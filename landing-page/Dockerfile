@@ -2,12 +2,11 @@
 FROM node:18-alpine AS BUILD_IMAGE
 WORKDIR /app
 COPY package*.json ./
-COPY .env ./
 COPY next.config.js ./
 RUN npm install
 COPY . .
 RUN npm run build
-
+#
 
 # Production Stage
 FROM node:18-alpine AS PRODUCTION_STAGE
