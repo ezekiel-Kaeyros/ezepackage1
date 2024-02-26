@@ -3,6 +3,8 @@ FROM node:18-alpine AS BUILD_IMAGE
 WORKDIR /app
 COPY package*.json ./
 RUN yarn install
+RUN cd packages/frontend
+RUN yarn install
 RUN yarn add styled-components
 COPY . .
 RUN yarn build
