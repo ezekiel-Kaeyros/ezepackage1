@@ -1,0 +1,19 @@
+version: '3'
+services:
+  frontend_communities:
+    build:
+      context: ./communities/packages/frontend
+      dockerfile: Dockerfile
+    image: frontend_communities
+
+  backend_communities:
+    build:
+      context: ./communities/packages/api
+      dockerfile: Dockerfile
+    image: backend_communities
+
+  landing_communities:
+    build:
+      context: ./landing-page
+      dockerfile: Dockerfile
+    image: landing_communities
