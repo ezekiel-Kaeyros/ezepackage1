@@ -4,7 +4,11 @@ WORKDIR /app
 COPY package*.json ./
 RUN yarn install
 COPY . .
-RUN yarn workspace packages/frontend add styled-components && yarn workspace packages/frontend build
+WORKDIR /app/packages/frontend
+RUN yarn add styled-components && yarn build
+
+# Reset the working directory
+WORKDIR /app
 
 # Production Stage
 FROM node:18-alpine AS PRODUCTION_STAGE
