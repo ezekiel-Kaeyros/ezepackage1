@@ -3,6 +3,8 @@ FROM node:18-alpine AS BUILD_IMAGE
 WORKDIR /app
 COPY package*.json ./
 
+RUN npm install -g npm@10.4.0
+
 RUN npm install
 COPY . .
 RUN npm run build
