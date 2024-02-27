@@ -8,13 +8,13 @@ WORKDIR /app
 COPY package.json  ./
 
 # Install dependencies
-RUN npm install
+RUN yarn
 
 # Copy the rest of project files into this image
 COPY . .
 
 # Build the project
-RUN npm run build
+RUN yarn build
 
 # Expose application port
 EXPOSE 4000
