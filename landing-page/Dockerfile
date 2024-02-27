@@ -5,7 +5,7 @@ COPY package*.json ./
 COPY next.config.js ./
 RUN npm install
 COPY . .
-RUN npm run build
+RUN REACT_APP_API_URL=http://ec2-3-69-225-24.eu-central-1.compute.amazonaws.com:4000 npm run build
 #
 
 # Production Stage
