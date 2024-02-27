@@ -1,21 +1,27 @@
-# Build Stage
-FROM node:18.19.1 AS BUILD_IMAGE
+# Use Node 16 alpine as parent image
+FROM node:16-alpine
+
+# Change the working directory on the Docker image to /app
 WORKDIR /app
-COPY package*.json  tsconfig.json ./
 
-RUN npm install -g yarn@1.22.21
+# Copy package.json and package-lock.json to the /app directory
+COPY package.json  ./
 
-RUN yarn
+# RUN npm install -g npm@10.4.0
+
+# Install dependencies
+RUN npm install
+
+RUN npm install -g typescript
+
+# Copy the rest of project files into this image
 COPY . .
-RUN yarn build
-#
 
-# Production Stage
-FROM node:18.19.1 AS PRODUCTION_STAGE
-WORKDIR /app
-COPY --from=BUILD_IMAGE /app/package*.json ./
-COPY --from=BUILD_IMAGE /app/build ./build
-COPY --from=BUILD_IMAGE /app/node_modules ./node_modules
-ENV NODE_ENV=production
-EXPOSE 3000
-CMD ["yarn", "start"]
+# Build the project
+RUN npm run build
+
+# Expose application port
+EXPOSE 4000
+
+# Start the application
+CMD ["npm", "start"]
