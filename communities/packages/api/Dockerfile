@@ -1,24 +1,21 @@
-# Use Node 16 alpine as parent image
-FROM node:18-alpine
-
-# Change the working directory on the Docker image to /app
+# Build Stage
+FROM node:18-alpine AS BUILD_IMAGE
 WORKDIR /app
+COPY package*.json ./
 
-# Copy package.json and package-lock.json to the /app directory
-COPY package.json .
-
-
-# Install dependencies
-RUN yarn install
-
-# Copy the rest of project files into this image
+RUN npm install
 COPY . .
+RUN npm run build
+#
 
-# Build the project
-RUN yarn build
-
-# Expose application port
-EXPOSE 4000
-
-# Start the application
-CMD ["yarn", "start"]
+# Production Stage
+FROM node:18-alpine AS PRODUCTION_STAGE
+WORKDIR /app
+COPY --from=BUILD_IMAGE /app/package*.json ./
+COPY --from=BUILD_IMAGE /app/next.config.js ./
+COPY --from=BUILD_IMAGE /app/.next ./.next
+COPY --from=BUILD_IMAGE /app/src ./src
+COPY --from=BUILD_IMAGE /app/node_modules ./node_modules
+ENV NODE_ENV=production
+EXPOSE 3000
+CMD ["npm", "start"]
