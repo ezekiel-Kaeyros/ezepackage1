@@ -5,10 +5,10 @@ FROM node:16-alpine
 WORKDIR /app
 
 # Copy package.json and package-lock.json to the /app directory
-COPY package.json yarn.lock ./
+COPY package.json  ./
 
 # Install dependencies
-RUN yarn install --frozen-lockfile
+
 
 # Copy the rest of project files into this image
 COPY . .
