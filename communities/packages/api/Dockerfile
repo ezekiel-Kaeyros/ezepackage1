@@ -1,9 +1,17 @@
-FROM node:18.16.0-alpine3.17
-RUN mkdir -p /opt/app
-WORKDIR /opt/app
-COPY src/package.json src/package-lock.json ./
-RUN yarn 
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY package.json .
+
+RUN yarn
+
+RUN yarn build
+
+# RUN npm install -g nodemon
+
 COPY . .
-RUN  yarn build
-EXPOSE 3000
-CMD [ "npm", "start"]
+
+EXPOSE 4000
+
+CMD ["npm", "start"]
