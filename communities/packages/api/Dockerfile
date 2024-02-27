@@ -12,8 +12,6 @@ RUN npm run build
 FROM node:18-alpine AS PRODUCTION_STAGE
 WORKDIR /app
 COPY --from=BUILD_IMAGE /app/package*.json ./
-COPY --from=BUILD_IMAGE /app/next.config.js ./
-COPY --from=BUILD_IMAGE /app/.next ./.next
 COPY --from=BUILD_IMAGE /app/src ./src
 COPY --from=BUILD_IMAGE /app/node_modules ./node_modules
 ENV NODE_ENV=production
