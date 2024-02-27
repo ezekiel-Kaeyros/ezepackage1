@@ -10,6 +10,8 @@ COPY package.json  ./
 # Install dependencies
 RUN yarn install
 
+RUN npm install -g npm@10.4.0
+
 # Copy the rest of project files into this image
 COPY . .
 
