@@ -1,24 +1,9 @@
-# Use Node 16 alpine as parent image
-FROM node:18-alpine
-
-# Change the working directory on the Docker image to /app
-WORKDIR /app
-
-# Copy package.json and package-lock.json to the /app directory
-COPY package.json  ./
-
-
-# Install dependencies
-RUN yarn install
-
-# Copy the rest of project files into this image
-COPY . .
-
-# Build the project
-RUN yarn build
-
-# Expose application port
-EXPOSE 4000
-
-# Start the application
-CMD ["yarn", "start"]
+FROM node:18.16.0-alpine3.17
+RUN mkdir -p /opt/app
+WORKDIR /opt/app
+COPY src/package.json src/package-lock.json ./
+RUN yarn 
+COPY src/ .
+RUN  yarn build
+EXPOSE 3000
+CMD [ "npm", "start"]
