@@ -6,11 +6,10 @@ WORKDIR /app
 
 # Copy package.json and package-lock.json to the /app directory
 COPY package.json  ./
+COPY yarn.lock ./
 
 # Install dependencies
 RUN yarn install
-
-RUN npm install -g npm@10.4.0
 
 # Copy the rest of project files into this image
 COPY . .
@@ -22,4 +21,4 @@ RUN yarn build
 EXPOSE 4000
 
 # Start the application
-CMD ["npm", "start"]
+CMD ["yarn", "start"]
