@@ -1,5 +1,5 @@
 # Use Node 16 alpine as parent image
-FROM node:16-alpine
+FROM node:18-alpine
 
 # Change the working directory on the Docker image to /app
 WORKDIR /app
@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package.json  ./
 
 # Install dependencies
-RUN yarn
+RUN yarn install
 
 # Copy the rest of project files into this image
 COPY . .
