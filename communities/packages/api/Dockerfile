@@ -3,7 +3,7 @@ FROM node:18.19.1 AS BUILD_IMAGE
 WORKDIR /app
 COPY package*.json  tsconfig.json ./
 
-RUN 
+RUN npm install -g yarn@1.22.21
 
 RUN yarn
 COPY . .
