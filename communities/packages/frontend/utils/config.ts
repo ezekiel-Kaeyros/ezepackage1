@@ -1,4 +1,4 @@
-const API_PRODUCTION_URL = 'http://eze.wiki:3003';
+const API_PRODUCTION_URL = 'http://eze.wiki:3002';
 const API_DEV_URL = 'http://localhost:4000';
 
 export const Config = {
