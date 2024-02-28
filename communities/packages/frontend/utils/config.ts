@@ -1,4 +1,4 @@
-const API_PRODUCTION_URL = 'https://communities.eze.wiki';
+const API_PRODUCTION_URL = 'https://back.communities.eze.wiki';
 const API_DEV_URL = 'http://localhost:4000';
 
 export const Config = {
