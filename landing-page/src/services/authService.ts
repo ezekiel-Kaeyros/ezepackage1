@@ -2,12 +2,11 @@ import DataService from './dataService';
 
 export default class AuthService extends DataService {
   login = (data: { email: string; password: string }) => {
-    this.post('/auth/login', data);
-    return;
+    return this.post('/login', data);
   };
 
-  register = (data: any, config: any) => {
-    return this.post('/auth/register', data);
+  register = (data: { email: string; password: string; fullName: string }) => {
+    return this.post('/signup', data);
   };
 
   forgottenPassword = (data: any) => {

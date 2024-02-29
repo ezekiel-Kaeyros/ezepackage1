@@ -10,13 +10,17 @@ import CloseIcon from '../../../../../../public/icons/closeIcon.svg';
 import LocaleSwitcher from '../locale-switcher/locale-switcher';
 import AnimateClick from '../../animate-click/AnimateClick';
 import { useClickOutside } from '@/app/hooks/useClickOutside';
+import { getUserCookies } from '@/cookies/cookies';
+import { useAuth } from '@/app/hooks/useAuth';
 
 type NavBarProps = {
   lang: string;
 };
+const COMMUNITIES_URL = 'https://communities.eze.wiki';
 
 const NavBar: React.FC<NavBarProps> = ({ lang }) => {
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
+  const { token } = useAuth();
 
   let domNode = useClickOutside(() => {
     setToggleMenu(true);
@@ -25,7 +29,7 @@ const NavBar: React.FC<NavBarProps> = ({ lang }) => {
   return (
     <nav
       ref={domNode}
-      className="w-full  top-0 shadow-sm py-2 px-4 lg:px-8 lg:fixed z-50 sticky flex justify-between items-center bg-white "
+      className="w-[100vw]  top-0 shadow-sm py-2 px-4 lg:px-8 lg:fixed z-50 sticky flex justify-between items-center bg-white "
     >
       <Link href="/">
         <Image className="w-24" src={Logo} alt="Logo" />
@@ -54,7 +58,9 @@ const NavBar: React.FC<NavBarProps> = ({ lang }) => {
           className="flex flex-col lg:flex-row space-y-3 lg:w-fit lg:space-y-0 lg:items-center  pt-2"
         >
           <li className="border-t-1 hover:text-primaryColor lg:border-none px-6 lg:px-3 2xl:px-6  pt-4 lg:pt-0 pb-2">
-            <Link href="#">Communities</Link>
+            <Link href={`${(token && COMMUNITIES_URL) || `/${lang}/login`}`}>
+              Communities
+            </Link>
           </li>
           <li className="border-t-1 hover:text-primaryColor lg:border-none px-6 lg:px-3 2xl:px-6  pt-4 lg:pt-0 pb-2">
             <Link href="#">Online Courses</Link>
@@ -69,9 +75,18 @@ const NavBar: React.FC<NavBarProps> = ({ lang }) => {
             <Link href="#">Events</Link>
           </li>
           <li className="border-t-1 hover:text-primaryColor lg:border-none px-6 lg:px-3 2xl:px-6  pt-4 lg:pt-0 pb-4">
-            <Button href={`/${lang}/signup`} className="w-fit py-3">
-              Register
-            </Button>
+            {token ? (
+              <Button
+                href={`https://communities.eze.wiki/`}
+                className="w-fit py-3"
+              >
+                Go to Dashboard
+              </Button>
+            ) : (
+              <Button href={`/${lang}/login`} className="w-fit py-3">
+                Login
+              </Button>
+            )}
           </li>
           <li className="border-t-1 hover:text-primaryColor lg:border-none px-6 lg:px-3 2xl:px-6  pt-4 lg:pt-0 pb-4">
             <LocaleSwitcher />

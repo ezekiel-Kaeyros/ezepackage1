@@ -1,5 +1,70 @@
 {
   "Navigation": {
     "home": "Accueil"
+  },
+  "page": {
+    "home": {
+      "section1": {
+        "block1": {
+          "h1": "Où les esprits se rencontrent, les idées",
+          "span": "jaillissent.",
+          "placeholder": "Recherche d'un article, d'un document, d'un utilisateur, d'un événement, ...",
+          "p": "Libérez tout le potentiel de votre voyage scientifique avec Eze, votre portail vers une communauté florissante de chercheurs, d'apprenants et d'experts.",
+          "btn": "Recherche",
+          "link": {
+            "line1": "Sciences de la santé",
+            "line2": "Mines",
+            "line3": "ICT",
+            "line4": "Sciences agro-alimentaires",
+            "line5": "Sciences sociales",
+            "line6": "Analyse des données",
+            "line7": "Energie"
+          },
+          "block2": {
+            "title": " Des communautés en ligne dynamiques",
+            "p": "Rencontrez des personnes partageant les mêmes idées au sein de nos communautés en ligne dynamiques.",
+            "btn": "explorer les communautés"
+          }
+        }
+      },
+      "section2": {
+        "sec1": {
+          "title1": "Bibliothèque en ligne certifiée",
+          "des1": "Accédez à une vaste bibliothèque d'articles et de recherches certifiés. Restez à l'avant-garde de votre domaine avec les dernières découvertes et perspectives de chercheurs renommés.",
+          "paragragph1": "Articles de recherche",
+          "paragragph2": "Papiers de recherche",
+          "paragragph3": "Visitez notre bibliothèque"
+        },
+        "sec2": {
+          "title1": "Écosystème d'apprentissage complet",
+          "des1": "Découvrez une mine de connaissances grâce à nos cours en ligne soigneusement élaborés par des experts. De principes fondamentaux aux dernières avancées, notre programme diversifié répond à un éventail d'intérêts scientifiques.",
+          "paragragph1": "Articles de recherche",
+          "paragragph2": "Papiers de recherche",
+          "paragragph3": "Visitez notre bibliothèque",
+          "paragragph4": "Voir les cours"
+        },
+        "sec3": {
+          "title1": "Obtenez un financement pour votre projet dès aujourd'hui",
+          "des1": "Notre section Eze Funding est un espace dédié conçu pour soutenir et financer vos projets scientifiques, en fournissant les ressources nécessaires pour transformer des concepts innovants en réalisations tangibles.",
+          "des2": "Naviguez dans vos activités académiques et de recherche en toute confiance grâce à des séances de coaching individuelles avec des professeurs certifiés. Bénéficiez de conseils et de perspectives sur mesure pour faire avancer votre carrière.",
+          "paragragph1": "Commencer",
+          "paragragph2": "Guidance personnalisée",
+          "paragragph3": "Cours de carrière",
+          "paragragph4": "Nos chercheurs",
+          "paragragph5": "Instructeurs"
+        },
+        "sec4": {
+          "title1": "Obtenez un financement pour votre projet dès aujourd'hui",
+          "des1": "Notre section Eze Funding est un espace dédié conçu pour soutenir et financer vos projets scientifiques, en fournissant les ressources nécessaires pour transformer des concepts innovants en réalisations tangibles.",
+          "paragragph1": "Instructeurs",
+          "paragragph2": "Cours de carrière",
+          "paragragph3": "Nos chercheurs",
+          "paragragph4": "Commencer"
+        },
+        "sec5": {
+          "title1": "Partenaires de confiance"
+        }
+      }
+    }
   }
 }

@@ -2,19 +2,22 @@
 import React from 'react';
 import FirstStep from './first-step/FirstStep';
 import Image from 'next/image';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 import LogoForm from '../../../../../public/icons/logoForm.svg';
 import SecondStep from './second-step/SecondStep';
+import { useAuth } from '@/app/hooks/useAuth';
 
 const Onboarding = () => {
   const searchParams = useSearchParams();
+  const { user } = useAuth();
   const step = searchParams.get('step');
 
   return (
     <div>
       <h1 className="font-bold flex text-3xl mb-12">
-        Welcome <h2 className="font-bold ml-2 text-primaryColor">John Doe</h2>
+        Welcome{' '}
+        <h2 className="font-bold ml-2 text-primaryColor">{user?.fullName}</h2>
       </h1>
       {parseInt(`${step}`) === 1 ? <FirstStep /> : <SecondStep />}
 

@@ -46,7 +46,7 @@ const topics = [
 
 const HeroSection = () => {
   return (
-    <div className="flex w-full items-center justify-between">
+    <div className="flex w-full items-center justify-between px-8">
       <div className="w-full text-center lg:text-start lg:max-w-lg xl:max-w-2xl 2xl:max-w-3xl">
         <div className="font-bold flex items-center flex-col lg:block text-center lg:text-start text-4xl lg:text-5xl xl:text-6xl">
           <h1 className="mb-2">Where Minds Meet,</h1>

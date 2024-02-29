@@ -1,40 +1,33 @@
 import React from 'react';
-import { Button } from '../../button/Button';
 import Carousel from './carousel/Carousel';
 
 const CertifiedLibrarySection = () => {
   return (
-    <div className="flex flex-col  items-center xl:flex-row justify-between">
-      <div className="flex flex-col space-y-4 w-full lg:w-4/12">
-        <h1 className="font-bold text-2xl lg:text-3xl">
+    <div className="mt-[10%] bg-white md:flex md:justify-between  text-black block overflow-hidden w-full md:pl-3 ">
+      <div className=" md:w-[31%] w-fit md:px-0 md:m-0  md:mt-0 mt-[2%] ">
+        <h1 className="lg:mb-4 mb-4  md:mb-2 text-xl font-[700] md:mt-2">
           Certified Online Library
         </h1>
-        <h3>
+        <p className="lg:mb-4 md:mb-2 mb-4 sm:text-justify w-full text-base pr-4">
           Access an extensive library of certified articles and research papers.
           Stay at the forefront of your field with the latest discoveries and
           perspectives from renowned researchers.
-        </h3>
-        <div className="flex mt-2 items-center space-x-8">
-          <div className="text-center mt-2">
-            <h1 className="font-bold text-5xl text-secondaryColor opacity-80">
-              450 +
-            </h1>
+        </p>
+        <div className="flex lg:mb-4 mb-4  md:mb-2 text-[#47586E]">
+          <div className="mr-6">
+            <h1 className="text-4xl text-[#47586E] mb-2">450 +</h1>
             <p>Research articles</p>
           </div>
           <div>
-            <h1 className="font-bold text-5xl text-secondaryColor opacity-80">
-              100 +
-            </h1>
-            <p>Research papers</p>
+            <h1 className="text-4xl text-[#47586E] mb-2">100 +</h1>
+            <p> Research papers</p>
           </div>
         </div>
-
-        <div className="pt-4">
-          <Button className="w-fit">Visit Our Library</Button>
-        </div>
+        <button className="bg-[#015E44] rounded-3xl px-4 py-3 text-white font-[700]">
+          Visit Our Library
+        </button>
       </div>
-
-      <div className="mt-16 w-8/12 xl:mt-0">
+      <div className="md:w-[68%] box-border md:px-0 w-full m-auto md:m-0	md:mt-0 mt-[2%]  h-[600px]">
         <Carousel />
       </div>
     </div>

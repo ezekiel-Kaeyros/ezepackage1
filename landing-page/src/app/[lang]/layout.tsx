@@ -37,13 +37,13 @@ export default function RootLayout({
         <meta name="description">{metadata.description}</meta>
       </Head>
       <ReduxProvider>
-        <ThemeProvider attribute="class" defaultTheme="white" enableSystem>
-          <Providers>
-            <body className={`${inter.className}  dark:bg-[#192428]`}>
-              <div>{children}</div>
-            </body>
-          </Providers>
-        </ThemeProvider>
+        {/* <ThemeProvider attribute="class" defaultTheme="white" enableSystem> */}
+        <Providers>
+          <body className={`${inter.className}  dark:bg-[#192428]`}>
+            <div>{children}</div>
+          </body>
+        </Providers>
+        {/* </ThemeProvider> */}
       </ReduxProvider>
     </html>
   );

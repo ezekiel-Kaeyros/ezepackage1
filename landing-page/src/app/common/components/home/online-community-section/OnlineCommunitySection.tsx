@@ -8,7 +8,7 @@ import { Button } from '../../button/Button';
 
 const OnlineCommunitySection = () => {
   return (
-    <div className="my-8 w-full">
+    <div className="my-8 w-full px-8">
       <Image
         className="w-full hidden lg:block"
         src={AnimationImage}

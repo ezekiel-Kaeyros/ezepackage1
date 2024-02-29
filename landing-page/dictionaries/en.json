@@ -1,5 +1,70 @@
 {
   "Navigation": {
     "home": "Home page"
+  },
+  "page": {
+    "home": {
+      "section1": {
+        "block1": {
+          "h1": "Where Minds Meet, Ideas",
+          "span": "Spark.",
+          "placeholder": "Search for an article, document, user, event, ...",
+          "p": "Unleash the full potential of your scientific journey with Eze, your gateway to a thriving community of knowledge seekers, learners, and experts.",
+          "btn": "Search",
+          "link": {
+            "line1": "Health Sciences",
+            "line2": "Mines",
+            "line3": "ICT",
+            "line4": "Agro-food Sciences",
+            "line5": "Social Sciences",
+            "line6": "Data Analytics",
+            "line7": "Energy"
+          },
+          "block2": {
+            "title": " Vibrant Online Communities",
+            "p": "Connect with like-minded individuals in our vibrant online communities.",
+            "btn": "expolre communities"
+          }
+        }
+      },
+      "section2": {
+        "sec1": {
+          "title1": "Certified Online Library",
+          "des1": "Access an extensive library of certified articles and research papers. Stay at the forefront of your field with the latest discoveries and perspectives from renowned researchers.",
+          "paragragph1": "Research articles",
+          "paragragph2": "Research papers",
+          "paragragph3": "Visit our Library"
+        },
+        "sec2": {
+          "title1": "Comprehensive Learning Ecosystem",
+          "des1": " Discover a wealth of knowledge through our expert-curated online courses. From foundation principles to the latest advancements, our diverse curriculum caters to a spectrum of scientific interests.",
+          "paragragph1": "Research articles",
+          "paragragph2": "Research papers",
+          "paragragph3": "Visit our Library",
+          "paragragph4": "See Courses"
+        },
+        "sec3": {
+          "title1": "Get A Fund To Your Project Today",
+          "des1": " Our Eze Funding section is a dedicated space designed to support and finance your scientific projects, providing the resources needed to transform innovative concepts into tangible achievements.",
+          "des2": "Navigate your academic and research pursuits with confidence through one-on-one coaching sessions with certified professors.Receive tailored advice and insights to propel your career forward.",
+          "paragragph1": "Get Started",
+          "paragragph2": "Personalized Guidance",
+          "paragragph3": "Career courses",
+          "paragragph4": "Our researchers",
+          "paragragph5": "Instructors"
+        },
+        "sec4": {
+          "title1": "Get A Fund To Your Project Today",
+          "des1": " Our Eze Funding section is a dedicated space designed to support and finance your scientific projects, providing the resources needed to transform innovative concepts into tangible achievements.",
+          "paragragph1": "Instructors",
+          "paragragph2": "Career courses",
+          "paragragph3": "Our researchers",
+          "paragragph4": "Get Started"
+        },
+        "sec5": {
+          "title1": "Trusted Partners"
+        }
+      }
+    }
   }
 }

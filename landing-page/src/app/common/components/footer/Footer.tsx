@@ -1,14 +1,13 @@
 import Image from 'next/image';
 import React from 'react';
 import Logo from '../../../../../public/logo.svg';
+import Link from 'next/link';
 
 const Footer = () => {
   return (
     <div>
       <section className="bg-[#E6F0ED] px-5 sm:px-16 pb-10 border-2 md:px-20 ">
         <div className="border-b-2 border-[#CCCCCC] flex flex-col sm:flex-row justify-between pt-10 pb-3">
-          {/* <div className="flex justify-between"> */}
-          {/* <div className='mb-8 sm:mb-0'> */}
           <div></div>
           <div className="mb-8 sm:mb-0">
             <Image
@@ -18,7 +17,6 @@ const Footer = () => {
             />
           </div>
           <div className="flex flex-col gap-2 mb-6 sm:mb-0">
-            {/* <div className="flex flex-col gap-2 mb-6 sm:mb-0"> */}
             <span>
               <h1 className="text-[21px] font-semibold m-0 cursor-pointer">
                 Visit
@@ -83,17 +81,21 @@ const Footer = () => {
           </div>
           <div className="mb-2 sm:mb-0">
             <h1 className="cursor-pointer">Our Socials</h1>
-            {/* <div className="flex items-center gap-x-2">
-        <Image src={facebook} alt="instagram" className="w-[50px] h-[50px] p-2 cursor-pointer rounded-full bg-[#015E44]" />
-        <Image src={instagram} alt="facebook" className="w-[50px] h-[50px] p-2 cursor-pointer rounded-full bg-[#015E44]" />
-        <Image src={twitter} alt="twitter" className="w-[50px] h-[50px]  p-2 cursor-pointer rounded-full bg-[#015E44]" />
-        <Image src={whatsapp} alt="whatsapp" className="w-[50px] h-[50px] p-2 cursor-pointer rounded-full bg-[#015E44]" />
-      </div> */}
           </div>
         </div>
-        <div>Designed by Kaeryros Analytics</div>
-        <div className="text-end font-thin cursor-pointer">
-          ©2023 Kaeyros Analytics
+        <div className="flex flex-col mt-4 sm:flex-row sm:justify-between">
+          <div>
+            Designed by
+            <Link
+              href="https://kaeyros-analytics.com/"
+              className="text-green-800 ml-2"
+            >
+              Kaeryros Analytics
+            </Link>
+          </div>
+          <div className="text-end font-medium cursor-pointer">
+            © Copyright EZE 2023
+          </div>
         </div>
       </section>
     </div>

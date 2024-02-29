@@ -16,7 +16,7 @@ const CheckboxChip: React.FC<CheckboxChipProps> = ({
   register,
 }) => {
   return (
-    <div className="p-1">
+    <div className="sm:p-1 p-0">
       <div className="flex justify-center items-center mr-0 mb-0">
         <input
           {...register}

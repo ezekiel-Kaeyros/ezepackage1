@@ -5,11 +5,9 @@ import VideoImage from '../../../../../../public/images/video.png';
 
 const PersonalGuidanceSection = () => {
   return (
-    <div className="w-full flex flex-col lg:flex-row items-start gap-x-11">
+    <div className="mt-20 max-lg:mt-80 max-sm:mt-[30rem] w-full flex flex-col lg:flex-row items-start gap-x-11 px-8">
       <div className="lg:w-4/12 w-full flex flex-col justify-start space-y-4">
-        <h2 className="font-bold text-2xl lg:text-3xl ">
-          Personalized Guidance
-        </h2>
+        <h2 className="font-bold text-2xl lg:text-3xl "></h2>
         <p className="text-base font-normal">
           Navigate your academic and research pursuits with confidence through
           one-on-one coaching sessions with certified professors. Receive

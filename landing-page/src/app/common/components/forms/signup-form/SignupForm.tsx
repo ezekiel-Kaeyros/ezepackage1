@@ -17,11 +17,18 @@ import { Button } from '../../button/Button';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { SignupFormValues } from './signupForm';
+import { useAuth } from '@/app/hooks/useAuth';
+import { setAuthUser } from '@/redux/features/auth-slice';
+import AuthService from '@/services/authService';
+
+// const COMMUNITIES_URL = 'https://communities.eze.wiki/';
 
 const SignupForm = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { push } = useRouter();
+
+  const { dispatch } = useAuth();
 
   const {
     register,
@@ -31,22 +38,28 @@ const SignupForm = () => {
 
   // Triggers when submitting
 
-  const onSubmit: SubmitHandler<SignupFormValues> = (data) => {
-    setIsLoading(true);
+  const onSubmit: SubmitHandler<SignupFormValues> = async (data) => {
+    // setIsLoading(true);
+    try {
+      const res = await new AuthService().register(data);
 
-    // const user = new AuthService().login(data);
-    setTimeout(() => {
-      setIsLoading(false);
-      toast.success('Successfully toasted!');
-      push('/');
-    }, 1000);
+      if (res?.status !== 200) {
+        toast.error('Registration failed');
+      } else {
+        toast.success('Registration completed');
+
+        dispatch(setAuthUser({ user: res?.data }));
+        // Redirecting to onboarding
+        push('/onboarding?step=1');
+      }
+    } catch (error: any) {
+      console.log(`An error occured`, error);
+      toast.error(error?.response?.data);
+    }
   };
 
   return (
     <div className="w-full">
-      {/* <div className="w-full p-4 text-red-400 text-center border bg-divDark border-red-200 rounded-lg my-4">
-        Login failed
-      </div> */}
       <Toaster position="top-center" reverseOrder={false} />
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -69,14 +82,14 @@ const SignupForm = () => {
             />
           </div>
           {errors?.fullName && (
-            <p className="text-sm color-red-400">Email not valid</p>
+            <p className="text-sm text-red-700">Full name not valid</p>
           )}
           <div>
             <InputField
               icon={ContactIcon}
               name="contact"
               register={register('contact', {
-                required: true,
+                required: false,
                 pattern: /^6(9|7|6|5|2|8)[0-9]{7}$/,
                 maxLength: 9,
                 minLength: 9,
@@ -86,7 +99,7 @@ const SignupForm = () => {
             />
           </div>
           {errors?.contact && (
-            <p className="text-sm color-red-400">Contact not valid</p>
+            <p className="text-sm text-red-700">Contact not valid</p>
           )}
           <div>
             <InputField
@@ -101,7 +114,7 @@ const SignupForm = () => {
             />
           </div>
           {errors?.email && (
-            <p className="text-sm color-red-400">Email not valid</p>
+            <p className="text-sm text-red-700">Email not valid</p>
           )}
           <div>
             <InputField

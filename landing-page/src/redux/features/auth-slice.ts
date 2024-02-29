@@ -1,3 +1,4 @@
+import { setToken, setUserCookies } from '@/cookies/cookies';
 import { createSlice } from '@reduxjs/toolkit';
 
 // Just a boiler plate, this file needs to be updated
@@ -28,9 +29,13 @@ export const auth = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    login: (state, action) => {},
+    setAuthUser: (state, action) => {
+      const { user } = action?.payload;
+      setToken(user?.token);
+      setUserCookies(user?.user);
+    },
   },
 });
 
-export const { login } = auth.actions;
+export const { setAuthUser } = auth.actions;
 export default auth.reducer;

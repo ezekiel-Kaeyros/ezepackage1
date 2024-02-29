@@ -1,11 +1,13 @@
 'use client';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { SecondStepFormValues } from './secondStep.d';
-import CheckboxChip from '../checkbox-chip/CheckboxChip';
+import { SecondStepFormValues } from './secondStep';
 import { Button } from '../../button/Button';
 import CheckboxCommunityChip from '../checkbox-community-chip/CheckboxCommunityChip';
+import { redirect, useRouter } from 'next/navigation';
+import { isFirstTime } from '@/cookies/cookies';
 
+const COMMUNITIES_URL = 'https://communities.eze.wiki/';
 const communities = [
   {
     id: 1,
@@ -75,8 +77,16 @@ const SecondStep = () => {
     mode: 'onChange' || 'onBlur' || 'onSubmit',
   });
 
+  const { push } = useRouter();
   const onSubmit: SubmitHandler<SecondStepFormValues> = (data) => {
-    // const user = new AuthService().login(data);
+    // console.log('clicked');
+    // isFirstTime('true');
+    // push(COMMUNITIES_URL);
+  };
+
+  const handleSend = () => {
+    isFirstTime('true');
+    push(COMMUNITIES_URL);
   };
 
   return (
@@ -98,8 +108,10 @@ const SecondStep = () => {
         </div>
       </div>
 
-      <div className="mt-8">
-        <Button className="w-fit">Continue</Button>
+      <div className="mt-8 w-fit">
+        <Button onClick={() => handleSend()} type="submit" className="w-fit">
+          Continue
+        </Button>
       </div>
     </form>
   );

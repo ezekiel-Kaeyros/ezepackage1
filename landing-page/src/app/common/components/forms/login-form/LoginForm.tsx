@@ -8,12 +8,23 @@ import { Button } from '../../button/Button';
 import { LoginFormValues } from './loginForm';
 
 import Link from 'next/link';
-import { SubmitHandler, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { Spinner } from '@nextui-org/react';
+import AuthService from '@/services/authService';
+import { setAuthUser } from '@/redux/features/auth-slice';
+import { useAuth } from '@/app/hooks/useAuth';
+import { useRouter } from 'next/navigation';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import toast, { Toaster } from 'react-hot-toast';
+import { getIsFirstTime } from '@/cookies/cookies';
+
+const COMMUNITIES_URL = 'https://communities.eze.wiki/';
 
 const LoginForm = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
+
+  const { dispatch } = useAuth();
 
   const {
     register,
@@ -21,15 +32,31 @@ const LoginForm = () => {
     formState: { isValid, errors },
   } = useForm<LoginFormValues>({ mode: 'onChange' || 'onBlur' || 'onSubmit' });
 
+  const { push } = useRouter();
   //   // Triggers when submitting
 
-  const onSubmit: SubmitHandler<LoginFormValues> = (data) => {};
+  const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
+    const isFirstTime = getIsFirstTime();
+    try {
+      const res = await new AuthService().login(data);
+
+      if (res?.status !== 200) {
+        setErrorMessage(res?.data);
+      } else {
+        dispatch(setAuthUser({ user: res?.data }));
+        toast.success('Logged in successfully');
+        (isFirstTime && push(COMMUNITIES_URL)) || push('/fr/onboarding?step=1');
+      }
+    } catch (error) {
+      console.log(`An error occured`, error);
+      toast.error("User doesn't exist");
+    }
+  };
 
   return (
     <div className="w-full">
-      {/* <div className="w-full p-4 text-red-400 text-center border bg-divDark border-red-200 rounded-lg my-4">
-        Login failed
-      </div> */}
+      <Toaster position="top-center" reverseOrder={false} />
+
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col  w-full  mx-auto dark:text-white justify-center"
@@ -68,7 +95,8 @@ const LoginForm = () => {
         </div>
         <div className="mt-4 w-full flex flex-col items-center space-y-4 justify-center">
           <Button
-            href="/fr/onboarding?step=1"
+            //href="/fr/onboarding?step=1"
+            type="submit"
             disabled={isLoading ? true : false}
             variant={!isValid || isLoading ? 'disabled' : 'default'}
             className="w-full"

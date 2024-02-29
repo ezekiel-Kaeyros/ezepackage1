@@ -108,13 +108,22 @@ const Carousel = () => {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
           slidesToScroll: 1,
           initialSlide: 1,
         },
       },
       {
-        breakpoint: 480,
+        breakpoint: 680,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
@@ -124,7 +133,7 @@ const Carousel = () => {
   };
 
   return (
-    <div className="w-screen px-8 lg:-mr-48">
+    <div className=" lg:w-[70vw] xl:w-[67vw] md:w-[80vw] w-screen px-8 lg:-mr-48">
       <Slider {...settings}>
         {reports?.map((report) => (
           <ReportCard

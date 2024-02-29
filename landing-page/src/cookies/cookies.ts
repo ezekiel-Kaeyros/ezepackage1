@@ -1,8 +1,17 @@
 import cookies from 'js-cookie';
-import { USER_DATA } from './cookies.d';
+import { FIRST_TIME, TOKEN, USER_DATA } from './cookies.d';
 
 export const setUserCookies = (data: any) => {
   cookies.set(USER_DATA, JSON.stringify(data));
+};
+
+export const setToken = (token: string) => {
+  cookies.set('token', JSON.stringify(token));
+};
+
+export const getToken = () => {
+  const token: string | undefined = cookies.get(TOKEN);
+  return token ? JSON.parse(token) : undefined;
 };
 
 export const getUserCookies = () => {
@@ -12,4 +21,15 @@ export const getUserCookies = () => {
 
 export const removeUserCookies = () => {
   cookies.remove(USER_DATA);
+};
+
+// Onboarding cookies
+
+export const isFirstTime = (data: string) => {
+  cookies.set(FIRST_TIME, 'true');
+};
+
+export const getIsFirstTime = () => {
+  const data = cookies.get(FIRST_TIME);
+  return data ? JSON.parse(data) : undefined;
 };
