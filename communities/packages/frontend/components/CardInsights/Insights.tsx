@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect, Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import Image from 'next/image';
-import { Root } from './style';
+
 import { Button, Link, P, Spacing } from '../ui';
 import Follow from '../Follow';
 import theme from '../../theme';

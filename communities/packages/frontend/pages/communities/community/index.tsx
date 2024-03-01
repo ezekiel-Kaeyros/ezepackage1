@@ -1,6 +1,5 @@
 'use client';
-import React, { Fragment, useState } from 'react';
-import { Wrapper } from '../../../components/Community/style';
+import React, { useState } from 'react';
 import {
   BodyCommunity,
   InputSearch,
@@ -14,33 +13,26 @@ import {
   SearchContainer,
 } from '../../../components/Community/style2';
 import Seo from '../../../components/Seo';
-import CommunityAgroFood from '../../../components/Community/CommunityAgroFood';
-import CommunityMicrobiologist from '../../../components/Community/CommunityMicrobiologist';
-import CommunityDataAnalytics from '../../../components/Community/CommunityDataAnalytics';
-import InsightsCard from '../../../components/CardInsights/Insights';
+
 import Image from 'next/image';
 import searchIcon from '../../../public/community/search-normal.svg';
 import LayoutCommunities from '../../../components/Layout/CommuntiesLayout';
+import CommunityCard from '../../../components/Community/CommunityCard';
+import { useDispatchAuth } from '../../../utils/useDispatchAuth';
+import CommunityCards from '../../../components/Community/CommunityCard';
+import axios from 'axios';
+import { useQuery } from 'react-query';
 
-/* const fetchUsers = async ({ queryKey, pageParam = 0 }) => {
-
-  const [, isEmailVerificationRequired] = queryKey;
-  const { data } = await axios.get(
-    `/users/get-users?offset=${pageParam}&limit=${DataLimit.Members}&emailVerified=${isEmailVerificationRequired}`
-  );
+const fetchChannels = async () => {
+  const { data } = await axios.get('/channels');
   return data;
-}; */
+};
 
 const CommunityPage = () => {
   const [part, setPart] = useState(1);
   const [step, setStep] = useState(1);
   const [isSearch, SetIsSearch] = useState(false);
-  // const { isEmailVerificationRequired } = useSelector((state: RootState) => state.settings);
-  /* const { data, isFetching, isFetchingNextPage } = useInfiniteScroll({
-    key: ['members', isEmailVerificationRequired],
-    apiCall: fetchUsers,
-    dataLimit: DataLimit.Members,
-  }); */
+
   const [value2, setValue2] = useState('');
   const searchHandeler = (e: any) => {
     const value: string = e.target.value;
@@ -52,8 +44,12 @@ const CommunityPage = () => {
     }
   };
 
+  useDispatchAuth();
+
   /* const isEmpty = !data?.pages[0] || data.pages[0].length === 0;
    */
+
+  const { data: channels, isLoading } = useQuery('channels', fetchChannels);
 
   return (
     <LayoutCommunities hideRightSidebar>
@@ -68,7 +64,7 @@ const CommunityPage = () => {
                 setPart(1);
               }}
             >
-              My Communities
+              All Communities
             </ItemData>
             <ItemData
               background={part === 2 ? 'var(--colors-Castleton-Green-100, #E6F0ED)' : ''}
@@ -90,7 +86,8 @@ const CommunityPage = () => {
               </SearchContainer>
               <ListCommunity>
                 <ItemAll
-                  underlined={step === 1 ? 'underline' : ''}
+                  underlined={step === 1 ? '2px solid #1D242D' : ''}
+                  colored={step === 1 ? 'var(--colors-text-colors-primary, #1D242D)' : ''}
                   onClick={() => {
                     setStep(1);
                   }}
@@ -98,8 +95,9 @@ const CommunityPage = () => {
                   {' '}
                   All{' '}
                 </ItemAll>
-                <ItemAll
-                  underlined={step === 2 ? 'underline' : ''}
+                {/* <ItemAll
+                  underlined={step === 2 ? '2px solid #1D242D' : ''}
+                  colored={step === 2 ? 'var(--colors-text-colors-primary, #1D242D)' : ''}
                   onClick={() => {
                     setStep(2);
                   }}
@@ -108,7 +106,8 @@ const CommunityPage = () => {
                   Data Analytics{' '}
                 </ItemAll>
                 <ItemAll
-                  underlined={step === 3 ? 'underline' : ''}
+                  underlined={step === 3 ? '2px solid #1D242D' : ''}
+                  colored={step === 3 ? 'var(--colors-text-colors-primary, #1D242D)' : ''}
                   onClick={() => {
                     setStep(3);
                   }}
@@ -117,78 +116,41 @@ const CommunityPage = () => {
                   Agro-Food Sciences{' '}
                 </ItemAll>
                 <ItemAll
-                  underlined={step === 4 ? 'underline' : ''}
+                  underlined={step === 4 ? '2px solid #1D242D' : ''}
+                  colored={step === 4 ? 'var(--colors-text-colors-primary, #1D242D)' : ''}
                   onClick={() => {
                     setStep(4);
                   }}
                 >
                   {' '}
                   Microbiologist{' '}
-                </ItemAll>
+                </ItemAll> */}
               </ListCommunity>
 
               {step == 1 && (
                 <>
-                  <Title>Data Analytics Community</Title>
-                  <Wrapper>
-                    <Fragment>
-                      <CommunityDataAnalytics search={isSearch} value={value2} />
-                    </Fragment>
-
-                    {/* {isFetchingNextPage && <LoadingDots />} */}
-                  </Wrapper>
-
-                  <Title>Agro-Food Sciences Community</Title>
-                  <Wrapper>
-                    <Fragment>
-                      <CommunityAgroFood search={isSearch} value={value2} />
-                    </Fragment>
-                  </Wrapper>
-
-                  <Title>Microbiologist Community</Title>
-                  <Wrapper>
-                    <Fragment>
-                      <CommunityMicrobiologist search={isSearch} value={value2} />
-                    </Fragment>
-                  </Wrapper>
+                  <Title>Communities</Title>
+                  <CommunityCards search={isSearch} channels={channels} categoryStep={'Data Analytics'} />
                 </>
               )}
-              {step == 2 && (
+              {/* {step == 2 && (
                 <>
                   <Title>Data Analytics Community</Title>
-                  <Wrapper>
-                    <Fragment>
-                      <CommunityDataAnalytics search={isSearch} value={value2} />
-                    </Fragment>
-
-                    {/* {isFetchingNextPage && <LoadingDots />} */}
-                  </Wrapper>
+                  <CommunityCard search={isSearch} value={value2} categoryStep={'Data Analytics'} />
                 </>
               )}
               {step == 3 && (
                 <>
                   <Title>Agro-Food Sciences Community</Title>
-                  <Wrapper>
-                    <Fragment>
-                      <CommunityAgroFood search={isSearch} value={value2} />
-                    </Fragment>
-
-                    {/* {isFetchingNextPage && <LoadingDots />} */}
-                  </Wrapper>
+                  <CommunityCard search={isSearch} value={value2} categoryStep={'Agro-Food Sciences'} />
                 </>
               )}
               {step == 4 && (
                 <>
                   <Title>Microbiologist Community</Title>
-                  <Wrapper>
-                    <Fragment>
-                      <CommunityMicrobiologist search={isSearch} value={value2} />
-                    </Fragment>
-
-                    {/* {isFetchingNextPage && <LoadingDots />} */}
-                  </Wrapper>
+                  <CommunityCard search={isSearch} value={value2} categoryStep={'Microbiologist'} />
                 </>
-              )}
+              )} */}
             </>
           )}
 
@@ -202,7 +164,8 @@ const CommunityPage = () => {
               </SearchContainer>
               <ListCommunity>
                 <ItemAll
-                  underlined={step === 1 ? 'underline' : ''}
+                  underlined={step === 1 ? '2px solid #1D242D' : ''}
+                  colored={step === 1 ? 'var(--colors-text-colors-primary, #1D242D)' : ''}
                   onClick={() => {
                     setStep(1);
                   }}
@@ -211,7 +174,8 @@ const CommunityPage = () => {
                   All{' '}
                 </ItemAll>
                 <ItemAll
-                  underlined={step === 2 ? 'underline' : ''}
+                  underlined={step === 2 ? '2px solid #1D242D' : ''}
+                  colored={step === 2 ? 'var(--colors-text-colors-primary, #1D242D)' : ''}
                   onClick={() => {
                     setStep(2);
                   }}
@@ -220,7 +184,8 @@ const CommunityPage = () => {
                   Data Analytics{' '}
                 </ItemAll>
                 <ItemAll
-                  underlined={step === 3 ? 'underline' : ''}
+                  underlined={step === 3 ? '2px solid #1D242D' : ''}
+                  colored={step === 3 ? 'var(--colors-text-colors-primary, #1D242D)' : ''}
                   onClick={() => {
                     setStep(3);
                   }}
@@ -229,7 +194,8 @@ const CommunityPage = () => {
                   Agro-Food Sciences{' '}
                 </ItemAll>
                 <ItemAll
-                  underlined={step === 4 ? 'underline' : ''}
+                  underlined={step === 4 ? '2px solid #1D242D' : ''}
+                  colored={step === 4 ? 'var(--colors-text-colors-primary, #1D242D)' : ''}
                   onClick={() => {
                     setStep(4);
                   }}
@@ -242,72 +208,41 @@ const CommunityPage = () => {
               {step == 1 && (
                 <>
                   <Title>Data Analytics Community</Title>
-                  <Wrapper>
-                    <Fragment>
-                      <CommunityDataAnalytics search={isSearch} value={value2} />
-                    </Fragment>
 
-                    {/* {isFetchingNextPage && <LoadingDots />} */}
-                  </Wrapper>
+                  <CommunityCard search={isSearch} value={value2} categoryStep={'Data Analytics'} />
+
+                  {/* {isFetchingNextPage && <LoadingDots />} */}
 
                   <Title>Agro-Food Sciences Community</Title>
-                  <Wrapper>
-                    <Fragment>
-                      <CommunityAgroFood search={isSearch} value={value2} />
-                    </Fragment>
-                  </Wrapper>
+                  <CommunityCard search={isSearch} value={value2} categoryStep={'Agro-Food Sciences'} />
 
                   <Title>Microbiologist Community</Title>
-                  <Wrapper>
-                    <Fragment>
-                      <CommunityMicrobiologist search={isSearch} value={value2} />
-                    </Fragment>
-                  </Wrapper>
+                  <CommunityCard search={isSearch} value={value2} categoryStep={'Microbiologist'} />
                 </>
               )}
               {step == 2 && (
                 <>
                   <Title>Data Analytics Community</Title>
-                  <Wrapper>
-                    <Fragment>
-                      <CommunityDataAnalytics search={isSearch} value={value2} />
-                    </Fragment>
-
-                    {/* {isFetchingNextPage && <LoadingDots />} */}
-                  </Wrapper>
+                  <CommunityCard search={isSearch} value={value2} categoryStep={'Data Analytics'} />
                 </>
               )}
               {step == 3 && (
                 <>
                   <Title>Agro-Food Sciences Community</Title>
-                  <Wrapper>
-                    <Fragment>
-                      <CommunityAgroFood search={isSearch} value={value2} />
-                    </Fragment>
-
-                    {/* {isFetchingNextPage && <LoadingDots />} */}
-                  </Wrapper>
+                  <CommunityCard search={isSearch} value={value2} categoryStep={'Agro-Food Sciences'} />
                 </>
               )}
               {step == 4 && (
                 <>
                   <Title>Microbiologist Community</Title>
-                  <Wrapper>
-                    <Fragment>
-                      <CommunityMicrobiologist search={isSearch} value={value2} />
-                    </Fragment>
-
-                    {/* {isFetchingNextPage && <LoadingDots />} */}
-                  </Wrapper>
+                  <CommunityCard search={isSearch} value={value2} categoryStep={'Microbiologist'} />
                 </>
               )}
             </>
           )}
         </LeftSection>
 
-        <RightSection>
-          <InsightsCard />
-        </RightSection>
+        <RightSection>{/* <InsightsCard />   */}</RightSection>
       </BodyCommunity>
     </LayoutCommunities>
   );

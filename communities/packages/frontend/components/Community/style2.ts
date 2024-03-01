@@ -14,7 +14,7 @@ export const Root = styled.div`
   box-shadow: ${(p) => p.theme.shadows.sm};
 `;
 
-export const Wrapper = styled.div`
+/* export const Wrapper = styled.div`
   width: 67%;
   max-width: ${(p) => p.theme.screen.lg};
   margin: 0 auto;
@@ -27,7 +27,7 @@ export const Wrapper = styled.div`
   grid-gap: 20px;
   // padding-top: 20px;
   margin-bottom: ${(p) => p.theme.spacing.lg};
-`;
+`; */
 
 export const ImageContainer = styled.div``;
 
@@ -38,55 +38,93 @@ export const BlockFollow = styled.div`
 export const BanqueImage = styled.div``;
 
 export const BodyCommunity = styled.div`
-  display: flex;
+ // display: flex;
   width: 100%;
-  // max-width: ${(p) => p.theme.screen.lg};
-  margin: 0 auto;
-  justify-content: space-between;
-  // border: 1px solid red;
-  //background-color: red;
-  margin-bottom: ${(p) => p.theme.spacing.lg};
+// justify-content: center;
+padding: 2%;
+ @media only screen and (max-width: 768px) {
+  
+  display: grid;
+  }
+
 `;
 
 export const LeftSection = styled.div`
-  width: 60%;
-  justify-content: start;
-  align-items: flex-start;
-  max-width: ${(p) => p.theme.screen.lg};
+//width: 55%;
+//margin-right: 3%;
 
-  background-color: #fff;
-  margin-bottom: ${(p) => p.theme.spacing.lg};
+
+@media (min-width: 576px) {
+  width: 100%;
+  
+}
+ @media (min-width: 768px) {
+  width: 60%;
+  
+}
+
+@media (min-width: 992px) { 
+  width: 100%;
+ }
+
+
+@media (min-width: 1200px) { 
+  width: 75%;
+ }
+
+
+@media (min-width: 1400px) { 
+  width: 60%;
+ } 
+
+
+//  margin-bottom: ${(p) => p.theme.spacing.lg};
 `;
 
 export const RightSection = styled.div`
-  width: 40%;
-  justify-content: end;
-  align-items: flex-end;
+/* 
+width: 20%;
+padding-top: 20px;
 
-  background-color: #fff;
-  padding-top: 20px;
+@media screen and (max-width: 1024px) {
+  width: 30%;
+  
+  
+}
+@media screen and (max-width: 768px) {
+  width: 100%;
+  padding: 0 5%;
+  
+  
+} */
+
 `;
 
 export const Title = styled.h2`
   color: var(--colors-text-colors-secondary, #47586e);
-  /* Desktop/Button Text */
+  margin-top: 30px;
 
   font-size: 18px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  margin-left: 20px;
+ // margin-left: 20px;
 `;
 
 export const ListCommunity = styled.div`
-  display: flex;
-  padding: 10px;
+display: flex;
+  padding: 10px 0;
   justify-content: start;
   align-items: flex-start;
-  gap: 20px;
-  margin-left: 10px;
-  margin-top: 10px;
-  margin-bottom: 30px;
+  gap: 30px;
+ 
+
+  @media (max-width: 768px) {
+    display: none;
+    gap: 0px;
+    
+  }
+   
 `;
 
 export const InputSearch = styled.input`
@@ -119,14 +157,17 @@ export const ImageSearch = styled.div`
   left: 10px;
   margin-right: ${(p) => p.theme.spacing.xs};
 `;
-export const ItemAll = styled.span<{ underlined?: string }>`
+export const ItemAll = styled.span<{ underlined?: string, colored?: string }>`
   color: var(--colors-text-colors-secondary, #47586e);
   cursor: pointer;
   font-size: 18px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  text-decoration: ${(p) => p.underlined};
+  border-bottom: ${(p) => p.underlined};
+  color: ${(p) => p.colored};
+ // background-color: red;
+ padding-bottom: 9px;
 `;
 export const ItemData = styled.span<{ background?: string }>`
   display: flex;
@@ -158,8 +199,8 @@ export const ItemMicrobio = styled.span`
 export const SearchContainer = styled.div`
   position: relative;
   height: 40px;
-  width: 95%;
-  margin-bottom: 30px;
-  margin-left: 2%;
+  width: 100%;
+  margin: 40px 0 30px 0;
+ 
   border: none;
 `;

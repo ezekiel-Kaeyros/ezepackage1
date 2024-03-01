@@ -167,8 +167,8 @@ export const Textarea = styled.textarea`
   outline: 0;
   resize: none;
   border: 0;
-  padding-left: ${(p) => p.theme.spacing.sm};
-  padding-top: ${(p) => p.theme.spacing.xs};
+  padding-left: 47px;
+  padding-top: 16px;
   color: ${(p) => p.theme.colors.general.text};
   font-size: ${(p) => p.theme.font.size.xs};
 

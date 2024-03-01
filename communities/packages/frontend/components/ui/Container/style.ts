@@ -4,7 +4,7 @@ import { ContainerProps } from './Container';
 export const Root = styled.div<ContainerProps>`
   position: relative;
   margin: 0 auto;
-  margin-top: ${(p) => (p.marginTop ? p.theme.spacing[p.marginTop] : 0)};
+ // margin-top: ${(p) => (p.marginTop ? p.theme.spacing[p.marginTop] : 0)};
   width: 100%;
   max-width: ${(p) => p.maxWidth && p.theme.screen[p.maxWidth]};
   z-index: ${(p) => p.zIndex && p.theme.zIndex[p.zIndex]};

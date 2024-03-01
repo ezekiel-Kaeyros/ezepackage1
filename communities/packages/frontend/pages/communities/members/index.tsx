@@ -6,9 +6,10 @@ import { useInfiniteScroll } from '../../../utils';
 import { DataLimit } from '../../../constants';
 import { LoadingDots, Container, Empty, Skeleton } from '../../../components/ui';
 import Seo from '../../../components/Seo';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store';
 import LayoutCommunities from '../../../components/Layout/CommuntiesLayout';
+import { useDispatchAuth } from '../../../utils/useDispatchAuth';
 
 const fetchUsers = async ({ queryKey, pageParam = 0 }) => {
   const [, isEmailVerificationRequired] = queryKey;
@@ -26,11 +27,13 @@ const MembersPage: FC = () => {
     dataLimit: DataLimit.Members,
   });
 
+  useDispatchAuth();
+
   const isEmpty = !data?.pages[0] || data.pages[0].length === 0;
 
   if (isFetching && !isFetchingNextPage) {
     return (
-      <LayoutCommunities hideRightSidebar containerMaxWidth="md">
+      <LayoutCommunities marginTop="sm" hideRightSidebar containerMaxWidth="md">
         <Wrapper>
           <Skeleton count={12} height={270} />
         </Wrapper>
@@ -40,7 +43,7 @@ const MembersPage: FC = () => {
 
   if (isEmpty) {
     return (
-      <LayoutCommunities hideRightSidebar containerMaxWidth="md">
+      <LayoutCommunities marginTop="sm" hideRightSidebar containerMaxWidth="md">
         <Container centered padding="lg">
           <Empty>
             <div>No community members yet.</div>
@@ -51,7 +54,7 @@ const MembersPage: FC = () => {
   }
 
   return (
-    <LayoutCommunities hideRightSidebar containerMaxWidth="md">
+    <LayoutCommunities marginTop="sm" hideRightSidebar containerMaxWidth="md">
       <Seo title="Members" />
       <Wrapper>
         {data?.pages?.map((users, i) => {

@@ -2,14 +2,11 @@ import { FC, useEffect, useRef, useState } from 'react';
 import Router from 'next/router';
 import { Root, StyledContainer } from './style';
 import Header from '../Header';
-import SideBar from '../Sidebar';
 import { Cookies, getCookie, useClickOutside } from '../../utils';
 import { Spacing, Screen } from '../../theme';
 import RightSideBar from '../RightSideBar';
 import Seo from '../Seo';
 import Announcement from '../Announcement';
-import MainSidebar from '../Sidebar/MainSidebar';
-import SubHeader from '../Header/SubHeader';
 import Sidebar from '../Sidebar';
 
 interface LayoutCommunitiesProps {
@@ -54,9 +51,8 @@ const LayoutCommunities: FC<LayoutCommunitiesProps> = ({
       <Root>
         {!hideLeftSidebar && <Sidebar ref={sideBarRef} isOpen={isSideBarOpen} />}
         <StyledContainer
-          bgColor="body"
           marginTop={marginTop}
-          padding="none"
+          padding={marginTop}
           maxWidth={containerMaxWidth}
           hideRightSidebar={hideRightSidebar}
         >
@@ -72,7 +68,6 @@ LayoutCommunities.defaultProps = {
   hideLeftSidebar: false,
   hideRightSidebar: false,
   containerMaxWidth: 'sm',
-  marginTop: 'md',
 };
 
 export default LayoutCommunities;

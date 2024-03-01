@@ -29,15 +29,15 @@ export const Input = styled.input<InputProps>`
   font-family: Visby CF;
   font-size: 16px;
   font-weight: 400;
-  line-height: 19.2px; 
-color: var(--colors-text-Placeholder, #A3ADBB);
-  border-radius: ${(p) => (p.radius ? p.theme.radius[p.radius] : p.theme.radius.md)};
+  line-height: 19.2px;
+  color: var(--colors-text-Placeholder, #a3adbb);
+  border-radius: ${(p) => (p.radius ? p.theme.radius[p.radius] : p.theme.radius.lg)};
   padding-left: ${(p) => (p.hideIcon ? p.theme.spacing.xs : p.theme.spacing.lg)};
   padding-right: ${(p) => p.theme.spacing.lg};
- // color: ${(p) => p.theme.colors.general.text};
+  // color: ${(p) => p.theme.colors.general.text};
   //font-size: ${(p) => p.theme.font.size.xs};
   background-color: ${(p) =>
-    p.backgroundColor ? p.theme.colors.grey[p.backgroundColor] : p.theme.colors.general.white};
+    p.backgroundColor ? p.theme.colors.grey[p.backgroundColor] : p.theme.colors.general.body};
   transition: background-color 0.1s;
 
   &:focus {
@@ -78,9 +78,10 @@ color: var(--colors-text-Placeholder, #A3ADBB);
 
 export const Result = styled.div`
   width: 100%;
-  max-height: 500px;
-  position: absolute;
-  top: 40px;
+  height: 200px;
+  overflow-y: scroll;
+  //position: absolute;
+  margin-top: 0px;
   background-color: ${(p) => p.theme.colors.general.white};
   overflow: hidden;
   overflow-y: auto;

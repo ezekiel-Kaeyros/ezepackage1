@@ -7,27 +7,30 @@ interface RootProps {
 }
 
 export const Root = styled.div<RootProps>`
-  position: fixed;
+  position: sticky;
   top: ${Layout.HEADER_HEIGHT}px;
   left: 0;
   padding-top: ${(p) => p.theme.spacing.sm};
   width: ${Layout.SIDEBAR_DESKTOP_WIDTH}px;
   flex: 0 0 ${Layout.SIDEBAR_DESKTOP_WIDTH}px;
   font-size: ${(p) => p.theme.font.size.xxs};
-  z-index: ${(p) => p.theme.zIndex.xs};
+  // z-index: ${(p) => p.theme.zIndex.xs};
   height: calc(100vh - ${Layout.HEADER_HEIGHT}px);
   background-color: ${(p) => p.theme.colors.general.white};
   border-right: 1px solid ${(p) => p.theme.colors.border.main};
   padding-left: ${(p) => p.theme.spacing.sm};
   padding-right: ${(p) => p.theme.spacing.sm};
   padding-bottom: ${(p) => p.theme.spacing.md};
+  top: 0px;
+  z-index: 39;
 
   @media (min-width: ${(p) => p.theme.screen.md}) {
     padding-right: ${(p) => p.theme.spacing.sm};
     padding-top: ${(p) => p.theme.spacing.sm};
     position: sticky;
+    top: ${Layout.HEADER_HEIGHT}px;
     flex: 0 0 ${Layout.SIDEBAR_MOBILE_WIDTH}px;
-    margin-right: ${(p) => p.theme.spacing.md};
+    // margin-right: ${(p) => p.theme.spacing.md};
     background-color: ${(p) => p.theme.colors.general.white};
     border-right: 1px solid ${(p) => p.theme.colors.border.main};
   }
@@ -89,7 +92,6 @@ export const LI = styled.li<LIProps>`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding-right: ${(p) => p.theme.spacing.xs};
   border-radius: ${(p) => p.theme.spacing.xs};
 
   &:hover {

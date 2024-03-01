@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Root } from './style';
 
-import { FontSize, FontWeight, GeneralColors, Radius } from '../../../theme';
+import { FontSize, FontWeight, GeneralColors, Radius, BorderColors } from '../../../theme';
 
 export interface ButtonProps {
   children: React.ReactNode;
@@ -14,6 +14,7 @@ export interface ButtonProps {
   fullWidth?: boolean;
   smallWidth?: boolean;
   color?: GeneralColors;
+  Border?: BorderColors;
   textColor?: GeneralColors;
   inline?: boolean;
   [x: string]: any;

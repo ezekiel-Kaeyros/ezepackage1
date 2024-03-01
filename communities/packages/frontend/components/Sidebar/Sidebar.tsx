@@ -31,6 +31,7 @@ const reorderChannels = async ({ sortedChannels }) => {
 
 const Sidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ isOpen }, ref) => {
   const authUser = useSelector((state: RootState) => state.auth.user);
+  console.log('auth user', authUser);
   const [modal, setModal] = useState(false);
   const closeModal = () => setModal(false);
   const router = useRouter();
@@ -52,6 +53,7 @@ const Sidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ isOpe
     }
   }, [channelItems, reorderChannelsMutation, isAdmin]);
 
+  console.log('auth user', authUser);
   return (
     <Root ref={ref} isOpen={isOpen}>
       <Modal title="Create Channel" isOpen={modal} close={closeModal}>
@@ -59,23 +61,6 @@ const Sidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ isOpe
       </Modal>
 
       <UL>
-        {/* {authUser && (
-          <LI>
-            <ButtonLink
-              fullWidth
-              radius="none"
-              href={`/profile/${authUser._id}`}
-              color="text"
-              active={router.query?.id === authUser._id}
-              size="sm"
-            >
-              <Avatar image={authUser.image} isActive={router.query?.id === authUser._id} />
-              <Spacing right="xs" />
-              {authUser.fullName}
-            </ButtonLink>
-          </LI>
-        )} */}
-
         <LI>
           <ButtonLink
             fullWidth
@@ -85,7 +70,7 @@ const Sidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ isOpe
             active={router.pathname === '/communities/members'}
             size="sm"
           >
-            <CommunitiesIcon width="32" color={router.pathname === '/communities/members' ? 'primary' : 'text'} />
+            <CommunitiesIcon width="32" isActive={router.pathname.includes('/communities/members')} />
             {'\u00A0'}
             {'\u00A0'} Members
           </ButtonLink>
@@ -100,7 +85,7 @@ const Sidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ isOpe
             active={router.pathname === '/communities/messages'}
             size="sm"
           >
-            <MessageIcon width="32" color={router.pathname === '/communities/messages' ? 'primary' : 'text'} />
+            <MessageIcon isActive={router.pathname.includes('/communities/messages')} width="32" />
             {'\u00A0'}
             {'\u00A0'} Messages
           </ButtonLink>
@@ -115,7 +100,7 @@ const Sidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ isOpe
             active={router.pathname === '/communities/community'}
             size="sm"
           >
-            <CommunitiesIcon width="32" color={router.pathname === '/communities/community' ? 'primary' : 'text'} />
+            <CommunitiesIcon width="32" isActive={router.pathname.includes('/communities/community')} />
             {'\u00A0'}
             {'\u00A0'} All communities
           </ButtonLink>
@@ -130,10 +115,7 @@ const Sidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ isOpe
             active={router.pathname === '/communities/notifications'}
             size="sm"
           >
-            <NotificationIcon
-              width="32"
-              color={router.pathname === '/communities/notifications' ? 'primary' : 'text'}
-            />
+            <NotificationIcon width="32" isActive={router.pathname.includes('/communities/notifications')} />
             {'\u00A0'}
             {'\u00A0'} Notifications
           </ButtonLink>
@@ -148,7 +130,7 @@ const Sidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ isOpe
             active={router.pathname === '/communities/insights'}
             size="sm"
           >
-            <InsightsIcon width="32" color={router.pathname === '/communities/insights' ? 'primary' : 'text'} />
+            <InsightsIcon width="32" isActive={router.pathname.includes('/communities/insights')} />
             {'\u00A0'}
             {'\u00A0'} Insights
           </ButtonLink>
@@ -160,12 +142,12 @@ const Sidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ isOpe
         </LI>
       </UL>
 
-      {channelItems?.length > 0 && (
+      {(authUser?.joinedChannels?.length > 0 && (
         <List
           lockVertically
-          values={channelItems}
+          values={authUser?.joinedChannels}
           onChange={({ oldIndex, newIndex }) => {
-            setChannelItems(arrayMove(channelItems, oldIndex, newIndex));
+            setChannelItems(arrayMove(authUser?.joinedChannels, oldIndex, newIndex));
           }}
           renderList={({ children, props }) => <UL {...props}>{children}</UL>}
           renderItem={({ value, props }) => {
@@ -195,7 +177,7 @@ const Sidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ isOpe
             );
           }}
         />
-      )}
+      )) || <h4>No joined communities</h4>}
 
       {isAdmin && (
         <Button size="xs" onClick={() => setModal(true)} textColor="text">

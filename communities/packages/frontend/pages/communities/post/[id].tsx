@@ -6,6 +6,7 @@ import Seo from '../../../components/Seo';
 import { GetServerSideProps } from 'next';
 import { useQuery } from 'react-query';
 import LayoutCommunities from '../../../components/Layout/CommuntiesLayout';
+import { useDispatchAuth } from '../../../utils/useDispatchAuth';
 
 const fetchPost = async ({ queryKey }) => {
   const [, postId] = queryKey;
@@ -19,6 +20,8 @@ interface ProfilePageProps {
 
 const PostPage: FC<ProfilePageProps> = ({ post }) => {
   const { data, refetch } = useQuery(['post', post._id], fetchPost, { initialData: post });
+
+  useDispatchAuth();
 
   return (
     <LayoutCommunities hideRightSidebar marginTop="none">

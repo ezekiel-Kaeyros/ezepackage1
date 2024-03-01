@@ -6,10 +6,11 @@ import { DataLimit, Post } from '../../constants';
 import { RootState } from '../../store';
 import { PostCard, PostCreateButton } from '../../components/Post';
 import { Container, Button, Spacing, LoadingDots, Skeleton, Text } from '../../components/ui';
-import { openAuthPopup, PopupType } from '../../store/auth';
+import { openAuthPopup, PopupType, setAuthUser } from '../../store/auth';
 import { CommunityIcon } from '../../components/ui/icons';
 import Seo from '../../components/Seo';
 import LayoutCommunities from '../../components/Layout/CommuntiesLayout';
+import { useDispatchAuth } from '../../utils/useDispatchAuth';
 
 const fetchPostsByFollowing = async ({ pageParam = 0 }) => {
   const { data } = await axios.get(`/posts/follow?offset=${pageParam}&limit=${DataLimit.PostsByFollowing}`);
@@ -32,7 +33,7 @@ const Home: FC = () => {
 
   if (isFetching && !isFetchingNextPage) {
     return (
-      <LayoutCommunities>
+      <LayoutCommunities marginTop="sm">
         <Skeleton count={10} height={300} bottom="sm" />
       </LayoutCommunities>
     );
@@ -41,7 +42,7 @@ const Home: FC = () => {
   const isEmpty = !data?.pages[0] || data.pages.every((p) => p.length === 0);
 
   return (
-    <LayoutCommunities>
+    <LayoutCommunities marginTop="sm">
       <Seo title="Home" />
       <div>
         {authUser && <PostCreateButton queryKey="postsByFollowing" />}

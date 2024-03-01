@@ -24,6 +24,8 @@ interface SidebarProps {
 
 const fetchChannels = async () => {
   const { data } = await axios.get('/channels');
+
+  console.log('list of channels and its data', data);
   return data;
 };
 
@@ -64,7 +66,7 @@ const MainSidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ i
       <UL>
         <LI>
           <ButtonLink fullWidth radius="none" href="/" color="text" active={router.pathname === '/'} size="sm">
-            <HomeIcon width="32" color={router.pathname === '/' ? 'link' : 'text'} />
+            <HomeIcon isActive={router.pathname === '/'} width="32" color={router.pathname === '/' ? 'link' : 'text'} />
             {'\u00A0'}
             {'\u00A0'} Home
           </ButtonLink>
@@ -79,7 +81,11 @@ const MainSidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ i
             active={router.pathname === '/communities'}
             size="sm"
           >
-            <CommunitiesIcon width="32" color={router.pathname === '/communities' ? 'link' : 'text'} />
+            <CommunitiesIcon
+              isActive={router.pathname.includes('/communities')}
+              width="32"
+              color={router.pathname === '/communities' ? 'link' : 'text'}
+            />
             {'\u00A0'}
             {'\u00A0'} Communities
           </ButtonLink>
@@ -176,7 +182,7 @@ const MainSidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ i
                 <ButtonLink
                   fullWidth
                   radius="none"
-                  href={`/channel/${value.name}`}
+                  href={`/communities/channel/${value.name}`}
                   color="text"
                   active={value.name === router.query.name}
                   size="sm"

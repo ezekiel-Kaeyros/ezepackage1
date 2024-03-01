@@ -36,7 +36,7 @@ const ChannelCreate: FC<ChannelCreateProps> = ({ closeModal, channels }) => {
       });
       queryClient.setQueryData('channels', (existingChannels: Channel[]) => [...existingChannels, channel]);
       closeModal();
-      router.push(`/channel/${channel?.name}`);
+      router.push(`/communities/channel/${channel?.name}`);
       dispatch(
         openAlert({
           message: 'Channel has been successfully created.',

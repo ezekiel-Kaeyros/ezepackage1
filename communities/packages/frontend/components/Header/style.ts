@@ -8,6 +8,7 @@ export const Root = styled.div`
   background-color: ${(p) => p.theme.colors.general.white};
   height: ${Layout.HEADER_HEIGHT}px;
   z-index: ${(p) => p.theme.zIndex.md};
+
   box-shadow: 0 2px 1px -1px ${(p) => p.theme.colors.grey[30]};
 `;
 
@@ -24,8 +25,26 @@ export const CommunitiesHeaderRoot = styled.div`
   box-shadow: 0 2px 1px -1px ${(p) => p.theme.colors.grey[30]};
 `;
 
+export const ItemMenu = styled.span<{ underlined?: string }>`
+  border-bottom: ${(p) => p.underlined};
+  margin: 0 2rem;
+
+  @media (max-width: ${(p) => parseInt(p.theme.screen.lg, 10) + 20 + 'px'}) {
+    margin: 0 0.1rem;
+  }
+
+  a div svg {
+    fill: #015e44;
+  }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
 export const CommunitiesNavigationWrapper = styled.div`
   display: flex;
+  width: 100%;
   justify-content: space-between;
   align-items: center;
 `;
@@ -60,7 +79,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 380px;
+  width: fit-content;
 `;
 
 export const SearchContainer = styled.div`
@@ -124,6 +143,8 @@ export const Hamburger = styled.button`
 `;
 
 export const Logo = styled.div`
+  height: fit-content;
+  padding: 1rem;
   @media (max-width: ${(p) => p.theme.screen.lg}) {
     display: none;
   }
@@ -148,4 +169,10 @@ export const UserDropDownItem = styled(Button)`
 export const AllNotifications = styled.div`
   border-top: 1px solid ${(p) => p.theme.colors.border.main};
   padding: ${(p) => p.theme.spacing.xs};
+`;
+
+export const BlockLogoBurger = styled.div`
+  display: inline-flex;
+  gap: 7px;
+  align-items: end;
 `;

@@ -25,6 +25,7 @@ export interface Channel {
   name: string;
   authRequired: boolean;
   description?: string;
+  createdAt: string;
   order: number;
 }
 

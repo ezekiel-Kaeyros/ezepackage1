@@ -1,5 +1,6 @@
 export enum Cookies {
   Token = 'token',
+  User_data = 'user_data',
   Announcement_Disabled = 'Announcement_Disabled',
 }
 

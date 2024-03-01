@@ -48,7 +48,7 @@ const TextAreaAutoSize: FC<TextAreaAutoSizeProps> = ({
   };
 
   return (
-    <div style={{ minHeight: rootHeight, maxHeight: `${maxHeight}px` }}>
+    <span style={{ minHeight: rootHeight, maxHeight: `${maxHeight}px` }}>
       {label && <Label htmlFor={name}>{label}</Label>}
       <Root
         rows={rowLength || 4}
@@ -63,7 +63,7 @@ const TextAreaAutoSize: FC<TextAreaAutoSizeProps> = ({
         value={value}
         {...otherProps}
       ></Root>
-    </div>
+    </span>
   );
 };
 

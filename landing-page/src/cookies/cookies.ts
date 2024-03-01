@@ -11,12 +11,12 @@ export const setToken = (token: string) => {
 
 export const getToken = () => {
   const token: string | undefined = cookies.get(TOKEN);
-  return token ? JSON.parse(token) : undefined;
+  return token ? JSON.parse(JSON.stringify(token)) : undefined;
 };
 
 export const getUserCookies = () => {
   const data = cookies.get(USER_DATA);
-  return data ? JSON.parse(data) : undefined;
+  return data ? JSON.parse(JSON.stringify(data)) : undefined;
 };
 
 export const removeUserCookies = () => {
@@ -31,5 +31,5 @@ export const isFirstTime = (data: string) => {
 
 export const getIsFirstTime = () => {
   const data = cookies.get(FIRST_TIME);
-  return data ? JSON.parse(data) : undefined;
+  return data ? JSON?.parse(JSON.stringify(data)) : undefined;
 };

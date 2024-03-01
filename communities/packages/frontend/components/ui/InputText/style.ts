@@ -11,6 +11,7 @@ export const Input = styled.input<InputTextProps>`
   border: 1px solid ${(p) => (p.error ? p.theme.colors.general.error : p.theme.colors.grey[40])};
   color: ${(p) => p.theme.colors.general.text};
   font-size: ${(p) => p.theme.font.size.sm};
+  background-color: ${(p) => p.theme.colors.grey[10]};
 
   &:hover {
     background-color: ${(p) => p.theme.colors.grey[10]};

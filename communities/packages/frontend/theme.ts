@@ -2,10 +2,10 @@ export type FontWeight = 'light' | 'normal' | 'bold';
 export type FontSize = 'tiny' | 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export type Radius = 'sm' | 'md' | 'lg' | 'full' | 'none';
 export type Shadows = 'sm' | 'md' | 'lg' | 'xl';
-export type Screen = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'xxxl';
+export type Screen = 'xs' | 'sm' | 'modalOverlay' | 'modal' | 'md' | 'lg' | 'xl' | 'xxl' | 'xxxl';
 export type Spacing = 'none' | 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'lg2';
 export type ZIndex = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-export type BorderColors = 'light' | 'main' | 'dark';
+export type BorderColors = 'ezeborder' | 'light' | 'main' | 'dark';
 export type GreyColors = 5 | 10 | 20 | 30 | 40 | 50 | 60 | 70 | 80 | 90 | 100 | 11;
 export type SocialColors = 'facebook' | 'twitter' | 'linkedIn' | 'github';
 export type GeneralColors =
@@ -22,7 +22,9 @@ export type GeneralColors =
   | 'white'
   | 'text'
   | 'textSecondary'
+  | 'textSecondary2'
   | 'disabled'
+  | 'danger'
   | 'transparent';
 
 interface IFont {
@@ -74,7 +76,7 @@ const theme: Theme = {
 
   colors: {
     general: {
-      primary: '#0084FF',
+      primary: '#015E44',
       ezeColor: '#01533C',
       primary2: '#01533C',
       secondary: '#f50057',
@@ -87,11 +89,14 @@ const theme: Theme = {
       white: '#fff',
       text: '#050505',
       textSecondary: '#64676B',
+      textSecondary2: '#D9E8E4',
       disabled: '#CDD0D4',
+      danger: '#ff0000',
       transparent: 'transparent',
     },
 
     border: {
+      ezeborder: '#015E44',
       light: '#f5f5f5',
       main: '#e0e0e0',
       dark: '#bdbdbd',
@@ -130,6 +135,8 @@ const theme: Theme = {
   screen: {
     xs: '540px',
     sm: '640px',
+    modalOverlay: '392px',
+    modal: '650px',
     md: '1007px',
     lg: '1100px',
     xl: '1230px',

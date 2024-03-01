@@ -1,18 +1,5 @@
 import styled from 'styled-components';
 
-export const Root = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  justify-content: space-between;
-  background-color: white;
-  padding: 0px 10px;
-  //padding: ${(p) => p.theme.spacing.sm};
-  border-radius: ${(p) => p.theme.radius.sm};
-  transition: border-color 0.1s;
-  box-shadow: ${(p) => p.theme.shadows.sm};
-`;
 
 export const BlockInsight = styled.div`
   display: flex;
@@ -66,8 +53,8 @@ export const ContentInsight = styled.div`
 
   display: grid;
   gap: 10px;
-  width: 43%;
-  margin-left: 52%;
+  width: 100%;
+ // margin-left: 52%;
   padding: 34px 20px;
   border-radius: var(--spacing-8---grid-2, 16px);
     border: 1px solid var(--borders, #B2BBC6);

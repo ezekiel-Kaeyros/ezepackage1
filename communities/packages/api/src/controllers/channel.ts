@@ -9,14 +9,16 @@ import {
   deletePost,
   reorderChannels,
 } from '../db';
-import { getChannelPosts } from '../db';
+import { getChannelPosts, joinChannel, leaveChannel } from '../db';
 import { ErrorCodes, ErrorMessages } from '../constants';
+import { uploadToCloudinary } from '../utils/cloudinary';
 
 const channelNameReg = /[-!$%^&*()_+|~=`\\#{}[\]:";'<>?,./]/;
 
 const ChannelController = {
   channels: async (req: Request, res: Response): Promise<any> => {
     const channels = await getChannels();
+    console.log('channels');
     return res.send(channels);
   },
   channelByName: async (req: Request, res: Response): Promise<any> => {
@@ -26,6 +28,8 @@ const ChannelController = {
   },
   create: async (req: Request, res: Response): Promise<any> => {
     const { name, authRequired, description, order } = req.body;
+    console.log('Auth required', authRequired);
+    console.log('req user', req.user);
     const trimmedName = name.trim();
 
     if (channelNameReg.test(name) || !name || name.length > 20) {
@@ -58,6 +62,41 @@ const ChannelController = {
     }
     const updatedChannel = await updateChannel(_id, trimmedName, authRequired, description);
     return res.send(updatedChannel);
+  },
+
+  uploadPhoto: async (req: Request, res: Response): Promise<any> => {
+    const { imagePublicId, coverImagePublicId, isCover, name, authRequired } = req.body;
+    const { channelId } = req.params;
+    const image = req.file;
+
+    if(!image) {
+      return res.status(ErrorCodes.Bad_Request).send('Please upload an image.');
+    }
+    if(image && !image.mimetype.match(/image-*/)) {
+      return res.status(ErrorCodes.Bad_Request).send('Please upload an image.');
+    }
+
+
+    const coverOrImagePublicId = isCover === 'true' ? coverImagePublicId : imagePublicId;
+    const uploadImage = await uploadToCloudinary(image, 'channel', coverOrImagePublicId);
+
+    if((uploadImage.secure_url)) {
+      const fieldsToUpdate: any = {};
+
+      if(isCover === 'true') {
+        fieldsToUpdate.coverImage = uploadImage.secure_url;
+        fieldsToUpdate.coverImagePublicId = uploadImage.public_id;
+      } else {
+        fieldsToUpdate.image = uploadImage.secure_url;
+        fieldsToUpdate.imagePublicId = uploadImage.public_id;
+      }
+
+      const updatedChannel = await updateChannel(channelId, name, authRequired, fieldsToUpdate)
+    }
+
+
+
+
   },
   reorder: async (req: Request, res: Response): Promise<any> => {
     const { sortedChannels } = req.body;

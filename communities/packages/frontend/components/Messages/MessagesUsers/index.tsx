@@ -1,14 +1,14 @@
-import React, { FC } from 'react';
+import React, { FC, FormEvent, useState } from 'react';
 import Image from 'next/image';
+import { useQuery } from 'react-query';
+import axios from 'axios';
 import MessageEdit from '../../../public/message-edit.svg';
 import PlusBtn from '../../../public/plus-btn.svg';
 import { useSelector } from 'react-redux';
 import {
   Root,
-  HeadingContainer,
   MessageHeading,
   Heading,
-  SearchContainer,
   UserContainer,
   User,
   Info,
@@ -16,14 +16,14 @@ import {
   FullName,
   UnSeen,
   LastMessage,
-  IconPlus,
   MessageHeading2,
 } from './style';
-import { ButtonLink, Avatar, Spacing, Skeleton } from '../../ui';
-import Search from '../../Search';
+import { useInfiniteScroll, timeAgo } from '../../../utils';
+import { DataLimit } from '../../../constants';
+import { Avatar, Spacing, Skeleton } from '../../ui';
 import { RootState } from '../../../store';
-import { PlusIcon } from '../../ui/icons';
 import ButtonLink2 from '../../ui/Link/ButtonLink2';
+import InitMessageUsers from './InitMessageUsers';
 
 interface MessagesUsers {
   isFetching: boolean;
@@ -36,7 +36,7 @@ const MessagesUsers: FC<MessagesUsers> = ({ onSearchItemClick, conversations, us
   const authUser = useSelector((state: RootState) => state.auth.user);
 
   const renderSkeleton = () => {
-    return <Skeleton count={3} height={50} top="xs" />;
+    return <Skeleton count={3} height={70} top="xs" />;
   };
 
   const renderConversations = () => {
@@ -44,10 +44,9 @@ const MessagesUsers: FC<MessagesUsers> = ({ onSearchItemClick, conversations, us
       const person = conversation.receiver._id === authUser._id ? conversation.sender : conversation.receiver;
 
       return (
-       <ButtonLink2 href={`/communities/messages/${person._id}`} fullWidth key={conversation._id}>
+        <ButtonLink2 href={`/communities/messages/${person._id}`} fullWidth key={conversation._id}>
           <User active={person._id === userId}>
-            <Avatar isOnline={conversation.isOnline} image={person.image} size={1.5}  />
-
+            <Avatar isOnline={conversation.isOnline} image={person.image} size={1.5} />
             <Info>
               <FullNameUnSeen>
                 <FullName>{person.fullName}</FullName>
@@ -57,7 +56,7 @@ const MessagesUsers: FC<MessagesUsers> = ({ onSearchItemClick, conversations, us
 
               <LastMessage>
                 {/* {conversation.sender._id === authUser._id && conversation.message && 'You:'} {conversation.message} */}
-                {conversation.sender._id === authUser._id && conversation.message } {conversation.message}
+                {conversation.sender._id === authUser._id && conversation.message} {conversation.message}
               </LastMessage>
             </Info>
           </User>
@@ -66,26 +65,44 @@ const MessagesUsers: FC<MessagesUsers> = ({ onSearchItemClick, conversations, us
     });
   };
 
+  const fetchUsers = async ({ queryKey, pageParam = 0 }) => {
+    const [, searchQuery] = queryKey;
+    const { data } = await axios.get(
+      `/settings/users?offset=${pageParam}&limit=${DataLimit.AdminUsers}&searchQuery=${searchQuery}`
+    );
+
+    console.log('data', data);
+    return data;
+  };
+  const fetchUsersTotal = async () => {
+    const { data } = await axios.get('/settings/users-total');
+    return data;
+  };
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const { data: usersTotal, isFetching: isFetchingTotal } = useQuery('usersTotal', fetchUsersTotal);
+
+  const { data: users, isFetchingNextPage } = useInfiniteScroll({
+    key: ['adminUsers', searchQuery],
+    apiCall: fetchUsers,
+    dataLimit: DataLimit.AdminUsers,
+  });
+
   return (
     <Root>
       <MessageHeading>
-        <Heading> <h3 className="">Messages</h3></Heading>
+        <Heading>
+          <h3 className="">Messages</h3>
+        </Heading>
         <Image src={MessageEdit} alt="EZE-edit-message" />
       </MessageHeading>
-
-      {/*    <SearchContainer>
-        <Search radius="none" onlyUsers onItemClick={onSearchItemClick} placeholder="Search members" hideBorder />
-      </SearchContainer> */}
 
       <UserContainer>
         {isFetching ? renderSkeleton() : renderConversations()}
         <Spacing top="xxs" />
-        {/* <IconPlus>
-          <PlusIcon width='28'></PlusIcon>
-        </IconPlus> */}        
       </UserContainer>
       <MessageHeading2>
-        <Image src={PlusBtn} alt="EZE-edit-message" />
+        <InitMessageUsers />
       </MessageHeading2>
     </Root>
   );

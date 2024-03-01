@@ -9,7 +9,8 @@ export const Root = styled.textarea<TextAreaAutoSizeProps>`
   resize: none;
   border-radius: ${(p) => p.theme.radius.lg};
   border: ${(p) => (p.borderColor ? `1px solid ${p.theme.colors.border[p.borderColor]}` : 0)};
-  background-color: ${(p) => (p.backgroundColorTone ? p.theme.colors.grey[p.backgroundColorTone] : 'transparent')};
+  // background-color: ${(p) => (p.backgroundColorTone ? p.theme.colors.grey[p.backgroundColorTone] : 'transparent')};
+  background-color: #E9ECEF;
   padding: 10px ${(p) => p.theme.spacing.xs};
   color: ${(p) => p.theme.colors.general.text};
   font-size: ${(p) => p.theme.font.size.xs};

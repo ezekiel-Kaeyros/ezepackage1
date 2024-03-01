@@ -7,6 +7,7 @@ export const Root = styled.button<ButtonProps>`
   outline: 0;
   transition: opacity 0.1s;
   border: 0;
+  //border: ${(p) => (p.Border ? p.theme.Border[p.Border] : p.theme.Border.ezeborder)};
   color: ${(p) => (p.textColor ? p.theme.colors.general[p.textColor] : p.theme.colors.general.white)};
   font-size: ${(p) => (p.size ? p.theme.font.size[p.size] : p.theme.font.size.sm)};
   padding: ${(p) => p.theme.spacing.xs} ${(p) => p.theme.spacing.lg};

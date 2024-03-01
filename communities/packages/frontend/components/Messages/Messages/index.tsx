@@ -11,7 +11,6 @@ import { RootState } from '../../../store';
 import { useSocket } from '../../../utils';
 import { Events } from '../../../constants';
 import { addNewUserToConversationsList, addOrUpdateUserInConversationsList, updateSeenInConversation } from '../cache';
-import PubSpace from '../PubSpace';
 
 interface MessagesProps {
   userId?: string;
@@ -76,7 +75,7 @@ const Messages: FC<MessagesProps> = ({ userId }) => {
     return () => {
       socket.off(Events.SEND_MESSAGE, sendMessageListener);
     };
-  }, [authUser._id, queryClient, socket]);
+  }, [authUser?._id, queryClient, socket]);
 
   useEffect(() => {
     if (!user || !conversations) {
@@ -111,12 +110,6 @@ const Messages: FC<MessagesProps> = ({ userId }) => {
       />
 
       <MessagesChat onSearchItemClick={onSearchItemClick} userId={userId} user={user} />
-      <PubSpace
-        isFetching={isConversationFetching}
-        onSearchItemClick={onSearchItemClick}
-        conversations={[]}
-        userId=''
-      />
     </Root>
   );
 };

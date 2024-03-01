@@ -7,7 +7,7 @@ import LayoutCommunities from '../../../components/Layout/CommuntiesLayout';
 const insights = () => {
   return (
     <>
-      <LayoutCommunities hideRightSidebar containerMaxWidth="md">
+      <LayoutCommunities marginTop="sm" hideRightSidebar containerMaxWidth="md">
         <Seo title="Members" />
 
         <Insights />

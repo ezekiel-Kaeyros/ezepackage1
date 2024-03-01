@@ -13,7 +13,6 @@ import {
   Form,
   Message,
   MessageDate,
-  MessageDate2,
   Textarea,
   ScrollWrapper,
   Container2,
@@ -26,7 +25,6 @@ import {
 } from './style';
 import { Avatar, Link, Spacing, Button } from '../../ui';
 import Search from '../../Search';
-import { PlusIcon } from '../../ui/icons';
 import { RootState } from '../../../store';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSocket, date, useNotifications } from '../../../utils';
@@ -102,12 +100,12 @@ const MessagesChat: FC<MessagesChatProps> = ({ onSearchItemClick, userId, user }
   }, [socket, queryClient, messages, authUser, userId]);
 
   useEffect(() => {
-    if (authUser.notifications.length < 1) {
+    if (authUser?.notifications.length < 1) {
       return;
     }
 
-    const notification = authUser.notifications.find((n) => {
-      if (n?.author?._id === userId && n?.user === authUser._id && n.message) {
+    const notification = authUser?.notifications.find((n) => {
+      if (n?.author?._id === userId && n?.user === authUser?._id && n.message) {
         return n;
       }
     });
@@ -168,7 +166,6 @@ const MessagesChat: FC<MessagesChatProps> = ({ onSearchItemClick, userId, user }
     <Root>
       {user ? (
         <Header>
-
           <Container>
             <Link href={`/communities/profile/${user._id}`} disableBorderOnHover>
               <Avatar isOnline={user.isOnline} image={user.image} size={1.5} />
@@ -177,17 +174,7 @@ const MessagesChat: FC<MessagesChatProps> = ({ onSearchItemClick, userId, user }
           </Container>
         </Header>
       ) : (
-        <> <Container>
-          To:
-          <Spacing left="xs">
-            <Search
-              onlyUsers
-              onItemClick={(user: any) => onSearchItemClick(user)}
-              hideBorder
-              hideIcon
-              placeholder="Name of a member" />
-          </Spacing>
-        </Container>
+        <>
           <Container2>
             <Image src={MessageIcon} alt="EZE-message-icon" />
             <span>No chats selected</span>
@@ -200,7 +187,6 @@ const MessagesChat: FC<MessagesChatProps> = ({ onSearchItemClick, userId, user }
             {messages &&
               messages.map((m) => {
                 const isSender = m.sender._id === authUser._id;
-                console.log(m)
                 return (
                   <MessageWrapper isSender={isSender} key={m._id}>
                     {!isSender && (
@@ -209,15 +195,16 @@ const MessagesChat: FC<MessagesChatProps> = ({ onSearchItemClick, userId, user }
                         <Avatar image={m.sender.image} />
                       </Spacing>
                     )}
-                    {isSender && 
-                      <ReceiverName>You
+                    {isSender && (
+                      <ReceiverName>
+                        You
                         {/* <Avatar image={m.sender.image} /> */}
-                      </ReceiverName>}
+                      </ReceiverName>
+                    )}
                     <Message isSender={isSender}>
                       <SpanMessage>
                         <Linkify>{m.message}</Linkify>
                       </SpanMessage>
-                      
                     </Message>
                     <MessageDate isSender={isSender}>{date(m.createdAt)}</MessageDate>
                   </MessageWrapper>
@@ -232,7 +219,7 @@ const MessagesChat: FC<MessagesChatProps> = ({ onSearchItemClick, userId, user }
             <CircleAttach>
               <Image src={AttachCircle} alt="EZE-edit-message" />
             </CircleAttach>
-            <Textarea value={message} onChange={(e) => setMessage(e.target.value)} onKeyDown={onEnterPress} />
+            <Textarea value={message} placeholder='Enter Message' onChange={(e) => setMessage(e.target.value)} onKeyDown={onEnterPress} />
             <Container3>
               <Image src={EmojiIcon} alt="EZE-edit-message" />
               <Container4>
@@ -241,9 +228,7 @@ const MessagesChat: FC<MessagesChatProps> = ({ onSearchItemClick, userId, user }
                   <Image src={SendIcon} alt="EZE-edit-message" />
                 </Button>
               </Container4>
-
             </Container3>
-
           </Form>
         )}
       </ScrollWrapper>

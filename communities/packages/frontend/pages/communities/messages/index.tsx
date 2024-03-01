@@ -1,12 +1,16 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import cookies from 'js-cookie';
 import { Messages } from '../../../components/Messages';
 import Seo from '../../../components/Seo';
 import { Button, Spacing, Text, Container } from '../../../components/ui';
 import { CommunityIcon } from '../../../components/ui/icons';
 import { RootState } from '../../../store';
-import { openAuthPopup, PopupType } from '../../../store/auth';
+import { openAuthPopup, PopupType, setAuthUser } from '../../../store/auth';
 import LayoutCommunities from '../../../components/Layout/CommuntiesLayout';
+import { Cookies } from '../../../utils';
+import axios from 'axios';
+import { useDispatchAuth } from '../../../utils/useDispatchAuth';
 
 const MessagesPage: FC = () => {
   const authUser = useSelector((state: RootState) => state.auth.user);
@@ -15,6 +19,8 @@ const MessagesPage: FC = () => {
   const openAuthModal = () => {
     dispatch(openAuthPopup(PopupType.Sign_Up));
   };
+
+  useDispatchAuth();
 
   if (!authUser) {
     return (
@@ -39,7 +45,7 @@ const MessagesPage: FC = () => {
   }
 
   return (
-    <LayoutCommunities hideRightSidebar containerMaxWidth="md" marginTop="none">
+    <LayoutCommunities hideRightSidebar containerMaxWidth="md">
       <Seo title="Messages" />
       <Messages />
     </LayoutCommunities>

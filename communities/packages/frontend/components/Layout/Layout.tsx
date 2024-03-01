@@ -2,15 +2,12 @@ import { FC, useEffect, useRef, useState } from 'react';
 import Router from 'next/router';
 import { Root, StyledContainer } from './style';
 import Header from '../Header';
-import SideBar from '../Sidebar';
 import { Cookies, getCookie, useClickOutside } from '../../utils';
 import { Spacing, Screen } from '../../theme';
 import RightSideBar from '../RightSideBar';
 import Seo from '../Seo';
 import Announcement from '../Announcement';
 import MainSidebar from '../Sidebar/MainSidebar';
-import SubHeader from '../Header/SubHeader';
-import Sidebar from '../Sidebar';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -50,7 +47,7 @@ const Layout: FC<LayoutProps> = ({ children, hideLeftSidebar, hideRightSidebar, 
       <Root>
         {!hideLeftSidebar && <MainSidebar ref={sideBarRef} isOpen={isSideBarOpen} />}
         <StyledContainer
-          bgColor="white"
+          bgColor="transparent"
           marginTop={marginTop}
           padding="none"
           maxWidth={containerMaxWidth}

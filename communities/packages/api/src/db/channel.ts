@@ -1,3 +1,4 @@
+import channel from '../models/channel';
 import Channel from '../models/channel';
 
 export const getChannels = async (): Promise<any> => {
@@ -29,11 +30,12 @@ export const updateChannel = async (
   id: string,
   name: string,
   authRequired: boolean,
+  fieldsToUpdate,
   description?: string
 ): Promise<any> => {
   const updatedChannel = await Channel.findOneAndUpdate(
     { _id: id },
-    { name, authRequired, description },
+    { name, authRequired, description, ...fieldsToUpdate },
     { new: true }
   );
   return updatedChannel;

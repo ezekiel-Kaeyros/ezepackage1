@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getNewMembers, getUserById, getUsers, onlineUsers, updateUser, updateUserBanned } from '../db';
+import { getNewMembers, getUserById, getUsers, onlineUsers, updateUser, updateUserBanned, joinChannel, leaveChannel } from '../db';
 import { AuthUser, ErrorCodes, ErrorMessages, UserRole } from '../constants';
 import { uploadToCloudinary } from '../utils/cloudinary';
 
@@ -70,6 +70,31 @@ const UserController = {
 
     return res.send(bannedUser);
   },
+  joinChannel: async (req: Request, res: Response): Promise<any> => {
+    const { channelId } = req.params;
+    const { userId } = req.body;
+
+    try {
+      await joinChannel(channelId, userId);
+      return res.send(`User ${userId} joined channel ${channelId}`);
+    } catch (error) {
+      console.error('Error joining channel:', error);
+      return res.status(ErrorCodes.Internal).send(ErrorMessages.Generic);
+    }
+  },
+
+  leaveChannel: async (req: Request, res: Response): Promise<any> => {
+    const { channelId } = req.params;
+    const { userId } = req.body;
+
+    try {
+      await leaveChannel(channelId, userId);
+      return res.send(`User ${userId} left channel ${channelId}`);
+    } catch (error) {
+      console.error('Error leaving channel:', error);
+      return res.status(ErrorCodes.Internal).send(ErrorMessages.Generic);
+    }
+  }
 };
 
 export default UserController;

@@ -10,6 +10,12 @@ import {
   Th,
   Td,
   Top,
+  CardCommunity,
+  ListCommunity,
+  LineCommunity,
+  BlockCommunity,
+  SeconSection,
+  ImageSearch,
   Count,
   Title,
   SearchInput,
@@ -21,6 +27,10 @@ import { LoadingDots, Container, Empty, Spacing, H2, Divider } from '../../../co
 import { CloseIcon, SuccessIcon, GoogleIcon, GithubIcon, FacebookIcon } from '../../ui/icons';
 import SettingsPopover from './SettingsPopover';
 import SettingsCreateUser from '../SettingsCreateUser/SettingsCreateUser';
+import IconProfile from '../../../public/community/profile/profile.svg';
+import Image from 'next/image';
+import searchIcon from '../../../public/community/search-normal.svg';
+
 
 const fetchUsers = async ({ queryKey, pageParam = 0 }) => {
   const [, searchQuery] = queryKey;
@@ -39,6 +49,7 @@ const SettingsUsers: FC = () => {
   const [searchValue, setSearchValue] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const { data: usersTotal, isFetching: isFetchingTotal } = useQuery('usersTotal', fetchUsersTotal);
+  
   const {
     data: users,
     isFetching,
@@ -85,24 +96,45 @@ const SettingsUsers: FC = () => {
 
   return (
     <div>
-      <H2>Community Users</H2>
-      <Divider spacing="sm" />
+     
+      {/* <Divider spacing="sm" /> */}
 
       {usersTotal && (
         <Top>
-          <div>
-            <Spacing inline right="lg">
-              <Title>Total users</Title> <Count>{usersTotal.total}</Count>
-            </Spacing>
-            <Spacing inline right="lg">
-              <Title>Verified</Title> <Count>{usersTotal.verified}</Count>
-            </Spacing>
-            <Spacing inline>
-              <Title>Not Verified</Title> <Count>{usersTotal.total - usersTotal.verified}</Count>
-            </Spacing>
-          </div>
-          <SearchContainer>
+          <BlockCommunity>
+          <LineCommunity>
+            <H2>Community Users</H2>
+            <SettingsCreateUser searchQuery={searchQuery} />
+          </LineCommunity>
+            <ListCommunity>
+            
+              <CardCommunity>
+                <Title><Image  alt="icon total user" src={IconProfile} /> Total users</Title> <Count>{usersTotal.total}</Count>
+              </CardCommunity>
+         
+           
+              <CardCommunity>
+                <Title> <Image  alt="icon verified" src={IconProfile} /> Verified</Title> <Count>{usersTotal.verified}</Count>
+              </CardCommunity>
+              
+           
+           
+              <CardCommunity>
+              <Title> <Image  alt="icon not verified" src={IconProfile} /> Not Verified</Title> <Count>{usersTotal.total - usersTotal.verified}</Count>
+              </CardCommunity>
+              
+          
+            </ListCommunity>
+
+          </BlockCommunity>
+          </Top>
+      )}
+      <SeconSection>
+        <SearchContainer>
             <Form onSubmit={onSearchFormSubmit}>
+                <ImageSearch>
+                  <Image alt="icon card" src={searchIcon} />
+                </ImageSearch>
               <SearchInput
                 onChange={(e) => setSearchValue(e.target.value)}
                 type="text"
@@ -115,10 +147,9 @@ const SettingsUsers: FC = () => {
                 </SearchClearButton>
               )}
             </Form>
-            <SettingsCreateUser searchQuery={searchQuery} />
+            
           </SearchContainer>
-        </Top>
-      )}
+       
 
       {isFetching && !isFetchingNextPage ? (
         <LoadingDots />
@@ -173,6 +204,7 @@ const SettingsUsers: FC = () => {
         </>
       )}
       {isFetchingNextPage && <LoadingDots />}
+      </SeconSection>
     </div>
   );
 };

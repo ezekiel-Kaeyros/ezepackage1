@@ -106,6 +106,12 @@ const UserSchema = new Schema(
         ref: 'User',
       },
     ],
+    joinedChannels: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Channel',
+      }
+    ],
   },
   {
     timestamps: true,
@@ -138,6 +144,7 @@ export interface IUser extends Document {
   following: string[];
   notifications: string[];
   messages: string[];
+  joinedChannels: string[];
   isValidPassword: (password: string) => Promise<boolean>;
 }
 

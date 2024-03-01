@@ -42,14 +42,13 @@ export const MessageHeading = styled.div`
 `;
 
 export const MessageHeading2 = styled.div`
-
   padding: 0 ${(p) => p.theme.spacing.xs};
   display: flex;
   flex-direction: row-reverse;
 
   position: absolute;
-  left: 215px;
-  bottom: 12px;
+  left: 230px;
+  bottom: 18px;
 
   @media (min-width: ${(p) => p.theme.screen.lg}) {
     justify-content: space-between;
@@ -81,7 +80,6 @@ export const SearchContainer = styled.div`
 `;
 
 export const UserContainer = styled.div`
-  
   overflow-y: auto;
 
   ::-webkit-scrollbar {
@@ -176,4 +174,4 @@ export const IconPlus = styled.div`
   position: absolute;
   bottom: 15px;
   left: 275px;
-`
+`;

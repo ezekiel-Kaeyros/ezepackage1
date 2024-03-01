@@ -7,6 +7,8 @@ import { RootState } from '../../store';
 import axios from 'axios';
 import { UserRole } from '../../constants';
 
+const HOME_PAGE = 'https://eze.wiki';
+
 interface HeaderUserProps {
   closeDropDown: () => void;
   authUserRef: RefObject<HTMLDivElement>;
@@ -24,7 +26,7 @@ const HeaderUser: FC<HeaderUserProps> = ({ closeDropDown, isUserDropdownOpen, au
       await axios.post('/logout');
       deleteCookie(Cookies.Token);
       closeDropDown();
-      window.location.href = '';
+      window.location.href = HOME_PAGE;
     } catch (error) {
       console.log('An error occurred while logging out: ', error);
     }
@@ -32,7 +34,14 @@ const HeaderUser: FC<HeaderUserProps> = ({ closeDropDown, isUserDropdownOpen, au
 
   return (
     <UserDropDown>
-      <ButtonLink fullWidth center hasHover color="textSecondary" radius="none" href={`communities/profile/${authUser?._id}`}>
+      <ButtonLink
+        fullWidth
+        center
+        hasHover
+        color="textSecondary"
+        radius="none"
+        href={`/communities/profile/${authUser?._id}`}
+      >
         My Profile
       </ButtonLink>
 

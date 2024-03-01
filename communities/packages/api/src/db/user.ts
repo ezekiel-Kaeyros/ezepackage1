@@ -8,6 +8,7 @@ export const getAuthUser = async (id: string): Promise<any> => {
     .populate('likes')
     .populate('followers')
     .populate('following')
+    .populate('joinedChannels')
     .populate({
       path: 'notifications',
       populate: [
@@ -32,6 +33,7 @@ export const getUserById = async (id: string, hideBannedUser?: boolean): Promise
     .populate('likes')
     .populate('followers')
     .populate('following')
+    .populate('joinedChannels')
     .populate({
       path: 'notifications',
       populate: [{ path: 'author' }, { path: 'follow' }, { path: 'like' }, { path: 'comment' }],
@@ -139,4 +141,50 @@ export const updateUserBanned = async (id: string, banned: boolean): Promise<any
   const user = await User.findOneAndUpdate({ _id: id }, { banned: banned }, { new: true });
 
   return user;
+};
+
+export const joinChannel = async (channelId: string, userId: string): Promise<any> => {
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    if (user.joinedChannels.includes(channelId)) {
+      throw new Error('User already joined the channel');
+    }
+
+    user.joinedChannels.push(channelId);
+
+    console.log('User before saving', user);
+
+    await user.save();
+    console.log('user after saving', user);
+
+    return user;
+  } catch (error) {
+    throw new Error(`Error joining channel: ${error.message}`);
+  }
+};
+
+export const leaveChannel = async (channelId: string, userId: string): Promise<any> => {
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    if (!user.joinedChannels.includes(channelId)) {
+      throw new Error('User has not joined the channel');
+    }
+
+    user.joinedChannels = user.joinedChannels.filter((id) => id != channelId);
+
+    await user.save();
+    return user;
+  } catch (error) {
+    throw new Error(`Error leaving channel: ${error.message}`);
+  }
 };

@@ -42,7 +42,7 @@ const NotificationsPage: FC = () => {
 
   if (isFetching) {
     return (
-      <LayoutCommunities hideRightSidebar containerMaxWidth="md">
+      <LayoutCommunities marginTop="sm" hideRightSidebar containerMaxWidth="md">
         <Container shadow="sm" bgColor="white" maxWidth="lg">
           <Skeleton height={40} count={14} bottom="xs" />
         </Container>
@@ -52,7 +52,7 @@ const NotificationsPage: FC = () => {
 
   if (!authUser) {
     return (
-      <LayoutCommunities containerMaxWidth="md">
+      <LayoutCommunities marginTop="sm" containerMaxWidth="md">
         <Container centered padding="lg" bgColor="white" shadow="sm">
           <CommunityIcon width="40" />
 

@@ -1,15 +1,17 @@
-import { FC, Fragment } from 'react';
+import { FC, Fragment, useEffect } from 'react';
+import cookies from 'js-cookie';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import Layout from '../components/Layout';
-import { useInfiniteScroll } from '../utils';
+import { Cookies, getCookie, setCookie, useInfiniteScroll } from '../utils';
 import { DataLimit, Post } from '../constants';
 import { RootState } from '../store';
 import { PostCard, PostCreateButton } from '../components/Post';
 import { Container, Button, Spacing, LoadingDots, Skeleton, Text } from '../components/ui';
-import { openAuthPopup, PopupType } from '../store/auth';
+import { openAuthPopup, PopupType, setAuthUser, setToken } from '../store/auth';
 import { CommunityIcon } from '../components/ui/icons';
 import Seo from '../components/Seo';
+import { useDispatchAuth } from '../utils/useDispatchAuth';
 
 const fetchPostsByFollowing = async ({ pageParam = 0 }) => {
   const { data } = await axios.get(`/posts/follow?offset=${pageParam}&limit=${DataLimit.PostsByFollowing}`);
@@ -18,6 +20,7 @@ const fetchPostsByFollowing = async ({ pageParam = 0 }) => {
 
 const Home: FC = () => {
   const dispatch = useDispatch();
+
   const authUser = useSelector((state: RootState) => state.auth.user);
   const { data, isFetching, isFetchingNextPage } = useInfiniteScroll({
     key: 'postsByFollowing',
@@ -25,6 +28,8 @@ const Home: FC = () => {
     enabled: authUser !== null,
     dataLimit: DataLimit.PostsByFollowing,
   });
+
+  useDispatchAuth();
 
   const openAuthModal = () => {
     dispatch(openAuthPopup(PopupType.Sign_Up));
@@ -47,7 +52,7 @@ const Home: FC = () => {
         {authUser && <PostCreateButton queryKey="postsByFollowing" />}
 
         {isEmpty && (
-          <Container centered padding="lg" bgColor="white" shadow="sm">
+          <Container centered padding="lg" bgColor="transparent" shadow="sm">
             <CommunityIcon width="40" />
 
             <Spacing top="sm">

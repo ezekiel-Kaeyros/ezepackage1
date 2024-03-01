@@ -2,44 +2,60 @@ import styled from 'styled-components';
 
 export const Root = styled.div`
   width: 100%;
+  height: 300px;
   display: flex;
   flex-direction: column;
   align-items: left;
   justify-content: space-between;
   background-color: white;
-  padding: 0px 10px;
+  padding: 16px 16px;
   //padding: ${(p) => p.theme.spacing.sm};
   border-radius: ${(p) => p.theme.radius.sm};
   transition: border-color 0.1s;
   box-shadow: ${(p) => p.theme.shadows.sm};
+  @media only screen and (max-width: 768px) {
+    margin-bottom: 5%;
+  }
 `;
 
 export const Wrapper = styled.div`
-  width: 95%;
-  max-width: ${(p) => p.theme.screen.lg};
-  margin: 0 auto;
+  width: 100%;
+  // max-width: ${(p) => p.theme.screen.lg};
+  //margin: 0 auto;
   display: grid;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
   // grid-template-columns: auto auto auto auto;
-  grid-template-columns: repeat(auto-fill, minmax(35%, 3fr));
+  grid-template-columns: repeat(auto-fill, minmax(40%, 3fr));
   grid-auto-rows: auto;
   grid-gap: 20px;
-  // padding-top: 20px;
+
   margin-bottom: ${(p) => p.theme.spacing.lg};
+
+  @media only screen and (max-width: 768px) {
+    display: block;
+    padding: 0 1%;
+  }
 `;
 
 export const ImageContainer = styled.div``;
 
 export const BlockFollow = styled.div`
   display: flex;
+  // border: 1px solid red;
 `;
 
-export const BanqueImage = styled.div``;
+export const BanqueImage = styled.div`
+  display: flex;
+  margin-left: 10px;
+`;
+export const ListImage = styled.div`
+  margin-left: -10px;
+`;
 
 export const HeaderContainer = styled.div`
   width: 100%;
-  margin-top: 15px;
+  // margin-top: 15px;
   overflow: hidden;
   flex-shrink: 0;
   display: flex;
@@ -106,7 +122,11 @@ export const BlockMembers = styled.div`
 export const MyButton = styled.div`
   display: flex;
   justify-content: space-between;
-  padding-bottom: 15px;
+
+  button {
+    width: 50%;
+    padding-bottom: 6px 10px;
+  }
 `;
 
 export const Description = styled.span`

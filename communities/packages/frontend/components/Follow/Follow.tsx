@@ -10,6 +10,7 @@ import { useNotifications } from '../../utils';
 import { NotificationType } from '../../constants/Notification';
 import { Root } from './style';
 import Image from 'next/image';
+import addIcon from '../../public/add (2).svg';
 
 const createFollow = async ({ userId }) => {
   const follow = await axios.post('/follow/create', { userId });
@@ -60,6 +61,7 @@ const Follow: FC<FollowProps> = ({ user, queryKey }) => {
 
   return (
     <Root onClick={debounce(followMutation, 200)} isFollowing={isFollowing}>
+      <Image alt="" src={addIcon}/>&nbsp;&nbsp;
       {isFollowing ? 'Following' : 'Follow'}
     </Root>
   );

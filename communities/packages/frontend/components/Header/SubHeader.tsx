@@ -5,15 +5,14 @@ import { useMutation } from 'react-query';
 import { useRouter } from 'next/router';
 import { updateNotificationSeen } from '../../pages/communities/notifications';
 import {
-  Root,
-  Wrapper,
   Hamburger,
   Container,
-  SearchContainer,
   NotificationsAndAvatar,
   NotificationsCount,
   Logo,
+  ItemMenu,
   CommunitiesHeaderRoot,
+  BlockLogoBurger,
 } from './style';
 
 import { HomeIcon, MenuIcon, NotificationIcon } from '../ui/icons';
@@ -26,11 +25,12 @@ import { RootState } from '../../store';
 import { useBreakpoints } from '../../utils';
 import NavTab from '../NavTab';
 import CommunitiesIcon from '../ui/icons/CommunitiesIcon';
-import AskAProfIcon from '../ui/icons/AskAProfIcon';
 import OnlineCoursesIcon from '../ui/icons/OnlineCoursesIcon';
 import LivingLibraryIcon from '../ui/icons/LivingLibraryIcon';
 import EventsIcon from '../ui/icons/EventsIcon';
 import FundingAreaIcon from '../ui/icons/FundingAreIcon';
+import BurgerMenuIcon from '../../public/header/burgerMenu.svg';
+import { useDispatchAuth } from '../../utils/useDispatchAuth';
 
 interface SubHeaderProps {
   toggleSidebar?: () => void;
@@ -48,6 +48,9 @@ const SubHeader: ForwardRefRenderFunction<HTMLButtonElement, SubHeaderProps> = (
   const notificationsRef = useRef(null);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const [isNotificationsDropdownOpen, setIsNotificationsDropdownOpen] = useState(false);
+  const [step, setStep] = useState(1);
+
+  console.log('auth user', authUser);
 
   useEffect(() => {
     Router.events.on('routeChangeComplete', () => {
@@ -71,6 +74,8 @@ const SubHeader: ForwardRefRenderFunction<HTMLButtonElement, SubHeaderProps> = (
     }
   };
 
+  useDispatchAuth();
+
   const onNotificationIconClick = () => {
     if (!isNotificationsDropdownOpen) {
       setIsNotificationsDropdownOpen(true);
@@ -85,31 +90,62 @@ const SubHeader: ForwardRefRenderFunction<HTMLButtonElement, SubHeaderProps> = (
     <CommunitiesHeaderRoot>
       <Logo>
         <Link href="/" disableBorderOnHover>
-          <img alt="logo" style={{ height: 30 }} src={logo} />
+          <img alt="logo" style={{ height: 35 }} src={logo} />
         </Link>
       </Logo>
       <Container>
-        <Hamburger ref={ref} onClick={toggleSidebar}>
-          <MenuIcon />
-        </Hamburger>
+        <BlockLogoBurger>
+          <Hamburger ref={ref} onClick={toggleSidebar}>
+            <MenuIcon />
+          </Hamburger>
+        </BlockLogoBurger>
+        <ItemMenu>
+          <NavTab
+            icon={<HomeIcon isActive={router.pathname === '/'} width="32" />}
+            link="/"
+            isActive={router.pathname === '/'}
+          />
+        </ItemMenu>
 
-        <Spacing left="xl" />
-        <NavTab icon={<HomeIcon width="32" />} link="/" />
-        <Spacing right="xl" />
-        <NavTab icon={<CommunitiesIcon width="32" />} link="/" />
-        <Spacing right="xl" />
-        <NavTab icon={<AskAProfIcon width="32" />} link="/" />
-        <Spacing right="xl" />
-        <NavTab icon={<OnlineCoursesIcon width="48" />} link="/" />
-        <Spacing right="xl" />
-        <NavTab icon={<LivingLibraryIcon width="32" />} link="/" />
-        <Spacing right="xl" />
-        <NavTab icon={<EventsIcon width="32" />} link="/" />
-        <Spacing right="xl" />
-        <NavTab icon={<FundingAreaIcon width="32" />} link="/" />
+        <ItemMenu>
+          <NavTab
+            icon={<CommunitiesIcon isActive={router.pathname.includes('/communities')} width="32" />}
+            link="/communities"
+            isActive={router.pathname.includes('/communities')}
+          />
+        </ItemMenu>
+        {/* <ItemMenu>
+          <NavTab
+            icon={<AskAProfIcon isActive={router.pathname.includes('/profile')} width="32" />}
+            link="/profile"
+            isActive={router.pathname.includes('/profile')}
+          />
+        </ItemMenu> */}
+        <ItemMenu>
+          <NavTab
+            icon={<OnlineCoursesIcon />}
+            link="/online-courses"
+            isActive={router.pathname === '/online-courses'}
+          />
+        </ItemMenu>
+        <ItemMenu>
+          <NavTab
+            icon={<LivingLibraryIcon width="32" />}
+            link="/living-library"
+            isActive={router.pathname === '/living-library'}
+          />
+        </ItemMenu>
+        <ItemMenu>
+          <NavTab icon={<EventsIcon width="32" />} link="/events" isActive={router.pathname === '/events'} />
+        </ItemMenu>
+        <ItemMenu>
+          <NavTab
+            icon={<FundingAreaIcon width="32" />}
+            link="/funding-area"
+            isActive={router.pathname === '/funding-area'}
+          />
+        </ItemMenu>
       </Container>
-
-      <Spacing right="sm" />
 
       <NotificationsAndAvatar>
         {authUser && (

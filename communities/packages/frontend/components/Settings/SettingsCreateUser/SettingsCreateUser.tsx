@@ -5,6 +5,8 @@ import { useQueryClient } from 'react-query';
 import { UserRole } from '../../../constants';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
+import IconAddUser from '../../../public/community/profile/add.svg';
+import Image from 'next/image';
 
 interface User {
   fullName: string;
@@ -83,7 +85,8 @@ const SettingsCreateUser: FC<SettingsCreateUserProps> = ({ searchQuery }) => {
 
   return (
     <>
-      <Button color="primary" onClick={() => setIsPopupOpen(true)}>
+      <Button color="ezeColor" onClick={() => setIsPopupOpen(true)}>
+      <Image  alt="icon add user" src={IconAddUser} /> 
         Add user
       </Button>
 

@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/link-passhref */
 import React, { FC, ReactNode } from 'react';
-import { Line, Root } from './style';
+import { Icon, Line, Root } from './style';
 import { ButtonLink } from '../ui';
 
 export interface NavTabProps {
@@ -12,7 +12,7 @@ export interface NavTabProps {
 const NavTab: FC<NavTabProps> = ({ icon, link, isActive }) => {
   return (
     <ButtonLink href={`/${link}`}>
-      <Root>
+      <Root isActive={isActive}>
         {icon}
         {isActive && <Line />}
       </Root>

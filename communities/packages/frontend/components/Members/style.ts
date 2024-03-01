@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Root = styled.div`
-  width: 100%;
+width: 205px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,6 +12,7 @@ export const Root = styled.div`
   border-radius: ${(p) => p.theme.radius.sm};
   transition: border-color 0.1s;
   box-shadow: ${(p) => p.theme.shadows.sm};
+  
 `;
 
 export const Wrapper = styled.div`
@@ -36,6 +37,7 @@ export const ImageContainer = styled.div`
   //border-radius: 50%;
   overflow: hidden;
   flex-shrink: 0;
+
 
   Image: {
     width: 100%;
@@ -63,6 +65,7 @@ export const InitialLetters = styled.div`
 `;
 
 export const FullName = styled.span`
+
   width: 200px;
   align-items: left;
   justify-content: left;

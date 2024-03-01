@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:4000';
+const API_URL = 'https://back.communities.eze.wiki';
+//const API_URL = 'http://localhost:4000';
 
 export default class DataService {
   client: any;

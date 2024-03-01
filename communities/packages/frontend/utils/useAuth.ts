@@ -42,6 +42,7 @@ const useAuth = (): useAuthPayload => {
         notifications,
         followers,
         following,
+        joinedChannels,
       } = data;
       dispatch(
         setAuthUser({
@@ -63,6 +64,7 @@ const useAuth = (): useAuthPayload => {
           followers,
           following,
           isOnline: true,
+          joinedChannels,
         })
       );
     },

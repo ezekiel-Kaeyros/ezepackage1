@@ -17,6 +17,7 @@ export const Root = styled.div<RootProps>`
   background-color: ${(p) => p.theme.colors.general.white};
   flex: 0 0 ${Layout.SIDEBAR_MOBILE_WIDTH}px;
   border-right: 1px solid ${(p) => p.theme.colors.border.main};
+  
 
   @media (min-width: ${(p) => p.theme.screen.md}) {
     padding-top: ${(p) => p.theme.spacing.sm};

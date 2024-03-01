@@ -1,11 +1,12 @@
 import axios from 'axios';
 import { UserRole } from '../constants';
 
+const HOME_URL = 'https://eze-gamma.vercel.app/';
 export const redirectToHome = () => {
   return {
     redirect: {
       permanent: false,
-      destination: '/',
+      destination: HOME_URL,
     },
     props: {},
   };
@@ -18,6 +19,8 @@ export const isAuthorized = async (req, requiredRole = UserRole.Regular): Promis
         Authorization: `bearer ${req.cookies.token}`,
       },
     });
+
+    console.log('user', user);
 
     if (!user) {
       return false;

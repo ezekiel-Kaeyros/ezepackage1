@@ -20,6 +20,7 @@ export interface AuthUser {
   followers: any[];
   following: any[];
   isOnline: boolean;
+  joinedChannels: any[];
 }
 
 export enum PopupType {

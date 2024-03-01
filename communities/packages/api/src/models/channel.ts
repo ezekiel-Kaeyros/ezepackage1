@@ -18,6 +18,10 @@ const ChannelSchema = new Schema(
       type: Number,
       required: true,
     },
+    coverImage: String,
+    coverImagePublicId: String,
+    image: String,
+    imagePublicId: String,
     posts: [
       {
         type: Schema.Types.ObjectId,

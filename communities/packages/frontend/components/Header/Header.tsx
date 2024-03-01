@@ -82,7 +82,7 @@ const Header: ForwardRefRenderFunction<HTMLButtonElement, HeaderProps> = ({ togg
           </Hamburger>
           <Logo>
             <Link href="/" disableBorderOnHover>
-              <img alt="logo" style={{ height: 30 }} src={logo} />
+              <img alt="logo" style={{ height: 35 }} src={logo} />
             </Link>
           </Logo>
           <Spacing left="sm" />
