@@ -18,7 +18,11 @@ const app = express();
 
 app.use(compression());
 app.use(cookieParser());
-app.use(cors());
+app.use(
+  cors({
+    origin: true,
+  })
+);
 
 app.use(passport.initialize());
 app.use(express.json());
