@@ -34,7 +34,7 @@ const HeaderNotifications: FC<HeaderNotificationsProps> = ({
         ))
       )}
       <AllNotifications>
-        <Link href="/notifications" size="sm">
+        <Link href="/communities/notifications" size="sm">
           See all notifications
         </Link>
       </AllNotifications>

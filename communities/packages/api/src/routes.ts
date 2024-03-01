@@ -74,6 +74,7 @@ router.delete('/channels/delete', checkIfAdmin, ChannelController.delete);
 router.post('/channels/reorder', checkIfAdmin, ChannelController.reorder);
 router.post('/channels/join/:channelId', UserController.joinChannel);
 router.post('/channels/leave/:channelId', UserController.leaveChannel);
+router.post('/channels/upload-photo', [checkIfAdmin, multerUpload.single('image')], ChannelController.uploadPhoto);
 
 /**
  * Posts

@@ -27,9 +27,9 @@ const ChannelController = {
     return res.send(channel);
   },
   create: async (req: Request, res: Response): Promise<any> => {
-    const { name, authRequired, description, order } = req.body;
+    const { name, authRequired, description, order, authUserId } = req.body;
     console.log('Auth required', authRequired);
-    console.log('req user', req.user);
+    console.log('req user', authUserId);
     const trimmedName = name.trim();
 
     if (channelNameReg.test(name) || !name || name.length > 20) {
@@ -44,6 +44,16 @@ const ChannelController = {
     }
 
     const newChannel = await createChannel(trimmedName, authRequired, order, description);
+
+    console.log('new channel', newChannel);
+
+    if (newChannel._id) {
+      try {
+        await joinChannel(newChannel._id, authUserId);
+      } catch (error) {
+        console.error('Error joining user to channel:', error);
+      }
+    }
     return res.send(newChannel);
   },
   update: async (req: Request, res: Response): Promise<any> => {
@@ -68,6 +78,8 @@ const ChannelController = {
     const { imagePublicId, coverImagePublicId, isCover, name, authRequired } = req.body;
     const { channelId } = req.params;
     const image = req.file;
+
+    console.log('I am here');
 
     if(!image) {
       return res.status(ErrorCodes.Bad_Request).send('Please upload an image.');

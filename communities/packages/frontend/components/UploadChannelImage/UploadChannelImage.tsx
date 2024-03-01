@@ -22,6 +22,7 @@ const createUploadImage = async ({ image, isCover, imagePublicId, coverImagePubl
   formData.append('coverImagePublicId', coverImagePublicId);
 
   const newImage = await axios.post('/channels/upload-photo', formData);
+  console.log('new image', newImage);
   return newImage;
 };
 

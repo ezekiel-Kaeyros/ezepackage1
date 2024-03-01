@@ -15,8 +15,8 @@ export const useDispatchAuth = () => {
   const user = cookies.get(Cookies.User_data);
   useEffect(() => {
     if (user && token) {
-      const token = JSON?.parse(cookies.get(Cookies.Token));
-      const user = JSON?.parse(cookies.get(Cookies.User_data));
+      const token = JSON?.parse(cookies.get(Cookies.Token, { domain: '.eze.wiki' }));
+      const user = JSON?.parse(cookies.get(Cookies.User_data, { domain: '.eze.wiki' }));
 
       if (token && user) {
         axios.defaults.headers.common = { Authorization: `bearer ${token}` };

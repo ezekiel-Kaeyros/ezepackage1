@@ -1,5 +1,6 @@
 import channel from '../models/channel';
 import Channel from '../models/channel';
+import { joinChannel } from './user';
 
 export const getChannels = async (): Promise<any> => {
   const channels = await Channel.find({}).sort({ order: 1 });

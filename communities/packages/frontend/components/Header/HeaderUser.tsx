@@ -1,4 +1,5 @@
 import React, { FC, RefObject } from 'react';
+import cookies from 'js-cookie';
 import { useSelector } from 'react-redux';
 import { Cookies, deleteCookie, useClickOutside } from '../../utils';
 import { UserDropDown, UserDropDownItem } from './style';
@@ -8,6 +9,8 @@ import axios from 'axios';
 import { UserRole } from '../../constants';
 
 const HOME_PAGE = 'https://eze.wiki';
+
+console.log('Hello')
 
 interface HeaderUserProps {
   closeDropDown: () => void;
@@ -24,7 +27,8 @@ const HeaderUser: FC<HeaderUserProps> = ({ closeDropDown, isUserDropdownOpen, au
   const logout = async () => {
     try {
       await axios.post('/logout');
-      deleteCookie(Cookies.Token);
+      cookies.remove(Cookies.Token, { domain: '.eze.wiki' });
+      cookies.remove(Cookies.User_data, { domain: '.eze.wiki' });
       closeDropDown();
       window.location.href = HOME_PAGE;
     } catch (error) {
@@ -45,13 +49,13 @@ const HeaderUser: FC<HeaderUserProps> = ({ closeDropDown, isUserDropdownOpen, au
         My Profile
       </ButtonLink>
 
-      <ButtonLink fullWidth center hasHover color="textSecondary" radius="none" href="/settings/account">
+      <ButtonLink fullWidth center hasHover color="textSecondary" radius="none" href="/communities/settings/account">
         Account
       </ButtonLink>
 
       {authUser.role === UserRole.Admin ||
         (authUser.role === UserRole.SuperAdmin && (
-          <ButtonLink fullWidth center hasHover color="textSecondary" radius="none" href="/settings/community">
+          <ButtonLink fullWidth center hasHover color="textSecondary" radius="none" href="/communities/settings/community">
             Admin
           </ButtonLink>
         ))}

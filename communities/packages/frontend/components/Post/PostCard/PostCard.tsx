@@ -94,7 +94,7 @@ const PostCard: FC<PostCardProps> = ({
 
       <Top>
         <Author>
-          <Link disableBorderOnHover href={`/profile/${post.author._id}`}>
+          <Link disableBorderOnHover href={`/communities/profile/${post.author._id}`}>
             <Avatar image={post.author?.image} size={1.25} />
           </Link>
 

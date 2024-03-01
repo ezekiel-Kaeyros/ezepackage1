@@ -146,6 +146,7 @@ export interface IUser extends Document {
   messages: string[];
   joinedChannels: string[];
   isValidPassword: (password: string) => Promise<boolean>;
+  _id?: string;
 }
 
 UserSchema.pre<IUser>('save', async function (next) {

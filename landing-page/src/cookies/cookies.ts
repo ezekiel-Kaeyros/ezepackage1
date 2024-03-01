@@ -2,11 +2,11 @@ import cookies from 'js-cookie';
 import { FIRST_TIME, TOKEN, USER_DATA } from './cookies.d';
 
 export const setUserCookies = (data: any) => {
-  cookies.set(USER_DATA, JSON.stringify(data));
+  cookies.set(USER_DATA, JSON.stringify(data), { domain: '.eze.wiki' });
 };
 
 export const setToken = (token: string) => {
-  cookies.set('token', JSON.stringify(token));
+  cookies.set('token', JSON.stringify(token), { domain: '.eze.wiki' });
 };
 
 export const getToken = () => {
