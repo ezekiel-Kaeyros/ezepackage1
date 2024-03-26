@@ -33,7 +33,7 @@ const PostCreateButton: FC<PostCreateButtonProps> = ({ channel, queryKey }) => {
   return (
     <Root>
       <DefautlRoot>
-        <Avatar image={authUser?.image} size={1.25} isOnline />
+        <Avatar image={authUser?.image} size={2} isOnline />
         {isPostCreateOpen && (
           <PostCreate
             channelId={channel?._id}

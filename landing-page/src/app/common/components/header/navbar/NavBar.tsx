@@ -15,10 +15,12 @@ import { useAuth } from '@/app/hooks/useAuth';
 
 type NavBarProps = {
   lang: string;
+  navigation:any
 };
 const COMMUNITIES_URL = 'https://communities.eze.wiki';
 
-const NavBar: React.FC<NavBarProps> = ({ lang }) => {
+const NavBar: React.FC<NavBarProps> = ({ lang,navigation }) => {
+  
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
   const { token } = useAuth();
 
@@ -59,20 +61,20 @@ const NavBar: React.FC<NavBarProps> = ({ lang }) => {
         >
           <li className="border-t-1 hover:text-primaryColor lg:border-none px-6 lg:px-3 2xl:px-6  pt-4 lg:pt-0 pb-2">
             <Link href={`${(token && COMMUNITIES_URL) || `/${lang}/login`}`}>
-              Communities
+              {navigation.comunity}
             </Link>
           </li>
           <li className="border-t-1 hover:text-primaryColor lg:border-none px-6 lg:px-3 2xl:px-6  pt-4 lg:pt-0 pb-2">
-            <Link href="#">Online Courses</Link>
+            <Link href="#"> {navigation.online}</Link>
           </li>
           <li className="border-t-1 hover:text-primaryColor lg:border-none px-6 lg:px-3 2xl:px-6  pt-4 lg:pt-0 pb-2">
-            <Link href="#">Visit Library</Link>
+            <Link href="#"> {navigation.library}</Link>
           </li>
           <li className="border-t-1 hover:text-primaryColor lg:border-none px-6 lg:px-3 2xl:px-6  pt-4 lg:pt-0 pb-2">
-            <Link href="#">Funding Area</Link>
+            <Link href="#"> {navigation.fuding}</Link>
           </li>
           <li className="border-t-1 hover:text-primaryColor lg:border-none px-6 lg:px-3 2xl:px-6  pt-4 lg:pt-0 pb-2">
-            <Link href="#">Events</Link>
+            <Link href="#"> {navigation.events}</Link>
           </li>
           <li className="border-t-1 hover:text-primaryColor lg:border-none px-6 lg:px-3 2xl:px-6  pt-4 lg:pt-0 pb-4">
             {token ? (
@@ -80,11 +82,11 @@ const NavBar: React.FC<NavBarProps> = ({ lang }) => {
                 href={`https://communities.eze.wiki/`}
                 className="w-fit py-3"
               >
-                Go to Dashboard
+                {navigation.dash}
               </Button>
             ) : (
               <Button href={`/${lang}/login`} className="w-fit py-3">
-                Login
+                {navigation.btn}
               </Button>
             )}
           </li>

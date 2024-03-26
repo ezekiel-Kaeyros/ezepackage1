@@ -2,15 +2,15 @@ import axios from 'axios';
 import { UserRole } from '../constants';
 
 const HOME_URL = 'https://communities.eze.wiki';
-export const redirectToHome = () => {
-  return {
-    redirect: {
-      permanent: false,
-      destination: HOME_URL,
-    },
-    props: {},
-  };
-};
+// export const redirectToHome = () => {
+//   return {
+//     redirect: {
+//       permanent: false,
+//       destination: HOME_URL,
+//     },
+//     props: {},
+//   };
+// };
 
 export const isAuthorized = async (req, requiredRole = UserRole.Regular): Promise<boolean> => {
   try {

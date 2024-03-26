@@ -129,6 +129,7 @@ const useAuth = (): useAuthPayload => {
 
         axios.defaults.headers.common = { Authorization: `bearer ${token}` };
         const { data } = await axios.get('/auth-user');
+        console.log('data', data);
         if (!data) {
           setIsAuthFetching(false);
           return;

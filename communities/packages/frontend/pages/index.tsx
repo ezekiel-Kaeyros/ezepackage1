@@ -1,14 +1,13 @@
-import { FC, Fragment, useEffect } from 'react';
-import cookies from 'js-cookie';
+import { FC, Fragment } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import Layout from '../components/Layout';
-import { Cookies, getCookie, setCookie, useInfiniteScroll } from '../utils';
+import { useInfiniteScroll } from '../utils';
 import { DataLimit, Post } from '../constants';
 import { RootState } from '../store';
 import { PostCard, PostCreateButton } from '../components/Post';
 import { Container, Button, Spacing, LoadingDots, Skeleton, Text } from '../components/ui';
-import { openAuthPopup, PopupType, setAuthUser, setToken } from '../store/auth';
+import { openAuthPopup, PopupType } from '../store/auth';
 import { CommunityIcon } from '../components/ui/icons';
 import Seo from '../components/Seo';
 import { useDispatchAuth } from '../utils/useDispatchAuth';

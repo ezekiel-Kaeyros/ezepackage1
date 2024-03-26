@@ -7,37 +7,41 @@ import LearningArea from '@/app/common/components/learningArea/LearningArea';
 import TrustedPartners from '@/app/common/components/trustedPartners/TrustedPartners';
 import { Locale } from '@/i18n.config';
 import { getDictionary } from '../../../../lib/dictionary';
-import React from 'react';
+import React, { Suspense } from 'react';
 
 export default async function Home({ lang }: { lang: Locale }) {
   const { page } = await getDictionary(lang);
   return (
-    <>
+    <div>
       <div className="">
         <div className="lg:mt-12">
-          <HeroSection />
+          <HeroSection home={page.home} />
         </div>
 
         <div>
-          <OnlineCommunitySection />
+          <OnlineCommunitySection home={page.home} />
         </div>
 
         <div>
-          <CertifiedLibrarySection />
+          <CertifiedLibrarySection home={page.home} />
         </div>
         <div>
-          <LearningArea home={page} lang={lang} />
+          <Suspense>
+            <LearningArea home={page} lang={lang} />
+          </Suspense>
         </div>
         <div>
-          <PersonalGuidanceSection />
+          <PersonalGuidanceSection home={page.home} />
         </div>
         <div>
-          <GetFund home={page} lang={lang} />
+          <Suspense>
+            <GetFund home={page} lang={lang} />
+          </Suspense>
         </div>
-        <div></div>
-
-        <TrustedPartners home={page} lang={lang} />
+        <Suspense>
+          <TrustedPartners home={page} lang={lang} />
+        </Suspense>
       </div>
-    </>
+    </div>
   );
 }

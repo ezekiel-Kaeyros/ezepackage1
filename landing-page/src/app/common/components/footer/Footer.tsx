@@ -3,7 +3,7 @@ import React from 'react';
 import Logo from '../../../../../public/logo.svg';
 import Link from 'next/link';
 
-const Footer = () => {
+const Footer:React.FC<{footer:any}> = ({footer}) => {
   return (
     <div>
       <section className="bg-[#E6F0ED] px-5 sm:px-16 pb-10 border-2 md:px-20 ">
@@ -19,82 +19,112 @@ const Footer = () => {
           <div className="flex flex-col gap-2 mb-6 sm:mb-0">
             <span>
               <h1 className="text-[21px] font-semibold m-0 cursor-pointer">
-                Visit
+                {footer.block1.title}
               </h1>
             </span>
             <span className="flex flex-col gap-1">
-              <p className="text-[16px] m-0 cursor-pointer ">Communities</p>
-              <p className="text-[16px] m-0 cursor-pointer">Online Courses</p>
-              <p className="text-[16px] m-0 cursor-pointer">Library</p>
-              <p className="text-[16px] m-0 cursor-pointer">Funding Area</p>
+              <p className="text-[16px] m-0 cursor-pointer ">
+                {footer.block1.ligne1}
+              </p>
+              <p className="text-[16px] m-0 cursor-pointer">
+                {footer.block1.ligne2}
+              </p>
+              <p className="text-[16px] m-0 cursor-pointer">
+                {footer.block1.ligne3}
+              </p>
+              <p className="text-[16px] m-0 cursor-pointer">
+                {footer.block1.ligne4}
+              </p>
             </span>
           </div>
           <div className="flex flex-col gap-2 mb-6 sm:mb-0">
             {/* <div className="flex flex-col gap-2 mb-6 sm:mb-0"> */}
             <span>
               <h1 className="text-[21px] font-semibold m-0 cursor-pointer">
-                Communities
+                {footer.block2.title}
               </h1>
             </span>
             <span className="flex flex-col gap-1">
-              <p className="text-[16px] m-0 cursor-pointer">Health Sciences</p>
-              <p className="text-[16px] m-0 cursor-pointer">Mines</p>
-              <p className="text-[16px] m-0 cursor-pointer">ICT</p>
               <p className="text-[16px] m-0 cursor-pointer">
-                Agro-food Sciences
+                {' '}
+                {footer.block2.ligne1}
               </p>
-              <p className="text-[16px] m-0 cursor-pointer">Energy</p>
-              <p className="text-[16px] m-0 cursor-pointer">Data Analytics</p>
-              <p className="text-[16px] m-0 cursor-pointer">Social Sciences</p>
+              <p className="text-[16px] m-0 cursor-pointer">
+                {footer.block2.ligne2}
+              </p>
+              <p className="text-[16px] m-0 cursor-pointer">
+                {footer.block2.ligne3}
+              </p>
+              <p className="text-[16px] m-0 cursor-pointer">
+                {footer.block2.ligne4}
+              </p>
+              <p className="text-[16px] m-0 cursor-pointer">
+                {footer.block2.ligne5}
+              </p>
+              <p className="text-[16px] m-0 cursor-pointer">
+                {footer.block2.ligne6}
+              </p>
+              <p className="text-[16px] m-0 cursor-pointer">
+                {footer.block2.ligne7}
+              </p>
             </span>
           </div>
           <div className="flex flex-col gap-2 mb-6 sm:mb-0">
             <span>
               <h1 className="text-[21px] font-semibold m-0 cursor-pointer">
-                Online Courses
+                {footer.block3.title}
               </h1>
             </span>
             <span className="flex flex-col gap-1">
-              <p className="text-[16px] m-0 cursor-pointer">Health Sciences</p>
-              <p className="text-[16px] m-0 cursor-pointer">Mines</p>
-              <p className="text-[16px] m-0 cursor-pointer">ICT</p>
               <p className="text-[16px] m-0 cursor-pointer">
-                Agro-food Sciences
+                {footer.block3.ligne1}
+              </p>
+              <p className="text-[16px] m-0 cursor-pointer">
+                {footer.block3.ligne2}
+              </p>
+              <p className="text-[16px] m-0 cursor-pointer">
+                {footer.block3.ligne3}
+              </p>
+              <p className="text-[16px] m-0 cursor-pointer">
+                {footer.block3.ligne4}
               </p>
             </span>
           </div>
           <div className="flex flex-col gap-2 mb-6 sm:mb-0">
             <span>
               <h1 className="text-[21px] font-semibold m-0 cursor-pointer">
-                Popular Articles
+                {footer.block4.title}
               </h1>
             </span>
             <span className="flex flex-col gap-1">
               <p className="text-[16px] m-0 cursor-pointer">
-                Agricultural product Insights
+                {footer.block4.ligne1}
               </p>
               <p className="text-[16px] m-0 cursor-pointer">
-                Medical Consumption Insights
+                {footer.block4.ligne2}
               </p>
-              <p className="text-[16px] m-0 cursor-pointer">Football Stats</p>
+              <p className="text-[16px] m-0 cursor-pointer">
+                {' '}
+                {footer.block4.ligne3}
+              </p>
             </span>
           </div>
           <div className="mb-2 sm:mb-0">
-            <h1 className="cursor-pointer">Our Socials</h1>
+            <h1 className="cursor-pointer"> {footer.social}</h1>
           </div>
         </div>
         <div className="flex flex-col mt-4 sm:flex-row sm:justify-between">
           <div>
-            Designed by
+            {footer.design}
             <Link
               href="https://kaeyros-analytics.com/"
               className="text-green-800 ml-2"
             >
-              Kaeryros Analytics
+              Kaeyros Analytics
             </Link>
           </div>
           <div className="text-end font-medium cursor-pointer">
-            © Copyright EZE 2023
+            {`© ${ footer.copy} EZE 2023`}
           </div>
         </div>
       </section>

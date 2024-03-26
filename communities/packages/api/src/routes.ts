@@ -92,12 +92,14 @@ router.post('/posts/pin', checkIfSuperAdmin, PostController.pin);
  * Likes
  */
 router.post('/likes/create', checkIfUser, LikeController.create);
+router.post('/likes/comment', checkIfUser, LikeController.like_comment);
 router.delete('/likes/delete', checkIfUser, LikeController.delete);
 
 /**
  * Comments
  */
 router.post('/comments/create', checkIfUser, CommentController.create);
+router.post('/comments/:commentId/reply/:authorId', checkIfUser, CommentController.createReply);
 router.delete('/comments/delete', checkIfUser, CommentController.delete);
 
 /**

@@ -10,8 +10,6 @@ import { UserRole } from '../../constants';
 
 const HOME_PAGE = 'https://eze.wiki';
 
-console.log('Hello')
-
 interface HeaderUserProps {
   closeDropDown: () => void;
   authUserRef: RefObject<HTMLDivElement>;
@@ -55,7 +53,14 @@ const HeaderUser: FC<HeaderUserProps> = ({ closeDropDown, isUserDropdownOpen, au
 
       {authUser.role === UserRole.Admin ||
         (authUser.role === UserRole.SuperAdmin && (
-          <ButtonLink fullWidth center hasHover color="textSecondary" radius="none" href="/communities/settings/community">
+          <ButtonLink
+            fullWidth
+            center
+            hasHover
+            color="textSecondary"
+            radius="none"
+            href="/communities/settings/community"
+          >
             Admin
           </ButtonLink>
         ))}

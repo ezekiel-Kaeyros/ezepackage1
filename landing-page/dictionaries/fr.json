@@ -1,8 +1,44 @@
 {
   "Navigation": {
-    "home": "Accueil"
+    "home": "Accueil",
+
+    "comunity": "communautés",
+    "online": "Cours en ligne",
+    "fuding": " Domaine de financement ",
+    "library": "Visitez la bibliothèque",
+    "events": "Événements",
+    "dash": " Aller au tableau de bord",
+    "btn": "Connexion"
   },
   "page": {
+    "signup": {
+      "title": "S'inscrire",
+      "name": "Saisissez votre nom complet",
+      "name_error": "Le nom complet n'est pas valide",
+      "phone": "Entrez votre contact",
+      "phone_error": "Contact non valide",
+      "email": "Adresse Email",
+      "email_error": " Email non valide",
+      "password": "Entrez votre mot de passe",
+      "forgot": "Mot de passe oublié ?",
+      "btn": "S'inscrire",
+      "choice": "OU",
+      "google": "  S'inscrire avec Google",
+      "question": "Vous avez déjà un compte ?",
+      "login": "Connexion"
+    },
+    "login": {
+      "title": "Connexion",
+      "email": "Adresse email",
+      "email_error": "Saisir une adresse Email valide ",
+      "password": "mot de passe",
+      "forgot": "Mot de passe oublié ?",
+      "btn": "Connexion",
+      "choice": "OU",
+      "google": "Se connecter avec Google",
+      "question": "Vous n'avez pas de compte ?",
+      "sign_up": "S'inscrire"
+    },
     "home": {
       "section1": {
         "block1": {
@@ -35,6 +71,12 @@
           "paragragph2": "Papiers de recherche",
           "paragragph3": "Visitez notre bibliothèque"
         },
+        "sec6": {
+          "title1": "Aperçu du marché :",
+          "p": "Ce rapport couvre la Coupe du Monde Féminine de la FIFA, l'une des compétitions les plus importantes du football mondial. Ce rapport se concentre sur les équipes participantes et les informations clés",
+          "description": "Produits agricoles au Congo",
+          "link": "Voir le rapport"
+        },
         "sec2": {
           "title1": "Écosystème d'apprentissage complet",
           "des1": "Découvrez une mine de connaissances grâce à nos cours en ligne soigneusement élaborés par des experts. De principes fondamentaux aux dernières avancées, notre programme diversifié répond à un éventail d'intérêts scientifiques.",
@@ -66,5 +108,40 @@
         }
       }
     }
+  },
+  "footer": {
+    "block1": {
+      "title": "Visite",
+      "ligne1": "communautés",
+      "ligne2": "Cours en ligne",
+      "ligne3": "Bibliothèque",
+      "ligne4": "Domaine de financement"
+    },
+    "block2": {
+      "title": "communautés",
+      "ligne1": "Sciences de la santé",
+      "ligne2": "Mines",
+      "ligne3": "ICT",
+      "ligne4": " Sciences agro-alimentaires",
+      "ligne5": "Énergie",
+      "ligne6": "Analyse des données",
+      "ligne7": "Sciences sociales"
+    },
+    "block3": {
+      "title": "Cours en ligne",
+      "ligne1": "Sciences de la santé",
+      "ligne2": "Mines",
+      "ligne3": "ICT",
+      "ligne4": " Sciences agro-alimentaires"
+    },
+    "block4": {
+      "title": "Articles populaires",
+      "ligne1": "Produits agricoles Insights",
+      "ligne2": " Aperçu de la consommation médicale",
+      "ligne3": "Statistiques du football"
+    },
+    "social": "Nos Réseaux",
+    "design": "Développé par",
+    "copy": "Droits d'auteur"
   }
 }

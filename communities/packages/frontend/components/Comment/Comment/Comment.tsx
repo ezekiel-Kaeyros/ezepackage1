@@ -21,6 +21,20 @@ interface CommentProps {
   post: any;
 }
 
+function parseTextWithLinks(text) {
+  // Regular expression to find attributions
+  const attributionRegex = /\@\[([^\]]+)\]\(([^)]+)\)/g;
+
+  // Replace attributions with Link components
+  const parsedText = text.replace(attributionRegex, (match, name, id) => {
+    return `<a  href='/communities/profile/${id}'>${name}</a>`;
+  });
+
+  console.log('parsed text', parsedText);
+
+  // Render HTML with Next.js Link components
+  return parsedText;
+}
 const Comment: FC<CommentProps> = ({ comment, author, queryKey, post }) => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const authUser = useSelector((state: RootState) => state.auth.user);
@@ -72,7 +86,7 @@ const Comment: FC<CommentProps> = ({ comment, author, queryKey, post }) => {
 
   return (
     <Root>
-      <Link disableBorderOnHover href={`/profile/${author._id}`}>
+      <Link disableBorderOnHover href={`/communities/profile/${author._id}`}>
         <Avatar image={author?.image} />
       </Link>
 
@@ -82,7 +96,9 @@ const Comment: FC<CommentProps> = ({ comment, author, queryKey, post }) => {
             {author.fullName}
           </Link>
         </UserName>
-        <Linkify>{comment.comment}</Linkify>
+        <Linkify>
+          <div dangerouslySetInnerHTML={{ __html: parseTextWithLinks(comment.comment) }} />
+        </Linkify>
       </Container>
 
       <Confirm

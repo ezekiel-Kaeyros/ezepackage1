@@ -1,16 +1,23 @@
 import React, { FC, FormEvent, useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Root, TextareaContainer } from './style';
-import { Avatar, TextAreaAutoSize } from '../../ui';
+import { Avatar } from '../../ui';
 import axios from 'axios';
 import { useNotifications } from '../../../utils';
 import { NotificationType } from '../../../constants/Notification';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';
+import { MentionsInput, Mention } from 'react-mentions';
+import mentionsInputStyle from './mentionsInputStyle';
 
 const createComment = async ({ comment, postId }) => {
   const newComment = await axios.post('/comments/create', { comment, postId });
   return newComment.data;
+};
+
+const fetchUsers = async () => {
+  const users = await axios.get('/users/get-users');
+  return users;
 };
 
 interface CommentCreateProps {
@@ -80,20 +87,34 @@ const CommentCreate: FC<CommentCreateProps> = ({ autoFocus, post, queryKey }) =>
     }
   };
 
+  // Fetching users
+
+  const { data, isLoading } = useQuery({ queryFn: fetchUsers, queryKey: ['users'] });
+
+  const usersData = data?.data?.map((user) => ({ id: user._id, display: user.fullName }));
+  console.log('users data', usersData);
   return (
     <Root>
       <Avatar image={authUser?.image} />
 
       <TextareaContainer>
-        <TextAreaAutoSize
-          onKeyDown={onEnterPress}
-          rowLength={1}
-          backgroundColorTone={10}
-          onChange={handleChange}
-          autoFocus={autoFocus}
-          value={comment}
+        {/* Mentions input */}
+
+        <MentionsInput
           placeholder="Write a comment..."
-        />
+          onKeyDown={onEnterPress}
+          style={mentionsInputStyle}
+          value={comment}
+          autoFocus={true}
+          onChange={handleChange}
+        >
+          <Mention
+            style={{ backgroundColor: '#cee4e5' }}
+            displayTransform={(id, display) => `@${display}`}
+            trigger="@"
+            data={usersData}
+          />
+        </MentionsInput>
       </TextareaContainer>
     </Root>
   );

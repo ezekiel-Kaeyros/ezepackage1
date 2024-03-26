@@ -31,7 +31,6 @@ const reorderChannels = async ({ sortedChannels }) => {
 
 const Sidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ isOpen }, ref) => {
   const authUser = useSelector((state: RootState) => state.auth.user);
-  console.log('auth user', authUser);
   const [modal, setModal] = useState(false);
   const closeModal = () => setModal(false);
   const router = useRouter();
@@ -53,7 +52,7 @@ const Sidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ isOpe
     }
   }, [channelItems, reorderChannelsMutation, isAdmin]);
 
-  console.log('auth user', authUser);
+  console.log('auth user sidebar', authUser);
   return (
     <Root ref={ref} isOpen={isOpen}>
       <Modal title="Create Channel" isOpen={modal} close={closeModal}>

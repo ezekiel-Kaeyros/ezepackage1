@@ -20,7 +20,6 @@ import { Link, Button, Avatar, Spacing } from '../ui';
 import { openAuthPopup, cleanUserNotifications, PopupType } from '../../store/auth';
 import HeaderUser from './HeaderUser';
 import HeaderNotifications from './HeaderNotifications';
-import Search from '../Search';
 import { RootState } from '../../store';
 import { useBreakpoints } from '../../utils';
 import NavTab from '../NavTab';
@@ -29,7 +28,6 @@ import OnlineCoursesIcon from '../ui/icons/OnlineCoursesIcon';
 import LivingLibraryIcon from '../ui/icons/LivingLibraryIcon';
 import EventsIcon from '../ui/icons/EventsIcon';
 import FundingAreaIcon from '../ui/icons/FundingAreIcon';
-import BurgerMenuIcon from '../../public/header/burgerMenu.svg';
 import { useDispatchAuth } from '../../utils/useDispatchAuth';
 
 interface SubHeaderProps {
@@ -48,9 +46,6 @@ const SubHeader: ForwardRefRenderFunction<HTMLButtonElement, SubHeaderProps> = (
   const notificationsRef = useRef(null);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const [isNotificationsDropdownOpen, setIsNotificationsDropdownOpen] = useState(false);
-  const [step, setStep] = useState(1);
-
-  console.log('auth user', authUser);
 
   useEffect(() => {
     Router.events.on('routeChangeComplete', () => {

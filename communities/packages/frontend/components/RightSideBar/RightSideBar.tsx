@@ -89,7 +89,7 @@ const RightSideBar: FC = () => {
         )}
 
         <ViewMembers>
-          View all members
+          <Link href="/communities/members">View all members</Link>
           <MoreMemebers />
         </ViewMembers>
       </RightSideBarSections>

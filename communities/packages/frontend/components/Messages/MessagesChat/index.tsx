@@ -24,10 +24,9 @@ import {
   SpanMessage,
 } from './style';
 import { Avatar, Link, Spacing, Button } from '../../ui';
-import Search from '../../Search';
 import { RootState } from '../../../store';
 import { useDispatch, useSelector } from 'react-redux';
-import { useSocket, date, useNotifications } from '../../../utils';
+import { useSocket, date, useNotifications, useClickOutside } from '../../../utils';
 import { Events } from '../../../constants';
 import { addToMessagesList } from '../cache';
 import { NotificationType } from '../../../constants/Notification';
@@ -39,6 +38,9 @@ import SendIcon from '../../../public/send.svg';
 import MessageIcon from '../../../public/messages.svg';
 import EmojiIcon from '../../../public/emoji-happy.svg';
 import AttachCircle from '../../../public/attach-circle.svg';
+
+// Loading emoji picker
+import EmojiPicker from 'emoji-picker-react';
 
 interface MessagesChatProps {
   onSearchItemClick: (user: any) => void;
@@ -64,7 +66,8 @@ const updateMessagesSeen = async (userId) => {
 
 const MessagesChat: FC<MessagesChatProps> = ({ onSearchItemClick, userId, user }) => {
   const router = useRouter();
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState<string>('');
+  const [openEmojiPicker, setOpenEmojiPicker] = useState<boolean>(false);
   const scrollToBottomRef = useRef(null);
   const authUser = useSelector((state: RootState) => state.auth.user);
   const queryClient = useQueryClient();
@@ -98,6 +101,22 @@ const MessagesChat: FC<MessagesChatProps> = ({ onSearchItemClick, userId, user }
       socket.off(Events.SEND_MESSAGE, sendMessageListener);
     };
   }, [socket, queryClient, messages, authUser, userId]);
+
+  // Handle open emoji picker
+
+  const handleOpenEmojiPicker = () => {
+    setOpenEmojiPicker((prev) => !prev);
+  };
+
+  // Ref for clicking outside emoji picker
+  const wrapperRef = useRef<any>();
+
+  useClickOutside(wrapperRef, true, () => setOpenEmojiPicker(false));
+
+  // Handle append emoji
+  const onEmojiClick = (emojiObject) => {
+    setMessage((prevInput) => prevInput + emojiObject.emoji);
+  };
 
   useEffect(() => {
     if (authUser?.notifications.length < 1) {
@@ -219,9 +238,25 @@ const MessagesChat: FC<MessagesChatProps> = ({ onSearchItemClick, userId, user }
             <CircleAttach>
               <Image src={AttachCircle} alt="EZE-edit-message" />
             </CircleAttach>
-            <Textarea value={message} placeholder='Enter Message' onChange={(e) => setMessage(e.target.value)} onKeyDown={onEnterPress} />
-            <Container3>
-              <Image src={EmojiIcon} alt="EZE-edit-message" />
+            <Textarea
+              value={message}
+              placeholder="Enter Message"
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={onEnterPress}
+            />
+
+            <Container3 ref={wrapperRef}>
+              {openEmojiPicker && (
+                <div style={{ position: 'absolute', bottom: '3rem', right: 0 }}>
+                  <EmojiPicker onEmojiClick={onEmojiClick} />
+                </div>
+              )}
+              <Image
+                style={{ cursor: 'pointer' }}
+                onClick={handleOpenEmojiPicker}
+                src={EmojiIcon}
+                alt="EZE-edit-message"
+              />
               <Container4>
                 <Button type="submit" ghost>
                   <SendButton>Send</SendButton>

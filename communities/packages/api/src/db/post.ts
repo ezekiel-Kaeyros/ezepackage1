@@ -42,6 +42,8 @@ export const getFollowedPosts = async (userId: string, offset: number, limit: nu
       path: 'comments',
       options: { sort: { createdAt: 'asc' } },
       populate: { path: 'author', select: '-password' },
+      populate: { path: 'likes'},
+      populate: { path: 'replies' },
     })
     .skip(offset)
     .limit(limit)
@@ -72,6 +74,8 @@ export const getPostsByChannelId = async (channelId: any, offset: number, limit:
       path: 'comments',
       options: { sort: { createdAt: 'asc' } },
       populate: { path: 'author', select: '-password' },
+      populate: { path: 'likes'},
+      populate: { path: 'replies' },
     })
     .populate('channel')
     .skip(offset)
@@ -101,6 +105,8 @@ export const getPostsByAuthorId = async (authorId: any, offset: number, limit: n
       path: 'comments',
       options: { sort: { createdAt: 'asc' } },
       populate: { path: 'author', select: '-password' },
+      populate: { path: 'likes'},
+      populate: { path: 'replies' },
     })
     .populate('channel')
     .skip(offset)
@@ -130,6 +136,8 @@ export const getPostById = async (id: string): Promise<any> => {
       path: 'comments',
       options: { sort: { createdAt: 'asc' } },
       populate: { path: 'author', select: '-password' },
+      populate: { path: 'likes'},
+      populate: { path: 'replies' },
     })
     .populate('channel');
   return post;
@@ -195,6 +203,7 @@ export const updatePost = async (
             { path: 'follow' },
             { path: 'like' },
             { path: 'comment' },
+
           ],
         },
       ],
@@ -205,6 +214,8 @@ export const updatePost = async (
       path: 'comments',
       options: { sort: { createdAt: 'asc' } },
       populate: { path: 'author', select: '-password' },
+      populate: { path: 'likes'},
+      populate: { path: 'replies' },
     });
   return updatedPost;
 };

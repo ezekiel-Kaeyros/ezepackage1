@@ -8,6 +8,7 @@ import ReduxProvider from '@/redux/provider';
 import Header from '../common/components/header/header';
 import { Providers } from '../common/nextui/providers';
 import { i18n } from '@/i18n.config';
+import { Suspense } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -36,15 +37,15 @@ export default function RootLayout({
       <Head>
         <meta name="description">{metadata.description}</meta>
       </Head>
-      <ReduxProvider>
-        {/* <ThemeProvider attribute="class" defaultTheme="white" enableSystem> */}
-        <Providers>
-          <body className={`${inter.className}  dark:bg-[#192428]`}>
-            <div>{children}</div>
-          </body>
-        </Providers>
-        {/* </ThemeProvider> */}
-      </ReduxProvider>
+      <body className={`${inter.className}  dark:bg-[#192428]`}>
+        <ReduxProvider>
+          {/* <ThemeProvider attribute="class" defaultTheme="white" enableSystem> */}
+          <Providers>
+            <Suspense>{children}</Suspense>
+          </Providers>
+          {/* </ThemeProvider> */}
+        </ReduxProvider>
+      </body>
     </html>
   );
 }

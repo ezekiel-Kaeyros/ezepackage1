@@ -4,6 +4,7 @@ import HomeModule from '../modules/home/Home';
 import Header from '../common/components/header/header';
 import Footer from '../common/components/footer/Footer';
 import Home from '../modules/home/Home';
+import { Suspense } from 'react';
 
 // const Home = async ({ params: { lang } }: { params: { lang: Locale } }) => {
 //   const { Navigation, page } = await getDictionary(lang);
@@ -17,16 +18,18 @@ import Home from '../modules/home/Home';
 //     </div>
 
 const home = async ({ params: { lang } }: { params: { lang: Locale } }) => {
-  const { Navigation, page } = await getDictionary(lang);
+  const { Navigation, page, footer } = await getDictionary(lang);
 
   return (
     <>
-      <Header lang={lang} />
+      <Header lang={lang} navigation={Navigation} />
       <div className="h-full ">
-        <Home lang={lang} />
+        <Suspense>
+          <Home lang={lang} />
+        </Suspense>
       </div>
 
-      <Footer />
+      <Footer footer={footer}  />
     </>
   );
 };

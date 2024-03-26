@@ -7,68 +7,69 @@ import 'slick-carousel/slick/slick-theme.css';
 import ReportDefaultImage from '../../../../../../../public/images/reportDefaultImage.png';
 import ReportCard from '../report-card/ReportCard';
 
-const reports = [
-  {
-    id: 1,
-    title: 'Market Insights:',
-    subTitle: 'Agricultural Products in Congo',
-    image: ReportDefaultImage,
-    description:
-      'This reports covers the FIFA Women’s world Cup, one of the leading competitions in world soccer. This report focuses on participating teams and key information',
-  },
-  {
-    id: 2,
-    title: 'Market Insights:',
-    subTitle: 'Agricultural Products in Congo',
-    image: ReportDefaultImage,
-    description:
-      'This reports covers the FIFA Women’s world Cup, one of the leading competitions in world soccer. This report focuses on participating teams and key information',
-  },
-  {
-    id: 3,
-    title: 'Market Insights:',
-    subTitle: 'Agricultural Products in Congo',
-    image: ReportDefaultImage,
-    description:
-      'This reports covers the FIFA Women’s world Cup, one of the leading competitions in world soccer. This report focuses on participating teams and key information',
-  },
 
-  {
-    id: 4,
-    title: 'Market Insights:',
-    subTitle: 'Agricultural Products in Congo',
-    image: ReportDefaultImage,
-    description:
-      'This reports covers the FIFA Women’s world Cup, one of the leading competitions in world soccer. This report focuses on participating teams and key information',
-  },
 
-  {
-    id: 5,
-    title: 'Market Insights:',
-    subTitle: 'Agricultural Products in Congo',
-    image: ReportDefaultImage,
-    description:
-      'This reports covers the FIFA Women’s world Cup, one of the leading competitions in world soccer. This report focuses on participating teams and key information',
-  },
-  {
-    id: 6,
-    title: 'Market Insights:',
-    subTitle: 'Agricultural Products in Congo',
-    image: ReportDefaultImage,
-    description:
-      'This reports covers the FIFA Women’s world Cup, one of the leading competitions in world soccer. This report focuses on participating teams and key information',
-  },
-  {
-    id: 7,
-    title: 'Market Insights:',
-    subTitle: 'Agricultural Products in Congo',
-    image: ReportDefaultImage,
-    description:
-      'This reports covers the FIFA Women’s world Cup, one of the leading competitions in world soccer. This report focuses on participating teams and key information',
-  },
-];
+const Carousel: React.FC<{ section6: any }> = ({ section6 }) => {
+  const reports = [
+    {
+      id: 1,
+      title: section6.title1,
+      subTitle: section6.description,
+      image: ReportDefaultImage,
+      description: section6.p,
+      href: section6.link,
+    },
+    {
+      id: 2,
+      title: section6.title1,
+      subTitle: section6.description,
+      image: ReportDefaultImage,
+      description: section6.p,
+      href: section6.link,
+    },
+    {
+      id: 3,
+      title: section6.title1,
+      subTitle: section6.description,
+      image: ReportDefaultImage,
+      description: section6.p,
+      href: section6.link,
+    },
 
-const Carousel = () => {
+    {
+      id: 4,
+      title: section6.title1,
+      subTitle: section6.description,
+      image: ReportDefaultImage,
+      description: section6.p,
+      href: section6.link,
+    },
+
+    {
+      id: 5,
+      title: section6.title1,
+      subTitle: section6.description,
+      image: ReportDefaultImage,
+      description: section6.p,
+      href: section6.link,
+    },
+    {
+      id: 6,
+      title: section6.title1,
+      subTitle: section6.description,
+      image: ReportDefaultImage,
+      description: section6.p,
+      href: section6.link,
+    },
+    {
+      id: 7,
+      title: section6.title1,
+      subTitle: section6.description,
+      image: ReportDefaultImage,
+      description: section6.p,
+      href: section6.link,
+    },
+  ];
   const settings = {
     dots: true,
     infinite: true,
@@ -142,6 +143,7 @@ const Carousel = () => {
             subTitle={report?.subTitle}
             description={report?.description}
             image={report?.image}
+            href={report?.href}
           />
         ))}
       </Slider>

@@ -20,7 +20,7 @@ import { getIsFirstTime } from '@/cookies/cookies';
 
 const COMMUNITIES_URL = 'https://communities.eze.wiki/';
 
-const LoginForm = () => {
+const LoginForm:React.FC<{login:any}> = ({login}) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
@@ -47,9 +47,9 @@ const LoginForm = () => {
         toast.success('Logged in successfully');
         (isFirstTime && push(COMMUNITIES_URL)) || push('/fr/onboarding?step=1');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log(`An error occured`, error);
-      toast.error("User doesn't exist");
+      toast.error(error.response?.data);
     }
   };
 
@@ -62,7 +62,7 @@ const LoginForm = () => {
         className="flex flex-col  w-full  mx-auto dark:text-white justify-center"
       >
         <h1 className="font-bold text-xl lg:text-3xl text-center mb-4">
-          Login
+          {login.title}
         </h1>
         <div>
           <div>
@@ -74,13 +74,11 @@ const LoginForm = () => {
                 pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
               })}
               type="email"
-              placeholder="E-mail address"
+              placeholder={login.email}
             />
           </div>
           {errors.email && (
-            <p className="text-red-700 ml-6 text-xs">
-              Enter a valid email address
-            </p>
+            <p className="text-red-700 ml-6 text-xs">{login.email_error}</p>
           )}
           <div>
             <InputField
@@ -88,10 +86,10 @@ const LoginForm = () => {
               register={register('password', { required: true, minLength: 4 })}
               type="password"
               name="password"
-              placeholder="Password"
+              placeholder={login.password}
             />
           </div>
-          <p className="my-2 opacity-80">Forgot password ?</p>
+          <p className="my-2 opacity-80">{login.forgot}</p>
         </div>
         <div className="mt-4 w-full flex flex-col items-center space-y-4 justify-center">
           <Button
@@ -101,24 +99,24 @@ const LoginForm = () => {
             variant={!isValid || isLoading ? 'disabled' : 'default'}
             className="w-full"
           >
-            {isLoading ? <Spinner size="sm" color="white" /> : <>Connexion</>}
+            {isLoading ? <Spinner size="sm" color="white" /> : <>{login.btn}</>}
           </Button>
 
-          <h1 className="font-bold opacity-50">OR</h1>
+          <h1 className="font-bold opacity-50">{login.choice}</h1>
 
           <Button
             variant="outline"
             className="flex items-center justify-center"
             icon={GoogleIcon}
           >
-            Login with Google
+            {login.google}
           </Button>
         </div>
         <div className="mt-4">
           <h1 className="flex justify-center items-center space-x-2">
-            <h3>{" You don't have an account ?"}</h3>
+            <h3>{login.question}</h3>
             <Link className="font-bold" href="/signup">
-              Signup
+              {login.sign_up}
             </Link>
           </h1>
         </div>

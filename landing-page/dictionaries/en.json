@@ -1,8 +1,44 @@
 {
   "Navigation": {
-    "home": "Home page"
+    "home": "Home page",
+    "comunity":"communities",
+    "online":"Online Courses",
+    "fuding":"Funding Area",
+    "library":"Visit Library",
+    "events":"Events",
+    "dash":" Go to Dashboard",
+    "btn":"Login"
+
   },
   "page": {
+    "signup": {
+      "title": "Signup",
+      "name": "Enter your full name",
+      "name_error": "Full name not valid",
+      "phone": "Enter your contact",
+      "phone_error": "Contact not valid",
+      "email": "E-mail address",
+      "email_error": " Email not valid",
+      "password": "Enter your password",
+      "forgot": "Forgot password ?",
+      "btn": "sign up",
+      "choice": "OR",
+      "google": "  Sign up with Google",
+      "question": "Already have an account ?",
+      "login": "Login"
+    },
+    "login": {
+      "title": "Login",
+      "email": "E-mail address",
+      "email_error": " Enter a valid email address",
+      "password": "password",
+      "forgot": "Forgot password ?",
+      "btn": "Login",
+      "choice": "OR",
+      "google": "  Login with Google",
+      "question": "You don't have an account ?",
+      "sign_up": "Sign up"
+    },
     "home": {
       "section1": {
         "block1": {
@@ -35,6 +71,12 @@
           "paragragph2": "Research papers",
           "paragragph3": "Visit our Library"
         },
+        "sec6": {
+          "title1": "Market Insights:",
+          "p": "This reports covers the FIFA Women’s world Cup, one of the leading competitions in world soccer. This report focuses on participating teams and key information",
+          "description": "Agricultural Products in Congo",
+          "link": "View Report"
+        },
         "sec2": {
           "title1": "Comprehensive Learning Ecosystem",
           "des1": " Discover a wealth of knowledge through our expert-curated online courses. From foundation principles to the latest advancements, our diverse curriculum caters to a spectrum of scientific interests.",
@@ -66,5 +108,40 @@
         }
       }
     }
+  },
+  "footer":{
+    "block1": {
+      "title": "Visit",
+      "ligne1": "communities",
+      "ligne2": "Online Courses",
+      "ligne3": "Library",
+      "ligne4": "Funding Area"
+    },
+    "block2": {
+      "title": "communities",
+      "ligne1": "Health Sciences",
+      "ligne2": "Mines",
+      "ligne3": "ICT",
+      "ligne4": " Agro-food Sciences",
+      "ligne5": "Energy",
+      "ligne6": "Data Analytics",
+      "ligne7": "Social Sciences"
+    },
+    "block3": {
+      "title": "Online Courses",
+      "ligne1": "Health Sciences",
+      "ligne2": "Mines",
+      "ligne3": "ICT",
+      "ligne4": " Agro-food Sciences"
+    },
+    "block4": {
+      "title": "Popular Articles",
+      "ligne1": "Agricultural product Insights",
+      "ligne2": " Medical Consumption Insights",
+      "ligne3": "Football Stats"
+    },
+    "social":"Our Socials",
+    "design":"Designed by",
+    "copy":"Copyright"
   }
 }

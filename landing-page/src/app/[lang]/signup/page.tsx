@@ -4,11 +4,11 @@ import LoginSignupLayout from '@/app/common/layouts/LoginSignupLayout';
 import SignupForm from '@/app/common/components/forms/signup-form/SignupForm';
 
 const signUp = async ({ params: { lang } }: { params: { lang: Locale } }) => {
-  const { Navigation } = await getDictionary(lang);
+  const { page } = await getDictionary(lang);
 
   return (
     <LoginSignupLayout>
-      <SignupForm />
+      <SignupForm signup={page.signup}/>
     </LoginSignupLayout>
   );
 };

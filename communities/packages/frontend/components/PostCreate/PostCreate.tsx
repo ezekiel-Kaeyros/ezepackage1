@@ -200,7 +200,7 @@ const PostCreate: FC<PostCreateProps> = ({
           <Avatar size={1.25} image={authUser.image} />
           <Spacing left="sm">
             <Select onChange={handleChange} name="channelId" defaultValue={channelId && channelId}>
-              {channels?.map((channel: Channel) => (
+              {authUser?.joinedChannels?.map((channel: Channel) => (
                 <Fragment key={channel._id}>
                   <option value={channel._id}>{channel.name}</option>
                 </Fragment>

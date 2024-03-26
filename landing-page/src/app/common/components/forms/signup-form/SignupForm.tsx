@@ -23,7 +23,7 @@ import AuthService from '@/services/authService';
 
 // const COMMUNITIES_URL = 'https://communities.eze.wiki/';
 
-const SignupForm = () => {
+const SignupForm:React.FC<{signup:any}> = ({signup}) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { push } = useRouter();
@@ -50,7 +50,7 @@ const SignupForm = () => {
 
         dispatch(setAuthUser({ user: res?.data }));
         // Redirecting to onboarding
-        push('/onboarding?step=1');
+        push('/fr/onboarding?step=1');
       }
     } catch (error: any) {
       console.log(`An error occured`, error);
@@ -66,7 +66,7 @@ const SignupForm = () => {
         className="flex flex-col  w-full  mx-auto dark:text-white justify-center"
       >
         <h1 className="font-bold text-xl lg:text-3xl text-center mb-4">
-          Signup
+          {signup.title}
         </h1>
         <div>
           <div>
@@ -78,11 +78,11 @@ const SignupForm = () => {
                 minLength: 3,
               })}
               type="fullName"
-              placeholder="Enter your full name"
+              placeholder={signup.name}
             />
           </div>
           {errors?.fullName && (
-            <p className="text-sm text-red-700">Full name not valid</p>
+            <p className="text-sm text-red-700">{signup.name_error}</p>
           )}
           <div>
             <InputField
@@ -95,11 +95,11 @@ const SignupForm = () => {
                 minLength: 9,
               })}
               type="contact"
-              placeholder="Enter your contact"
+              placeholder={signup.phone}
             />
           </div>
           {errors?.contact && (
-            <p className="text-sm text-red-700">Contact not valid</p>
+            <p className="text-sm text-red-700">{signup.phone_error}</p>
           )}
           <div>
             <InputField
@@ -110,11 +110,11 @@ const SignupForm = () => {
                 pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
               })}
               type="email"
-              placeholder="E-mail address"
+              placeholder={signup.email}
             />
           </div>
           {errors?.email && (
-            <p className="text-sm text-red-700">Email not valid</p>
+            <p className="text-sm text-red-700">{signup.email_error}</p>
           )}
           <div>
             <InputField
@@ -122,10 +122,10 @@ const SignupForm = () => {
               register={register('password', { required: true, minLength: 4 })}
               type="password"
               name="password"
-              placeholder="Enter your password"
+              placeholder={signup.password}
             />
           </div>
-          <p className="my-2 opacity-80">Forgot password ?</p>
+          <p className="my-2 opacity-80">{signup.forgot}</p>
         </div>
         <div className="mt-4 w-full flex flex-col items-center space-y-4 justify-center">
           <Button
@@ -133,24 +133,28 @@ const SignupForm = () => {
             variant={!isValid || isLoading ? 'disabled' : 'default'}
             className="w-full"
           >
-            {isLoading ? <Spinner size="sm" color="white" /> : <>Signup</>}
+            {isLoading ? (
+              <Spinner size="sm" color="white" />
+            ) : (
+              <>{signup.btn}</>
+            )}
           </Button>
 
-          <h1 className="font-bold opacity-50">OR</h1>
+          <h1 className="font-bold opacity-50">{signup.choice}</h1>
 
           <Button
             variant="outline"
             className="flex items-center justify-center"
             icon={GoogleIcon}
           >
-            Signup with Google
+            {signup.google}
           </Button>
         </div>
         <div className="mt-4">
           <h1 className="flex justify-center items-center space-x-2">
-            <h3>{'Already have an account ?'}</h3>
+            <h3>{signup.question}</h3>
             <Link className="font-bold" href="/login">
-              Login
+              {signup.login}
             </Link>
           </h1>
         </div>

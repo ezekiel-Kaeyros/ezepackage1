@@ -9,7 +9,7 @@ export const Root = styled.div`
   align-items: center;
   text-align: center;
   width: 100%;
-  background-color: ${(p) => p.theme.colors.general.primary};
+  background-color: ${(p) => p.theme.colors.general.link};
   color: ${(p) => p.theme.colors.general.white};
   padding: ${(p) => p.theme.spacing.xs} ${(p) => p.theme.spacing.lg};
   line-height: 26px;

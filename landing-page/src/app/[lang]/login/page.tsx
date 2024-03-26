@@ -4,11 +4,11 @@ import { getDictionary } from '../../../../lib/dictionary';
 import LoginSignupLayout from '@/app/common/layouts/LoginSignupLayout';
 
 const login = async ({ params: { lang } }: { params: { lang: Locale } }) => {
-  const { Navigation } = await getDictionary(lang);
+  const { page } = await getDictionary(lang);
 
   return (
     <LoginSignupLayout>
-      <LoginForm />
+      <LoginForm login={page.login}/>
     </LoginSignupLayout>
   );
 };

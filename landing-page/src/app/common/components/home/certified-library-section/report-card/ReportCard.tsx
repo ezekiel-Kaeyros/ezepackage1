@@ -25,12 +25,12 @@ const ReportCard: React.FC<ReportCardProps> = ({
           <p className="mb-3 text-[#47586E] md:text-sm text-sm">
             {description}
           </p>
-          <p className="flex text-[#014E38] relative">
-            <span className="mr-5">View Report</span>
+          <p className="flex text-[#014E38] items-center">
+            <span className="mr-2">{href}</span>
             <Image
               src={RightIcon}
               alt=""
-              className="w-[24px] h-[24px] absolute left-24 "
+              className="w-[24px] h-[24px]  "
             />
           </p>
         </div>

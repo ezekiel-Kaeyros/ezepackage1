@@ -4,7 +4,7 @@ import Post from '../models/post';
 import User from '../models/user';
 
 export const commentById = async (id: string): Promise<any> => {
-  const comment = await Comment.findById(id);
+  const comment = await Comment.findById(id).populate('likes').populate('replies');
   return comment;
 };
 
@@ -22,6 +22,24 @@ export const createComment = async (comment: string, authorId: string, postId: s
   await User.findOneAndUpdate({ _id: authorId }, { $push: { comments: newComment._id } });
 
   return newComment;
+};
+
+export const createReplyComment = async (commentId,comment: string, authorId: string, postId: string): Promise<any> => {
+  const newReply = await new Comment({
+    comment,
+    author: authorId,
+    post: postId,
+    parentComment:commentId
+  }).save();
+  await Comment.findOneAndUpdate({_id:commentId, postId},{$push:{replies:newReply._id}})
+
+  await newReply.populate('author').execPopulate();
+
+  // Push the comment to post and user collection.
+  await Post.findOneAndUpdate({ _id: postId }, { $push: { comments: newReply._id } });
+  await User.findOneAndUpdate({ _id: authorId }, { $push: { comments: newReply._id } });
+
+  return newReply;
 };
 
 export const deleteComment = async (id: string): Promise<any> => {

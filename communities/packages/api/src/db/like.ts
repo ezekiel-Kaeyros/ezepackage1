@@ -2,6 +2,7 @@
 import Like from '../models/like';
 import Post from '../models/post';
 import User from '../models/user';
+import { Comment } from '../models';
 
 export const likeById = async (id: string): Promise<any> => {
   const like = await Like.findById(id);
@@ -17,6 +18,17 @@ export const createLike = async (userId: string, postId: string): Promise<any> =
 
   return like;
 };
+
+export const createLikeComment = async (userId: string, commentId: string): Promise<any> => {
+  const like = await new Like({ user: userId, comment: commentId }).save();
+
+  // Push the like to the post and user collection.
+  await Comment.findOneAndUpdate({ _id: commentId }, { $push: { likes: like._id } });
+  await User.findOneAndUpdate({ _id: userId }, { $push: { likes: like._id } });
+
+  return like;
+};
+
 
 export const deleteLike = async (id: string): Promise<any> => {
   const like = await Like.findByIdAndRemove(id);

@@ -1,37 +1,71 @@
-import { FC, Fragment } from 'react';
+import { FC } from 'react';
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
-import { useInfiniteScroll } from '../../utils';
-import { DataLimit, Post } from '../../constants';
+import { useSelector } from 'react-redux';
+import { Post } from '../../constants';
 import { RootState } from '../../store';
 import { PostCard, PostCreateButton } from '../../components/Post';
-import { Container, Button, Spacing, LoadingDots, Skeleton, Text } from '../../components/ui';
-import { openAuthPopup, PopupType, setAuthUser } from '../../store/auth';
+import { Container, Spacing, Skeleton, Text } from '../../components/ui';
 import { CommunityIcon } from '../../components/ui/icons';
 import Seo from '../../components/Seo';
 import LayoutCommunities from '../../components/Layout/CommuntiesLayout';
-import { useDispatchAuth } from '../../utils/useDispatchAuth';
+import { useQuery } from 'react-query';
 
-const fetchPostsByFollowing = async ({ pageParam = 0 }) => {
-  const { data } = await axios.get(`/posts/follow?offset=${pageParam}&limit=${DataLimit.PostsByFollowing}`);
-  return data;
+function extractUniquePostIds(data) {
+  // Check if the input is an array
+  if (!Array.isArray(data)) {
+    console.error('Input is not an array.');
+    return [];
+  }
+
+  // Extract post IDs, flatten the array, and convert to Set to remove duplicates
+  const uniquePostIdsSet = new Set(data.map((item) => item.posts).flat());
+
+  // Convert the Set back to an array
+  const uniquePostIdsArray = Array.from(uniquePostIdsSet);
+
+  return uniquePostIdsArray;
+}
+
+// Fetching posts by id
+const fetchPostsById = async (id) => {
+  try {
+    const { data } = await axios.get(`/posts/${id}`);
+    return data;
+  } catch (error) {
+    console.error(`Error fetching post with ID ${id}:`, error);
+    throw error;
+  }
 };
 
 const Home: FC = () => {
-  const dispatch = useDispatch();
   const authUser = useSelector((state: RootState) => state.auth.user);
-  const { data, isFetching, isFetchingNextPage } = useInfiniteScroll({
-    key: 'postsByFollowing',
-    apiCall: fetchPostsByFollowing,
-    enabled: authUser !== null,
-    dataLimit: DataLimit.PostsByFollowing,
-  });
 
-  const openAuthModal = () => {
-    dispatch(openAuthPopup(PopupType.Sign_Up));
+  const uniquePostsIds = extractUniquePostIds(authUser?.joinedChannels);
+
+  const fetchPosts = async () => {
+    try {
+      const postsData = await Promise.all(uniquePostsIds.map((id) => fetchPostsById(id)));
+      return postsData;
+    } catch (error) {
+      console.log(`An error occured ${error}`);
+    }
   };
 
-  if (isFetching && !isFetchingNextPage) {
+  // const [posts, setPosts] = useState([]);
+  // const { data, isFetching, isFetchingNextPage } = useInfiniteScroll({
+  //   key: 'postsByFollowing',
+  //   apiCall: fetchPosts,
+  //   enabled: authUser !== null,
+  //   dataLimit: DataLimit.PostsByFollowing,
+  // });
+
+  const { data, isLoading } = useQuery('posts', { queryFn: () => fetchPosts() });
+
+  // const openAuthModal = () => {
+  //   dispatch(openAuthPopup(PopupType.Sign_Up));
+  // };
+
+  if (isLoading) {
     return (
       <LayoutCommunities marginTop="sm">
         <Skeleton count={10} height={300} bottom="sm" />
@@ -39,8 +73,9 @@ const Home: FC = () => {
     );
   }
 
-  const isEmpty = !data?.pages[0] || data.pages.every((p) => p.length === 0);
+  // const isEmpty = !data?.pages[0] || data.pages.every((p) => p.length === 0);
 
+  const isEmpty = data?.length === 0 || false;
   return (
     <LayoutCommunities marginTop="sm">
       <Seo title="Home" />
@@ -52,29 +87,20 @@ const Home: FC = () => {
             <CommunityIcon width="40" />
 
             <Spacing top="sm">
-              {!authUser && (
-                <Button inline onClick={openAuthModal} color="primary">
-                  Sign up
-                </Button>
-              )}
               <Spacing top="sm">
-                <Text>{!authUser && 'And'} Follow community members to see their posts in the News Feed.</Text>
+                <Text>{!authUser && 'And'} Join a community to see their posts in the News Feed.</Text>
               </Spacing>
             </Spacing>
           </Container>
         )}
 
-        {data?.pages?.map((posts, i) => {
-          return (
-            <Fragment key={i}>
-              {posts?.map((post: Post) => (
-                <PostCard displayChannelName queryKey="postsByFollowing" key={post._id} post={post} />
-              ))}
+        <>
+          {data?.reverse().map((post: Post) => (
+            <PostCard displayChannelName queryKey="postsByFollowing" key={post._id} post={post} />
+          ))}
 
-              {isFetchingNextPage && <LoadingDots />}
-            </Fragment>
-          );
-        })}
+          {/* {isFetchingNextPage && <LoadingDots />} */}
+        </>
       </div>
     </LayoutCommunities>
   );
