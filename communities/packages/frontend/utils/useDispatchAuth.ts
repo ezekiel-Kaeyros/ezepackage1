@@ -12,12 +12,12 @@ export const useDispatchAuth = () => {
   const dispatch = useDispatch();
   const { push } = useRouter();
 
-  const token = cookies.get(Cookies.Token);
-  const user = cookies.get(Cookies.User_data);
+  const token = JSON?.parse(cookies.get(Cookies.Token, { domain: '.eze.wiki' }));
+  //const user = cookies.get(Cookies.User_data);
 
   const fetch = async () => {
-    //const token = JSON?.parse(cookies.get(Cookies.Token, { domain: '.eze.wiki' }));
-    const token = JSON?.parse(cookies.get(Cookies.Token));
+    const token = JSON?.parse(cookies.get(Cookies.Token, { domain: '.eze.wiki' }));
+    //const token = JSON?.parse(cookies.get(Cookies.Token));
     try {
       axios.defaults.headers.common = { Authorization: `bearer ${token}` };
       const { data } = await axios.get('/auth-user');
