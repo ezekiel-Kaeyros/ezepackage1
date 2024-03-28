@@ -1,7 +1,8 @@
 import { ChangeEvent, FC, FormEvent, useState, Fragment } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { MentionsInput, Mention } from 'react-mentions';
 import { CloseIcon } from '../ui/icons';
 import PostImageUpload from './PostImageUpload';
 import { MaxImageSize, Channel } from '../../constants';
@@ -17,6 +18,7 @@ import {
 import { RootState } from '../../store';
 import { AlertTypes, openAlert } from '../../store/alert';
 import { updateCache } from './cache';
+import mentionsInputStyle from './mentionsInputStyle';
 
 const config = {
   headers: {
@@ -44,6 +46,11 @@ const updatePost = async ({ postId, title, image, imageToDeletePublicId, channel
 
   const updatedPost = await axios.put('/posts/update', formData, config);
   return updatedPost.data;
+};
+
+const fetchUsers = async () => {
+  const users = await axios.get('/users/get-users');
+  return users;
 };
 
 interface PostCreateProps {
@@ -193,6 +200,17 @@ const PostCreate: FC<PostCreateProps> = ({
     }
   };
 
+  const handleChange2 = (e: FormEvent) => {
+    const { value } = e.target as HTMLInputElement;
+    setFormValues({ ...formValues, title: value });
+  };
+
+  // Fetching users
+
+  const { data } = useQuery({ queryFn: fetchUsers, queryKey: ['users'] });
+
+  const usersData = data?.data?.map((user) => ({ id: user._id, display: user.fullName }));
+
   return (
     <Modal title={postId ? 'Edit Post' : 'Create Post'} isOpen={isPostCreateOpen} close={close}>
       <form onSubmit={handleSubmit}>
@@ -210,13 +228,21 @@ const PostCreate: FC<PostCreateProps> = ({
         </SelectContainer>
 
         <Spacing top="xs" bottom="xxs">
-          <TextAreaAutoSize
+          <MentionsInput
             name="title"
-            autoFocus
-            onChange={handleChange}
-            value={formValues.title}
             placeholder={`What do you want to talk about, ${authUser.fullName}?`}
-          />
+            style={mentionsInputStyle}
+            value={`${formValues?.title}`}
+            autoFocus
+            onChange={handleChange2}
+          >
+            <Mention
+              style={{ backgroundColor: '#cee4e5' }}
+              displayTransform={(id, display) => `@${display}`}
+              trigger="@"
+              data={usersData}
+            />
+          </MentionsInput>
         </Spacing>
 
         {renderImagePreview()}

@@ -92,7 +92,7 @@ const Header: ForwardRefRenderFunction<HTMLButtonElement, HeaderProps> = ({ togg
               backgroundColor={5}
               placeholder="Search for posts and members"
               onItemClick={(item) =>
-                item.fullName ? router.push(`/profile/${item._id}`) : router.push(`/post/${item._id}`)
+                item.fullName ? router.push(`/communities/profile/${item._id}`) : router.push(`/post/${item._id}`)
               }
             />
           </SearchContainer>

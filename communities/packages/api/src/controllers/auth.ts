@@ -17,7 +17,7 @@ import { URLSearchParams } from 'url';
 import { SocialProvider } from '../authentication';
 
 const AuthController = {
-  authUser: async (req: Request, res: Response): Promise<any> => {
+  authUser: async (req: Request, res: Response,next:NextFunction): Promise<any> => {
     passport.authenticate('jwt', { session: false }, async (err, user) => {
       if (!user) {
         return res.send(null);
@@ -27,7 +27,8 @@ const AuthController = {
         const authUser = await getAuthUser(user._id);
         return res.send(authUser);
       } catch (error) {
-        return res.send(ErrorCodes.Internal).send(ErrorMessages.Generic);
+        next(error)
+        // return res.send(ErrorCodes.Internal).send(ErrorMessages.Generic);
       }
     })(req, res);
   },

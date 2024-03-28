@@ -1,6 +1,6 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Post } from '../../constants';
 import { RootState } from '../../store';
 import { PostCard, PostCreateButton } from '../../components/Post';
@@ -8,7 +8,8 @@ import { Container, Spacing, Skeleton, Text } from '../../components/ui';
 import { CommunityIcon } from '../../components/ui/icons';
 import Seo from '../../components/Seo';
 import LayoutCommunities from '../../components/Layout/CommuntiesLayout';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
+
 
 function extractUniquePostIds(data) {
   // Check if the input is an array
@@ -38,8 +39,10 @@ const fetchPostsById = async (id) => {
 };
 
 const Home: FC = () => {
+  const [datas,setDatas]=useState([])
   const authUser = useSelector((state: RootState) => state.auth.user);
-
+  
+  const dispatch=useDispatch()
   const uniquePostsIds = extractUniquePostIds(authUser?.joinedChannels);
 
   const fetchPosts = async () => {
@@ -60,7 +63,19 @@ const Home: FC = () => {
   // });
 
   const { data, isLoading } = useQuery('posts', { queryFn: () => fetchPosts() });
+  const clientQuery = useQueryClient();
+  
+  // useEffect(() => {
+  //   if (isRefresh) {
+  //     clientQuery.invalidateQueries({ queryKey: ['posts'] });
+  //     dispatch(refeshPost(false))
+  //     // setDatas(data)
+  //   }
 
+  // //   if (!isLoading && data && data.length > 0) {
+  // //    setDatas(data)
+  // //  }
+  // }, [isRefresh,isLoading]);
   // const openAuthModal = () => {
   //   dispatch(openAuthPopup(PopupType.Sign_Up));
   // };

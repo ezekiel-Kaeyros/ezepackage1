@@ -10,6 +10,7 @@ import routes from './routes';
 import socket from './socket';
 import { initDb } from './db';
 import { initPassport } from './authentication';
+import { errorHandler } from './utils/errorHandler';
 
 initDb();
 initPassport();
@@ -30,6 +31,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/', routes);
+app.use(errorHandler)
 
 const httpServer = createServer(app);
 socket(httpServer);

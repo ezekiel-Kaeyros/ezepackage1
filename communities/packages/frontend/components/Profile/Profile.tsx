@@ -70,7 +70,7 @@ const Profile: FC<ProfileProps> = ({ user, queryKey }) => {
         <Actions>
           <Follow user={user} queryKey={queryKey} />
           <Spacing left="sm" />
-          <ButtonLink href={`/messages/${user._id}`}>
+          <ButtonLink href={`/communities/messages/${user._id}`}>
             <EnvelopeIcon color="primary" /> Message
           </ButtonLink>
         </Actions>

@@ -16,12 +16,11 @@ export const useDispatchAuth = () => {
   const user = cookies.get(Cookies.User_data);
 
   const fetch = async () => {
-    const token = JSON?.parse(cookies.get(Cookies.Token, { domain: '.eze.wiki' }));
-    //const token = JSON?.parse(cookies.get(Cookies.Token));
+    //const token = JSON?.parse(cookies.get(Cookies.Token, { domain: '.eze.wiki' }));
+    const token = JSON?.parse(cookies.get(Cookies.Token));
     try {
       axios.defaults.headers.common = { Authorization: `bearer ${token}` };
       const { data } = await axios.get('/auth-user');
-      console.log('data', data);
       if (data) {
         dispatch(
           setAuthUser({
@@ -38,18 +37,7 @@ export const useDispatchAuth = () => {
   };
 
   useEffect(() => {
-    // const user = JSON?.parse(cookies.get(Cookies.User_data));
-
-    // dispatch(
-    //   setAuthUser({
-    //     ...user,
-    //     isOnline: true,
-    //   })
-    // );
-
     if (token) {
-      // const token = JSON?.parse(cookies.get(Cookies.Token, { domain: '.eze.wiki' }));
-      // const user = JSON?.parse(cookies.get(Cookies.User_data, { domain: '.eze.wiki' }));
       fetch();
     } else {
       push(HOME_URL);

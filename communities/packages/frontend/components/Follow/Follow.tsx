@@ -61,7 +61,8 @@ const Follow: FC<FollowProps> = ({ user, queryKey }) => {
 
   return (
     <Root onClick={debounce(followMutation, 200)} isFollowing={isFollowing}>
-      <Image alt="" src={addIcon}/>&nbsp;&nbsp;
+      <Image alt="" src={addIcon} />
+      &nbsp;&nbsp;
       {isFollowing ? 'Following' : 'Follow'}
     </Root>
   );

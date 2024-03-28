@@ -57,7 +57,7 @@ const CommunityPage = () => {
 
       <BodyCommunity>
         <LeftSection>
-          <ListCommunity>
+          {/* <ListCommunity>
             <ItemData
               background={part === 1 ? 'var(--colors-Castleton-Green-100, #E6F0ED)' : ''}
               onClick={() => {
@@ -74,7 +74,7 @@ const CommunityPage = () => {
             >
               Discover{' '}
             </ItemData>
-          </ListCommunity>
+          </ListCommunity> */}
 
           {part === 1 && (
             <>
@@ -95,36 +95,6 @@ const CommunityPage = () => {
                   {' '}
                   All{' '}
                 </ItemAll>
-                {/* <ItemAll
-                  underlined={step === 2 ? '2px solid #1D242D' : ''}
-                  colored={step === 2 ? 'var(--colors-text-colors-primary, #1D242D)' : ''}
-                  onClick={() => {
-                    setStep(2);
-                  }}
-                >
-                  {' '}
-                  Data Analytics{' '}
-                </ItemAll>
-                <ItemAll
-                  underlined={step === 3 ? '2px solid #1D242D' : ''}
-                  colored={step === 3 ? 'var(--colors-text-colors-primary, #1D242D)' : ''}
-                  onClick={() => {
-                    setStep(3);
-                  }}
-                >
-                  {' '}
-                  Agro-Food Sciences{' '}
-                </ItemAll>
-                <ItemAll
-                  underlined={step === 4 ? '2px solid #1D242D' : ''}
-                  colored={step === 4 ? 'var(--colors-text-colors-primary, #1D242D)' : ''}
-                  onClick={() => {
-                    setStep(4);
-                  }}
-                >
-                  {' '}
-                  Microbiologist{' '}
-                </ItemAll> */}
               </ListCommunity>
 
               {step == 1 && (
@@ -133,24 +103,6 @@ const CommunityPage = () => {
                   <CommunityCards search={isSearch} channels={channels} categoryStep={'Data Analytics'} />
                 </>
               )}
-              {/* {step == 2 && (
-                <>
-                  <Title>Data Analytics Community</Title>
-                  <CommunityCard search={isSearch} value={value2} categoryStep={'Data Analytics'} />
-                </>
-              )}
-              {step == 3 && (
-                <>
-                  <Title>Agro-Food Sciences Community</Title>
-                  <CommunityCard search={isSearch} value={value2} categoryStep={'Agro-Food Sciences'} />
-                </>
-              )}
-              {step == 4 && (
-                <>
-                  <Title>Microbiologist Community</Title>
-                  <CommunityCard search={isSearch} value={value2} categoryStep={'Microbiologist'} />
-                </>
-              )} */}
             </>
           )}
 

@@ -91,6 +91,8 @@ router.post('/posts/pin', checkIfSuperAdmin, PostController.pin);
 /**
  * Likes
  */
+router.get('/likes/comment/:id',checkIfUser, LikeController.get_like_by_commentID);
+router.get('/likes/post/:id', LikeController.get_like_by_postID);
 router.post('/likes/create', checkIfUser, LikeController.create);
 router.post('/likes/comment', checkIfUser, LikeController.like_comment);
 router.delete('/likes/delete', checkIfUser, LikeController.delete);

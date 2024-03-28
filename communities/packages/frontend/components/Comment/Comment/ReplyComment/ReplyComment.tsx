@@ -2,17 +2,17 @@ import React, { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMutation, useQueryClient } from 'react-query';
 import axios from 'axios';
-import { Root, UserName, Container, StyledButton, ContainerActionComment } from './style';
-import { Link, Avatar, Confirm, Spacing } from '../../ui';
-import { CloseIcon } from '../../ui/icons';
-import { RootState } from '../../../store';
-import { useNotifications } from '../../../utils';
-import Linkify from '../../Linkify';
-import { getIdComment } from '../../../store/auth';
-import CommentCreate from '../CommentCreate';
-import { Item } from '../../ConnexionCard/style';
-import Like from '../../Like';
-import ReplyComment from './ReplyComment/ReplyComment';
+import { Root, UserName, Container, StyledButton, ContainerActionComment } from '../style';
+import { Link, Avatar, Confirm, Spacing } from '../../../ui';
+import { CloseIcon } from '../../../ui/icons';
+import { RootState } from '../../../../store';
+import { useNotifications } from '../../../../utils';
+import Linkify from '../../../Linkify';
+import { getIdComment } from '../../../../store/auth';
+import CommentCreate from '../../CommentCreate';
+import { Item } from '../../../ConnexionCard/style';
+import Like from '../../../Like';
+// import Like from '../../Like';
 
 const deleteComment = async (id: string) => {
   const like = await axios.delete('/comments/delete', { data: { id } });
@@ -23,21 +23,25 @@ interface CommentProps {
   comment: any;
   author: any;
   queryKey: any;
-  post: any;
+    post: any;
+    id?:string
 }
 
-export function parseTextWithLinks(text) {
+function parseTextWithLinks(text) {
   // Regular expression to find attributions
   const attributionRegex = /\@\[([^\]]+)\]\(([^)]+)\)/g;
 
   // Replace attributions with Link components
-  const parsedText = text?.replace(attributionRegex, (match, name, id) => {
-    return `<a style="text-decoration:none; color:#015E44;"  href='/communities/profile/${id}'>${name}</a>`;
+  const parsedText = text.replace(attributionRegex, (match, name, id) => {
+    return `<a  href='/communities/profile/${id}'>${name}</a>`;
   });
+
+  console.log('parsed text', parsedText);
+
   // Render HTML with Next.js Link components
   return parsedText;
 }
-const Comment: FC<CommentProps> = ({ comment, author, queryKey, post }) => {
+const ReplyComment: FC<CommentProps> = ({ comment, author, queryKey, post , id}) => {
   const idComment = useSelector((state: RootState) => state.auth.idComment);
   const reply = post.comments.filter((item) => item.parentComment == comment._id);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
@@ -69,8 +73,8 @@ const Comment: FC<CommentProps> = ({ comment, author, queryKey, post }) => {
     setIsLike('');
   };
   // const comments = commentsLength > 0 ? commentsLength + ' comments' : null;
-  console.log('post', post);
-  console.log('hasLiked', author);
+  // console.log('post', post.comments);
+  // console.log('hasLiked', author);
 
   const remove = async () => {
     try {
@@ -124,7 +128,7 @@ const Comment: FC<CommentProps> = ({ comment, author, queryKey, post }) => {
 
         <Container>
           <UserName>
-            <Link color="text" weight="bold" size="tiny" href={`/communities/profile/${author._id}`}>
+            <Link color="text" weight="bold" size="tiny" href={`/profile/${author._id}`}>
               {author.fullName}
             </Link>
           </UserName>
@@ -157,10 +161,10 @@ const Comment: FC<CommentProps> = ({ comment, author, queryKey, post }) => {
         </span> */}
         <span
           onClick={() => {
-            if (idComment === comment._id) {
+            if (idComment === id) {
               dispatch(getIdComment(''));
             } else {
-              dispatch(getIdComment(comment._id.toString()));
+              dispatch(getIdComment(id.toString()));
             }
           }}
           style={{ cursor: 'pointer', marginRight: '20px' }}
@@ -181,30 +185,16 @@ const Comment: FC<CommentProps> = ({ comment, author, queryKey, post }) => {
             likeHandler={likeHandler}
           /> */}
         </div>
-        {/* <span>{likes && comment.likes.length}</span>'r */}
+        {/* <span>{likes && comment.likes.length}</span> */}
       </ContainerActionComment>
 
-      {reply.length > 0 &&
-        reply.map((item, index) => {
-          return (
-            <div style={{ paddingLeft: '8%' }} key={index}>
-              <ReplyComment
-                comment={item}
-                post={post}
-                queryKey={queryKey}
-                author={item.author}
-                id={comment._id}
-              ></ReplyComment>
-            </div>
-          );
-        })}
-      <Spacing top="xs" left="sm">
+      {/* <Spacing top="xs" left="sm">
         {authUser && idComment && idComment == comment._id && (
           <CommentCreate queryKey={queryKey} post={post} type="reply" id={comment._id} />
         )}
-      </Spacing>
+      </Spacing> */}
     </>
   );
 };
 
-export default Comment;
+export default ReplyComment;

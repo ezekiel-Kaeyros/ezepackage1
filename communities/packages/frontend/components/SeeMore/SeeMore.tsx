@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useState, FC } from 'react';
+import React, { SyntheticEvent, useState, FC, ReactNode } from 'react';
 import { StyledButton } from './style';
 
 const MAX_CHARACTERS_TO_SHOW = 420;

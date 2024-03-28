@@ -29,6 +29,7 @@ import Like from '../../Like';
 import SeeMore from '../../SeeMore';
 import Linkify from '../../Linkify';
 import RepostIcon from '../../ui/icons/RepostIcon';
+import { parseTextWithLinks } from '../../Comment/Comment/Comment';
 
 interface PostCardProps {
   post: Post;
@@ -69,9 +70,10 @@ const PostCard: FC<PostCardProps> = ({
 
   const showComments = isCommentSectionOpen || isCommentsOpen;
 
+  const parsedText: any = <div dangerouslySetInnerHTML={{ __html: parseTextWithLinks(post.title) }} />;
   const postCardTitle = (
     <Title>
-      <SeeMore>{post.title}</SeeMore>
+      <SeeMore>{parsedText}</SeeMore>
     </Title>
   );
 
@@ -99,7 +101,7 @@ const PostCard: FC<PostCardProps> = ({
           </Link>
 
           <Spacing left="xs">
-            <Link href={`/profile/${post.author._id}`} color="text">
+            <Link href={`/communities/profile/${post.author._id}`} color="text">
               <Name>{post.author.fullName} </Name>
             </Link>
             <CreatedAt>
@@ -140,9 +142,9 @@ const PostCard: FC<PostCardProps> = ({
         <>
           <TitleContainer>
             {disableNavigation ? (
-              <Linkify>{postCardTitle}</Linkify>
+              <Linkify> {postCardTitle}</Linkify>
             ) : (
-              <Link color="text" href={`/post/${post._id}`} disableBorderOnHover>
+              <Link color="text" href={`/communities/post/${post._id}`} disableBorderOnHover>
                 {postCardTitle}
               </Link>
             )}
@@ -153,7 +155,7 @@ const PostCard: FC<PostCardProps> = ({
         (disableNavigation ? (
           postCardImage
         ) : (
-          <Link href={`/post/${post._id}`} disableBorderOnHover fullWidth block>
+          <Link href={`/communities/post/${post._id}`} disableBorderOnHover fullWidth block>
             {postCardImage}
           </Link>
         ))}
@@ -197,7 +199,7 @@ const PostCard: FC<PostCardProps> = ({
             <PostCardShare
               ref={sharePopoverRef}
               setIsShareOpen={setIsShareOpen}
-              url={`${window.location.host}/post/${post._id}`}
+              url={`${window.location.host}/communities/post/${post._id}`}
               title={post.title}
             />
           )}
@@ -213,9 +215,13 @@ const PostCard: FC<PostCardProps> = ({
             {authUser && <CommentCreate queryKey={queryKey} autoFocus={isCommentSectionOpen} post={post} />}
           </Spacing>
 
-          {post.comments.map((comment: any) => (
-            <Comment key={comment._id} queryKey={queryKey} post={post} author={comment.author} comment={comment} />
-          ))}
+          {post.comments.map((comment: any) => {
+            if (!comment.parentComment) {
+              return (
+                <Comment key={comment._id} queryKey={queryKey} post={post} author={comment.author} comment={comment} />
+              );
+            }
+})}
         </Comments>
       )}
     </Root>

@@ -35,6 +35,8 @@ export interface AuthState {
   token: string | null;
   isPopupOpen: boolean;
   popupType: null | PopupType;
+  idComment: string;
+  idCommentLike: string;
 }
 
 export const SET_AUTH_USER = 'SET_AUTH_USER';
@@ -50,6 +52,8 @@ export const ADD_USER_IMAGE = 'ADD_USER_IMAGE';
 export const ADD_USER_COVER = 'ADD_USER_COVER';
 export const ADD_USER_FOLLOWING = 'ADD_USER_FOLLOWING';
 export const REMOVE_USER_FOLLOWING = 'REMOVE_USER_FOLLOWING';
+export const GET_ID_COMMENT = 'GET_ID_COMMENT';
+export const GET_ID_COMMENT_LIKE = 'GET_ID_COMMENT_LIKE';
 
 export interface setAuthUserAction {
   type: typeof SET_AUTH_USER;
@@ -112,6 +116,16 @@ export interface removeUserFollowingAction {
   payload: string;
 }
 
+export interface getIdComment {
+  type: typeof GET_ID_COMMENT;
+  payload: string;
+}
+
+export interface getIdCommentLike {
+  type: typeof GET_ID_COMMENT_LIKE;
+  payload: string;
+}
+
 export type AuthActionTypes =
   | setAuthUserAction
   | setTokenAction
@@ -125,7 +139,9 @@ export type AuthActionTypes =
   | removeUserFollowingAction
   | setSocketAction
   | addUserImageAction
-  | addUserCoverAction;
+  | addUserCoverAction
+  | getIdComment
+  | getIdCommentLike;
 
 // Actions
 export function setAuthUser(user: AuthUser): AuthActionTypes {
@@ -215,6 +231,19 @@ export function removeUserFollowing(id: string): AuthActionTypes {
     payload: id,
   };
 }
+export function getIdComment(idComment: string): AuthActionTypes {
+  return {
+    type: GET_ID_COMMENT,
+    payload: idComment,
+  };
+}
+
+export function getIdCommentLike(idCommentLike: string): AuthActionTypes {
+  return {
+    type: GET_ID_COMMENT_LIKE,
+    payload: idCommentLike,
+  };
+}
 
 // Reducer
 const initialState: AuthState = {
@@ -223,6 +252,8 @@ const initialState: AuthState = {
   socket: null,
   isPopupOpen: false,
   popupType: null,
+  idComment: '',
+  idCommentLike: '',
 };
 
 export function authReducer(state = initialState, action: AuthActionTypes): AuthState {
@@ -231,6 +262,16 @@ export function authReducer(state = initialState, action: AuthActionTypes): Auth
       return {
         ...state,
         user: action.payload,
+      };
+    case GET_ID_COMMENT:
+      return {
+        ...state,
+        idComment: action.payload,
+      };
+    case GET_ID_COMMENT_LIKE:
+      return {
+        ...state,
+        idCommentLike: action.payload,
       };
     case SET_TOKEN:
       return {

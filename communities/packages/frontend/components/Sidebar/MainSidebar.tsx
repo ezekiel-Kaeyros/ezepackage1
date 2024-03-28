@@ -109,7 +109,7 @@ const MainSidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ i
           <ButtonLink
             fullWidth
             radius="none"
-            href="/online-courses"
+            href="https://learn.eze.wiki/"
             color="text"
             active={router.pathname === '/online-courses'}
             size="sm"
@@ -123,7 +123,7 @@ const MainSidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ i
           <ButtonLink
             fullWidth
             radius="none"
-            href="/living-library"
+            href="https://library.eze.wiki/"
             color="text"
             active={router.pathname === '/living-library'}
             size="sm"

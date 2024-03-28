@@ -1,13 +1,10 @@
 import React, { FC, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import Image from 'next/image';
 import { Root, ImageContainer, Imaged, InitialLetters, FullName, Description, UserName } from './style';
-import { Button, Link, Spacing } from '../ui';
+import { Link, Spacing } from '../ui';
 import Follow from '../Follow';
 import theme from '../../theme';
 import { RootState } from '../../store';
-import FOE_image from 'img_p1.png';
-import iconButton from '../../public/add-circle.svg';
 
 interface MembersCardProps {
   user: any;

@@ -27,6 +27,16 @@ export const Container = styled.div`
   border-radius: ${(p) => p.theme.radius.lg};
   margin-left: ${(p) => p.theme.spacing.xxs};
 `;
+export const ContainerActionComment = styled.div`
+width:fit;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content:start;
+   padding-left: ${(p) => p.theme.spacing.xs};
+  font-size:12px;
+
+`;
 
 export const UserName = styled.div`
   color: ${(p) => p.theme.colors.general.primary};

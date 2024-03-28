@@ -15,12 +15,11 @@ import { useAuth } from '@/app/hooks/useAuth';
 
 type NavBarProps = {
   lang: string;
-  navigation:any
+  navigation: any;
 };
 const COMMUNITIES_URL = 'https://communities.eze.wiki';
 
-const NavBar: React.FC<NavBarProps> = ({ lang,navigation }) => {
-  
+const NavBar: React.FC<NavBarProps> = ({ lang, navigation }) => {
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
   const { token } = useAuth();
 
@@ -65,10 +64,13 @@ const NavBar: React.FC<NavBarProps> = ({ lang,navigation }) => {
             </Link>
           </li>
           <li className="border-t-1 hover:text-primaryColor lg:border-none px-6 lg:px-3 2xl:px-6  pt-4 lg:pt-0 pb-2">
-            <Link href="#"> {navigation.online}</Link>
+            <Link href="https://learn.eze.wiki/"> {navigation.online}</Link>
           </li>
           <li className="border-t-1 hover:text-primaryColor lg:border-none px-6 lg:px-3 2xl:px-6  pt-4 lg:pt-0 pb-2">
-            <Link href="#"> {navigation.library}</Link>
+            <Link href="http://library.eze.wiki:3010/">
+              {' '}
+              {navigation.library}
+            </Link>
           </li>
           <li className="border-t-1 hover:text-primaryColor lg:border-none px-6 lg:px-3 2xl:px-6  pt-4 lg:pt-0 pb-2">
             <Link href="#"> {navigation.fuding}</Link>

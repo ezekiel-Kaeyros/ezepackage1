@@ -38,7 +38,7 @@ const Notification: FC<NotificationProps> = ({ notification }) => {
           <Action>
             <div>
               commented on your{' '}
-              <Link disableBorderOnHover href={`/communties/post/${notification.comment.post._id}`}>
+              <Link disableBorderOnHover href={`/communities/post/${notification.comment.post._id}`}>
                 post
               </Link>
             </div>
