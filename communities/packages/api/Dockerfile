@@ -23,7 +23,8 @@ COPY . .
 RUN npm run build
 
 # Copy index.html to the build directory
-COPY index.html ./build/
+COPY src/index.html ./build/
+
 
 
 # Expose application port
