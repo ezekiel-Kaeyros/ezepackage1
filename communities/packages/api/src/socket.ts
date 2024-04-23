@@ -1,21 +1,21 @@
 import { Server } from 'socket.io';
-import jwt from 'jsonwebtoken';
+// import jwt from 'jsonwebtoken';
 import { Events } from './constants';
 import { onlineUsers, updateUserIsOnline } from './db';
 
 const users = {};
 
-function getCookie(cookie, name) {
-  cookie = ';' + cookie;
-  cookie = cookie.split('; ').join(';');
-  cookie = cookie.split(' =').join('=');
-  cookie = cookie.split(';' + name + '=');
-  if (cookie.length < 2) {
-    return null;
-  } else {
-    return decodeURIComponent(cookie[1].split(';')[0]);
-  }
-}
+// function getCookie(cookie, name) {
+//   cookie = ';' + cookie;
+//   cookie = cookie.split('; ').join(';');
+//   cookie = cookie.split(' =').join('=');
+//   cookie = cookie.split(';' + name + '=');
+//   if (cookie.length < 2) {
+//     return null;
+//   } else {
+//     return decodeURIComponent(cookie[1].split(';')[0]);
+//   }
+// }
 
 setInterval(async () => {
   const currentUsers = await onlineUsers();
@@ -29,37 +29,38 @@ setInterval(async () => {
 export default (httpServer) => {
   const io = new Server(httpServer, {
     cors: {
-      origin: process.env.FRONTEND_URL,
+      // origin: process.env.FRONTEND_URL,
       methods: ['GET', 'POST'],
       credentials: true,
     },
-  });
+  }
+  );
 
-  io.use((socket: any, next) => {
-    if (socket.handshake.headers.cookie) {
-      const token = getCookie(socket.handshake.headers.cookie, 'token');
-      jwt.verify(token, process.env.SECRET, function (err, decoded) {
-        if (err) {
-          return next(new Error('Authentication error'));
-        }
-        socket.authUser = decoded.user;
-        next();
-      });
-    } else {
-      next(new Error('Authentication error'));
-    }
-  });
+  // io.use((socket: any, next) => {
+  //   if (socket.handshake.headers.cookie) {
+  //     const token = getCookie(socket.handshake.headers.cookie, 'token');
+  //     jwt.verify(token, process.env.SECRET, function (err, decoded) {
+  //       if (err) {
+  //         return next(new Error('Authentication error'));
+  //       }
+  //       socket.authUser = decoded.user;
+  //       next();
+  //     });
+  //   } else {
+  //     next(new Error('Authentication error'));
+  //   }
+  // });
 
   io.on('connection', (socket: any) => {
     console.log('Socket connection. socket.connected: ', socket.connected);
-    const userId = socket.authUser._id;
-    if (!users[userId]) {
-      console.log('user')
-      users[userId] = {
-        socketId: socket.id,
-        userId: socket.authUser._id,
-      };
-    }
+    // const userId = socket.authUser._id;
+    // if (!users[userId]) {
+    //   console.log('user')
+    //   users[userId] = {
+    //     socketId: socket.id,
+    //     userId: socket.authUser._id,
+    //   };
+    // }
 
     /**
      * Notifications.
@@ -91,11 +92,14 @@ export default (httpServer) => {
         io.to(users[senderId]?.socketId).emit(Events.SEND_MESSAGE, data);
       }
     });
-
+socket.on('chat message',(data)=>{
+  console.log(data)
+}
+);
     socket.on('disconnect', () => {
       console.log('Socket disconnected');
-      updateUserIsOnline(userId, false);
-      delete users[socket.authUser._id];
+      // updateUserIsOnline(userId, false);
+      // delete users[socket.authUser._id];
     });
   });
 };

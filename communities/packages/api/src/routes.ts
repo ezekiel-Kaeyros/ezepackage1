@@ -22,7 +22,7 @@ const router = Router();
 const storage = multer.memoryStorage();
 const multerUpload = multer({ storage });
 
-router.get('/', (req: Request, res: Response) => res.send('echo'));
+router.get('/', (req: Request, res: Response) => res.sendFile(__dirname + '/index.html'));
 
 /**
  * Authentication
