@@ -94,6 +94,7 @@ export default (httpServer) => {
     });
 socket.on('chat message',(data)=>{
   console.log(data)
+  io.emit('chat message',data)
 }
 );
     socket.on('disconnect', () => {
