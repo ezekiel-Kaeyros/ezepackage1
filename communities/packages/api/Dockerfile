@@ -22,6 +22,10 @@ COPY . .
 # Build the project
 RUN npm run build
 
+# Copy index.html to the build directory
+COPY index.html ./build/
+
+
 # Expose application port
 EXPOSE 4000
 
