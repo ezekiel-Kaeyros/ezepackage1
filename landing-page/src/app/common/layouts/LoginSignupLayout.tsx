@@ -10,11 +10,9 @@ import LogoFormIcon from '../../../../public/icons/logoFormIcon.svg';
 const LoginSignupLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="xl:flex px-4 sm:px-16 md:px-32 lg:px-64 xl:px-0 xl:fixed w-full h-full">
-      <div className=" w-full  xl:w-6/12 p-8">
+      <div className=" w-full  xl:w-6/12 p-8 overflow-y-auto">
         <LoginHeader />
-        <div className="my-12 xl:overflow-y-scroll 2xl:overflow-hidden h-[80vh] pb-16 pr-8">
-          {children}
-        </div>
+        <div className="my-14 overflow-y-auto  h-fit pb-4 ">{children}</div>
 
         <LoginFooter />
       </div>

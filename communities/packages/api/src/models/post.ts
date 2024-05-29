@@ -4,10 +4,12 @@ const Schema = mongoose.Schema;
 
 const PostSchema = new Schema(
   {
+    postId: String,
     title: String,
     image: String,
     imagePublicId: String,
     pinned: Boolean,
+
     channel: {
       type: Schema.Types.ObjectId,
       ref: 'Channel',

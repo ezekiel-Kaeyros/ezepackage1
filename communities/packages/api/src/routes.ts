@@ -22,7 +22,7 @@ const router = Router();
 const storage = multer.memoryStorage();
 const multerUpload = multer({ storage });
 
-router.get('/', (req: Request, res: Response) => res.sendFile(__dirname + '/index.html'));
+router.get('/', (req: Request, res: Response) => res.send('echo'));
 
 /**
  * Authentication
@@ -44,7 +44,7 @@ router.get('/facebook/callback', AuthController.facebookCallback);
 /**
  * Users
  */
-router.get('/users/get-users', withUser, UserController.getUsers);
+router.get('/users/get-users',  UserController.getUsers);
 router.get('/users/online-users', withUser, UserController.onlineUsers);
 router.get('/users/new-members', withUser, UserController.newMembers);
 router.post('/users/upload-photo', [checkIfUser, multerUpload.single('image')], UserController.uploadPhoto);
@@ -70,11 +70,12 @@ router.get('/channels', ChannelController.channels);
 router.get('/channels/:name', ChannelController.channelByName);
 router.post('/channels/create', checkIfAdmin, ChannelController.create);
 router.put('/channels/update', checkIfAdmin, ChannelController.update);
+router.put('/channels/update-member', ChannelController.updateMember);
 router.delete('/channels/delete', checkIfAdmin, ChannelController.delete);
 router.post('/channels/reorder', checkIfAdmin, ChannelController.reorder);
 router.post('/channels/join/:channelId', UserController.joinChannel);
 router.post('/channels/leave/:channelId', UserController.leaveChannel);
-router.post('/channels/upload-photo', [checkIfAdmin, multerUpload.single('image')], ChannelController.uploadPhoto);
+router.post('/channels/upload-photo', [ multerUpload.single('image')], ChannelController.uploadPhoto);
 
 /**
  * Posts

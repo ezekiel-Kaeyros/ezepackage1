@@ -52,7 +52,9 @@ const useNotifications = () => {
         return;
       }
 
+      
       queryClient.setQueryData(queryKey, (existingPosts: any) => {
+        console.log(existingPosts, "**********")
         if (!existingPosts.pages) {
           return {
             ...existingPosts,
@@ -89,10 +91,13 @@ const useNotifications = () => {
       return;
     }
 
+    console.log(id, "....///")
+
     try {
       const notification = await deleteMutation(id);
       socket.emit(Events.DELETE_NOTIFICATION, notification);
       queryClient.setQueryData(queryKey, (existingPosts: any) => {
+        console.log(existingPosts, "**********")
         if (!existingPosts.pages) {
           return {
             ...existingPosts,

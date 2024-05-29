@@ -17,10 +17,10 @@ jobs:
           cd communities/packages/api && \
           touch .env && \
           echo "API_PORT=4000" > .env && \
-          echo "API_URL=https://back.communities.eze.wiki" >> .env && \
+          echo "API_URL=https://backend_communities.sch-eze.com" >> .env && \
           echo "NODE_ENV=production" >> .env && \
           echo "SECRET=WriteYourSecret" >> .env && \
-          echo "FRONTEND_URL=https://communities.eze.wiki" >> .env && \
+          echo "FRONTEND_URL=https://communities.sch-eze.com" >> .env && \
           echo "MONGO_URL=mongodb+srv://eze:nMWN2NG50nSLJrOC@eze-communities.ufwbl4d.mongodb.net/?retryWrites=true&w=majority" >> .env && \
           echo "CLOUDINARY_CLOUD_NAME=dyekwrvwe" >> .env && \
           echo "CLOUDINARY_API_KEY=981519692274267" >> .env && \
@@ -32,7 +32,7 @@ jobs:
         run: |
           cd landing-page && \
           touch .env && \
-          echo "REACT_APP_API_URL=https://back.communities.eze.wiki" > .env
+          echo "REACT_APP_API_URL=https://backend_communities.sch-eze.com" > .env
 
       - name: Build Docker image
         run: docker-compose build

@@ -6,7 +6,7 @@ import IFYARLogo from '../../../../../public/images/ifyarLogo.png';
 
 const LoginFooter = () => {
   return (
-    <div className="relative 2xl:absolute bottom-0">
+    <div className="relative ">
       <h1 className="opacity-70">Partenaires de coopération</h1>
       <div className="flex space-x-4">
         <Image src={SCHLogo} alt="SCH logo" />

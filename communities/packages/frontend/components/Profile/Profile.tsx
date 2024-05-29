@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
   CoverPhoto,
@@ -21,6 +21,7 @@ import { EnvelopeIcon } from '../ui/icons';
 interface ProfileProps {
   user: any;
   queryKey: any;
+  refetch?: any;
 }
 
 export enum ProfileLoading {
@@ -28,9 +29,10 @@ export enum ProfileLoading {
   CoverPicture,
 }
 
-const Profile: FC<ProfileProps> = ({ user, queryKey }) => {
+const Profile: FC<ProfileProps> = ({ user, queryKey, refetch }) => {
   const authUser = useSelector((state: RootState) => state.auth.user);
   const [isLoading, setIsLoading] = useState<ProfileLoading>(null);
+
   return (
     <>
       <CoverPhoto isLoading={isLoading} image={authUser?._id === user._id ? authUser.coverImage : user.coverImage}>
@@ -68,7 +70,7 @@ const Profile: FC<ProfileProps> = ({ user, queryKey }) => {
 
       {authUser && authUser?._id !== user._id && (
         <Actions>
-          <Follow user={user} queryKey={queryKey} />
+          <Follow refetch={ refetch } user={user} queryKey={queryKey} />
           <Spacing left="sm" />
           <ButtonLink href={`/communities/messages/${user._id}`}>
             <EnvelopeIcon color="primary" /> Message

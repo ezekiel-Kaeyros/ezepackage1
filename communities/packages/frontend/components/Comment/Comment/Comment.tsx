@@ -18,6 +18,12 @@ const deleteComment = async (id: string) => {
   const like = await axios.delete('/comments/delete', { data: { id } });
   return like.data;
 };
+export const getLikes = async (comment_id: string) => {
+  const newComment = await axios.get(`/likes/comment/${comment_id}`);
+  console.log('newComment', newComment);
+
+  return newComment.data;
+};
 
 interface CommentProps {
   comment: any;
@@ -38,26 +44,52 @@ export function parseTextWithLinks(text) {
   return parsedText;
 }
 const Comment: FC<CommentProps> = ({ comment, author, queryKey, post }) => {
+
   const idComment = useSelector((state: RootState) => state.auth.idComment);
   const reply = post.comments.filter((item) => item.parentComment == comment._id);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [loadLike, setLoadLike] = useState(false);
+  const [hasLiked, sethasLiked] = useState(null);
   const [isLike, setIsLike] = useState('');
   const dispatch = useDispatch();
   const authUser = useSelector((state: RootState) => state.auth.user);
   const { mutateAsync } = useMutation(deleteComment);
   const queryClient = useQueryClient();
   const { deleteNotification } = useNotifications();
-  const [commentValue, setCommentValue] = useState('');
-  const hasLiked = null;
-  // const hasLiked = comment.likes.find((post: any) => post === authUser?._id);
+  const [commentValue, setCommentValue] = useState(comment?.likes?.length);
+  // const hasLiked = null;
+  const changeLike = (type: number) => {
+    if (type==1) {
+      const val = commentValue - 1
+      setCommentValue(val)
+    } else {
+        const val = commentValue +1;
+        setCommentValue(val);
+    }
+  }
+  const hasLiked2 = comment?.likes?.find((post: any) => {
+
+    if (post?.user?._id == authUser?._id) {
+      // console.log('postTrue',post);
+      
+      return post
+    } else {
+      // console.log('postFalse', post?.user?._id);
+      // console.log('id', authUser?._id);
+      
+      
+    }
+  });
+  //  console.log('hasLiked2',hasLiked2);
+  
   // const view = comment.likes.filter((post: any) => {
   //   console.log(post);
   //   console.log(authUser?._id);
 
   // });
-  const likesLength = comment.likes.length;
+  const likesLength = comment && comment.likes ? comment.likes.length : 0;
   // const commentsLength = post.comments.length;
-  const likes = likesLength > 0 ? likesLength + ' likes' : null;
+  const likes = likesLength > 0 ? likesLength + ' Likes' : null;
   // const getLikeHandler = (id: string) => {
   //   const reply = post.comments.find((item) => item._id == id);
   //   const likesLength = reply.likes.length;
@@ -65,12 +97,26 @@ const Comment: FC<CommentProps> = ({ comment, author, queryKey, post }) => {
   //   const likes = likesLength > 0 ? likesLength + ' likes' : null;
   //   return likes;
   // };
-  const likeHandler = () => {
-    setIsLike('');
+  const likeHandler = async (id: string) => {
+    // setIsLike('');
+    setLoadLike(true);
+    if (comment.likes.length > 0) {
+      const like = await getLikes(id);
+      // console.log('like', like);
+      const islike = like.filter((item: any) => item.user._id == authUser?._id);
+      islike.length > 0 ? sethasLiked(islike[0]._id) : sethasLiked(null);
+      // islike.length > 0 && console.log(islike[0].user);
+
+      // console.log('islike5698', islike);
+      setIsLike(id);
+    } else {
+      setIsLike(id);
+    }
+    setLoadLike(false);
   };
   // const comments = commentsLength > 0 ? commentsLength + ' comments' : null;
-  console.log('post', post);
-  console.log('hasLiked', author);
+  // console.log('post', post);
+  // console.log('comment', comment);
 
   const remove = async () => {
     try {
@@ -79,7 +125,9 @@ const Comment: FC<CommentProps> = ({ comment, author, queryKey, post }) => {
         if (!existingPosts.pages) {
           return {
             ...existingPosts,
-            comments: existingPosts.comments.filter((comment) => comment._id !== deletedComment._id),
+            comments: existingPosts.comments.filter(
+              (comment) => comment._id != deletedComment._id && comment.parentComment != deletedComment._id
+            ),
           };
         }
 
@@ -90,7 +138,9 @@ const Comment: FC<CommentProps> = ({ comment, author, queryKey, post }) => {
               if (p._id === post._id) {
                 return {
                   ...p,
-                  comments: p.comments.filter((comment) => comment._id !== deletedComment._id),
+                  comments: p.comments.filter(
+                    (comment) => comment._id != deletedComment._id && comment.parentComment != deletedComment._id
+                  ),
                 };
               } else {
                 return p;
@@ -118,13 +168,13 @@ const Comment: FC<CommentProps> = ({ comment, author, queryKey, post }) => {
   return (
     <>
       <Root>
-        <Link disableBorderOnHover href={`/communities/profile/${author._id}`}>
+        <Link disableBorderOnHover href={`/communities/profile/${author}`}>
           <Avatar image={author?.image} />
         </Link>
 
         <Container>
           <UserName>
-            <Link color="text" weight="bold" size="tiny" href={`/communities/profile/${author._id}`}>
+            <Link color="text" weight="bold" size="tiny" href={`/profile/${author}`}>
               {author.fullName}
             </Link>
           </UserName>
@@ -140,21 +190,23 @@ const Comment: FC<CommentProps> = ({ comment, author, queryKey, post }) => {
           title="Remove the comment permanently?"
         />
 
-        {authUser && authUser._id === author._id && (
+        {authUser && (authUser._id == author || authUser._id == author._id) && (
           <StyledButton ghost onClick={() => setIsConfirmOpen(true)}>
             <CloseIcon width="10" />
           </StyledButton>
         )}
       </Root>
       <ContainerActionComment style={{ paddingLeft: '8%' }}>
-        {/* <span
-          style={{ marginRight: '20px', cursor: 'pointer' }}
+        <span
+          style={{ marginRight: '20px', cursor: 'pointer', fontWeight: '500' }}
           onClick={() => {
-            setIsLike(comment._id);
+            if (!loadLike) {
+              likeHandler(comment._id);
+            }
           }}
         >
-          like
-        </span> */}
+          {loadLike ? '...' : 'Like'}
+        </span>
         <span
           onClick={() => {
             if (idComment === comment._id) {
@@ -163,25 +215,32 @@ const Comment: FC<CommentProps> = ({ comment, author, queryKey, post }) => {
               dispatch(getIdComment(comment._id.toString()));
             }
           }}
-          style={{ cursor: 'pointer', marginRight: '20px' }}
+          style={{ cursor: 'pointer', marginRight: '20px', fontWeight: '500' }}
         >
-          reply
+          Reply
         </span>
         <div>
-          {/* <Like
+          <Like
             queryKey={queryKey}
             post={post}
-            hasLiked={hasLiked}
+            hasLiked={hasLiked ? { id: hasLiked } : undefined}
             fullWidth
             withText
             type="reply"
             islike={isLike}
-            id={isLike}
-            likes={likes}
-            likeHandler={likeHandler}
-          /> */}
+            id={hasLiked2}
+            likes={commentValue > 0 && likes}
+            likeHandler={() => {
+              setIsLike('');
+            }}
+            likeHandler2={() => {
+              sethasLiked(null);
+            }}
+            updateLikes={changeLike}
+          />
         </div>
-        {/* <span>{likes && comment.likes.length}</span>'r */}
+        <span>{likes && commentValue > 0 && commentValue}</span>
+        {/* <span>{likes && comment.likes.length}</span> */}
       </ContainerActionComment>
 
       {reply.length > 0 &&

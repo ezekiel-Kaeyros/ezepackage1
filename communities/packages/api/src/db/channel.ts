@@ -32,13 +32,21 @@ export const updateChannel = async (
   name: string,
   authRequired: boolean,
   fieldsToUpdate,
-  description?: string
+  description?: any,
+  member?: any
 ): Promise<any> => {
+  // console.log('member==================',member);
+  // console.log('authRequired11111111111', authRequired);
+  // console.log('fieldsToUpdate****************', fieldsToUpdate);
+  
+  
   const updatedChannel = await Channel.findOneAndUpdate(
     { _id: id },
-    { name, authRequired, description, ...fieldsToUpdate },
+    { name, authRequired, description, members:member, ...fieldsToUpdate },
     { new: true }
   );
+  // console.log('updateChannel', updatedChannel);
+  
   return updatedChannel;
 };
 

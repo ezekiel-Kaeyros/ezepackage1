@@ -1,10 +1,12 @@
-import React from 'react';
+'use client'
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 
 import SearchBar from '../../search-bar/SearchBar';
 import ChipLink from '../chip-link/ChipLink';
 
 import HeroImage from '../../../../../../public/images/heroImage.png';
+import ChannelService from '@/services/channelService';
 
 const topics = [
   {
@@ -44,7 +46,20 @@ const topics = [
   },
 ];
 
-const HeroSection:React.FC<{home:any}> = ({home}) => {
+
+
+
+const HeroSection: React.FC<{ home: any }> = ({ home }) => {
+  
+  useEffect(() => {
+    const response = new ChannelService().channel().then((result) => {
+      console.log('result======',result);
+      
+    }).catch((error) => {
+      console.log('error==============',error);
+      
+    })
+  },[])
   return (
     <div className="flex w-full items-center justify-between px-8">
       <div className="w-full text-center lg:text-start lg:max-w-lg xl:max-w-2xl 2xl:max-w-3xl">

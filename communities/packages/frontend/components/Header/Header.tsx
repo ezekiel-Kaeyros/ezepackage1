@@ -81,9 +81,9 @@ const Header: ForwardRefRenderFunction<HTMLButtonElement, HeaderProps> = ({ togg
             <MenuIcon />
           </Hamburger>
           <Logo>
-            <Link href="/" disableBorderOnHover>
+            <a href="https://eze.ink/en">
               <img alt="logo" style={{ height: 35 }} src={logo} />
-            </Link>
+            </a>
           </Logo>
           <Spacing left="sm" />
           <SearchContainer>

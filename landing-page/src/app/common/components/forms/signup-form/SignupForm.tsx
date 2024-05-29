@@ -20,8 +20,9 @@ import { SignupFormValues } from './signupForm';
 import { useAuth } from '@/app/hooks/useAuth';
 import { setAuthUser } from '@/redux/features/auth-slice';
 import AuthService from '@/services/authService';
+import { getUserInfo } from '@/utils/getUserInfo';
 
-// const COMMUNITIES_URL = 'https://communities.eze.wiki/';
+// const COMMUNITIES_URL = 'https://communities.eze.ink/';
 
 const SignupForm:React.FC<{signup:any}> = ({signup}) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -49,6 +50,9 @@ const SignupForm:React.FC<{signup:any}> = ({signup}) => {
         toast.success('Registration completed');
 
         dispatch(setAuthUser({ user: res?.data }));
+        const response = await getUserInfo(res?.data?.token)
+        console.log("response1111111111111",response);
+        
         // Redirecting to onboarding
         push('/fr/onboarding?step=1');
       }

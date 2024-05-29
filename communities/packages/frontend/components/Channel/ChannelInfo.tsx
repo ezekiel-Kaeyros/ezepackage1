@@ -42,6 +42,9 @@ interface ChannelInfoProps {
   name: string;
   creationDate: string;
   description?: string;
+  member?: number;
+  image?: string
+  cover?:string
 }
 
 export enum ProfileLoading {
@@ -69,6 +72,11 @@ const leaveChannel = async ({ userId, channelId }) => {
   return response;
 };
 
+const updateChannel = async (data: any) => {
+  const response = await axios.put(`/channels/update-member/`, data, config);
+  return response;
+};
+
 // Fetching user by id
 
 const fetchUserById = async ({ userId }) => {
@@ -76,13 +84,23 @@ const fetchUserById = async ({ userId }) => {
   return response;
 };
 
-const ChannelInfo: FC<ChannelInfoProps> = ({ channelId, name, creationDate, description }) => {
+const ChannelInfo: FC<ChannelInfoProps> = ({ channelId, name, creationDate, description, member ,image,cover}) => {
   const sharePopoverRef = useRef(null);
+  const [imageProfil,setImageprofile]=useState(image)
+  const [imageCover, setImageCover] = useState(cover);
+  const [number, setNumber] = useState(member);
   const [isLoadingProfile, setIsLoadingProfile] = useState<ProfileLoading>(null);
   const authUser = useSelector((state: RootState) => state.auth.user);
   const { mutateAsync: joinChannelMutation } = useMutation(joinChannel);
   const { mutateAsync: leaveChannelMutation } = useMutation(leaveChannel);
-
+  const { mutateAsync: updateChannelMutation } = useMutation(updateChannel);
+  console.log('authUser==========', authUser);
+  const setprofilHandler = (url: string) => {
+    setImageprofile(url)
+  }
+   const setCoverHandler = (url: string) => {
+     setImageCover(url);
+   };
   const [openShareModal, setOpenShareModal] = useState<boolean>(false);
 
   useClickOutside([sharePopoverRef], openShareModal, () => {
@@ -103,6 +121,18 @@ const ChannelInfo: FC<ChannelInfoProps> = ({ channelId, name, creationDate, desc
       const data = await joinChannelMutation(joiningDetails);
 
       if (data.status === 200) {
+        const val = number + 1;
+        const value = {
+          _id: channelId,
+          name: name,
+          authRequired: true,
+          description: description,
+          members: val,
+        };
+        const update = await updateChannelMutation(value);
+        if (update.status == 200) {
+          setNumber(val);
+        }
         notify('joined');
         await queryClient.refetchQueries('userById');
       }
@@ -120,8 +150,22 @@ const ChannelInfo: FC<ChannelInfoProps> = ({ channelId, name, creationDate, desc
     try {
       const data = await leaveChannelMutation(leavingDetails);
       await queryClient.refetchQueries('userById');
-
+      console.log('data==========',data.status);
       if (data.status === 200) {
+        
+        const val = number - 1;
+        const value = {
+          _id: channelId,
+          name: name,
+          authRequired: true,
+          description: description,
+          members: val >= 0 ? val : 0,
+        };
+        const update = await updateChannelMutation(value);
+        if (update.status == 200) {
+          val >= 0 && setNumber(val);
+          val < 0 && setNumber(0);
+        }
         notify('leaved');
       }
     } catch (error) {
@@ -183,10 +227,11 @@ const ChannelInfo: FC<ChannelInfoProps> = ({ channelId, name, creationDate, desc
     return formattedDate;
   }
   const isJoined = authUser?.joinedChannels?.find((channel) => channel._id === channelId);
-
+  console.log("isJoined222222222222",isJoined);
+  
   return (
     <div style={{ position: 'relative' }}>
-      <CoverPhoto isLoading={isLoadingProfile}>
+      <CoverPhoto isLoading={isLoadingProfile} image={imageCover && imageCover}>
         {isLoadingProfile === ProfileLoading.CoverPicture && (
           <CoverLoading>
             <Loading />
@@ -195,7 +240,15 @@ const ChannelInfo: FC<ChannelInfoProps> = ({ channelId, name, creationDate, desc
 
         {
           <CoverImageWrapper>
-            <UploadChannelImage isCover setIsLoading={setIsLoadingProfile} />
+         
+            {isJoined && (
+              <UploadChannelImage
+                isCover
+                setIsLoading={setIsLoadingProfile}
+                channel={isJoined}
+                imagehandler={setCoverHandler}
+              />
+            )}
           </CoverImageWrapper>
         }
         <ProfileDetails>
@@ -203,13 +256,16 @@ const ChannelInfo: FC<ChannelInfoProps> = ({ channelId, name, creationDate, desc
             {isLoadingProfile === ProfileLoading.ChannelPicture ? (
               <Loading top="lg" />
             ) : (
-              <Avatar
-                // image={authUser?._id === user._id ? authUser.image : user.image}
-                size={4}
-              />
+              <Avatar image={imageProfil && imageProfil} size={4} />
             )}
             <ProfileImageWrapper>
-              <UploadChannelImage setIsLoading={setIsLoadingProfile} />
+              {authUser.role !== 'Regular' && (
+                <UploadChannelImage
+                  setIsLoading={setIsLoadingProfile}
+                  channel={isJoined}
+                  imagehandler={setprofilHandler}
+                />
+              )}
             </ProfileImageWrapper>
           </ProfilePhoto>
           <DetailsList>
@@ -228,7 +284,7 @@ const ChannelInfo: FC<ChannelInfoProps> = ({ channelId, name, creationDate, desc
               </Detail>
               <Detail>
                 <Image src={MembersIcon} alt="Private Icon" />
-                <DetailText>123k Members</DetailText>
+                <DetailText>{number} Members</DetailText>
               </Detail>
             </DetailsInfo>
           </DetailsList>

@@ -37,6 +37,7 @@ export interface AuthState {
   popupType: null | PopupType;
   idComment: string;
   idCommentLike: string;
+  refresh: boolean; 
 }
 
 export const SET_AUTH_USER = 'SET_AUTH_USER';
@@ -54,6 +55,12 @@ export const ADD_USER_FOLLOWING = 'ADD_USER_FOLLOWING';
 export const REMOVE_USER_FOLLOWING = 'REMOVE_USER_FOLLOWING';
 export const GET_ID_COMMENT = 'GET_ID_COMMENT';
 export const GET_ID_COMMENT_LIKE = 'GET_ID_COMMENT_LIKE';
+export const TOGGLE_REFRESH = 'TOGGLE_REFRESH';
+
+export interface setRefreshStatus {
+  type: typeof TOGGLE_REFRESH;
+  payload: boolean;
+}
 
 export interface setAuthUserAction {
   type: typeof SET_AUTH_USER;
@@ -127,6 +134,7 @@ export interface getIdCommentLike {
 }
 
 export type AuthActionTypes =
+  | setRefreshStatus
   | setAuthUserAction
   | setTokenAction
   | clearAuthUserAction
@@ -144,6 +152,13 @@ export type AuthActionTypes =
   | getIdCommentLike;
 
 // Actions
+export function setRefresh(status: boolean): AuthActionTypes {
+  return {
+    type: TOGGLE_REFRESH,
+    payload: status,
+  };
+}
+
 export function setAuthUser(user: AuthUser): AuthActionTypes {
   return {
     type: SET_AUTH_USER,
@@ -254,10 +269,16 @@ const initialState: AuthState = {
   popupType: null,
   idComment: '',
   idCommentLike: '',
+  refresh: false, 
 };
 
 export function authReducer(state = initialState, action: AuthActionTypes): AuthState {
   switch (action.type) {
+    case TOGGLE_REFRESH:
+      return {
+        ...state,
+        refresh: action.payload,
+      };
     case SET_AUTH_USER:
       return {
         ...state,

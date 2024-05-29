@@ -6,7 +6,7 @@ export const Root = styled.div`
   display: flex;
   flex-direction: column;
   align-items: left;
-  justify-content: space-between;
+  // justify-content: space-between;
   background-color: white;
   padding: 16px 16px;
   //padding: ${(p) => p.theme.spacing.sm};
@@ -100,6 +100,22 @@ export const FullName = styled.span`
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+`;
+
+
+export const InnerWrapper = styled.div`
+  height: 100%;
+  display: flex; 
+  // background-color: black; 
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+export const MainUpperContent = styled.div`
+  // height: 100%;
+  display: flex; 
+  flex-direction: column;
+  // justify-content: space-between;
 `;
 
 export const MembersNumber = styled.p`

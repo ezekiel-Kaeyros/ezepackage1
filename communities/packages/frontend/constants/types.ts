@@ -5,6 +5,7 @@ export enum UserRole {
 }
 
 export interface AuthUser {
+  image?:any
   _id: string;
   role: UserRole;
   fullName?: string;
@@ -27,6 +28,9 @@ export interface Channel {
   description?: string;
   createdAt: string;
   order: number;
+  members?: number;
+  coverImage?: string;
+  image?:string
 }
 
 export interface Post {
@@ -39,6 +43,7 @@ export interface Post {
   createdAt: string;
   updatedAt: string;
   likes: [];
-  comments: [];
+  comments: any[];
   pinned?: boolean;
+  postId?:string
 }

@@ -1,28 +1,53 @@
-import { setToken, setUserCookies } from '@/cookies/cookies';
+import { getToken, setToken, setUserCookies } from '@/cookies/cookies';
 import { createSlice } from '@reduxjs/toolkit';
 
 // Just a boiler plate, this file needs to be updated
-
+export enum UserRole {
+  Regular = 'Regular',
+  Admin = 'Admin',
+  SuperAdmin = 'SuperAdmin',
+}
 type AuthState = {
   user: {
-    id: string;
-    fullName: string;
-    email: string;
-    token: string;
-    role: any;
-    createdAt: string;
+    _id: string;
+     role: string;
+    email?: string;
+    username?: string;
+    image?: string;
+    imagePublicId?: string;
+    coverImagePublicId?: string;
+    coverImage?: string;
+    fullName?: string;
+    facebookId?: string;
+    googleId?: string;
+    githubId?: string;
+    about?: string;
+    website?: string;
+    notifications: any[];
+    followers: any[];
+    following: any[];
+    isOnline: boolean;
+    joinedChannels: any[];
   };
+  token:string|undefined
 };
 
 const initialState: AuthState = {
   user: {
-    id: '',
+    _id: '',
     email: '',
-    token: '',
+    // token: '',
     fullName: '',
-    role: '',
-    createdAt: `${new Date()}`,
+    followers: [],
+    notifications: [],
+    following: [],
+    joinedChannels: [],
+    isOnline: false,
+    role:''
+    // role: '',
+    // createdAt: `${new Date()}`,
   },
+  token:getToken()
 };
 
 export const auth = createSlice({
@@ -32,6 +57,7 @@ export const auth = createSlice({
     setAuthUser: (state, action) => {
       const { user } = action?.payload;
       setToken(user?.token);
+      state.token=user?.token
       setUserCookies(user?.user);
     },
   },

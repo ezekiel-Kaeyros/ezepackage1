@@ -16,9 +16,11 @@ import { useAuth } from '@/app/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import toast, { Toaster } from 'react-hot-toast';
-import { getIsFirstTime } from '@/cookies/cookies';
+import { getIsFirstTime, setUserCookies } from '@/cookies/cookies';
+import { getUserInfo } from '@/utils/getUserInfo';
 
-const COMMUNITIES_URL = 'https://communities.eze.wiki/';
+// const COMMUNITIES_URL = 'https://communities.eze.ink/';
+const COMMUNITIES_URL = 'https://communities.sch-eze.com';
 
 const LoginForm:React.FC<{login:any}> = ({login}) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -44,8 +46,16 @@ const LoginForm:React.FC<{login:any}> = ({login}) => {
         setErrorMessage(res?.data);
       } else {
         dispatch(setAuthUser({ user: res?.data }));
+        const response = await getUserInfo(res?.data?.token);
+        console.log('response111111111111111',response);
+        
+         setUserCookies({
+           ...response,
+           isOnline: true,
+         });
         toast.success('Logged in successfully');
-        (isFirstTime && push(COMMUNITIES_URL)) || push('/fr/onboarding?step=1');
+        push(COMMUNITIES_URL)
+        // (isFirstTime && push(COMMUNITIES_URL)) || push('/fr/onboarding?step=1');
       }
     } catch (error: any) {
       console.log(`An error occured`, error);

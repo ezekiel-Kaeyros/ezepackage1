@@ -17,7 +17,7 @@ type NavBarProps = {
   lang: string;
   navigation: any;
 };
-const COMMUNITIES_URL = 'https://communities.eze.wiki';
+const COMMUNITIES_URL = 'https://communities.sch-eze.com';
 
 const NavBar: React.FC<NavBarProps> = ({ lang, navigation }) => {
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
@@ -81,7 +81,7 @@ const NavBar: React.FC<NavBarProps> = ({ lang, navigation }) => {
           <li className="border-t-1 hover:text-primaryColor lg:border-none px-6 lg:px-3 2xl:px-6  pt-4 lg:pt-0 pb-4">
             {token ? (
               <Button
-                href={`https://communities.eze.wiki/`}
+                href={`https://communities.eze.ink/`}
                 className="w-fit py-3"
               >
                 {navigation.dash}

@@ -39,9 +39,9 @@ const PostController = {
   },
   create: async (req: Request, res: Response): Promise<any> => {
     const authUser = req.user as AuthUser;
-    const { title, channelId } = req.body;
+    const { title, channelId, repost } = req.body;
     const image = req.file;
-    console.log('title again', title)
+    console.log('title again', title);
 
     if (!title && !image) {
       return res.status(400).send('Post title or image is required.');
@@ -52,6 +52,7 @@ const PostController = {
     console.log('Hey');
     let imageUrl: string;
     let imagePublicId: string;
+    let repost_test: string;
     if (image) {
       const uploadImage = await uploadToCloudinary(image, 'post');
       if (!uploadImage.secure_url) {
@@ -61,8 +62,14 @@ const PostController = {
       imagePublicId = uploadImage.public_id;
     }
 
+    if (repost) {
+      repost_test = repost;
+    }
+
     console.log('This is the title', title);
-    const newPost: any = await createPost(title, imageUrl, imagePublicId, channelId, authUser._id);
+    const newPost: any = await createPost(title, imageUrl, imagePublicId, channelId, authUser._id, repost_test);
+    console.log('newPost123456789',newPost);
+    
     return res.send(newPost);
   },
   update: async (req: Request, res: Response): Promise<any> => {

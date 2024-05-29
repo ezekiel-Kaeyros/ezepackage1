@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { UserRole } from '../constants';
 
-const HOME_URL = 'https://communities.eze.wiki';
+const HOME_URL = 'https://communities.eze.ink';
 // export const redirectToHome = () => {
 //   return {
 //     redirect: {

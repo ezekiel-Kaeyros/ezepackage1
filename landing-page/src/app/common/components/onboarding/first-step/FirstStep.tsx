@@ -1,9 +1,11 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FirstStepFormValues } from './firstStep';
 import CheckboxChip from '../checkbox-chip/CheckboxChip';
 import { Button } from '../../button/Button';
+import ChannelService from '@/services/channelService';
+import { useAuth } from '@/app/hooks/useAuth';
 
 const topics = [
   {
@@ -111,14 +113,36 @@ const professionCategory = [
 ];
 
 const FirstStep = () => {
+  const [topic, setTopic] = useState<{
+    authRequired: string;
+    createdAt: string;
+    description: string;
+    name: string;
+    order: 0;
+    updatedAt: string;
+    __v: 0;
+    _id: string;
+  }[]>();
   const {
     register,
     handleSubmit,
+    watch,
     formState: { isValid, errors },
-  } = useForm<FirstStepFormValues>({
-    mode: 'onChange' || 'onBlur' || 'onSubmit',
-  });
-
+  } = useForm<FirstStepFormValues>();
+  let top=watch('topic')
+  useEffect(() => {
+    const response = new ChannelService()
+      .channel()
+      .then((result) => {
+        console.log('result======', result.data);
+        setTopic(result.data)
+      })
+      .catch((error) => {
+        console.log('error==============', error);
+      });
+  }, []);
+  useEffect(()=>{console.log('top2222222222',top);
+  },[top])
   const onSubmit: SubmitHandler<FirstStepFormValues> = (data) => {
     // const user = new AuthService().login(data);
   };
@@ -128,14 +152,14 @@ const FirstStep = () => {
       <div>
         <h1 className="font-bold text-3xl">Choose a topic</h1>
         <div className="flex mt-6 flex-wrap gap-2">
-          {topics?.map((topic) => (
+          {topic && topic.length>0 && topic?.map((topic) => (
             <CheckboxChip
-              key={topic?.id}
-              id={`${topic?.value}`}
+              key={topic?._id}
+              id={`${topic?._id}`}
               name={topic?.name}
-              label={topic?.title}
+              label={topic?.name}
               register={register('topic', { required: true })}
-              value={topic?.value}
+              value={topic?.name}
             />
           ))}
         </div>

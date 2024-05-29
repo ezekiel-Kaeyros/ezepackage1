@@ -12,21 +12,28 @@ import { ProfileLoading } from '../Channel/ChannelInfo';
 interface UploadChannelImageProps {
   isCover?: boolean;
   setIsLoading: (param: ProfileLoading) => void;
+  channel: any
+  imagehandler:any
 }
 
-const createUploadImage = async ({ image, isCover, imagePublicId, coverImagePublicId }) => {
+const createUploadImage = async ({ image, isCover, imagePublicId, coverImagePublicId,id,name,members ,authRequired,description}) => {
   const formData = new FormData();
   formData.append('image', image);
+  formData.append('id', id);
   formData.append('isCover', isCover);
   formData.append('imagePublicId', imagePublicId);
   formData.append('coverImagePublicId', coverImagePublicId);
+   formData.append('name', name);
+  formData.append('authRequired', authRequired);
+  formData.append('description', description);
+  formData.append('members', members);
 
   const newImage = await axios.post('/channels/upload-photo', formData);
   console.log('new image', newImage);
   return newImage;
 };
 
-const UploadImage: FC<UploadChannelImageProps> = ({ isCover, setIsLoading }) => {
+const UploadImage: FC<UploadChannelImageProps> = ({ isCover, setIsLoading,channel ,imagehandler}) => {
   const authUser = useSelector((state: RootState) => state.auth.user);
   const dispatch = useDispatch();
 
@@ -51,11 +58,20 @@ const UploadImage: FC<UploadChannelImageProps> = ({ isCover, setIsLoading }) => 
     }
     try {
       const updateImage = await mutateAsync({
+        id:channel._id,
         image: file,
         isCover: isCover,
         imagePublicId: authUser.imagePublicId ? authUser.imagePublicId : '',
         coverImagePublicId: authUser.coverImagePublicId ? authUser.coverImagePublicId : '',
+        name: channel.name,
+        authRequired: channel.authRequired,
+        members: channel.members,
+        description:channel.description
       });
+      console.log("updateImage----------------------------",updateImage);
+      if (updateImage.status==200) {
+        !isCover ? imagehandler(updateImage.data.image) : imagehandler(updateImage.data.coverImage)
+      }
       setIsLoading(null);
       if (isCover) {
         dispatch(

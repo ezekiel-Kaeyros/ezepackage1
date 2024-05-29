@@ -1,10 +1,10 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import debounce from 'lodash/debounce';
 import { useMutation } from 'react-query';
 import { RootState } from '../../store';
-import { addUserFollowing, removeUserFollowing } from '../../store/auth';
+import { addUserFollowing, removeUserFollowing, setRefresh } from '../../store/auth';
 import { AuthUser } from '../../constants';
 import { useNotifications } from '../../utils';
 import { NotificationType } from '../../constants/Notification';
@@ -24,46 +24,58 @@ const deleteFollow = async (id: string) => {
 
 interface FollowProps {
   user: AuthUser;
-  queryKey: any;
+  queryKey: any; 
+  refetch?: any
 }
 
-const Follow: FC<FollowProps> = ({ user, queryKey }) => {
+const Follow: FC<FollowProps> = ({ refetch, user, queryKey }) => {
   const authUser = useSelector((state: RootState) => state.auth.user);
-  const isFollowing: any = authUser.following.find((f: any) => f.user === user._id);
+  const refresh = useSelector((state: RootState) => state.auth.refresh);
+  const isfollowing: any = authUser.following.find((f: any) => f.user === user._id);
   const dispatch = useDispatch();
 
-  const { createNotification, deleteNotification } = useNotifications();
+  // const { createNotification, deleteNotification } = useNotifications();
   const { mutateAsync: createFollowMutation } = useMutation(createFollow);
   const { mutateAsync: deleteFollowMutation } = useMutation(deleteFollow);
 
+  console.log(refresh, "outside mutate")
+
   const followMutation = async () => {
-    const follow = isFollowing
-      ? await deleteFollowMutation(isFollowing._id)
+    console.log(refresh, "inside mutate")
+    const follow = isfollowing
+      ? await deleteFollowMutation(isfollowing._id)
       : await createFollowMutation({ userId: user._id });
 
-    isFollowing ? dispatch(removeUserFollowing(follow._id)) : dispatch(addUserFollowing(follow));
+    // if (refetch) {
+    //   refetch();
+    // }
 
-    if (isFollowing) {
-      const notification: any = user.notifications.find((n: any) => n?.follow?._id === isFollowing?._id);
-      if (notification) {
-        deleteNotification({ id: notification._id, postId: null, user, queryKey });
-      }
-    } else {
-      createNotification({
-        user: user,
-        postId: null,
-        notificationType: NotificationType.FOLLOW,
-        notificationTypeId: follow._id,
-        queryKey,
-      });
-    }
+    isfollowing ? dispatch(removeUserFollowing(follow._id)) : dispatch(addUserFollowing(follow));
+
+    // if (isfollowing) {
+    //   const notification: any = user.notifications.find((n: any) => n?.follow?._id === isfollowing?._id);
+    //   if (notification) {
+    //     deleteNotification({ id: notification._id, postId: null, user, queryKey });
+    //   }
+    // } else {
+    //   createNotification({
+    //     user: user,
+    //     postId: null,
+    //     notificationType: NotificationType.FOLLOW,
+    //     notificationTypeId: follow._id,
+    //     queryKey,
+    //   });
+    // }
+
+    dispatch(setRefresh(!refresh));
+
   };
 
   return (
-    <Root onClick={debounce(followMutation, 200)} isFollowing={isFollowing}>
-      <Image alt="" src={addIcon} />
+    <Root onClick={debounce(followMutation, 200)} isfollowing={isfollowing}>
+      {/* <Image alt="" src={addIcon} width={ 10 } /> */}
       &nbsp;&nbsp;
-      {isFollowing ? 'Following' : 'Follow'}
+      {isfollowing ? 'Following' : 'Follow'}
     </Root>
   );
 };

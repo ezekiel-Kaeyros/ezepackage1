@@ -1,5 +1,5 @@
-//const API_PRODUCTION_URL = 'https://back.communities.eze.wiki';
-const API_PRODUCTION_URL = 'https://back.communities.eze.wiki';
+//const API_PRODUCTION_URL = 'https://backcommunities.eze.wiki';
+const API_PRODUCTION_URL = 'https://backend_communities.sch-eze.com';
 const API_DEV_URL = 'http://localhost:4000';
 
 export const Config = {

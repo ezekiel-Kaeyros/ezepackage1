@@ -20,7 +20,7 @@ const CheckboxChip: React.FC<CheckboxChipProps> = ({
       <div className="flex justify-center items-center mr-0 mb-0">
         <input
           {...register}
-          id={`${id}`}
+          id={id}
           type="checkbox"
           value={value}
           name={name}

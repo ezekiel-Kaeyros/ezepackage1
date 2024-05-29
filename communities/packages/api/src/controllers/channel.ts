@@ -28,8 +28,8 @@ const ChannelController = {
   },
   create: async (req: Request, res: Response): Promise<any> => {
     const { name, authRequired, description, order, authUserId } = req.body;
-    console.log('Auth required', authRequired);
-    console.log('req user', authUserId);
+    // console.log('Auth required', authRequired);
+    // console.log('req user', authUserId);
     const trimmedName = name.trim();
 
     if (channelNameReg.test(name) || !name || name.length > 20) {
@@ -57,8 +57,10 @@ const ChannelController = {
     return res.send(newChannel);
   },
   update: async (req: Request, res: Response): Promise<any> => {
-    const { _id, name, authRequired, description } = req.body;
+    const { _id, name, authRequired, description, members } = req.body;
     const trimmedName = name.trim();
+    let member: any;
+  
 
     if (channelNameReg.test(trimmedName) || !trimmedName || trimmedName.length > 20) {
       return res
@@ -70,32 +72,67 @@ const ChannelController = {
     if (channelExists && channelExists?._id.toString() !== _id) {
       return res.status(ErrorCodes.Bad_Request).send(`A channel with the name "${trimmedName}" already exists.`);
     }
-    const updatedChannel = await updateChannel(_id, trimmedName, authRequired, description);
+    if (members) {
+      member = members;
+    } else {
+      member = channelExists.members && channelExists.mebers;
+    }
+    // console.log('authRequired222222222222', member);
+
+    const updatedChannel = await updateChannel(_id, trimmedName, authRequired, null, description, member);
+    return res.send(updatedChannel);
+  },
+  updateMember: async (req: Request, res: Response): Promise<any> => {
+    const { _id, name, authRequired, description, members } = req.body;
+    const trimmedName = name.trim();
+    let member: any;
+    // console.log('description', description);
+    // console.log('member===========', members);
+
+    if (channelNameReg.test(trimmedName) || !trimmedName || trimmedName.length > 20) {
+      return res
+        .status(ErrorCodes.Bad_Request)
+        .send(`Channel names can only use letters, numbers, underscores, and periods by max character 20.`);
+    }
+
+    const channelExists = await getChannelByName(trimmedName);
+    if (channelExists && channelExists?._id.toString() !== _id) {
+      return res.status(ErrorCodes.Bad_Request).send(`A channel with the name "${trimmedName}" already exists.`);
+    }
+    if (members) {
+      member = members;
+    } else {
+      member = channelExists.members && channelExists.mebers;
+    }
+    // console.log('authRequired222222222222', member);
+
+    const updatedChannel = await updateChannel(_id, trimmedName, authRequired, null, description, member);
     return res.send(updatedChannel);
   },
 
   uploadPhoto: async (req: Request, res: Response): Promise<any> => {
-    const { imagePublicId, coverImagePublicId, isCover, name, authRequired } = req.body;
-    const { channelId } = req.params;
+    const { imagePublicId, coverImagePublicId, isCover, name, authRequired, id, description, members } = req.body;
+    const channelId = id;
     const image = req.file;
+    // console.log('authRequired222222222222', req.body);
 
     console.log('I am here');
-
-    if(!image) {
+    const auth = authRequired == 'true' ? true : false;
+    if (!image) {
       return res.status(ErrorCodes.Bad_Request).send('Please upload an image.');
     }
-    if(image && !image.mimetype.match(/image-*/)) {
+    if (image && !image.mimetype.match(/image-*/)) {
       return res.status(ErrorCodes.Bad_Request).send('Please upload an image.');
     }
-
+    console.log('image', image);
 
     const coverOrImagePublicId = isCover === 'true' ? coverImagePublicId : imagePublicId;
     const uploadImage = await uploadToCloudinary(image, 'channel', coverOrImagePublicId);
 
-    if((uploadImage.secure_url)) {
+    if (uploadImage.secure_url) {
       const fieldsToUpdate: any = {};
 
-      if(isCover === 'true') {
+      if (isCover === 'true') {
         fieldsToUpdate.coverImage = uploadImage.secure_url;
         fieldsToUpdate.coverImagePublicId = uploadImage.public_id;
       } else {
@@ -103,12 +140,9 @@ const ChannelController = {
         fieldsToUpdate.imagePublicId = uploadImage.public_id;
       }
 
-      const updatedChannel = await updateChannel(channelId, name, authRequired, fieldsToUpdate)
+      const updatedChannel = await updateChannel(channelId, name, auth, fieldsToUpdate, description, members);
+      return res.send(updatedChannel);
     }
-
-
-
-
   },
   reorder: async (req: Request, res: Response): Promise<any> => {
     const { sortedChannels } = req.body;

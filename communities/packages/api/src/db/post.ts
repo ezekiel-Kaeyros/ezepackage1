@@ -13,6 +13,7 @@ export const postById = async (id: string): Promise<any> => {
 };
 
 export const getFollowedPosts = async (userId: string, offset: number, limit: number): Promise<any> => {
+    console.log('============================================');
   const userFollowing = [];
   const follow = await Follow.find({ follower: userId }, { _id: 0 }).select('user');
   follow.map((f) => userFollowing.push(f.user));
@@ -61,24 +62,18 @@ export const getChannelPosts = async (channelId: any): Promise<any> => {
 };
 
 export const getPostsByChannelId = async (channelId: any, offset: number, limit: number): Promise<any> => {
+
+  
   const posts = await Post.find({ channel: channelId })
-    .populate({
-      path: 'author',
-      select: '-password',
-      populate: [
-        {
-          path: 'notifications',
-          populate: [{ path: 'author', select: '-password' }, { path: 'like' }, { path: 'comment' }],
-        },
-      ],
-    })
+    .populate('author')
     .populate('likes')
     .populate({
       path: 'comments',
-      options: { sort: { createdAt: 'asc' } },
-      populate: { path: 'author'},
-      populate: { path: 'likes', select: 'user' },
-      populate: { path: 'replies' },
+      // options: { sort: { createdAt: 'asc' } },
+      populate: 'author',
+      populate: { path: 'likes', populate: 'user' },
+
+      // populate: { path: 'replies' },
     })
     .populate('channel')
     .skip(offset)
@@ -86,12 +81,15 @@ export const getPostsByChannelId = async (channelId: any, offset: number, limit:
     .sort([
       ['pinned', -1],
       ['createdAt', -1],
-    ]);
+    ])
+    .exec();
+// console.log(posts,'post==========');
 
   return posts.filter((p: any) => p?.author?.banned !== true);
 };
 
 export const getPostsByAuthorId = async (authorId: any, offset: number, limit: number): Promise<any> => {
+  // console.log('============================================');
   const posts = await Post.find({ author: authorId })
     .populate({
       path: 'author',
@@ -108,10 +106,11 @@ export const getPostsByAuthorId = async (authorId: any, offset: number, limit: n
       path: 'comments',
       options: { sort: { createdAt: 'asc' } },
       populate: { path: 'author', select: '-password' },
-      populate: { path: 'likes', populate: { path: 'user', select: '-password' }},
+      populate: { path: 'likes', populate: 'user' },
       populate: { path: 'replies' },
     })
     .populate('channel')
+    .populate('author')
     .skip(offset)
     .limit(limit)
     .sort([
@@ -151,14 +150,18 @@ export const createPost = async (
   imageUrl: string,
   imagePublicId: string,
   channelId: string,
-  authorId: string
+  authorId: string,
+  repost: any
 ): Promise<any> => {
+  console.log('repost123654789',repost);
+  
   const newPost = await new Post({
     title,
     image: imageUrl,
     imagePublicId,
     channel: channelId,
     author: authorId,
+    postId: repost,
   }).save();
 
   await newPost.populate('channel').populate('author').execPopulate();
@@ -175,7 +178,7 @@ export const updatePost = async (
   imageUrl?: string,
   imagePublicId?: string,
   imageToDeletePublicId?: string,
-  channelId: string
+  channelId: string,
 ): Promise<any> => {
   const fields = {
     title,

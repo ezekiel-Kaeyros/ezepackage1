@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { Wrapper } from './style';
+import { InnerWrapper, MainUpperContent, Wrapper } from './style';
 import Image from 'next/image';
 import {
   Root,
@@ -19,6 +19,7 @@ import {
 import { Button, Link, Spacing } from '../ui';
 import { initialProducts } from './data';
 import iconMember from '../../public/people.svg';
+import { truncateText } from '../../utils/truncatText';
 
 const CommunityCards: React.FC<{ search: boolean; channels?: any; categoryStep: string }> = ({
   search,
@@ -56,52 +57,66 @@ const CommunityCards: React.FC<{ search: boolean; channels?: any; categoryStep: 
       <Wrapper>
         <Fragment>
           {channels?.map((community, index) => {
+            const truncatedCommunityDescription = truncateText (community?.description, 150); 
+            // console.log("communitycommunity", community)
             return (
               <Link key={index} href={`/communities/channel/${community.name}`}>
                 <Root>
-                  <Link href="#" disableBorderOnHover>
-                    <HeaderContainer>
-                      {community.img && (
-                        <ImageContainer>
-                          <Image alt="icon card" width={60} height={50} src={community.imgJob} />
-                        </ImageContainer>
+                  <InnerWrapper>
+
+                    <MainUpperContent>
+                      <BlockMembers>
+                        <Image alt="icon" src={iconMember} />
+                        <MembersNumber>10k Members</MembersNumber>
+                      </BlockMembers>
+
+                      <Link href="#" disableBorderOnHover>
+                        <HeaderContainer>
+                          {community.img && (
+                            <ImageContainer>
+                              <Image alt="icon card" width={60} height={50} src={community.imgJob} />
+                            </ImageContainer>
+                          )}
+
+                          <DescriptionContainer>
+                            <FullName> {community?.name} </FullName>
+                            <Description> { truncatedCommunityDescription } </Description>
+                          </DescriptionContainer>
+                        </HeaderContainer>
+                      </Link>
+                      {/* <BlockMembers>
+                        <Image alt="icon" src={iconMember} />
+                        <MembersNumber>10k Members</MembersNumber>
+                      </BlockMembers> */}
+                      <Spacing top="sm" bottom="xs">
+                        <BlockFollow>
+                          {/* <BanqueImage>
+                            {community.avatarCommunity.map((avatar) => {
+                              return (
+                                <ListImage key="">
+                                  <Image key={avatar} alt="icon" src={avatar} />
+                                </ListImage>
+                              );
+                            })}
+                          </BanqueImage> */}
+                          <ListMembers>{community.descriptionCommunity} </ListMembers>
+                        </BlockFollow>
+                      </Spacing>
+                    </MainUpperContent>
+
+
+                    <MyButton>
+                      <Button color="ezeColor" radius="full">
+                        View community
+                      </Button>
+                      {community.moreicon ? (
+                        <Image alt="icon card" width={30} height={30} src={community.moreicon} />
+                      ) : (
+                        <span></span>
                       )}
-
-                      <DescriptionContainer>
-                        <FullName> {community?.name} </FullName>
-                        <Description> {community?.description} </Description>
-                      </DescriptionContainer>
-                    </HeaderContainer>
-                  </Link>
-                  <BlockMembers>
-                    <Image alt="icon" src={iconMember} />
-                    <MembersNumber>10k Members</MembersNumber>
-                  </BlockMembers>
-                  <Spacing top="sm" bottom="xs">
-                    <BlockFollow>
-                      {/* <BanqueImage>
-                        {community.avatarCommunity.map((avatar) => {
-                          return (
-                            <ListImage key="">
-                              <Image key={avatar} alt="icon" src={avatar} />
-                            </ListImage>
-                          );
-                        })}
-                      </BanqueImage> */}
-                      <ListMembers>{community.descriptionCommunity} </ListMembers>
-                    </BlockFollow>
-                  </Spacing>
-
-                  <MyButton>
-                    <Button color="ezeColor" radius="full">
-                      View community
-                    </Button>
-                    {community.moreicon ? (
-                      <Image alt="icon card" width={30} height={30} src={community.moreicon} />
-                    ) : (
-                      <span></span>
-                    )}
-                  </MyButton>
+                    </MyButton>
+                    
+                  </InnerWrapper>
                 </Root>
               </Link>
             );

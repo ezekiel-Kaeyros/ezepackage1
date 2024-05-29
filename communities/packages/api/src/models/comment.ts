@@ -36,11 +36,11 @@ const CommentSchema = new Schema(
     timestamps: true,
   }
 );
-CommentSchema.pre("find", function( next){
-  this.populate({path:"replies",
-populate:{path:"author"}
-})
-  next();
-})
+// CommentSchema.pre("find", function( next){
+//   this.populate({path:"replies",
+// populate:{path:"author"}
+// })
+//   next();
+// })
 
 export default mongoose.model('Comment', CommentSchema);

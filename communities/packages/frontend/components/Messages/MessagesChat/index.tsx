@@ -157,7 +157,10 @@ const MessagesChat: FC<MessagesChatProps> = ({ onSearchItemClick, userId, user }
         receiver: user,
       };
       addToMessagesList(queryClient, newMessage, userId);
-      socket.emit(Events.CREATE_MESSAGE, newMessage);
+      socket.on('connect', () => {
+        console.log(newMessage);
+        socket.emit(Events.CREATE_MESSAGE, newMessage);
+      });
       setMessage('');
       const notificationExists = await axios.get(`/notifications/author-and-user/${user._id}`);
       if (!notificationExists.data) {

@@ -11,6 +11,7 @@ import { openAuthPopup, PopupType } from '../store/auth';
 import { CommunityIcon } from '../components/ui/icons';
 import Seo from '../components/Seo';
 import { useDispatchAuth } from '../utils/useDispatchAuth';
+import RepostCard from '../components/Post/RepostCard';
 
 const fetchPostsByFollowing = async ({ pageParam = 0 }) => {
   const { data } = await axios.get(`/posts/follow?offset=${pageParam}&limit=${DataLimit.PostsByFollowing}`);
@@ -70,9 +71,16 @@ const Home: FC = () => {
         {data?.pages?.map((posts, i) => {
           return (
             <Fragment key={i}>
-              {posts?.map((post: Post) => (
+              {posts?.map((post: Post) => {
+                if (post.postId && post.postId.length > 0) {
+                  return <RepostCard  queryKey="postsByFollowing" key={post._id} post={post} />;
+                } else {
+                  return <PostCard  queryKey="postsByFollowing" key={post._id} post={post} />;
+                }
+              })}
+              {/* {posts?.map((post: Post) => (
                 <PostCard displayChannelName queryKey="postsByFollowing" key={post._id} post={post} />
-              ))}
+              ))} */}
 
               {isFetchingNextPage && <LoadingDots />}
             </Fragment>

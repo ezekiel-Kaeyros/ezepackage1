@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const Root = styled.div`
+
 width: 205px;
   display: flex;
   flex-direction: column;
@@ -12,7 +13,21 @@ width: 205px;
   border-radius: ${(p) => p.theme.radius.sm};
   transition: border-color 0.1s;
   box-shadow: ${(p) => p.theme.shadows.sm};
-  
+`;
+
+export const WrappButton = styled.div`
+  margin-bottom: 1rem;
+  // width: 100%;
+  // max-width: ${(p) => p.theme.screen.lg};
+  // margin: 0 auto;
+  // display: grid;
+  // border-top-left-radius: 15px;
+  // border-top-right-radius: 15px;
+  // grid-template-columns: repeat(auto-fill, minmax(180px, 3fr));
+  // //grid-template-columns: auto auto auto auto;
+  // grid-auto-rows: auto;
+  // grid-gap: 20px;
+  // margin-bottom: ${(p) => p.theme.spacing.lg};
 `;
 
 export const Wrapper = styled.div`
@@ -22,8 +37,9 @@ export const Wrapper = styled.div`
   display: grid;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 3fr));
+  grid-template-columns: repeat(auto-fill, minmax(180px, 200px));
   //grid-template-columns: auto auto auto auto;
+  justify-content: center;
   grid-auto-rows: auto;
   grid-gap: 20px;
   margin-bottom: ${(p) => p.theme.spacing.lg};
@@ -69,6 +85,7 @@ export const FullName = styled.span`
   width: 200px;
   align-items: left;
   justify-content: left;
+  text-align: center;
   padding: 0px 5px;
   font-size: 16px;
   font-style: normal;

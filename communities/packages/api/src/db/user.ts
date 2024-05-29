@@ -144,6 +144,9 @@ export const updateUserBanned = async (id: string, banned: boolean): Promise<any
 };
 
 export const joinChannel = async (channelId: string, userId: string): Promise<any> => {
+  console.log('channelId===',channelId);
+  console.log('userId======',userId);
+  
   try {
     const user = await User.findById(userId);
 

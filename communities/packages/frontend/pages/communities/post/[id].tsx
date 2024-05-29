@@ -7,10 +7,13 @@ import { GetServerSideProps } from 'next';
 import { useQuery } from 'react-query';
 import LayoutCommunities from '../../../components/Layout/CommuntiesLayout';
 import { useDispatchAuth } from '../../../utils/useDispatchAuth';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
 
 const fetchPost = async ({ queryKey }) => {
   const [, postId] = queryKey;
   const { data } = await axios.get(`/posts/${postId}`);
+  
   return data;
 };
 

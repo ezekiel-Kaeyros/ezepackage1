@@ -2,13 +2,15 @@ import cookies from 'js-cookie';
 import { FIRST_TIME, TOKEN, USER_DATA } from './cookies.d';
 
 export const setUserCookies = (data: any) => {
-  cookies.set(USER_DATA, JSON.stringify(data), { domain: '.eze.wiki' });
-  //cookies.set(USER_DATA, JSON.stringify(data));
+  // cookies.set(USER_DATA, JSON.stringify(data), { domain: '.eze.ink' });
+  cookies.set(USER_DATA, JSON.stringify(data), { domain: '.sch-eze.com' });
+  // cookies.set(USER_DATA, JSON.stringify(data));
 };
 
 export const setToken = (token: string) => {
-  cookies.set('token', JSON.stringify(token), { domain: '.eze.wiki' });
-  //cookies.set('token', JSON.stringify(token));
+  // cookies.set('token', JSON.stringify(token), { domain: '.eze.ink' });
+  cookies.set('token', JSON.stringify(token), { domain: '.sch-eze.com' });
+  // cookies.set('token', JSON.stringify(token));
 };
 
 export const getToken = () => {
@@ -28,8 +30,8 @@ export const removeUserCookies = () => {
 // Onboarding cookies
 
 export const isFirstTime = (data: string) => {
-  cookies.set(FIRST_TIME, 'true', { domain: '.eze.wiki' });
-  //cookies.set(FIRST_TIME, 'true');
+  // cookies.set(FIRST_TIME, 'true', { domain: '.eze.ink' });
+  cookies.set(FIRST_TIME, 'true', { domain: '.sch-eze.com' });
 };
 
 export const getIsFirstTime = () => {

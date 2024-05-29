@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Root, ImageContainer, Imaged, InitialLetters, FullName, Description, UserName } from './style';
+import { Root, ImageContainer, Imaged, InitialLetters, FullName, Description, UserName, WrappButton } from './style';
 import { Link, Spacing } from '../ui';
 import Follow from '../Follow';
 import theme from '../../theme';
@@ -52,7 +52,7 @@ const MembersCard: FC<MembersCardProps> = ({ user, queryKey }) => {
         </Link>
       </Spacing>
       <Spacing bottom="xs">
-        <Description>{`Président du comité d'organisation chez International`} </Description>
+        {/* <Description>{`Président du comité d'organisation chez International`} </Description> */}
       </Spacing>
 
       {/* <Button color="ezeColor" radius="full" fullWidth>
@@ -60,8 +60,10 @@ const MembersCard: FC<MembersCardProps> = ({ user, queryKey }) => {
         &nbsp;Follow
       </Button> */}
       {username ? <UserName>@{username}</UserName> : <Spacing top="sm" />}
+      <WrappButton>
+        {authUser && <Follow queryKey={queryKey} user={user} />}
+      </WrappButton>
 
-      {authUser && <Follow queryKey={queryKey} user={user} />}
     </Root>
   );
 };

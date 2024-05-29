@@ -6,18 +6,22 @@ import { useDispatch } from 'react-redux';
 import { setAuthUser } from '../store/auth';
 import { useRouter } from 'next/router';
 
-const HOME_URL = 'https://eze.wiki';
+// const HOME_URL = 'https://eze.ink';
+const HOME_URL = 'https://eze.ink';
+// const HOME_URL = 'http://localhost:3000'
 
 export const useDispatchAuth = () => {
   const dispatch = useDispatch();
   const { push } = useRouter();
 
-  const token = JSON?.parse(cookies.get(Cookies.Token, { domain: '.eze.wiki' }));
-  //const user = cookies.get(Cookies.User_data);
+  // const token = JSON?.parse(cookies.get(Cookies.Token, { domain: '.eze.ink' }));
+  const token = JSON?.parse(cookies.get(Cookies.Token, { domain: '.eze.ink' }));
+  // const token = cookies.get(Cookies.User_data);
 
   const fetch = async () => {
-    const token = JSON?.parse(cookies.get(Cookies.Token, { domain: '.eze.wiki' }));
-    //const token = JSON?.parse(cookies.get(Cookies.Token));
+    // const token = JSON?.parse(cookies.get(Cookies.Token, { domain: '.eze.ink' }));
+    const token = JSON?.parse(cookies.get(Cookies.Token, { domain: '.eze.ink' }));
+    // const token = JSON?.parse(cookies.get(Cookies.Token));
     try {
       axios.defaults.headers.common = { Authorization: `bearer ${token}` };
       const { data } = await axios.get('/auth-user');
@@ -40,7 +44,7 @@ export const useDispatchAuth = () => {
     if (token) {
       fetch();
     } else {
-      push(HOME_URL);
+      // push(HOME_URL);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
