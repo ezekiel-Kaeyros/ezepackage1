@@ -19,7 +19,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { getIsFirstTime, setUserCookies } from '@/cookies/cookies';
 import { getUserInfo } from '@/utils/getUserInfo';
 
-// const COMMUNITIES_URL = 'https://communities.eze.ink/';
+// const COMMUNITIES_URL = 'https://communities.eze.ink/';;
 const COMMUNITIES_URL = 'https://communities.sch-eze.com';
 
 const LoginForm:React.FC<{login:any}> = ({login}) => {
