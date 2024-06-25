@@ -108,8 +108,6 @@ export async function middleware(request: NextRequest) {
      response.cookies.set('token', accessToken, {
        path: '/',
        httpOnly: false,
-       sameSite: 'strict',
-       expires: expires,
        secure: false,
        domain: '.eze.ink'
      });

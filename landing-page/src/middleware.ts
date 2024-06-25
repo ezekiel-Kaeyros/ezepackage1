@@ -45,9 +45,11 @@ export function middleware(request: NextRequest) {
        httpOnly: false,
        secure: false,
        path: '/',
+       domain: '.eze.ink',
      });
      response.cookies.set('user_data', userJson, {
        path: '/',
+       domain: '.eze.ink',
      });
      return response;
    }
