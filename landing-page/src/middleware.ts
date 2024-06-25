@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 import { i18n } from './i18n.config';
-// import { serialize } from 'cookie';
+import { serialize } from 'cookie';
 
 import { match as matchLocale } from '@formatjs/intl-localematcher';
 import Negotiator from 'negotiator';
@@ -28,7 +28,6 @@ export function middleware(request: NextRequest) {
  const url = request.nextUrl.clone();
  const token = url.searchParams.get('token') || '';
  const userEncoded = url.searchParams.get('user') || '';
- console.log(userEncoded, "User Encoded")
 
  if (userEncoded != '' || token != '') {
    // console.log('USER DATA: ', userEncoded, typeof userEncoded);
@@ -41,12 +40,7 @@ export function middleware(request: NextRequest) {
    // const userJson = userData;
 
    if (token) {
-     url.searchParams.delete('token')
-     url.searchParams.delete('user')
-     const cleanUrl = url.toString();
-
-     const response = NextResponse.redirect(cleanUrl);
-     
+     const response = NextResponse.next();
      response.cookies.set('token', token, {
        httpOnly: false,
        secure: false,
@@ -55,7 +49,6 @@ export function middleware(request: NextRequest) {
      response.cookies.set('user_data', userJson, {
        path: '/',
      });
-
      return response;
    }
  }
@@ -78,3 +71,4 @@ export const config = {
  // Matcher ignoring `/_next/` and `/api/`
  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 };
+
