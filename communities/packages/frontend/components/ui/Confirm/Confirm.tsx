@@ -27,21 +27,18 @@ const Confirm: FC<ConfirmProps> = ({
     <Modal hideHeading={hideHeading} hideTitleBorder isOpen={isOpen} close={close} hideCloseButton>
       <Title>{title}</Title>
       <Root>
-        <>
-        
-          {children}
-          <ButtonContainer>
-            <Button type="button" text color="primary" onClick={close}>
-              {cancelText}
-            </Button>
+        {children}
+        <ButtonContainer>
+          <Button type="button" text color="primary" onClick={close}>
+            {cancelText}
+          </Button>
 
-            <Spacing left="xs">
-              <Button type="submit" color="primary" onClick={onConfirm}>
-                {confirmText}
-              </Button>
-            </Spacing>
-          </ButtonContainer>
-        </>
+          <Spacing left="xs">
+            <Button type="submit" color="primary" onClick={onConfirm}>
+              {confirmText}
+            </Button>
+          </Spacing>
+        </ButtonContainer>
       </Root>
     </Modal>
   );

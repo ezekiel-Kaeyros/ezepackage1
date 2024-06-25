@@ -26,23 +26,10 @@ const CheckboxCommunityChip: React.FC<CheckboxCommunityChipProps> = ({
   gettopic,
   item
 }) => {
-
-  function extractUpToNextWhitespace(str: string, limit: any) {
-    // Extract the first 'limit' characters
-    let partialString = str.slice(0, limit);
-    // Find the next whitespace after the 'limit'
-    let nextWhitespaceIndex = str.indexOf(' ', limit);
-    if (nextWhitespaceIndex === -1) {
-        // If no whitespace is found, return the entire string
-        return str;
-    }
-    // Include the substring up to the next whitespace
-    return str.slice(0, nextWhitespaceIndex);
-}
   const [check,setCheck]=useState(false)
   return (
     <div
-      className={`bg-[#FFE6EF] w-[350px] ml-0 py-6 rounded-2xl h-[180px] ${check && 'border-primaryColor border-2  text-secondaryColor'} `}
+      className="p-1"
       onClick={() => {
         // alert(check)
         setCheck((preview) => !preview);
@@ -61,15 +48,15 @@ const CheckboxCommunityChip: React.FC<CheckboxCommunityChipProps> = ({
         /> */}
         <label
           htmlFor={`${id}`}
-          className={`text-sm  cursor-pointer select-none font-medium text-secondaryColor flex flex-col`}
+          className={`w-fit  my-1 max-w-xs bg-[#FFE6EF] px-4 ml-0 text-sm  cursor-pointer select-none rounded-2xl py-6 ${check && 'border-primaryColor border-2  text-secondaryColor'}   font-medium text-secondaryColor flex flex-col`}
         >
-          <div className="flex gap-x-10">
+          <div className="flex  justify-between space-x-4">
             <Image className="w-fit" src={IFYARLogo} alt="IFYAR logo" />
 
             <Image src={usersImage} alt="User image" />
           </div>
           <h1 className="font-bold text-xl my-2">{label}</h1>
-          {description.length > 0 ? <p className='text-base'>{extractUpToNextWhitespace(description, 24)}...</p> : <p></p>} 
+          <p>{description}</p>
         </label>
       </div>
     </div>

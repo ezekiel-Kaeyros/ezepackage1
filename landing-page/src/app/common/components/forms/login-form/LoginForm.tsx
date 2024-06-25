@@ -67,9 +67,8 @@ const LoginForm: React.FC<{ login: any }> = ({ login }) => {
         } else {
           dispatch(setAuthUser({ user: res?.data }));
           toast.success('Logged in successfully');
-          // (isFirstTime && push(COMMUNITIES_URL)) ||
-          //   push('/fr/onboarding?step=1');
-          push(COMMUNITIES_URL);
+          (isFirstTime && push(COMMUNITIES_URL)) ||
+            push('/fr/onboarding?step=1');
         }
       } catch (error: any) {
         console.log(`An error occured`, error);

@@ -20,14 +20,12 @@ import { Button, Link, Spacing } from '../ui';
 import { initialProducts } from './data';
 import iconMember from '../../public/people.svg';
 import { truncateText } from '../../utils/truncatText';
-import { useTranslation } from 'react-i18next';
-import { GetStaticProps } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
-const CommunityCards: React.FC<{ search: boolean; channels?: any; categoryStep: string }> = ({
+const CommunityCards: React.FC<{value?:any, search: boolean; channels?: any; categoryStep: string }> = ({
   search,
   channels,
   categoryStep,
+   
 }) => {
   const [table, setTable] = useState([]);
   const [products] = useState(initialProducts);
@@ -41,7 +39,6 @@ const CommunityCards: React.FC<{ search: boolean; channels?: any; categoryStep: 
   //     item.descriptionJob.toLowerCase().includes(value.toLowerCase()) ||
   //     item.descriptionCommunity.toLowerCase().includes(value.toLowerCase())
   // );
- const { t: translate } = useTranslation('common');
 
   useEffect(() => {
     if (categoryStep == 'Data Analytics' && !search) {
@@ -67,13 +64,11 @@ const CommunityCards: React.FC<{ search: boolean; channels?: any; categoryStep: 
               <Link key={index} href={`/communities/channel/${community.name}`}>
                 <Root>
                   <InnerWrapper>
+
                     <MainUpperContent>
                       <BlockMembers>
                         <Image alt="icon" src={iconMember} />
-                        <MembersNumber>
-                          {community?.members}{' '}
-                          {community.members && community.members > 1 ? translate('member') + 's' : translate('member')}
-                        </MembersNumber>
+                        <MembersNumber>10k Members</MembersNumber>
                       </BlockMembers>
 
                       <Link href="#" disableBorderOnHover>
@@ -86,7 +81,7 @@ const CommunityCards: React.FC<{ search: boolean; channels?: any; categoryStep: 
 
                           <DescriptionContainer>
                             <FullName> {community?.name} </FullName>
-                            <Description> {truncatedCommunityDescription} </Description>
+                            <Description> { truncatedCommunityDescription } </Description>
                           </DescriptionContainer>
                         </HeaderContainer>
                       </Link>
@@ -110,9 +105,10 @@ const CommunityCards: React.FC<{ search: boolean; channels?: any; categoryStep: 
                       </Spacing>
                     </MainUpperContent>
 
+
                     <MyButton>
                       <Button color="ezeColor" radius="full">
-                        {translate('btnCardCommunity')}
+                        View community
                       </Button>
                       {community.moreicon ? (
                         <Image alt="icon card" width={30} height={30} src={community.moreicon} />
@@ -120,6 +116,7 @@ const CommunityCards: React.FC<{ search: boolean; channels?: any; categoryStep: 
                         <span></span>
                       )}
                     </MyButton>
+                    
                   </InnerWrapper>
                 </Root>
               </Link>
@@ -130,10 +127,4 @@ const CommunityCards: React.FC<{ search: boolean; channels?: any; categoryStep: 
     </>
   );
 };
-
-// export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-//   props: {
-//     ...(await serverSideTranslations(locale ?? 'en', ['common'])),
-//   },
-// });
 export default CommunityCards;

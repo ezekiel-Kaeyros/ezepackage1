@@ -9,9 +9,6 @@ import { CommunityIcon } from '../../components/ui/icons';
 import Seo from '../../components/Seo';
 import LayoutCommunities from '../../components/Layout/CommuntiesLayout';
 import { useQuery, useQueryClient } from 'react-query';
-import { useTranslation } from 'react-i18next';
-import { GetStaticProps } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 
 function extractUniquePostIds(data) {
@@ -42,8 +39,6 @@ const fetchPostsById = async (id) => {
 };
 
 const Home: FC = () => {
-   const { t: translate } = useTranslation('common');
-   console.log('translation', translate('communityNotJoin'));
   const [datas,setDatas]=useState([])
   const authUser = useSelector((state: RootState) => state.auth.user);
   
@@ -108,9 +103,7 @@ const Home: FC = () => {
 
             <Spacing top="sm">
               <Spacing top="sm">
-                <Text>
-                  {!authUser && 'And'} {translate('communityNotJoin')}
-                </Text>
+                <Text>{!authUser && 'And'} Join a community to see their posts in the News Feed.</Text>
               </Spacing>
             </Spacing>
           </Container>
@@ -127,9 +120,5 @@ const Home: FC = () => {
     </LayoutCommunities>
   );
 };
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['common'])),
-  },
-});
+
 export default Home;

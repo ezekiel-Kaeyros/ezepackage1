@@ -29,7 +29,6 @@ import LivingLibraryIcon from '../ui/icons/LivingLibraryIcon';
 import EventsIcon from '../ui/icons/EventsIcon';
 import FundingAreaIcon from '../ui/icons/FundingAreIcon';
 import { useDispatchAuth } from '../../utils/useDispatchAuth';
-import LanguageSwitcher from './LanguageSwitcher';
 
 interface SubHeaderProps {
   toggleSidebar?: () => void;
@@ -80,21 +79,12 @@ const SubHeader: ForwardRefRenderFunction<HTMLButtonElement, SubHeaderProps> = (
     }
   };
 
-  const handleLogin = async () => {
-    try {
-      const returnUrl = window.location.href;
-      window.location.href = `${process.env.NEXT_PUBLIC_SSO_LOGIN_URL}?module=${encodeURIComponent(returnUrl)}`;
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-
   const isSmallScreen = breakpoint === 'xs' || breakpoint === 'sm';
 
   return (
     <CommunitiesHeaderRoot>
       <Logo>
-        <a href="http://localhost:3001">
+        <a href="https://eze.ink/en">
           <img alt="logo" style={{ height: 35 }} src={logo} />
         </a>
       </Logo>
@@ -127,24 +117,22 @@ const SubHeader: ForwardRefRenderFunction<HTMLButtonElement, SubHeaderProps> = (
           />
         </ItemMenu> */}
         <ItemMenu>
-          <a href="https://kashapp.biz/auth/mo_saml/index.php">
-            {/* <NavTab
+          {/* <NavTab
             icon={<OnlineCoursesIcon />}
             link="/online-courses"
             isActive={router.pathname === '/online-courses'}
           /> */}
+          <a href="https://kashapp.biz/auth/mo_saml/index.php">
             <OnlineCoursesIcon />
           </a>
         </ItemMenu>
-
         <ItemMenu>
+          {/* <NavTab
+            icon={<LivingLibraryIcon width="32" />}
+            link="/living-library"
+            isActive={router.pathname === '/living-library'}
+          /> */}
           <a href="https://library.eze.ink/">
-            {/* <NavTab
-              icon={<LivingLibraryIcon width="32" />}
-              link=""
-              isActive={router.pathname === '/living-library'}
-              all
-            /> */}
             <LivingLibraryIcon width="32" />
           </a>
         </ItemMenu>
@@ -192,7 +180,7 @@ const SubHeader: ForwardRefRenderFunction<HTMLButtonElement, SubHeaderProps> = (
               ghost={isSmallScreen}
               size="sm"
               color="primary"
-              onClick={handleLogin}
+              onClick={() => dispatch(openAuthPopup(PopupType.Log_In))}
             >
               {isSmallScreen ? <Avatar /> : 'Log in'}
             </Button>
@@ -204,10 +192,6 @@ const SubHeader: ForwardRefRenderFunction<HTMLButtonElement, SubHeaderProps> = (
               closeDropDown={closeDropDown}
             />
           )}
-        </div>
-
-        <div>
-          <LanguageSwitcher />
         </div>
       </NotificationsAndAvatar>
     </CommunitiesHeaderRoot>

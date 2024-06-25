@@ -71,7 +71,7 @@ const Like: FC<LikeProps> = ({
   const { mutateAsync: createLikeMutation } = useMutation(createLike);
   const { mutateAsync: createLikeCommentMutation } = useMutation(createLikeComment);
   const { mutateAsync: deleteLikeMutation } = useMutation(deleteLike);
-console.log('hfgkhgnfhgnf hjgfhjg',id);
+// console.log('hfgkhgnfhgnf hjgfhjg',id);
 
   const updateAfterLike = (like) => {
     if (!type) {
@@ -193,7 +193,7 @@ console.log('hfgkhgnfhgnf hjgfhjg',id);
       // alert(likeId);
 
       queryClient.setQueryData(queryKey, (existingPosts: any) => {
-        console.log('existingPosts',existingPosts);
+        // console.log('existingPosts',existingPosts);
         
         if (!existingPosts.pages) {
           const comments = existingPosts.comments.map((item: any) => {
@@ -205,7 +205,7 @@ console.log('hfgkhgnfhgnf hjgfhjg',id);
                 ...item,
                 likes: arraylikes,
               };
-              console.log('row', row);
+              // console.log('row', row);
             }
             return row;
           });
@@ -229,7 +229,7 @@ console.log('hfgkhgnfhgnf hjgfhjg',id);
                       ...item,
                       likes: arraylikes,
                     };
-                    console.log('row', row);
+                    // console.log('row', row);
                   }
                   return row;
                 });
@@ -277,14 +277,14 @@ console.log('hfgkhgnfhgnf hjgfhjg',id);
   };
 
   const likeCommentMutation = async () => {
-    console.log('hasLiked12365', hasLiked);
+    // console.log('hasLiked12365', hasLiked);
 
     try {
       const like = hasLiked
         ? await deleteLikeMutation(hasLiked?.id)
         : await createLikeCommentMutation({ commentId: checkLike });
-      console.log('like._id', like._id);
-      console.log('hasLiked', hasLiked);
+      // console.log('like._id', like._id);
+      // console.log('hasLiked', hasLiked);
       // alert('ok')
       // updateAfterUnLike(like._id);
       hasLiked ? updateAfterUnLike(like._id) : updateAfterLike(like._id);

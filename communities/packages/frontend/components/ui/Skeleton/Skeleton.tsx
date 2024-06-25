@@ -11,6 +11,7 @@ export interface SkeletonProps {
   bottom?: string;
   left?: string;
   radius?: string;
+  // theme?:string
 }
 
 const Skeleton: FC<SkeletonProps> = ({ count, width, height, inline, top, right, bottom, left, radius }) => {

@@ -72,15 +72,6 @@ const Login: FC = () => {
     };
   }, [popupType, isPopupOpen]);
 
-  const handleLogin = async () => {
-    try {
-      const returnUrl = window.location.href;
-      window.location.href = `${process.env.NEXT_PUBLIC_SSO_LOGIN_URL}?module=${encodeURIComponent(returnUrl)}`;
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-
   return (
     <Container paddingHorizontal="none">
       <form onSubmit={onSubmit}>
@@ -139,7 +130,9 @@ const Login: FC = () => {
               <LinkButton
                 size="xs"
                 type="button"
-                onClick={handleLogin}
+                onClick={() => {
+                  dispatch(openAuthPopup(PopupType.Sign_Up));
+                }}
               >
                 Sign up
               </LinkButton>

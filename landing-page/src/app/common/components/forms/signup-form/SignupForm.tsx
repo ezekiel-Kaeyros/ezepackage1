@@ -23,7 +23,7 @@ import { setAuthUser } from '@/redux/features/auth-slice';
 import AuthService from '@/services/authService';
 import { setUserCookies, setToken } from '@/cookies/cookies';
 
-// const COMMUNITIES_URL = 'https://communities.eze.wiki/';
+// const COMMUNITIES_URL = 'https://communities.eze.ink/';
 
 const SignupForm: React.FC<{ signup: any }> = ({ signup }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);

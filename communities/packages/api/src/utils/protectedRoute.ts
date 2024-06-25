@@ -3,12 +3,8 @@ import passport from 'passport';
 import { ErrorCodes, UserRole } from '../constants';
 
 export const checkIfUser = (req: Request, res: Response, next: NextFunction) => {
-  console.log('124');
-  
   passport.authenticate('jwt', { session: false }, (err, user) => {
     if (err) {
-      console.log('err',err);
-      
       return next(err);
     }
 

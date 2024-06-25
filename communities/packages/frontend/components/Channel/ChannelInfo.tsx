@@ -36,8 +36,6 @@ import { RootState } from '../../store';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { AlertTypes, openAlert } from '../../store/alert';
 import { setAuthUser } from '../../store/auth';
-// import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-// import { GetStaticProps } from 'next';
 
 interface ChannelInfoProps {
   channelId: string;
@@ -88,11 +86,9 @@ const fetchUserById = async ({ userId }) => {
 
 const ChannelInfo: FC<ChannelInfoProps> = ({ channelId, name, creationDate, description, member ,image,cover}) => {
   const sharePopoverRef = useRef(null);
-  
   const [imageProfil,setImageprofile]=useState(image)
   const [imageCover, setImageCover] = useState(cover);
   const [number, setNumber] = useState(member);
-  const [load, setLoad] = useState(false);
   const [isLoadingProfile, setIsLoadingProfile] = useState<ProfileLoading>(null);
   const authUser = useSelector((state: RootState) => state.auth.user);
   const { mutateAsync: joinChannelMutation } = useMutation(joinChannel);
@@ -116,7 +112,6 @@ const ChannelInfo: FC<ChannelInfoProps> = ({ channelId, name, creationDate, desc
 
   // Logic for joining
   const handleJoin = async () => {
-    setLoad(true)
     const joiningDetails = {
       userId: authUser._id,
       channelId: channelId,
@@ -140,18 +135,14 @@ const ChannelInfo: FC<ChannelInfoProps> = ({ channelId, name, creationDate, desc
         }
         notify('joined');
         await queryClient.refetchQueries('userById');
-        setLoad(false)
       }
     } catch (error) {
       console.log('An error occured', error);
-      setLoad(false)
     }
   };
 
   // Logic for leaving
   const handleLeave = async () => {
-      setLoad(true);
-
     const leavingDetails = {
       userId: authUser._id,
       channelId: channelId,
@@ -176,12 +167,9 @@ const ChannelInfo: FC<ChannelInfoProps> = ({ channelId, name, creationDate, desc
           val < 0 && setNumber(0);
         }
         notify('leaved');
-      setLoad(false);
-
       }
     } catch (error) {
       console.log(`An error occured, try again`, error);
-      setLoad(false)
     }
   };
 
@@ -252,6 +240,7 @@ const ChannelInfo: FC<ChannelInfoProps> = ({ channelId, name, creationDate, desc
 
         {
           <CoverImageWrapper>
+         
             {isJoined && (
               <UploadChannelImage
                 isCover
@@ -270,7 +259,7 @@ const ChannelInfo: FC<ChannelInfoProps> = ({ channelId, name, creationDate, desc
               <Avatar image={imageProfil && imageProfil} size={4} />
             )}
             <ProfileImageWrapper>
-              {isJoined && (
+              {authUser.role !== 'Regular' && (
                 <UploadChannelImage
                   setIsLoading={setIsLoadingProfile}
                   channel={isJoined}
@@ -281,8 +270,7 @@ const ChannelInfo: FC<ChannelInfoProps> = ({ channelId, name, creationDate, desc
           </ProfilePhoto>
           <DetailsList>
             <DetailsText>
-              {/* <H1 size="xl">{name}</H1> */}
-              <h1>{name}</h1>
+              <H1 size="xl">{name}</H1>
               <DecriptionText>{description}</DecriptionText>
             </DetailsText>
             <DetailsInfo>
@@ -303,17 +291,17 @@ const ChannelInfo: FC<ChannelInfoProps> = ({ channelId, name, creationDate, desc
           {/* Buttons group */}
           <ButtonGroup>
             {(!isJoined && (
-              <JoinButton disabled={load} style={{ opacity: load ? '0.8' : '1' }}>
+              <JoinButton>
                 <Image alt="invite button" src={JoinIcon} />
                 <H3 onClick={() => handleJoin()} color="white" size="sm">
-                  {load ? '...' : 'Join'}
+                  Join
                 </H3>
               </JoinButton>
             )) || (
-              <LeaveButton disabled={load} style={{ opacity: load ? '0.8' : '1' }}>
+              <LeaveButton>
                 <Image alt="invite button" src={JoinIcon} />
                 <H3 onClick={() => handleLeave()} color="white" size="sm">
-                  {load ? '...' : 'Leave'}
+                  Leave
                 </H3>
               </LeaveButton>
             )}
@@ -338,9 +326,5 @@ const ChannelInfo: FC<ChannelInfoProps> = ({ channelId, name, creationDate, desc
     </div>
   );
 };
-// export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-//   props: {
-//     ...(await serverSideTranslations(locale ?? 'en', ['common'])),
-//   },
-// });
+
 export default ChannelInfo;

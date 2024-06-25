@@ -23,8 +23,6 @@ const useSocket = (): Socket => {
       console.log(event, args);
     });
   }, [user, dispatch, socket]);
-console.log('Config.API_URL', Config.API_URL);
-console.log('socket',socket);
 
   return socket;
 };

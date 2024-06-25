@@ -61,7 +61,7 @@ const PostCard: FC<PostCardProps> = ({
   useClickOutside([sharePopoverRef, shareButtonRef], isShareOpen, () => {
     toggleShare();
   });
-console.log('authUser', authUser);
+console.log('post12654789====',post);
 
   const likesLength = post.likes.length;
   const commentsLength = post.comments.length;

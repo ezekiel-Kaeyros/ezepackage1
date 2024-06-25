@@ -19,7 +19,7 @@ const LoginRedirect = () => {
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="loader"></div>
-      <style >{`
+      <style>{`
         .loader {
           border: 4px solid rgba(0, 0, 0, 0.1);
           width: 36px;

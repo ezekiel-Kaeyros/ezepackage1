@@ -99,10 +99,13 @@ const NavBar: React.FC<NavBarProps> = ({ lang, navigation }) => {
           </li>
           <li className="border-t-1 hover:text-primaryColor lg:border-none px-6 lg:px-3 2xl:px-6  pt-4 lg:pt-0 pb-4">
             {token ? (
-              <Button href={`${COMMUNITIES_URL}`} className="w-fit py-3">
+              <Button href={COMMUNITIES_URL} className="w-fit py-3">
                 {navigation.dash}
               </Button>
             ) : (
+              // <Button href={`/${lang}/login`} className="w-fit py-3">
+              //   {navigation.btn}
+              // </Button>
               <Button className="w-fit py-3" onClick={handleLogin}>
                 {navigation.btn}
               </Button>

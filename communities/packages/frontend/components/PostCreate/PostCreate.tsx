@@ -27,17 +27,12 @@ const config = {
 };
 
 const createPost = async ({ title, image, channelId }) => {
-    console.log({ title, image, channelId }, 'function');
-  
   const formData = new FormData();
   formData.append('title', title);
   formData.append('image', image);
   formData.append('channelId', channelId);
 
   const newPost = await axios.post('/posts/create', formData, config);
-  console.log('create');
-  console.log('newPost',newPost);
-  
   return newPost.data;
 };
 
@@ -94,17 +89,12 @@ const PostCreate: FC<PostCreateProps> = ({
   const { mutateAsync: updatePostMutation, isLoading: isPostUpdateLoading } = useMutation(updatePost);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    
     e.preventDefault();
 
     try {
       // If we don't have a post id, it means we need to create one.
       if (!postId) {
-    console.log(formValues, 'formValues11111111111');
-
         const post = await createPostMutation({ ...formValues });
-        console.log('post',post);
-        
         updateCache({
           queryKey,
           operation: 'create',
@@ -158,8 +148,6 @@ const PostCreate: FC<PostCreateProps> = ({
   };
 
   const close = () => {
-    console.log('close');
-    
     setFormValues(initialState);
     closePostCreate();
   };

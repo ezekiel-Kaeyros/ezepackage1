@@ -44,12 +44,11 @@ router.get('/facebook/callback', AuthController.facebookCallback);
 /**
  * Users
  */
-router.get('/users/get-users', withUser, UserController.getUsers);
+router.get('/users/get-users',  UserController.getUsers);
 router.get('/users/online-users', withUser, UserController.onlineUsers);
 router.get('/users/new-members', withUser, UserController.newMembers);
 router.post('/users/upload-photo', [checkIfUser, multerUpload.single('image')], UserController.uploadPhoto);
 router.get('/users/:id', UserController.user);
-router.get('/users/email/:email', UserController.userEmail);
 router.delete('/users/ban-user', checkIfSuperAdmin, UserController.banUser);
 
 /**
@@ -69,7 +68,7 @@ router.post('/settings/create-user', checkIfSuperAdmin, SettingsController.creat
  */
 router.get('/channels', ChannelController.channels);
 router.get('/channels/:name', ChannelController.channelByName);
-router.post('/channels/create', ChannelController.create);
+router.post('/channels/create', checkIfAdmin, ChannelController.create);
 router.put('/channels/update', checkIfAdmin, ChannelController.update);
 router.put('/channels/update-member', ChannelController.updateMember);
 router.delete('/channels/delete', checkIfAdmin, ChannelController.delete);
