@@ -12,12 +12,16 @@ import AnimateClick from '../../animate-click/AnimateClick';
 import { useClickOutside } from '@/app/hooks/useClickOutside';
 import { getUserCookies } from '@/cookies/cookies';
 import { useAuth } from '@/app/hooks/useAuth';
+import { useRouter } from 'next/navigation';
 
 type NavBarProps = {
   lang: string;
   navigation: any;
 };
-const COMMUNITIES_URL = 'https://communities.sch-eze.com';
+// const COMMUNITIES_URL = 'https://communities.eze.wiki';
+const COMMUNITIES_URL = process.env.NEXT_PUBLIC_COMMUNITIES_URL;
+
+console.log(COMMUNITIES_URL, "URLLL")
 
 const NavBar: React.FC<NavBarProps> = ({ lang, navigation }) => {
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
@@ -26,6 +30,17 @@ const NavBar: React.FC<NavBarProps> = ({ lang, navigation }) => {
   let domNode = useClickOutside(() => {
     setToggleMenu(true);
   });
+
+  const router = useRouter();
+
+  const handleLogin = async () => {
+    try {
+      const returnUrl = window.location.href + '/onboarding';
+      window.location.href = `${process.env.NEXT_PUBLIC_SSO_LOGIN_URL}?module=${encodeURIComponent(returnUrl)}`;
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   return (
     <nav
@@ -58,13 +73,17 @@ const NavBar: React.FC<NavBarProps> = ({ lang, navigation }) => {
           ref={domNode}
           className="flex flex-col lg:flex-row space-y-3 lg:w-fit lg:space-y-0 lg:items-center  pt-2"
         >
-          <li className="border-t-1 hover:text-primaryColor lg:border-none px-6 lg:px-3 2xl:px-6  pt-4 lg:pt-0 pb-2">
-            <Link href={`${(token && COMMUNITIES_URL) || `/${lang}/login`}`}>
-              {navigation.comunity}
-            </Link>
+          <li className="border-t-1 hover:text-primaryColor lg:border-none px-6 lg:px-3 2xl:px-6 pt-4 lg:pt-0 pb-2">
+            {token ? (
+              <Link href={`${COMMUNITIES_URL}`}>{navigation.comunity}</Link>
+            ) : (
+              <Link href="#" onClick={handleLogin}>
+                {navigation.comunity}
+              </Link>
+            )}
           </li>
           <li className="border-t-1 hover:text-primaryColor lg:border-none px-6 lg:px-3 2xl:px-6  pt-4 lg:pt-0 pb-2">
-            <Link href="https://learn.eze.wiki/"> {navigation.online}</Link>
+            <Link href="https://kashapp.biz/auth/mo_saml/index.php"> {navigation.online}</Link>
           </li>
           <li className="border-t-1 hover:text-primaryColor lg:border-none px-6 lg:px-3 2xl:px-6  pt-4 lg:pt-0 pb-2">
             <Link href="http://library.eze.wiki:3010/">
@@ -80,14 +99,11 @@ const NavBar: React.FC<NavBarProps> = ({ lang, navigation }) => {
           </li>
           <li className="border-t-1 hover:text-primaryColor lg:border-none px-6 lg:px-3 2xl:px-6  pt-4 lg:pt-0 pb-4">
             {token ? (
-              <Button
-                href={`https://communities.eze.ink/`}
-                className="w-fit py-3"
-              >
+              <Button href={`${COMMUNITIES_URL}`} className="w-fit py-3">
                 {navigation.dash}
               </Button>
             ) : (
-              <Button href={`/${lang}/login`} className="w-fit py-3">
+              <Button className="w-fit py-3" onClick={handleLogin}>
                 {navigation.btn}
               </Button>
             )}

@@ -31,13 +31,13 @@ const HeaderRight: React.FC<TypeHeaderRight> = ({ title }) => {
             </SectionLeftHeaderRightInsignPage> */}
           <SectionLeftHeaderRightInsignPage>
             <ImageContainer size="24" mt="13" mr="10">
-              <Image src={clock} />
+              <Image src={clock} alt=''/>
             </ImageContainer>
             <TextSectionLeftHeaderRightInsignPage>Last 10 days</TextSectionLeftHeaderRightInsignPage>
           </SectionLeftHeaderRightInsignPage>
           <SectionLeftHeaderRightInsignPage>
             <ImageContainer size="24" mt="15" mr="10">
-              <Image src={people} />
+              <Image src={people} alt=''/>
             </ImageContainer>
             <TextSectionLeftHeaderRightInsignPage>10k Members</TextSectionLeftHeaderRightInsignPage>
           </SectionLeftHeaderRightInsignPage>
@@ -45,7 +45,7 @@ const HeaderRight: React.FC<TypeHeaderRight> = ({ title }) => {
 
         <BtnRightInsignPage color="white" bg="#015E44">
           <ImageContainer size="24" mr="10">
-            <Image src={edit} />
+            <Image src={edit} alt=''/>
           </ImageContainer>
           <SpanBtn mt="2"> Create Post</SpanBtn>
         </BtnRightInsignPage>

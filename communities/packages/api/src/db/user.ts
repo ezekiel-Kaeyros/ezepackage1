@@ -61,7 +61,7 @@ export const updateUserResetPasswordToken = async (userId: string, token: string
   const user = await User.findOneAndUpdate({ _id: userId }, { resetPasswordToken: token });
   return user;
 };
-
+ 
 export const createUser = async (
   fullName: string,
   username: string,

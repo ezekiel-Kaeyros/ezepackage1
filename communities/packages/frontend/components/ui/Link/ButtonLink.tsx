@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { default as NextLink } from 'next/link';
+import Link, { default as NextLink } from 'next/link';
 import { ButtonA } from './style';
 import { FontWeight, FontSize, GeneralColors, Radius } from '../../../theme';
 
@@ -29,7 +29,7 @@ const ButtonLink: FC<ButtonLinkProps> = ({
   hasHover,
 }) => {
   return (
-    <NextLink href={href}>
+    <Link href={href}>
       <ButtonA
         weight={weight}
         size={size}
@@ -42,7 +42,7 @@ const ButtonLink: FC<ButtonLinkProps> = ({
       >
         {children}
       </ButtonA>
-    </NextLink>
+    </Link>
   );
 };
 

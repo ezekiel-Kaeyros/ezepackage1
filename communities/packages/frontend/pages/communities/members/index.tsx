@@ -10,6 +10,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store';
 import LayoutCommunities from '../../../components/Layout/CommuntiesLayout';
 import { useDispatchAuth } from '../../../utils/useDispatchAuth';
+import { GetStaticProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'react-i18next';
 
 const fetchUsers = async ({ queryKey, pageParam = 0 }) => {
   const [, isEmailVerificationRequired] = queryKey;
@@ -20,6 +23,8 @@ const fetchUsers = async ({ queryKey, pageParam = 0 }) => {
 };
 
 const MembersPage: FC = () => {
+ const { t: translate } = useTranslation('common');
+
   const { isEmailVerificationRequired } = useSelector((state: RootState) => state.settings);
   const { data, isFetching, isFetchingNextPage } = useInfiniteScroll({
     key: ['members', isEmailVerificationRequired],
@@ -71,5 +76,9 @@ const MembersPage: FC = () => {
     </LayoutCommunities>
   );
 };
-
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common'])),
+  },
+});
 export default MembersPage;

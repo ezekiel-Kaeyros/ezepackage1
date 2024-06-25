@@ -14,6 +14,7 @@ import ChannelCreate from '../Channel/ChannelCreate';
 import CommunitiesIcon from '../ui/icons/CommunitiesIcon';
 import MessageIcon from '../ui/icons/MessageIcon';
 import InsightsIcon from '../ui/icons/InsightsIcon';
+import { useTranslation } from 'react-i18next';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -30,6 +31,8 @@ const reorderChannels = async ({ sortedChannels }) => {
 };
 
 const Sidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ isOpen }, ref) => {
+ const { t: translate } = useTranslation('common');
+
   const authUser = useSelector((state: RootState) => state.auth.user);
   const [modal, setModal] = useState(false);
   const closeModal = () => setModal(false);
@@ -71,7 +74,7 @@ const Sidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ isOpe
           >
             <CommunitiesIcon width="32" isActive={router.pathname.includes('/communities/members')} />
             {'\u00A0'}
-            {'\u00A0'} Members
+            {'\u00A0'} {translate('member') + 's'}
           </ButtonLink>
         </LI>
 
@@ -101,7 +104,7 @@ const Sidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ isOpe
           >
             <CommunitiesIcon width="32" isActive={router.pathname.includes('/communities/community')} />
             {'\u00A0'}
-            {'\u00A0'} All communities
+            {'\u00A0'} {translate('AllCom')}
           </ButtonLink>
         </LI>
 
@@ -131,7 +134,7 @@ const Sidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ isOpe
           >
             <InsightsIcon width="32" isActive={router.pathname.includes('/communities/insights')} />
             {'\u00A0'}
-            {'\u00A0'} Insights
+            {'\u00A0'} {translate('Insights')}
           </ButtonLink>
         </LI>
 
@@ -176,14 +179,14 @@ const Sidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ isOpe
             );
           }}
         />
-      )) || <h4>No joined communities</h4>}
+      )) || <h4>{translate('notjoin')}</h4>}
 
       {isAdmin && (
         <Button size="xs" onClick={() => setModal(true)} textColor="text">
           <PlusIcon />
           {'\u00A0'}
           {'\u00A0'}
-          Create a community
+          {translate('createCom')}
         </Button>
       )}
     </Root>

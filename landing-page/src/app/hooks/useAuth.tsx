@@ -1,19 +1,26 @@
-import { getToken, getUserCookies } from '@/cookies/cookies';
-import { AppDispatch, RootState } from '@/redux/store';
-import { useDispatch, useSelector } from 'react-redux';
+import {
+  getToken,
+  getUserCookies,
+  getUserCookiesAuth0,
+} from '@/cookies/cookies';
+import { AppDispatch } from '@/redux/store';
+import { useDispatch } from 'react-redux';
 
 export const useAuth = () => {
   const user:
-    any
+    | { fullName: string; role: string | null; email: string }
     | undefined = getUserCookies();
-  // const token: string | undefined = getToken();
-  const token: string | undefined = useSelector(
-    (state: RootState) => state.AuthReducer.token
-  );
+
+  const userAuth0: { fullName: string; username: string; email: string } | any =
+    getUserCookiesAuth0();
+  console.log('user: ', user);
+  const token: string | undefined = getToken();
+  console.log('token: ', token);
 
   const dispatch = useDispatch<AppDispatch>();
 
   return {
+    userAuth0,
     user,
     token,
     dispatch,

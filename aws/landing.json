@@ -1,5 +1,5 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:eu-central-1:108165532263:task-definition/landingpage:16",
+    "family": "landingpage",
     "containerDefinitions": [
         {
             "name": "landingpage",
@@ -18,10 +18,12 @@
             ],
             "essential": true,
             "environment": [],
-            "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": [],
-            "ulimits": [],
+            "dockerLabels": {
+                "traefik.enable": "true",
+                "traefik.http.routers.landing.rule": "Host(`eze.wiki`)"
+            },
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
@@ -35,39 +37,8 @@
             "systemControls": []
         }
     ],
-    "family": "landingpage",
     "taskRoleArn": "arn:aws:iam::108165532263:role/ecsTaskExecutionRole",
     "executionRoleArn": "arn:aws:iam::108165532263:role/ecsTaskExecutionRole",
-    "revision": 16,
-    "volumes": [],
-    "status": "ACTIVE",
-    "requiresAttributes": [
-        {
-            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
-        },
-        {
-            "name": "ecs.capability.execution-role-awslogs"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.task-iam-role"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
-        }
-    ],
-    "placementConstraints": [],
-    "compatibilities": [
-        "EC2"
-    ],
     "requiresCompatibilities": [
         "EC2"
     ],
@@ -76,8 +47,5 @@
     "runtimePlatform": {
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
-    },
-    "registeredAt": "2024-03-01T13:45:43.420Z",
-    "registeredBy": "arn:aws:iam::108165532263:user/Dombissi",
-    "tags": []
+    }
 }

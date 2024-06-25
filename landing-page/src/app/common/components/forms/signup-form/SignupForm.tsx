@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Spinner } from '@nextui-org/react';
 import toast, { Toaster } from 'react-hot-toast';
+import axios from 'axios';
 
 import InputField from '../text-field/InputField';
 import EmailIcon from '../../../../../../public/icons/mailIcon.svg';
@@ -14,20 +15,28 @@ import PasswordIcon from '../../../../../../public/icons/password-check.svg';
 import GoogleIcon from '../../../../../../public/icons/googleIcon.svg';
 import { Button } from '../../button/Button';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { SignupFormValues } from './signupForm';
 import { useAuth } from '@/app/hooks/useAuth';
 import { setAuthUser } from '@/redux/features/auth-slice';
 import AuthService from '@/services/authService';
-import { getUserInfo } from '@/utils/getUserInfo';
+import { setUserCookies, setToken } from '@/cookies/cookies';
 
-// const COMMUNITIES_URL = 'https://communities.eze.ink/';
+// const COMMUNITIES_URL = 'https://communities.eze.wiki/';
 
-const SignupForm:React.FC<{signup:any}> = ({signup}) => {
+const SignupForm: React.FC<{ signup: any }> = ({ signup }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { push } = useRouter();
+  const searchParams = useSearchParams();
+  const moduleAuth0 = searchParams.get('module');
+
+  // Using ternary operator to check if module exists
+  const moduleExists = moduleAuth0 ? true : false;
+
+  // Check if moduleParam equals "community"
+  const isCommunity = moduleAuth0 === 'community';
 
   const { dispatch } = useAuth();
 
@@ -40,25 +49,41 @@ const SignupForm:React.FC<{signup:any}> = ({signup}) => {
   // Triggers when submitting
 
   const onSubmit: SubmitHandler<SignupFormValues> = async (data) => {
-    // setIsLoading(true);
-    try {
-      const res = await new AuthService().register(data);
+    if (!moduleExists || isCommunity) {
+      // setIsLoading(true);
+      try {
+        const res = await new AuthService().register(data);
 
-      if (res?.status !== 200) {
-        toast.error('Registration failed');
-      } else {
-        toast.success('Registration completed');
-
-        dispatch(setAuthUser({ user: res?.data }));
-        const response = await getUserInfo(res?.data?.token)
-        console.log("response1111111111111",response);
-        
-        // Redirecting to onboarding
-        push('/fr/onboarding?step=1');
+        if (res?.status !== 200) {
+          toast.error('Registration failed');
+        } else {
+          toast.success('Registration completed');
+          console.log('data...: ', res?.data);
+          dispatch(setAuthUser({ user: res?.data }));
+          // Redirecting to onboarding
+          push('/fr/onboarding?step=1');
+        }
+      } catch (error: any) {
+        console.log(`An error occured`, error);
+        toast.error(error?.response?.data);
       }
-    } catch (error: any) {
-      console.log(`An error occured`, error);
-      toast.error(error?.response?.data);
+    } else {
+      try {
+        const postData = {
+          fullName: data.fullName,
+          email: data.email,
+          password: data.password,
+        };
+        console.log('DATA DATA DATA: ', data);
+        // const createUser = SSOClient.createUser(postData); // <-- Added semicolon
+        // console.log("create User", createUser)
+        push('/fr/onboarding?step=1');
+      } catch (error: any) {
+        console.error('An error occurred', error);
+        toast.error(error?.response?.data || 'Registration failed');
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 

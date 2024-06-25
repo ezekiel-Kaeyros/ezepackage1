@@ -1,27 +1,29 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:eu-central-1:108165532263:task-definition/backend_communitie:18",
+    "family": "backend_communitie",
     "containerDefinitions": [
         {
             "name": "backend_communities",
             "image": "ezekielkaeyros/backend_eze_communities:latest",
-            "cpu": 512,
-            "memory": 1229,
-            "memoryReservation": 1229,
+            "cpu": 1024,
+            "memory": 2048,
+            "memoryReservation": 2048,
             "portMappings": [
                 {
                     "name": "backend_communities-4000-tcp",
                     "containerPort": 4000,
-                    "hostPort": 3002,
+                    "hostPort": 0,
                     "protocol": "tcp",
                     "appProtocol": "http"
                 }
             ],
             "essential": true,
             "environment": [],
-            "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": [],
-            "ulimits": [],
+            "dockerLabels": {
+                "traefik.enable": "true",
+                "traefik.http.routers.backcomunities.rule": "Host(`backcommunities.eze.wiki`)"
+            },
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
@@ -35,49 +37,15 @@
             "systemControls": []
         }
     ],
-    "family": "backend_communitie",
     "taskRoleArn": "arn:aws:iam::108165532263:role/ecsTaskExecutionRole",
     "executionRoleArn": "arn:aws:iam::108165532263:role/ecsTaskExecutionRole",
-    "revision": 18,
-    "volumes": [],
-    "status": "ACTIVE",
-    "requiresAttributes": [
-        {
-            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
-        },
-        {
-            "name": "ecs.capability.execution-role-awslogs"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.task-iam-role"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
-        }
-    ],
-    "placementConstraints": [],
-    "compatibilities": [
-        "EC2"
-    ],
     "requiresCompatibilities": [
         "EC2"
     ],
-    "cpu": "512",
-    "memory": "1229",
+    "cpu": "1024",
+    "memory": "2048",
     "runtimePlatform": {
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
-    },
-    "registeredAt": "2024-03-12T09:26:41.524Z",
-    "registeredBy": "arn:aws:iam::108165532263:user/Dombissi",
-    "tags": []
+    }
 }

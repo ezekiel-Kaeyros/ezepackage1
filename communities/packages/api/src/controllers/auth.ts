@@ -60,7 +60,7 @@ const AuthController = {
     }
 
     const user = await createUser(fullName, username, email, password, true);
-    const token = jwt.sign({ user: { userId: user._id, email } }, process.env.SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ user: { userId: user._id, email } }, process.env.SECRET, { expiresIn: '1h' }); // Follipi's code
 
     if (isEmailVerificationRequired) {
       try {

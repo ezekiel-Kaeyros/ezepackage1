@@ -5,14 +5,14 @@ import { useMutation } from 'react-query';
 import { useRouter } from 'next/router';
 import { updateNotificationSeen } from '../../pages/communities/notifications';
 import {
-  Root,
-  Wrapper,
-  Hamburger,
-  Container,
-  SearchContainer,
-  NotificationsAndAvatar,
-  NotificationsCount,
-  Logo,
+ Root,
+ Wrapper,
+ Hamburger,
+ Container,
+ SearchContainer,
+ NotificationsAndAvatar,
+ NotificationsCount,
+ Logo,
 } from './style';
 
 import { MenuIcon, NotificationIcon } from '../ui/icons';
@@ -23,132 +23,146 @@ import HeaderNotifications from './HeaderNotifications';
 import Search from '../Search';
 import { RootState } from '../../store';
 import { useBreakpoints } from '../../utils';
+import LanguageSwitcher from './LanguageSwitcher';
 
 interface HeaderProps {
-  toggleSidebar?: () => void;
-  ref: RefObject<HTMLButtonElement>;
+ toggleSidebar?: () => void;
+ ref: RefObject<HTMLButtonElement>;
 }
 
 const Header: ForwardRefRenderFunction<HTMLButtonElement, HeaderProps> = ({ toggleSidebar }, ref) => {
-  const breakpoint = useBreakpoints();
-  const dispatch = useDispatch();
-  const authUser = useSelector((state: RootState) => state.auth.user);
-  const logo = useSelector((state: RootState) => state.settings.communityLogo);
-  const { mutateAsync: updateSeen } = useMutation(updateNotificationSeen);
-  const router = useRouter();
-  const authUserRef = useRef(null);
-  const notificationsRef = useRef(null);
-  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
-  const [isNotificationsDropdownOpen, setIsNotificationsDropdownOpen] = useState(false);
+ const breakpoint = useBreakpoints();
+ const dispatch = useDispatch();
+ const authUser = useSelector((state: RootState) => state.auth.user);
+ const logo = useSelector((state: RootState) => state.settings.communityLogo);
+ const { mutateAsync: updateSeen } = useMutation(updateNotificationSeen);
+ const router = useRouter();
+ const authUserRef = useRef(null);
+ const notificationsRef = useRef(null);
+ const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+ const [isNotificationsDropdownOpen, setIsNotificationsDropdownOpen] = useState(false);
 
-  useEffect(() => {
-    Router.events.on('routeChangeComplete', () => {
-      if (isUserDropdownOpen) {
-        setIsUserDropdownOpen(false);
-      }
+ useEffect(() => {
+   Router.events.on('routeChangeComplete', () => {
+     if (isUserDropdownOpen) {
+       setIsUserDropdownOpen(false);
+     }
 
-      if (isNotificationsDropdownOpen) {
-        setIsNotificationsDropdownOpen(false);
-      }
-    });
-  }, [isUserDropdownOpen, isNotificationsDropdownOpen]);
+     if (isNotificationsDropdownOpen) {
+       setIsNotificationsDropdownOpen(false);
+     }
+   });
+ }, [isUserDropdownOpen, isNotificationsDropdownOpen]);
 
-  const closeDropDown = () => {
-    setIsUserDropdownOpen(false);
-    setIsNotificationsDropdownOpen(false);
+ const closeDropDown = () => {
+   setIsUserDropdownOpen(false);
+   setIsNotificationsDropdownOpen(false);
 
-    if (isNotificationsDropdownOpen && authUser && authUser.notifications.length > 0) {
-      dispatch(cleanUserNotifications());
-      updateSeen();
-    }
-  };
+   if (isNotificationsDropdownOpen && authUser && authUser.notifications.length > 0) {
+     dispatch(cleanUserNotifications());
+     updateSeen();
+   }
+ };
 
-  const onNotificationIconClick = () => {
-    if (!isNotificationsDropdownOpen) {
-      setIsNotificationsDropdownOpen(true);
-    } else {
-      closeDropDown();
-    }
-  };
+ const onNotificationIconClick = () => {
+   if (!isNotificationsDropdownOpen) {
+     setIsNotificationsDropdownOpen(true);
+   } else {
+     closeDropDown();
+   }
+ };
 
-  const isSmallScreen = breakpoint === 'xs' || breakpoint === 'sm';
+ const handleLogin = async () => {
+   console.log("CLICKED")
+   try {
+     const returnUrl = window.location.href;
+     window.location.href = `${process.env.NEXT_PUBLIC_SSO_LOGIN_URL}?module=${encodeURIComponent(returnUrl)}`;
+   } catch (error) {
+     console.error('Error:', error);
+   }
+ };
 
-  return (
-    <Root>
-      <Wrapper>
-        <Container>
-          <Hamburger ref={ref} onClick={toggleSidebar}>
-            <MenuIcon />
-          </Hamburger>
-          <Logo>
-            <a href="https://eze.ink/en">
-              <img alt="logo" style={{ height: 35 }} src={logo} />
-            </a>
-          </Logo>
-          <Spacing left="sm" />
-          <SearchContainer>
-            <Search
-              hideBorder
-              backgroundColor={5}
-              placeholder="Search for posts and members"
-              onItemClick={(item) =>
-                item.fullName ? router.push(`/communities/profile/${item._id}`) : router.push(`/post/${item._id}`)
-              }
-            />
-          </SearchContainer>
-        </Container>
+ const isSmallScreen = breakpoint === 'xs' || breakpoint === 'sm';
 
-        <Spacing right="sm" />
+ return (
+   <Root>
+     <Wrapper>
+       <Container>
+         <Hamburger ref={ref} onClick={toggleSidebar}>
+           <MenuIcon />
+         </Hamburger>
+         <Logo>
+           <Link href="/" disableBorderOnHover>
+             <img alt="logo" style={{ height: 35 }} src={logo} />
+           </Link>
+         </Logo>
+         <Spacing left="sm" />
+         <SearchContainer>
+           <Search
+             hideBorder
+             backgroundColor={5}
+             placeholder="Search for posts and members"
+             onItemClick={(item) =>
+               item.fullName ? router.push(`/communities/profile/${item._id}`) : router.push(`/post/${item._id}`)
+             }
+           />
+         </SearchContainer>
+       </Container>
 
-        <NotificationsAndAvatar>
-          {authUser && (
-            <div ref={notificationsRef}>
-              <Spacing right="sm">
-                <Button ghost onClick={onNotificationIconClick}>
-                  {authUser?.notifications.length > 0 && (
-                    <NotificationsCount>{authUser?.notifications.length}</NotificationsCount>
-                  )}
-                  <NotificationIcon />
-                </Button>
-              </Spacing>
+       <Spacing right="sm" />
 
-              {isNotificationsDropdownOpen && (
-                <HeaderNotifications
-                  isNotificationsDropdownOpen={isNotificationsDropdownOpen}
-                  notificationsRef={notificationsRef}
-                  closeDropDown={closeDropDown}
-                />
-              )}
-            </div>
-          )}
+       <NotificationsAndAvatar>
+         {authUser && (
+           <div ref={notificationsRef}>
+             <Spacing right="sm">
+               <Button ghost onClick={onNotificationIconClick}>
+                 {authUser?.notifications.length > 0 && (
+                   <NotificationsCount>{authUser?.notifications.length}</NotificationsCount>
+                 )}
+                 <NotificationIcon />
+               </Button>
+             </Spacing>
 
-          <div ref={authUserRef}>
-            {authUser ? (
-              <Button ghost onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}>
-                <Avatar image={authUser.image} />
-              </Button>
-            ) : (
-              <Button
-                ghost={isSmallScreen}
-                size="sm"
-                color="primary"
-                onClick={() => dispatch(openAuthPopup(PopupType.Log_In))}
-              >
-                {isSmallScreen ? <Avatar /> : 'Log in'}
-              </Button>
-            )}
-            {isUserDropdownOpen && (
-              <HeaderUser
-                isUserDropdownOpen={isUserDropdownOpen}
-                authUserRef={authUserRef}
-                closeDropDown={closeDropDown}
-              />
-            )}
-          </div>
-        </NotificationsAndAvatar>
-      </Wrapper>
-    </Root>
-  );
+             {isNotificationsDropdownOpen && (
+               <HeaderNotifications
+                 isNotificationsDropdownOpen={isNotificationsDropdownOpen}
+                 notificationsRef={notificationsRef}
+                 closeDropDown={closeDropDown}
+               />
+             )}
+           </div>
+         )}
+
+         <div ref={authUserRef}>
+           {authUser ? (
+             <Button ghost onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}>
+               <Avatar image={authUser.image} />
+             </Button>
+           ) : (
+             <Button
+               ghost={isSmallScreen}
+               size="sm"
+               color="primary"
+               onClick={handleLogin}
+             >
+               {isSmallScreen ? <Avatar /> : 'Log in'}
+             </Button>
+           )}
+           {isUserDropdownOpen && (
+             <HeaderUser
+               isUserDropdownOpen={isUserDropdownOpen}
+               authUserRef={authUserRef}
+               closeDropDown={closeDropDown}
+             />
+           )}
+         </div>
+         <div className='pl-2'>
+           <LanguageSwitcher/>
+         </div>
+       </NotificationsAndAvatar>
+     </Wrapper>
+   </Root>
+ );
 };
 
 export default forwardRef(Header);

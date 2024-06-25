@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+      "types": ["express-session"],
+      "typeRoots": ["node_modules/@types", "src/@types"],
+      "esModuleInterop": true,
+    },
+    "include": [
+        "src/**/*.ts",
+        "types.d.ts"
+    ]
+}
+  

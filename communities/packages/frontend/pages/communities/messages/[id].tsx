@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useRouter } from 'next/router';
 import { Messages } from '../../../components/Messages';
-import { isAuthorized, redirectToHome } from '../../../utils';
+// import { isAuthorized, redirectToHome } from '../../../utils';
 import { GetServerSideProps } from 'next';
 import Seo from '../../../components/Seo';
 import LayoutCommunities from '../../../components/Layout/CommuntiesLayout';

@@ -29,32 +29,30 @@ setInterval(async () => {
 export default (httpServer) => {
   const io = new Server(httpServer, {
     cors: {
-      origin: process.env.FRONTEND_URL,
-      methods: ['GET', 'POST'],
-      credentials: true,
+      origin: '*'
     },
   });
 
-  io.use((socket: any, next) => {
-    if (socket.handshake.headers.cookie) {
-      const token = getCookie(socket.handshake.headers.cookie, 'token');
-      jwt.verify(token, process.env.SECRET, function (err, decoded) {
-        if (err) {
-          return next(new Error('Authentication error'));
-        }
-        socket.authUser = decoded.user;
-        next();
-      });
-    } else {
-      next(new Error('Authentication error'));
-    }
-  });
+  // io.use((socket: any, next) => {
+  //   if (socket.handshake.headers.cookie) {
+  //     const token = getCookie(socket.handshake.headers.cookie, 'token');
+  //     jwt.verify(token, process.env.SECRET, function (err, decoded) {
+  //       if (err) {
+  //         return next(new Error('Authentication error'));
+  //       }
+  //       socket.authUser = decoded.user;
+  //       next();
+  //     });
+  //   } else {
+  //     next(new Error('Authentication error'));
+  //   }
+  // });
 
   io.on('connection', (socket: any) => {
     console.log('Socket connection. socket.connected: ', socket.connected);
     const userId = socket.authUser._id;
     if (!users[userId]) {
-      console.log('user');
+      console.log('user')
       users[userId] = {
         socketId: socket.id,
         userId: socket.authUser._id,
@@ -84,6 +82,8 @@ export default (httpServer) => {
      * Messaging.
      */
     socket.on(Events.CREATE_MESSAGE, (data) => {
+      console.log('data_send',data);
+      
       const receiverId = data.receiver._id;
       const senderId = data.sender._id;
       if (users[receiverId] && users[senderId]) {

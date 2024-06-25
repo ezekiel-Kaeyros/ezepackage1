@@ -8,7 +8,7 @@ export interface DividerProps {
 }
 
 const Divider: FC<DividerProps> = (props) => {
-  return <Root {...props} />;
+  return <Root  spacing={ props.spacing} backgroundColorTone={props.backgroundColorTone} />;
 };
 
 export default Divider;

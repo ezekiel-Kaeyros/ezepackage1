@@ -1,14 +1,15 @@
 import styled from 'styled-components';
 
 interface IconProps {
-  isActive: boolean;
+   isActive: boolean;
+  children: React.ReactNode;
 }
 
 export const Icon = styled.div<IconProps>`
   fill: ${(p) => p?.isActive && 'red'};
 `;
 
-export const Root = styled.div`
+export const Root = styled.div<{children:React.ReactNode}>`
   display: flex;
   flex-direction: column;
   align-items: center;

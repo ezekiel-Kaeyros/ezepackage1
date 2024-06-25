@@ -10,8 +10,10 @@ import { useAuth } from '@/app/hooks/useAuth';
 
 const Onboarding = () => {
   const searchParams = useSearchParams();
-  const { user } = useAuth();
+  const { userAuth0, user } = useAuth();
   const step = searchParams.get('step');
+
+  console.log(userAuth0, 'userAuth0');
 
   return (
     <div>

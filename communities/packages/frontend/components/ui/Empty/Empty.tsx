@@ -10,9 +10,11 @@ interface EmptyProps {
 const Empty: FC<EmptyProps> = ({ children }) => {
   return (
     <Root>
-      <EmptyIcon width="80" />
-      <Spacing top="md" />
-      {children}
+      <>
+        <EmptyIcon width="80" />
+        <Spacing top="md" />
+        {children}
+      </>
     </Root>
   );
 };

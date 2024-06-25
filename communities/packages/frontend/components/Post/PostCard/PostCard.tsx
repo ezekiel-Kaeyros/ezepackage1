@@ -61,7 +61,7 @@ const PostCard: FC<PostCardProps> = ({
   useClickOutside([sharePopoverRef, shareButtonRef], isShareOpen, () => {
     toggleShare();
   });
-console.log('post12654789====',post);
+console.log('authUser', authUser);
 
   const likesLength = post.likes.length;
   const commentsLength = post.comments.length;
@@ -115,13 +115,13 @@ console.log('post12654789====',post);
 
       <Top>
         <Author>
-          <Link disableBorderOnHover href={`/communities/profile/${post.author._id}`}>
+          <Link disableBorderOnHover href={`/communities/profile/${post.author?._id}`}>
             <Avatar image={post.author?.image} size={1.25} />
           </Link>
 
           <Spacing left="xs">
-            <Link href={`/communities/profile/${post.author._id}`} color="text">
-              <Name>{post.author.fullName} </Name>
+            <Link href={`/communities/profile/${post.author?._id}`} color="text">
+              <Name>{post.author?.fullName} </Name>
             </Link>
             <CreatedAt>
               {post.pinned && (
@@ -145,7 +145,7 @@ console.log('post12654789====',post);
           </Spacing>
         </Author>
 
-        {!isrepost && (post.author._id === authUser?._id || authUser?.role === UserRole.SuperAdmin) && (
+        {!isrepost && (post.author?._id === authUser?._id || authUser?.role === UserRole.SuperAdmin) && (
           <PostCardPopover
             queryKey={queryKey}
             postId={post._id}

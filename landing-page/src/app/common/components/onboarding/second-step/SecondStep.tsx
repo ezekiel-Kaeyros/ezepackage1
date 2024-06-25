@@ -13,15 +13,28 @@ import axios from 'axios';
 import { API_URL } from '@/services/dataService';
 import { url } from 'inspector';
 
-const config = {
-  headers: {
-    'content-type': 'application/json',
-  },
-};
+// const COMMUNITIES_URL = 'https://communities.eze.wiki/';
+const COMMUNITIES_URL: any = process.env.NEXT_PUBLIC_COMMUNITIES_URL;
+// const communities = [
+//   {
+//     id: 1,
+//     name: 'community',
+//     title: 'Health Sciences',
+//     value: 'Health Sciences',
+//     description:
+//       'Quantitative researchers on microbiology research. With discussion on advanced technique',
+//   },
+// };
 
 // Getting new info from user
 
 // Joining request
+
+const config = {
+  headers: {
+    'content-type': 'application/json',
+  }
+}
 const joinChannel = async ({ channelId, userId, url }: any) => {
   console.log('channelId', channelId);
   console.log('userId', userId);
@@ -31,6 +44,14 @@ const joinChannel = async ({ channelId, userId, url }: any) => {
     { userId },
     config
   );
+  return response;
+};
+
+const getUserEmail = async (url:string,data:{email:string}) => {
+  // console.log('channelId', channelId);
+  // console.log('userId', userId);
+
+  const response = await axios.get(`${url}/users/email/${data.email}`);
   return response;
 };
 const updateChannel = async (
@@ -56,7 +77,7 @@ const updateChannel = async (
   );
   return response;
 };
-const COMMUNITIES_URL = 'https://communities.sch-eze.com';
+// const COMMUNITIES_URL = 'https://communities.eze.wiki/';
 // const COMMUNITIES_URL = 'http://localhost:3001';
 // const communities = [
 //   {
@@ -133,6 +154,7 @@ const SecondStep = () => {
     }[]
   >();
   const [number, setnumber] = useState<any>();
+  const [load, setLoad] = useState(false);
   const {
     register,
     handleSubmit,
@@ -163,7 +185,7 @@ const SecondStep = () => {
 
   const handleSend = async () => {
     // isFirstTime('true');
-    // push(COMMUNITIES_URL);
+     push(COMMUNITIES_URL);
     console.log(communities);
   };
   useEffect(() => {
@@ -185,6 +207,8 @@ const SecondStep = () => {
       push(COMMUNITIES_URL);
     }
     console.log('user11111111', number);
+    console.log(communities,'long');
+    
   }, [number, communities]);
 
   const getTopic = (value: {
@@ -202,55 +226,62 @@ const SecondStep = () => {
     if (tab.length == 0) {
       const val = communities;
       val.push(value);
-      setCommunities(val);
+      setCommunities([...val]);
     } else {
       const delTable = communities.filter((item) => item._id != value._id);
-      setCommunities(delTable);
+      setCommunities([...delTable]);
     }
   };
 
   const handleJoin = async () => {
-    if (communities && communities.length > 0) {
-      let row = 0;
-      communities.map(async (item) => {
-        const joiningDetails = {
-          userId: JSON.parse(user)?._id,
-          channelId: item._id,
-          url: API_URL,
-        };
-        try {
-          const response = await joinChannel(joiningDetails);
-          if (response.status == 200) {
-            const res = await updateChannel(
-              {
-                _id: item._id,
-                name: item.name,
-                authRequired: true,
-                description: item.description,
-                members: item.members ? item.members + 1 : 1,
-              },
-              API_URL
-            );
-            row = row + 1;
+    console.log('ok');
+    setLoad(true)
+    const userNew = await getUserEmail(API_URL, { email: user?.email! })
+    console.log('userNew++++++',userNew);
+    if (userNew.status==200) {
+         if (communities && communities.length > 0) {
+           let row = 0;
+           communities.map(async (item) => {
+             const joiningDetails = {
+               userId: userNew.data?._id,
+               channelId: item._id,
+               url: API_URL,
+             };handleSend;
+             try {
+               const response = await joinChannel(joiningDetails);
+               if (response.status == 200) {
+                 const res = await updateChannel(
+                   {
+                     _id: item._id,
+                     name: item.name,
+                     authRequired: true,
+                     description: item.description,
+                     members: item.members ? item.members + 1 : 1,
+                   },
+                   API_URL
+                 );
+                 row = row + 1;
 
-            // const row = number ? number + 1 : 1;
-            setnumber(row);
-          }
-        } catch (error) {
-          console.log('error', error);
-            row = row + 1;
+                 // const row = number ? number + 1 : 1;
+                 setnumber(row);
+               }
+             } catch (error) {
+               console.log('error', error);
+               row = row + 1;
 
-          // const row = number ? number + 1 : 1;
-          // console.log(row);
+               // const row = number ? number + 1 : 1;
+               // console.log(row);
 
-           setnumber(row);
-        }
-      });
-      // row == communities.length && push(COMMUNITIES_URL);
-      // setnumber(row);
-    } else {
-      setnumber(0);
+               setnumber(row);
+             }
+           });
+           // row == communities.length && push(COMMUNITIES_URL);
+           // setnumber(row);
+         } else {
+           setnumber(0);
+         }
     }
+ 
   };
   return (
     <form className="w-11/12" onSubmit={handleSubmit(onSubmit)}>
@@ -277,7 +308,19 @@ const SecondStep = () => {
       </div>
 
       <div className="mt-8 w-fit">
-        <Button onClick={handleJoin} type="submit" className="w-fit">
+        <Button
+          disabled={load}
+          variant={load ? 'disabled' : 'default'}
+          onClick={() => {
+            if (communities.length>0) {
+              handleJoin()
+            } else {
+              handleSend()
+            }
+          }}
+          type="submit"
+          className="w-fit"
+        >
           Continue
         </Button>
       </div>

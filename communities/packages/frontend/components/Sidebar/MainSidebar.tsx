@@ -17,6 +17,7 @@ import LivingLibraryIcon from '../ui/icons/LivingLibraryIcon';
 import OnlineCoursesIcon from '../ui/icons/OnlineCoursesIcon';
 import EventsIcon from '../ui/icons/EventsIcon';
 import FundingAreaIcon from '../ui/icons/FundingAreIcon';
+import { useTranslation } from 'react-i18next';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -39,6 +40,7 @@ const MainSidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ i
   const [modal, setModal] = useState(false);
   const closeModal = () => setModal(false);
   const router = useRouter();
+   const { t: translate } = useTranslation('common');
 
   const { data: channels } = useQuery('channels', fetchChannels);
   const [channelItems, setChannelItems] = useState([]);
@@ -68,7 +70,7 @@ const MainSidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ i
           <ButtonLink fullWidth radius="none" href="/" color="text" active={router.pathname === '/'} size="sm">
             <HomeIcon isActive={router.pathname === '/'} width="32" color={router.pathname === '/' ? 'link' : 'text'} />
             {'\u00A0'}
-            {'\u00A0'} Home
+            {'\u00A0'} {translate('home')}
           </ButtonLink>
         </LI>
 
@@ -87,7 +89,7 @@ const MainSidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ i
               color={router.pathname === '/communities' ? 'link' : 'text'}
             />
             {'\u00A0'}
-            {'\u00A0'} Communities
+            {'\u00A0'} {translate('titkeCommunities')}
           </ButtonLink>
         </LI>
         <LI>
@@ -101,7 +103,7 @@ const MainSidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ i
           >
             <AskAProfIcon width="32" color={router.pathname === '/messages' ? 'link' : 'text'} />
             {'\u00A0'}
-            {'\u00A0'} Ask a Prof
+            {'\u00A0'} {translate('asProf')}
           </ButtonLink>
         </LI>
 
@@ -109,28 +111,28 @@ const MainSidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ i
           <ButtonLink
             fullWidth
             radius="none"
-            href="https://learn.eze.wiki/"
+            href="https://kashapp.biz/auth/mo_saml/index.php"
             color="text"
             active={router.pathname === '/online-courses'}
             size="sm"
           >
             <OnlineCoursesIcon width="32" color={router.pathname === '/messages' ? 'link' : 'text'} />
             {'\u00A0'}
-            {'\u00A0'} Online Courses
+            {'\u00A0'} {translate('onlineCorse')}
           </ButtonLink>
         </LI>
         <LI>
           <ButtonLink
             fullWidth
             radius="none"
-            href="https://library.eze.wiki/"
+            href="https://library.eze.ink/"
             color="text"
             active={router.pathname === '/living-library'}
             size="sm"
           >
             <LivingLibraryIcon width="32" color={router.pathname === '/messages' ? 'link' : 'text'} />
             {'\u00A0'}
-            {'\u00A0'} Living Library
+            {'\u00A0'} {translate('library')}
           </ButtonLink>
         </LI>
         <LI>
@@ -144,7 +146,7 @@ const MainSidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ i
           >
             <EventsIcon width="32" color={router.pathname === '/messages' ? 'link' : 'text'} />
             {'\u00A0'}
-            {'\u00A0'} Events
+            {'\u00A0'} {translate('Events')}
           </ButtonLink>
         </LI>
         <LI>
@@ -158,7 +160,7 @@ const MainSidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ i
           >
             <FundingAreaIcon width="32" color={router.pathname === '/messages' ? 'link' : 'text'} />
             {'\u00A0'}
-            {'\u00A0'} Funding Area
+            {'\u00A0'} {translate('funfing')}
           </ButtonLink>
         </LI>
 

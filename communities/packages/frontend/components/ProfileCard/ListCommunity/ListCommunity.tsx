@@ -48,7 +48,7 @@ const ListCommunityCard: React.FC<{ search: boolean; value?: string }> = ({ sear
 
   // Fetching
 
-  console.log('channels', channels);
+  // console.log('channels', channels);
   return (
     <>
       <Wrapper>

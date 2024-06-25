@@ -12,6 +12,9 @@ import { CommunityIcon } from '../components/ui/icons';
 import Seo from '../components/Seo';
 import { useDispatchAuth } from '../utils/useDispatchAuth';
 import RepostCard from '../components/Post/RepostCard';
+import { useTranslation } from 'react-i18next';
+import { GetStaticProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const fetchPostsByFollowing = async ({ pageParam = 0 }) => {
   const { data } = await axios.get(`/posts/follow?offset=${pageParam}&limit=${DataLimit.PostsByFollowing}`);
@@ -19,6 +22,8 @@ const fetchPostsByFollowing = async ({ pageParam = 0 }) => {
 };
 
 const Home: FC = () => {
+    const { t:translate } = useTranslation('common');
+    console.log('translation', translate('welcome'));
   const dispatch = useDispatch();
 
   const authUser = useSelector((state: RootState) => state.auth.user);
@@ -43,6 +48,15 @@ const Home: FC = () => {
     );
   }
 
+  const handleLogin = async () => {
+    try {
+      const returnUrl = window.location.href;
+      window.location.href = `${process.env.NEXT_PUBLIC_SSO_LOGIN_URL}?module=${encodeURIComponent(returnUrl)}`;
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   const isEmpty = !data?.pages[0] || data.pages.every((p) => p.length === 0);
 
   return (
@@ -57,7 +71,7 @@ const Home: FC = () => {
 
             <Spacing top="sm">
               {!authUser && (
-                <Button inline onClick={openAuthModal} color="primary">
+                <Button inline onClick={handleLogin} color="primary">
                   Sign up
                 </Button>
               )}
@@ -90,5 +104,9 @@ const Home: FC = () => {
     </Layout>
   );
 };
-
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common'])),
+  },
+});
 export default Home;

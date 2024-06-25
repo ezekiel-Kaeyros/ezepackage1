@@ -1,6 +1,14 @@
 {
-  "version": "3.22.1",
-  "packages": ["packages/*"],
-  "npmClient": "yarn",
-  "useWorkspaces": true
+  "packages": [
+    "packages/*"
+  ],
+  "version": "1.0.0",
+  "npmClient": "npm",
+  "command": {
+    "publish": {
+      "allowBranch": ["main"],
+      "message": "chore(release): publish",
+      "registry": "https://registry.npmjs.org/"
+    }
+  }
 }

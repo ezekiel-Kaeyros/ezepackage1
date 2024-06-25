@@ -80,7 +80,7 @@ const Step1: React.FC<TypeStep1> = ({ step, dataCommunuity, UpdateState }) => {
             </SectionLeftHeaderRightInsignPage> */}
               <SectionLeftHeaderRightInsignPage>
                 <ImageContainer size="24" mt="13" mr="10">
-                  <Image src={clock} />
+                  <Image src={clock} alt=''/>
                 </ImageContainer>
                 <TextSectionLeftHeaderRightInsignPage>Last 10 days</TextSectionLeftHeaderRightInsignPage>
               </SectionLeftHeaderRightInsignPage>

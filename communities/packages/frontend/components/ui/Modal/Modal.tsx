@@ -45,21 +45,30 @@ const Modal: FC<ModalProps> = ({
   return (
     <Overlay>
       <Root>
-        <Container padding={padding} bgColor="white" bordered={!noBorder} maxWidth={maxWidth || 'modal'} ref={contentRef}>
-          {!hideHeading && (
-            <Heading hideTitleBorder={hideTitleBorder}>
-              {/* <div /> */}
-              <H2>{title}</H2>
+        <Container
+          padding={padding}
+          bgColor="white"
+          bordered={!noBorder}
+          maxWidth={maxWidth || 'modal'}
+          ref={contentRef}
+        >
+          <>
+            {' '}
+            {!hideHeading && (
+              <Heading hideTitleBorder={hideTitleBorder}>
+                {/* <div /> */}
+                <H2>{title}</H2>
 
-              {!hideCloseButton && (
-                <Button ghost onClick={close}>
-                  <Image alt="close icon" src={IconClose}/>
-                  {/* <CloseIcon /> */}
-                </Button>
-              )}
-            </Heading>
-          )}
-          {children}
+                {!hideCloseButton && (
+                  <Button ghost onClick={close}>
+                    <Image alt="close icon" src={IconClose} />
+                    {/* <CloseIcon /> */}
+                  </Button>
+                )}
+              </Heading>
+            )}
+            {children}
+          </>
         </Container>
       </Root>
     </Overlay>

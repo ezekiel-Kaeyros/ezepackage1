@@ -13,20 +13,37 @@ import { Spinner } from '@nextui-org/react';
 import AuthService from '@/services/authService';
 import { setAuthUser } from '@/redux/features/auth-slice';
 import { useAuth } from '@/app/hooks/useAuth';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import toast, { Toaster } from 'react-hot-toast';
 import { getIsFirstTime, setUserCookies } from '@/cookies/cookies';
 import { getUserInfo } from '@/utils/getUserInfo';
 
-// const COMMUNITIES_URL = 'https://communities.eze.ink/';;
-const COMMUNITIES_URL = 'https://communities.sch-eze.com';
+// const COMMUNITIES_URL = 'https://communities.eze.wiki/';
+const COMMUNITIES_URL: any = process.env.NEXT_PUBLIC_COMMUNITIES_URL
 
-const LoginForm:React.FC<{login:any}> = ({login}) => {
+const LoginForm: React.FC<{ login: any }> = ({ login }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const { push } = useRouter();
+
+  const searchParams = useSearchParams();
+  const moduleAuth0 = searchParams.get('module');
+
+  // Using ternary operator to check if module exists
+  const moduleExists = moduleAuth0 ? true : false;
+  console.log('MODULE EXISTS? :: ', moduleExists);
+
+  // Check if moduleParam equals "community"
+  const isCommunity = moduleAuth0 === 'community';
+
+  console.log('isCommunity:: ', isCommunity);
+
+  console.log('HMMM MMMM');
 
   const { dispatch } = useAuth();
+
+  console.log('HMMM MMMM 222');
 
   const {
     register,
@@ -34,32 +51,42 @@ const LoginForm:React.FC<{login:any}> = ({login}) => {
     formState: { isValid, errors },
   } = useForm<LoginFormValues>({ mode: 'onChange' || 'onBlur' || 'onSubmit' });
 
-  const { push } = useRouter();
   //   // Triggers when submitting
 
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     const isFirstTime = getIsFirstTime();
-    try {
-      const res = await new AuthService().login(data);
+    console.log('isFirstTime: ', isFirstTime);
+    if (!moduleExists || isCommunity) {
+      try {
+        console.log('FOR HERE???');
+        const res = await new AuthService().login(data);
+        console.log('<RES>: ', res);
 
-      if (res?.status !== 200) {
-        setErrorMessage(res?.data);
-      } else {
-        dispatch(setAuthUser({ user: res?.data }));
-        const response = await getUserInfo(res?.data?.token);
-        console.log('response111111111111111',response);
-        
-         setUserCookies({
-           ...response,
-           isOnline: true,
-         });
-        toast.success('Logged in successfully');
-        push(COMMUNITIES_URL)
-        // (isFirstTime && push(COMMUNITIES_URL)) || push('/fr/onboarding?step=1');
+        if (res?.status !== 200) {
+          setErrorMessage(res?.data);
+        } else {
+          dispatch(setAuthUser({ user: res?.data }));
+          toast.success('Logged in successfully');
+          // (isFirstTime && push(COMMUNITIES_URL)) ||
+          //   push('/fr/onboarding?step=1');
+          push(COMMUNITIES_URL);
+        }
+      } catch (error: any) {
+        console.log(`An error occured`, error);
+        toast.error(error.response?.data);
       }
-    } catch (error: any) {
-      console.log(`An error occured`, error);
-      toast.error(error.response?.data);
+    } else {
+      console.log('EI ENTER FOR HERE?');
+      try {
+        // const loginuser = SSOClient.loginUser(); // <-- Added semicolon
+        // console.log("Login User", loginuser)
+        push('/fr/onboarding?step=1');
+      } catch (error: any) {
+        console.error('An error occurred', error);
+        toast.error(error?.response?.data || 'Registration failed');
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 

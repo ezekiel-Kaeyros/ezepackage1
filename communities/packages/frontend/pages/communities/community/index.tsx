@@ -22,6 +22,9 @@ import { useDispatchAuth } from '../../../utils/useDispatchAuth';
 import CommunityCards from '../../../components/Community/CommunityCard';
 import axios from 'axios';
 import { useQuery } from 'react-query';
+import { useTranslation } from 'react-i18next';
+import { GetStaticProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const fetchChannels = async () => {
   const { data } = await axios.get('/channels');
@@ -43,13 +46,16 @@ const CommunityPage = () => {
       SetIsSearch(false);
     }
   };
-
+ const { t: translate } = useTranslation('common');
+ console.log('translation', translate('communityNotJoin'));
   useDispatchAuth();
 
   /* const isEmpty = !data?.pages[0] || data.pages[0].length === 0;
    */
 
   const { data: channels, isLoading } = useQuery('channels', fetchChannels);
+  console.log('channels=========',channels);
+  
 
   return (
     <LayoutCommunities hideRightSidebar>
@@ -82,7 +88,7 @@ const CommunityPage = () => {
                 <ImageSearch>
                   <Image alt="icon card" src={searchIcon} />
                 </ImageSearch>
-                <InputSearch type="text" placeholder="Search communities" onChange={searchHandeler} />
+                <InputSearch type="text" placeholder={translate('searchCom')} onChange={searchHandeler} />
               </SearchContainer>
               <ListCommunity>
                 <ItemAll
@@ -92,14 +98,13 @@ const CommunityPage = () => {
                     setStep(1);
                   }}
                 >
-                  {' '}
-                  All{' '}
+                  {translate('All')}
                 </ItemAll>
               </ListCommunity>
 
               {step == 1 && (
                 <>
-                  <Title>Communities</Title>
+                  <Title>{translate('titkeCommunities')}</Title>
                   <CommunityCards search={isSearch} channels={channels} categoryStep={'Data Analytics'} />
                 </>
               )}
@@ -199,5 +204,9 @@ const CommunityPage = () => {
     </LayoutCommunities>
   );
 };
-
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common'])),
+  },
+});
 export default CommunityPage;

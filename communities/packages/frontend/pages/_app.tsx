@@ -1,6 +1,6 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
-import type { AppProps } from 'next/app';
+import type { AppInitialProps, AppProps } from 'next/app';
 import axios from 'axios';
 import Router from 'next/router';
 import NProgress from 'nprogress';
@@ -13,7 +13,8 @@ import { store } from '../store';
 import AuthPopup from '../components/Auth';
 import currentTheme, { Theme } from '../theme';
 import { Config } from '../utils';
-
+import { appWithTranslation } from 'next-i18next';
+import nextI18NextConfig from '../../../next-i18next.config.js';
 axios.defaults.baseURL = Config.API_URL;
 axios.defaults.withCredentials = true;
 
@@ -67,4 +68,4 @@ const NextApp: FC<AppProps> = ({ Component, pageProps }) => {
   );
 };
 
-export default NextApp;
+export default appWithTranslation(NextApp, nextI18NextConfig);

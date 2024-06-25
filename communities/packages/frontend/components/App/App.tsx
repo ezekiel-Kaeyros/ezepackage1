@@ -69,7 +69,7 @@ const App: FC<AppProps> = ({ children, setTheme }) => {
     <>
       {children}
 
-      <GlobalStyle />
+      <GlobalStyle theme={undefined} />
 
       {notification.message && (
         <Alert autoClose={notification.autoClose} alignment={notification.alignment} type={notification.type}>

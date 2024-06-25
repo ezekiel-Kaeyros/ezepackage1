@@ -8,68 +8,69 @@ import { RootState } from '../../store';
 import axios from 'axios';
 import { UserRole } from '../../constants';
 
-const HOME_PAGE = 'https://eze.ink';
+const HOME_PAGE = process.env.NEXT_PUBLIC_LANDINGPAGE_URL;
 
 interface HeaderUserProps {
-  closeDropDown: () => void;
-  authUserRef: RefObject<HTMLDivElement>;
-  isUserDropdownOpen: boolean;
+ closeDropDown: () => void;
+ authUserRef: RefObject<HTMLDivElement>;
+ isUserDropdownOpen: boolean;
 }
 
 const HeaderUser: FC<HeaderUserProps> = ({ closeDropDown, isUserDropdownOpen, authUserRef }) => {
-  const authUser = useSelector((state: RootState) => state.auth.user);
-  useClickOutside(authUserRef, isUserDropdownOpen, () => {
-    closeDropDown();
-  });
+ const authUser = useSelector((state: RootState) => state.auth.user);
+ useClickOutside(authUserRef, isUserDropdownOpen, () => {
+   closeDropDown();
+ });
 
-  const logout = async () => {
-    try {
-      await axios.post('/logout');
-      cookies.remove(Cookies.Token, { domain: '.eze.ink' });
-      cookies.remove(Cookies.User_data, { domain: '.eze.ink' });
-      closeDropDown();
-      window.location.href = HOME_PAGE;
-    } catch (error) {
-      console.log('An error occurred while logging out: ', error);
-    }
-  };
+ const logout = async () => {
+   try {
+     await axios.post('/logout');
+     cookies.remove(Cookies.Token, { domain: '.eze.ink' });
+     cookies.remove(Cookies.User_data, { domain: '.eze.ink' });
+     closeDropDown();
+     window.location.href = HOME_PAGE;
+   } catch (error) {
+     console.log('An error occurred while logging out: ', error);
+   }
+ };
 
-  return (
-    <UserDropDown>
-      <ButtonLink
-        fullWidth
-        center
-        hasHover
-        color="textSecondary"
-        radius="none"
-        href={`/communities/profile/${authUser?._id}`}
-      >
-        My Profile
-      </ButtonLink>
 
-      <ButtonLink fullWidth center hasHover color="textSecondary" radius="none" href="/communities/settings/account">
-        Account
-      </ButtonLink>
+ return (
+   <UserDropDown>
+     <ButtonLink
+       fullWidth
+       center
+       hasHover
+       color="textSecondary"
+       radius="none"
+       href={`/communities/profile/${authUser?._id}`}
+     >
+       My Profile
+     </ButtonLink>
 
-      {authUser.role === UserRole.Admin ||
-        (authUser.role === UserRole.SuperAdmin && (
-          <ButtonLink
-            fullWidth
-            center
-            hasHover
-            color="textSecondary"
-            radius="none"
-            href="/communities/settings/community"
-          >
-            Admin
-          </ButtonLink>
-        ))}
+     <ButtonLink fullWidth center hasHover color="textSecondary" radius="none" href="/communities/settings/account">
+       Account
+     </ButtonLink>
 
-      <UserDropDownItem text fullWidth radius="none" onClick={logout}>
-        Log Out
-      </UserDropDownItem>
-    </UserDropDown>
-  );
+     {authUser.role === UserRole.Admin ||
+       (authUser.role === UserRole.SuperAdmin && (
+         <ButtonLink
+           fullWidth
+           center
+           hasHover
+           color="textSecondary"
+           radius="none"
+           href="/communities/settings/community"
+         >
+           Admin
+         </ButtonLink>
+       ))}
+
+     <UserDropDownItem text fullWidth radius="none" onClick={logout}>
+       Log Out
+     </UserDropDownItem>
+   </UserDropDown>
+ );
 };
 
 export default HeaderUser;

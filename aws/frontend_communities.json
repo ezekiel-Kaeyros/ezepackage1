@@ -1,5 +1,5 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:eu-central-1:108165532263:task-definition/communitie_frontend:23",
+    "family": "communitie_frontend",
     "containerDefinitions": [
         {
             "name": "communitie_frontend",
@@ -11,17 +11,19 @@
                 {
                     "name": "communitie_frontend-3002-tcp",
                     "containerPort": 3000,
-                    "hostPort": 3003,
+                    "hostPort": 0,
                     "protocol": "tcp",
                     "appProtocol": "http"
                 }
             ],
             "essential": true,
             "environment": [],
-            "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": [],
-            "ulimits": [],
+            "dockerLabels": {
+                "traefik.enable": "true",
+                "traefik.http.routers.communities.rule": "Host(`communities.eze.wiki`)"
+            },
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
@@ -35,39 +37,8 @@
             "systemControls": []
         }
     ],
-    "family": "communitie_frontend",
     "taskRoleArn": "arn:aws:iam::108165532263:role/ecsTaskExecutionRole",
     "executionRoleArn": "arn:aws:iam::108165532263:role/ecsTaskExecutionRole",
-    "revision": 23,
-    "volumes": [],
-    "status": "ACTIVE",
-    "requiresAttributes": [
-        {
-            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
-        },
-        {
-            "name": "ecs.capability.execution-role-awslogs"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.task-iam-role"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
-        }
-    ],
-    "placementConstraints": [],
-    "compatibilities": [
-        "EC2"
-    ],
     "requiresCompatibilities": [
         "EC2"
     ],
@@ -76,8 +47,5 @@
     "runtimePlatform": {
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
-    },
-    "registeredAt": "2024-03-01T15:16:03.714Z",
-    "registeredBy": "arn:aws:iam::108165532263:user/Dombissi",
-    "tags": []
+    }
 }

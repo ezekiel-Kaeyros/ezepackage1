@@ -1,7 +1,7 @@
-import { css, FlattenSimpleInterpolation } from 'styled-components';
+import { css} from 'styled-components';
 import { Theme } from '../../../theme';
 
-const nProgress = (theme: Theme): FlattenSimpleInterpolation => css`
+const nProgress = (theme: Theme): any => css`
   /* Make clicks pass-through */
   #nprogress {
     pointer-events: none;

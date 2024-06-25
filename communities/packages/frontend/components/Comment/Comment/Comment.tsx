@@ -70,17 +70,17 @@ const Comment: FC<CommentProps> = ({ comment, author, queryKey, post }) => {
   const hasLiked2 = comment?.likes?.find((post: any) => {
 
     if (post?.user?._id == authUser?._id) {
-      // console.log('postTrue',post);
+      console.log('postTrue',post);
       
       return post
     } else {
-      // console.log('postFalse', post?.user?._id);
-      // console.log('id', authUser?._id);
+      console.log('postFalse', post?.user?._id);
+      console.log('id', authUser?._id);
       
       
     }
   });
-  //  console.log('hasLiked2',hasLiked2);
+   console.log('hasLiked2',hasLiked2);
   
   // const view = comment.likes.filter((post: any) => {
   //   console.log(post);
@@ -102,7 +102,7 @@ const Comment: FC<CommentProps> = ({ comment, author, queryKey, post }) => {
     setLoadLike(true);
     if (comment.likes.length > 0) {
       const like = await getLikes(id);
-      // console.log('like', like);
+      console.log('like', like);
       const islike = like.filter((item: any) => item.user._id == authUser?._id);
       islike.length > 0 ? sethasLiked(islike[0]._id) : sethasLiked(null);
       // islike.length > 0 && console.log(islike[0].user);
@@ -174,7 +174,7 @@ const Comment: FC<CommentProps> = ({ comment, author, queryKey, post }) => {
 
         <Container>
           <UserName>
-            <Link color="text" weight="bold" size="tiny" href={`/profile/${author}`}>
+            <Link color="text" weight="bold" size="tiny" href={`/communities/profile/${author._id}`}>
               {author.fullName}
             </Link>
           </UserName>

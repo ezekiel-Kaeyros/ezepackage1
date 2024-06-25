@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Root = styled.div`
-  width: 100%;
+  width: 350px;
   height: 300px;
   display: flex;
   flex-direction: column;
@@ -9,6 +9,7 @@ export const Root = styled.div`
   // justify-content: space-between;
   background-color: white;
   padding: 16px 16px;
+  overflow: hidden;
   //padding: ${(p) => p.theme.spacing.sm};
   border-radius: ${(p) => p.theme.radius.sm};
   transition: border-color 0.1s;
@@ -22,7 +23,8 @@ export const Wrapper = styled.div`
   width: 100%;
   // max-width: ${(p) => p.theme.screen.lg};
   //margin: 0 auto;
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
   // grid-template-columns: auto auto auto auto;
@@ -95,7 +97,9 @@ export const FullName = styled.span`
   align-items: left;
   justify-content: left;
   color: var(--colors-text-colors-primary, #1d242d);
-
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
@@ -140,7 +144,7 @@ export const MyButton = styled.div`
   justify-content: space-between;
 
   button {
-    width: 50%;
+    width: auto;
     padding-bottom: 6px 10px;
   }
 `;
