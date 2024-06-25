@@ -4,7 +4,7 @@ import express from "express";
 import fs from "fs";
 import path from "path";
 import jwt from "jsonwebtoken";
-import { getUserByEmail, updateUserFirstTimeToFalse } from "./db/user";
+
 import dotenv from 'dotenv';
 dotenv.config();
 
