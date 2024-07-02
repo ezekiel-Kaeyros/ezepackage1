@@ -19,11 +19,12 @@ const[img,setImag]=useState<File|undefined>(step2.coverImage)
     watch,
     setValue,
     formState: { isValid, errors },
-  } = useForm<{ name: string, author: string, isbn: string, description: string }>({ mode: "onChange" || "onBlur" || "onSubmit" });
-   let author = watch("author");
-   let isbn = watch("isbn");
-   let name = watch("name");
+  } = useForm<{ lastName: string, title: string, firstName: string, description: string, author:string }>({ mode: "onChange" || "onBlur" || "onSubmit" });
+   let title = watch("title");
+   let firstName = watch("firstName");
+   let lastName = watch("lastName");
    let description = watch("description");
+   let author = watch('author')
   const handleFileSelected = async (e: any) => {
    
   const ext:string = e.target?.files[0]?.name.split(".").pop();
@@ -46,55 +47,77 @@ console.log(e.target.files,'target');
 };
 
   const onSubmit: SubmitHandler<{
-    name: string;
-    author: string;
-    isbn: string;
+    firstName: string;
+    lastName: string;
+    title: string;
+    author:string;
     description: string;
   }> = async (data) => { };
   
   useEffect(() => {
-    setValue('author', step2.author)
+    setValue('title', step2.title)
+    setValue('firstName', step2.firstName)
+    setValue('lastName',step2.lastName)
     setValue('description', step2.description)
-    setValue('isbn', step2.ibsn)
-    setValue('name',step2.name)
+    setValue('author', step2.author)
   },[])
+
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">
       <h1>Document Setup</h1>
       <p className="text-xs">Document Related</p>
 
+      {/* This is my doc title */}
       <div className="2xl:w-6/12 lg:9/12 sm:w-11/12 w-full">
         <InputField
-          title="Enter document name *"
-          placeholder="Ex : My thesis"
-          id="cat"
-          name="cat"
+          title="Enter document Title *"
+          placeholder="Ex: My Title"
+          id="titlek"
+          name="title"
           type="text"
-          props={register("name", {
+          props={register("title", {
             required: true,
           })}
         />
       </div>
+      {/* firstName */}
       <div className="2xl:w-6/12 lg:9/12 sm:w-11/12 w-full">
         <InputField
-          title="Author"
-          placeholder="John Doe"
-          id="name"
-          name="name"
+          title="FirstName"
+          placeholder="Enter First Name"
+          id="firstnamek"
+          name="firstname"
+          type="text"
+          props={register("firstName", {
+            required: true,
+          })}
+        />
+      </div>
+
+      {/* lastName */}
+      <div className="2xl:w-6/12 lg:9/12 sm:w-11/12 w-full">
+        <InputField
+          title="LastName"
+          placeholder="Enter Last Name"
+          id="lastnamek"
+          name="lastname"
+          type="text"
+          props={register("lastName", {
+            required: true,
+          })}
+        />
+      </div>
+
+      {/* lastName */}
+      <div className="2xl:w-6/12 lg:9/12 sm:w-11/12 w-full">
+        <InputField
+          title="Author Name"
+          placeholder="Enter Author's Name"
+          id="authork"
+          name="author"
           type="text"
           props={register("author", {
-            required: true,
-          })}
-        />
-      </div>
-      <div className="2xl:w-6/12 lg:9/12 sm:w-11/12 w-full">
-        <InputField
-          title="ISBN"
-          placeholder="Ex : 978-2-07-061275-8."
-          id="ISBN"
-          name="ISBN"
-          type="text"
-          props={register("isbn", {
             required: true,
           })}
         />
@@ -103,7 +126,7 @@ console.log(e.target.files,'target');
       <div className="2xl:w-6/12 lg:9/12 sm:w-11/12 w-full mt-5">
         <TextField
           title="description"
-          id="description"
+          id="descriptionk"
           props={register("description", {
             required: true,
           })}
@@ -150,22 +173,23 @@ console.log(e.target.files,'target');
         </button>
         <button
           type="submit"
-          disabled={!author || !description || !name || !isbn || !img ? true : false}
+          disabled={!author || !description || !firstName || !lastName || !title || !img ? true : false}
           onClick={() => {
             changeHandler("add");
             dispatch(
               step2Handler({
                 author,
-                name,
+                firstName,
                 description,
                 coverImage: img,
-                ibsn: isbn,
+                lastName: lastName,
+                title,
                 url: img ? URL.createObjectURL(img) : '',
               })
             );
           }}
           className={`bg-mainColor ${
-            !author || !description || !name || !isbn || !img ? "opacity-60" : "opacity-100"
+            !author || !description || !firstName || !lastName || !title || !img ? "opacity-60" : "opacity-100"
           } px-4 py-2 font-bold text-white text-sm flex justify-center items-center rounded-full mt-10`}
         >
           Continue

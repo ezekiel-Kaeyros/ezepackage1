@@ -14,6 +14,7 @@ export const useAddDocument = () => {
      const step3: { file: File|undefined; urlFile: string } = useSelector(
        (state: RootState) => state.AddDocument.step3
      );
+
      const step4: string = useSelector(
        (state: RootState) => state.AddDocument.step4
      );
@@ -23,10 +24,11 @@ export const useAddDocument = () => {
       categorie?: string;
       type?: string;
       author?: string;
-      name?: string;
+      title?:string;
+      firstName?: string;
+      lastName?: string;
       description?: string;
       coverImage?: any;
-      ibsn?: string;
       url?: string;
       num?: number;
       save?: boolean;

@@ -23,15 +23,17 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
   // ];
 // Just a boiler plate, this file needs to be updated
 export type Step1T = {
+  toLowerCase(): { type: any; };
   categorie: string;
   type: string;
 };
 export type Step2T = {
-  author: string;
-  name: string;
+  author:string;
+  title: string;
+  firstName: string;
+  lastName: string;
   description: string;
   coverImage: any;
-    ibsn: string;
   url:string
 };
 type AddDocumentState = {
@@ -46,11 +48,14 @@ type AddDocumentState = {
     id: string;
     categorie: string;
     type: string;
+    title:string;
     author: string;
-    name: string;
+    // name: string;
+    firstName:string;
+    lastName:string;
     description: string;
     coverImage: any;
-    ibsn: string;
+    // ibsn: string;
     url: string;
     num?: number;
     save?: boolean;
@@ -64,14 +69,23 @@ type AddDocumentState = {
 };
 
 const initialState: AddDocumentState = {
-  step1: { categorie: "", type: "" },
+  step1: {
+    categorie: "", type: "",
+    toLowerCase: function (): {
+      type // const arraytest = [
+      : any;
+    } {
+      throw new Error("Function not implemented.");
+    }
+  },
   step2: {
-    author: "",
-    name: "",
+    title: "",
+    firstName: "",
     description: "",
+    author:"",
     coverImage: undefined,
     url: "",
-    ibsn: "",
+    lastName: "",
   },
   step3: { file: undefined , urlFile:''},
   step4: "",
@@ -87,15 +101,16 @@ export const addDocument = createSlice({
       state.step1 = action.payload;
     },
     step2Handler: (state, action) => {
+    console.log(action.payload, 'this is my type')
       state.step2 = action.payload;
     },
     step3Handler: (state, action) => {
       state.step3 = action.payload;
         console.log(action.payload, "payload..............");
-        console.log(
-          "111111111111",
-          URL.createObjectURL(state.step2.coverImage)
-        );
+        // console.log(
+        //   "111111111111",
+        //   URL.createObjectURL(state.step2.coverImage)
+        // );
         
     },
     step4Handler: (state, action) => {
@@ -108,18 +123,24 @@ export const addDocument = createSlice({
           ...state.step3,
           id: (state.arrayDocs.length + 1).toString(),
           num: 0,
-          save: false,
+          save: false
         },
       ];
       
     //   state.step4 = action.payload;
-      (state.step1 = { categorie: "", type: "" }),
+      (state.step1 = { categorie: "", type: "", toLowerCase: function (): {
+        type // const arraytest = [
+        : any;
+      } {
+        throw new Error("Function not implemented.");
+      } }),
         (state.step2 = {
-          author: "",
-          name: "",
+          title: "",
+          firstName: "",
           description: "",
+          author:"",
           coverImage: undefined,
-          ibsn: "",
+          lastName: "",
           url: "",
         }),
         (state.step3 = { file: undefined, urlFile: "" }),
@@ -127,7 +148,6 @@ export const addDocument = createSlice({
     },
     idHandler: (state, action) => {
       state.id = action.payload
-      console.log(action.payload,'id++++++++++');
       
     }
   },

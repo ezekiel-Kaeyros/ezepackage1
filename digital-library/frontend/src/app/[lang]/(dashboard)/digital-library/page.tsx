@@ -108,10 +108,10 @@ const home = () => {
     },
   ];
   return (
-    <div className="w-full h-full bg-white bg-[rgba(0,0,0,0.004)]">
+    <div className="w-full h-full bg-white ">
       <div className="w-full bg-[#1E1E1E] text-white p-2">
         <h1 className="text-center text-5xl mt-5">
-          Welcome to Eze Digital Living Library
+          Welcome on Eze Digital Living Library
         </h1>
         <p className="flex justify-center my-10 w-6/12 m-auto text-center text-lg font-bold">
           Your online gateway to a vast collection of research papers, and

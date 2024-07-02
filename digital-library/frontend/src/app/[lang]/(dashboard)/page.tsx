@@ -12,8 +12,16 @@ import { url } from "inspector";
 import { URL } from "url";
 import { idHandler } from "@/redux/features/addDocument-slice";
 import { useRouter } from "next/navigation";
+
+
+
 const home = () => {
-  const { arrayDoc, dispatch } = useAddDocument()
+
+  const { arrayDoc, dispatch } = useAddDocument();
+  const url = "http://localhost:3000/api/files/upload";
+
+  // Create the payload for the POST request
+
   const{push}= useRouter()
   const arraytest = [
     { num: 3, save: true },
@@ -78,7 +86,7 @@ const home = () => {
                 push("/en/view-document");
               }}
             >
-              <p className="truncate">{item.name}</p>
+              <p className="truncate">{item.firstName}</p>
 
               <div className="w-full flex-grow mb-1 border  flex justify-center items-center  overflow-hidden mt-2">
                 <Image

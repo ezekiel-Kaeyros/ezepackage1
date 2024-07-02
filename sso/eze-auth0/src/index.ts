@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import cors from 'cors'; // Import the cors package
 import authRouter from './auth';
+import fileRouter from './routes/files';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -13,15 +14,19 @@ dotenv.config();
 const app = express();
 
 // Configure CORS to allow requests from your frontend origin
-app.use(cors({
-  origin: process.env.REDIRECT_ORIGIN, // Your client application URL
-  methods: 'GET,POST,PUT',
-  allowedHeaders: 'Content-Type',
+app.use(cors
+  ({
+  // origin: process.env.REDIRECT_ORIGIN,
+  origin:"*",
+  methods: ['GET','POST','PUT'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
-}));
+})
+);
 
 // Use session middleware
 app.use(session({ secret: 'your_secret_key', resave: false, saveUninitialized: true }));
+app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
@@ -46,6 +51,8 @@ app.get('/profile', (req, res) => {
     res.redirect('/auth/login');
   }
 });
+
+app.use('/api/files', fileRouter);
 
 const PORT = process.env.PORT;
 

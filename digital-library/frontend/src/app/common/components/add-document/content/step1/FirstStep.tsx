@@ -20,13 +20,17 @@ const FirstStep: React.FC<{ step: number; changeHandler: any }> = ({
 
   const Docarray = [
     { name: "Research", id: 1 },
-    { name: "Article", id: 2 },
+    { name: "article", id: 2 },
     { name: "Thesis", id: 3 },
     { name: "Records", id: 4 },
-    { name: "Other", id: 5 },
+    { name: "attachment", id: 5 },
+    { name: "book", id: 6 },
+    { name: "Other", id: 7 },
   ];
   const [value, setValue] = useState(step1.categorie);
   const [valueDoc, setValueDoc] = useState(step1.type);
+
+  console.log(valueDoc, 'this is my value doc')
 
   return (
     <div>
@@ -57,7 +61,6 @@ const FirstStep: React.FC<{ step: number; changeHandler: any }> = ({
       </div>
 
       <p className="text-sm mt-9 mb-5">Document type :</p>
-
       <div className="flex gap-5 items-center overflow-auto w-full border">
         {Docarray.map((item,index) => (
           <div

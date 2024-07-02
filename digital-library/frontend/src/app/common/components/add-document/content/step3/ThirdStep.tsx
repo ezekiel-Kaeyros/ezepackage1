@@ -13,6 +13,7 @@ const ThirdStep: React.FC<{ step: number; changeHandler: any }> = ({
 }) => {
     const { step3, dispatch } = useAddDocument();
   const [file, setFile] = useState<File | undefined>(step3.file);
+  const extArray = ['jpg', 'png', 'pdf', 'xlsx', 'docx', 'txt'];
   const {
     register,
     handleSubmit,
@@ -25,14 +26,15 @@ const ThirdStep: React.FC<{ step: number; changeHandler: any }> = ({
   }>({ mode: "onChange" || "onBlur" || "onSubmit" });
 
   const handleFileSelected = async (e: any) => {
+    // new
     const ext: string = e.target?.files[0]?.name.split(".").pop();
     !extArray.includes(ext.toLocaleLowerCase()) ? toast.error("bad file") : "";
     // filee=e.target.files[0];
-    const files = e?.target?.files;
+    // const files = e?.target?.files;
     // setFileName(e.target?.files[0].name);
     if (extArray.includes(ext.toLocaleLowerCase())) {
       // files && setInputValue(files);
-      console.log(e.target.files, "target");
+      console.log(e.target.files[0], "target file");
 
       // const reader = new FileReader();
       setFile(e.target.files[0]);
@@ -43,6 +45,8 @@ const ThirdStep: React.FC<{ step: number; changeHandler: any }> = ({
       setFile(undefined);
     }
   };
+
+  // console.log(file, 'this is my file')
 
   const onSubmit: SubmitHandler<{
     name: string;

@@ -212,8 +212,9 @@ jobs:
           cd digital-library/frontend && \
           touch .env && \
           echo "NEXT_PUBLIC_ZOTERO_API_KEY=7MdTpwHW7W7zyNPvE9zDea2k" >> .env && \
-          echo "NEXT_PUBLIC_ZOTERO_HOME_URL=https://backcommunities.eze.ink" >> .env && \
-          echo "NEXT_PUBLIC_COMMUNITIES_URL=https://eze.ink" >> .env && \
+          echo "NEXT_PUBLIC_ZOTERO_HOME_URL=https://eze.ink/" >> .env && \
+          # echo "NEXT_PUBLIC_COMMUNITIES_URL=https://eze.ink" >> .env && \
+          echo "NEXT_PUBLIC_ZOTERO_POST_FILES_URL=https://sso.eze.ink/" >> .env && \
           echo "NEXT_PUBLIC_ZOTERO_API_KEY=ljJwZLSkS26ymt6DFd5D2Blc" >> .env && \
           echo "NEXT_PUBLIC_ZOTERO_USER_ID=14487670" >> .env
           

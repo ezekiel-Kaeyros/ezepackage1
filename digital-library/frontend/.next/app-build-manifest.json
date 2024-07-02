@@ -1,9 +1,9 @@
 {
   "pages": {
-    "/[lang]/(dashboard)/page": [
+    "/[lang]/(dashboard)/add-document/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/[lang]/(dashboard)/page.js"
+      "static/chunks/app/[lang]/(dashboard)/add-document/page.js"
     ],
     "/[lang]/(dashboard)/layout": [
       "static/chunks/webpack.js",
@@ -21,21 +21,16 @@
       "static/chunks/main-app.js",
       "static/chunks/app/[lang]/not-found.js"
     ],
-    "/[lang]/(dashboard)/digital-library/page": [
+    "/[lang]/(dashboard)/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/[lang]/(dashboard)/digital-library/page.css",
-      "static/chunks/app/[lang]/(dashboard)/digital-library/page.js"
+      "static/chunks/app/[lang]/(dashboard)/page.js"
     ],
-    "/[lang]/(dashboard)/settings/page": [
+    "/[lang]/(dashboard)/view-document/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/[lang]/(dashboard)/settings/page.js"
-    ],
-    "/[lang]/(dashboard)/add-document/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/[lang]/(dashboard)/add-document/page.js"
+      "static/css/app/[lang]/(dashboard)/view-document/page.css",
+      "static/chunks/app/[lang]/(dashboard)/view-document/page.js"
     ]
   }
 }

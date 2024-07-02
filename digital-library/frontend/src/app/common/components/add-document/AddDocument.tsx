@@ -14,8 +14,6 @@ const AddDocument = () => {
          if (refDiv.current) {
            refDiv.current.scrollIntoView();
          }
-         console.log(step);
-
          // getFileHandler('../../../../../../public');
        }, [step]);
   return (

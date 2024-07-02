@@ -6,7 +6,8 @@ import "slick-carousel/slick/slick-theme.css";
 import CardDocument from "../cardDocument/CardDocument";
 import NewCardDocument from "../newCardDocument/NewCardDocument";
 import { useAddDocument } from "@/app/hooks/useAddDocument";
-import { fetchGroupItems, fetchGroups } from "@/functions/zoteroApi";
+// import { fetchGroupItems, fetchGroups } from "@/functions/zoteroApi";
+import { fetchGroupItems, fetchGroups } from "@/funtions/zoteroApi";
 import coverPhoto from '../../../../../public/images/coverphoto.svg';
 
 interface Item {

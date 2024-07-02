@@ -48,6 +48,7 @@ const ViewDocument = () => {
          alert("Veuillez souscrire pour accéder à la page suivante.");
        }
      };
+
   return (
     <div className="w-full h-full pt-5">
       {doc.length > 0 && (

@@ -116,4 +116,6 @@ authRouter.get("/logout", (req, res) => {
   });
 });
 
+
+
 export default authRouter;

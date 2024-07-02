@@ -14,7 +14,6 @@ import ReduxProvider from "@/redux/provider";
 import SidebarIntermediaire from "@/app/modules/sidebar/SideBarIntermediaire";
 import { getDictionary } from "../../../../lib/dictionary";
 import Footer from "@/app/common/components/footer/Footer";
-import ReactQueryProvider from "@/utils/reactQueryProvider";
 
 export async function generateStaticParams() {
   return i18n.locales.map((locale) => ({ lang: locale }));
@@ -37,7 +36,6 @@ const Layout = async ({
   const { sidebar, Navigation } = await getDictionary(lang);
   return (
     <ReduxProvider>
-      <ReactQueryProvider>
       {/* <BrowserRouter> */}
       <div className="flex h-screen w-screen">
         <div className="w-[13%]  ">
@@ -51,7 +49,6 @@ const Layout = async ({
           <div className="w-full ">{children}</div>
         </div>
       </div>
-      </ReactQueryProvider>
       {/* </BrowserRouter> */}
     </ReduxProvider>
   );

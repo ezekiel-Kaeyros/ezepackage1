@@ -52,12 +52,12 @@ const Sidebar: FC<SidebarProps> = ({ lang, sidebar }) => {
       className={`flex flex-col justify-start md:items-start items-center w-full  h-screen border-r-1 sm:pt-4 pt-1  text-xs font-bold`}
     >
       <div className="md:pl-2">
-        <a href={`${process.env.NEXT_PUBLIC_ZOTERO_HOME_URL}`}>
+        <a href={`${process.env.NEXT_PUBLIC_ZOTERO_HOME_URL}/en/`}>
           <Image
             src={logo}
             alt=""
-            // onClick={() => push(`${process.env.ZOTERO_HOME_URL}`)}
-            className="cursor-pointer"
+            onClick={() => setView((view) => !view)}
+            className=""
           />
         </a>
       </div>
@@ -65,10 +65,10 @@ const Sidebar: FC<SidebarProps> = ({ lang, sidebar }) => {
         <Link
           href={"/en/"}
           className={`w-full md:p-2 ${
-            !pathName.includes("digital-library") &&
-            !pathName.includes("settings") &&
-            !pathName.includes("create") &&
-            !pathName.includes("add-document") &&
+            !pathName.includes("/en/digital-library") &&
+            !pathName.includes("/en/settings") &&
+            !pathName.includes("/en/create") &&
+            !pathName.includes("/en/add-document") &&
             "bg-[#daeeda]"
           }`}
         >
