@@ -1,10 +1,4 @@
 {
-  "/_not-found": "app/_not-found.js",
-  "/api/auth/route": "app/api/auth/route.js",
   "/[lang]/(dashboard)/add-document/page": "app/[lang]/(dashboard)/add-document/page.js",
-  "/[lang]/(dashboard)/digital-library/[id]/page": "app/[lang]/(dashboard)/digital-library/[id]/page.js",
-  "/[lang]/(dashboard)/digital-library/page": "app/[lang]/(dashboard)/digital-library/page.js",
-  "/[lang]/(dashboard)/page": "app/[lang]/(dashboard)/page.js",
-  "/[lang]/(dashboard)/settings/page": "app/[lang]/(dashboard)/settings/page.js",
-  "/[lang]/(dashboard)/view-document/page": "app/[lang]/(dashboard)/view-document/page.js"
+  "/[lang]/(dashboard)/page": "app/[lang]/(dashboard)/page.js"
 }

@@ -134,10 +134,11 @@ const FourthStep: React.FC<{ step: number, changeHandler: any }> = ({ step, chan
         { name: "private", id: 1 },
         { name: "public", id: 2 },
     ];
-    const { type } = step1;
-    // const type  = 'attachment';
+    // const { type } = step1;
+    const type  = 'attachment';
+    const title = 'little mary'
     const { file } = step3;
-    const { firstName, lastName, title } = step2;
+    const { firstName, lastName } = step2;
 
     const formData = new FormData();
     formData.append("firstName", firstName);
@@ -181,6 +182,7 @@ const FourthStep: React.FC<{ step: number, changeHandler: any }> = ({ step, chan
             // console.log('File uploaded successfully:', response);
             const result = response.data;
             toast.success('File uploaded successfully!');
+            push('/en')
         } catch (error: any) {
             setIsLoading(false);
             console.error('Error uploading file:', error);
