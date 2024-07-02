@@ -1,0 +1,1 @@
+self.__SSG_MANIFEST=new Set(["\u002F[lang]","\u002F[lang]\u002Fadd-document","\u002F[lang]\u002Fdigital-library","\u002F[lang]\u002Fsettings","\u002F[lang]\u002Fview-document"]);self.__SSG_MANIFEST_CB&&self.__SSG_MANIFEST_CB()

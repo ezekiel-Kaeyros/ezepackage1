@@ -99,22 +99,22 @@ const ViewDocument = () => {
               <span></span>
               <span className="border rounded-l-full md:px-5 px-3 h-10 bg-slate-500 text-white flex items-center w-fit">
                 {" "}
-                {doc[0].type}
+                {doc[0]?.type}
               </span>
             </p>
             <div className=" flex flex-col w-full flex-grow px-2 gap-5">
               <div>
                 <h2>Article Name</h2>
-                <p>{doc[0].name}</p>
+                <p>{doc[0] && doc[0]?.firstName}</p>
               </div>
 
               <div className="max-h-24 overflow-auto w-11/12">
                 <h2>Description</h2>
-                <p className="text-sm">{doc[0].description}</p>
+                <p className="text-sm">{doc[0] && doc[0]?.description}</p>
               </div>
               <div>
                 <h2>File type</h2>
-                <p className="text-sm">{doc[0].file?.name.split(".").pop()}</p>
+                <p className="text-sm">{doc[0] && doc[0].file?.name.split(".").pop()}</p>
               </div>
               {/* <div>
                 <h2>File type</h2>
@@ -122,7 +122,7 @@ const ViewDocument = () => {
               </div> */}
               <div>
                 <h2>Category</h2>
-                <p className="text-sm">{doc[0].categorie}</p>
+                <p className="text-sm">{doc[0] && doc[0]?.categorie}</p>
               </div>
 
               <div className="flex justify-between items-center">
