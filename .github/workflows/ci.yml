@@ -76,7 +76,7 @@ jobs:
           echo "NODE_ENV=https://backcommunities.eze.ink" >> .env && \
           echo "GOOGLE_ANALYTICS_ID=G-MD706N8TZV" >> .env && \
           echo "NEXT_PUBLIC_ENV=production" >> .env && \
-          echo "NEXT_API_PRODUCTION_URL=https://backcommunities.eze.ink" >> .env && \
+          echo "NEXT_PUBLIC_PRODUCTION_URL=https://backcommunities.eze.ink" >> .env && \
           echo "NEXT_PUBLIC_COMMUNITIES_URL=https://communities.eze.ink" >> .env && \
           echo "NEXT_PUBLIC_BACKENDCOMMUNITIES_URL=https://backcommunities.eze.ink" >> .env && \
           echo "NEXT_PUBLIC_LIVING_LIBRARY_URL=https://library.eze.ink/en" >> .env && \
