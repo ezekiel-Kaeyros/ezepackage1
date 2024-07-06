@@ -1,73 +1,84 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-import { i18n } from './i18n.config';
-import { serialize } from 'cookie';
-
-import { match as matchLocale } from '@formatjs/intl-localematcher';
-import Negotiator from 'negotiator';
-
-function getLocale(request: NextRequest): string | undefined {
-  const negotiatorHeaders: Record<string, string> = {};
-  request.headers.forEach((value, key) => (negotiatorHeaders[key] = value));
-
-  // @ts-ignore locales are readonly
-  const locales: string[] = i18n.locales;
-  const languages = new Negotiator({ headers: negotiatorHeaders }).languages();
-
-  const locale = matchLocale(languages, locales, i18n.defaultLocale);
-  return locale;
-}
-
-export function middleware(request: NextRequest) {
-  const pathname = request.nextUrl.pathname;
-  const pathnameIsMissingLocale = i18n.locales.every(
-    (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
-  );
-
+export async function middleware(request: NextRequest) {
+  // Clone the current URL
   const url = request.nextUrl.clone();
-  const token = url.searchParams.get('token') || '';
-  const userEncoded = url.searchParams.get('user') || '';
 
-  if (userEncoded != '' || token != '') {
-    // console.log('USER DATA: ', userEncoded, typeof userEncoded);
-    // Decode the user data from the query parameter
-    const userString = decodeURIComponent(userEncoded);
-    // console.log('User string: ', userString, typeof userString);
-    const userJson = userEncoded;
-    // const userJson = JSON.parse(userEncoded);
-    // console.log('User Encoded Data stringify: ', userJson);
-    // const userJson = userData;
+  // Check if the request contains the 'access-token' cookie
+  const accessTokenExist = request.cookies.get('token');
 
-    if (token) {
-      const response = NextResponse.next();
-      response.cookies.set('token', token, {
+  // Check if the URL has the `access-token` parameter
+  const accessToken = url.searchParams.get('token');
+  const userData = url.searchParams.get('user')
+
+  if (accessTokenExist) {
+    console.log("IS THERE TOKEN IN COOKIE???\n");
+    if (accessToken) {
+      // Delete the 'token' query parameter
+      url.searchParams.delete('token');
+      url.searchParams.delete('user');
+      url.searchParams.delete('step');
+
+      console.log("DID IT ENTER HERE????");
+
+      // Redirect to the same URL without the 'token' parameter
+      return NextResponse.redirect(url);
+    }
+    console.log("WHAT NOW???");
+    return NextResponse.next();
+  } else {
+    console.log("TOKEN NOT IN COOKIE BUT IN URL");
+
+    if (accessToken) {
+      // Delete the 'token' query parameter
+      url.searchParams.delete('token');
+      url.searchParams.delete('user');
+      url.searchParams.delete('step');
+
+      // Create a NextResponse object
+      const response = NextResponse.redirect(url);
+
+      const expires = new Date();
+      expires.setDate(expires.getDate() + 28);
+
+      response.cookies.set('token', accessToken, {
+        path: '/',
         httpOnly: false,
         secure: false,
-        path: '/',
+        expires: expires,
       });
-      response.cookies.set('user_data', userJson, {
-        path: '/',
-      });
-      return response;
-    }
-  }
 
-  // Redirect if there is no locale
-  if (pathnameIsMissingLocale) {
-    const locale = getLocale(request);
-    return NextResponse.redirect(
-      new URL(
-        `/${locale}${pathname.startsWith('/') ? '' : '/'}${pathname}`,
-        request.url
-      )
-    );
+      response.cookies.set('user_data', userData, {
+        path: '/',
+        httpOnly: false,
+        secure: false,
+        expires: expires,
+      });
+
+      // If you need to log or further manipulate the cookie
+      const cookie = response.cookies.get('token');
+      console.log('Set cookie:', cookie);
+
+      // Return the modified response
+      return response;
+    } else {
+      try {
+        const returnUrl = process.env.NEXT_PUBLIC_COMMUNITIES_URL;
+        const ssoLoginUrl = `${process.env.NEXT_PUBLIC_SSO_LOGIN_URL}?module=${encodeURIComponent(returnUrl)}`;
+        console.log('Redirecting to SSO login URL:', ssoLoginUrl);
+        
+        return NextResponse.redirect(ssoLoginUrl);
+      } catch (error) {
+        console.error('Error:', error);
+        url.pathname = '/login';
+        console.log('URL: ', url);
+        return NextResponse.redirect(url);
+      }
+    }
   }
 }
 
-export function saveTokenToCookie(request: NextRequest) {}
-
 export const config = {
-  // Matcher ignoring `/_next/` and `/api/`
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
+  matcher: ['/'],
 };
