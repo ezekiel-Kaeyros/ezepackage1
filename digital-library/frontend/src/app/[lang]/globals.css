@@ -17,6 +17,35 @@ body {
   
 }
 
+
+.my-div {
+ /* Hauteur de la div */
+  background-image: url('../../../public/images/Frame.svg'); /* Chemin vers l'image de fond */
+  background-size: cover; /* Ajuste l'image pour couvrir toute la div */
+  background-position: center; /* Centre l'image dans la div */
+  background-repeat: no-repeat; /* Évite la répétition de l'image */
+}
+.my-div2 {
+ /* Hauteur de la div */
+  background-image: url('../../../public/images/Frame 532.svg'); /* Chemin vers l'image de fond */
+  background-size: contain; /* Ajuste l'image pour couvrir toute la div */
+  background-position: right; /* Centre l'image dans la div */
+  background-repeat: no-repeat; /* Évite la répétition de l'image */
+}
+.my-div3 {
+ /* Hauteur de la div */
+  background-image: url('../../../public/images/Frame 533.svg'); /* Chemin vers l'image de fond */
+  background-size: contain; /* Ajuste l'image pour couvrir toute la div */
+  background-position: center; /* Centre l'image dans la div */
+  background-repeat: no-repeat; /* Évite la répétition de l'image */
+}
+.my-div4 {
+ /* Hauteur de la div */
+  background-image: url('../../../public/images/Frame 534.svg'); /* Chemin vers l'image de fond */
+  background-size: contain; /* Ajuste l'image pour couvrir toute la div */
+  background-position: center; /* Centre l'image dans la div */
+  background-repeat: no-repeat; /* Évite la répétition de l'image */
+}
 .slick-dots .slick-active div div {
   background-color: #015e44;
 }

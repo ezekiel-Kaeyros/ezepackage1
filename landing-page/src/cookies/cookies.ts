@@ -43,7 +43,7 @@ import { FIRST_TIME, TOKEN, USER_DATA } from './cookies.d';
 export const setUserCookies = (data: any) => {
   try {
     console.log('DID IT EVEN GET HERE???: ', data);
-    cookies.set(USER_DATA, JSON.stringify(data),{ domain: '.eze.ink', path: '/' });
+    cookies.set(USER_DATA, JSON.stringify(data), { domain: '.eze.ink' });
   } catch (error) {
     console.error('Error setting user cookies:', error);
   }
@@ -52,7 +52,7 @@ export const setUserCookies = (data: any) => {
 export const setToken = (token: string) => {
   try {
     console.log('IS IT HERE???');
-    cookies.set(TOKEN, JSON.stringify(token),{ domain: '.eze.ink', path: '/' });
+    cookies.set(TOKEN, JSON.stringify(token), { domain: '.eze.ink' });
   } catch (error) {
     console.error('Error setting token:', error);
   }
@@ -80,7 +80,7 @@ export const getUserCookiesAuth0 = () => {
 };
 
 export const removeUserCookies = () => {
-  cookies.remove(USER_DATA,{ domain: '.eze.ink', path: '/' });
+  cookies.remove(USER_DATA);
 };
 
 // Onboarding cookies
@@ -88,7 +88,7 @@ export const removeUserCookies = () => {
 export const isFirstTime = (data: string) => {
   // Use the default domain (localhost)
   console.log('HERE ISfirstTime');
-  cookies.set(FIRST_TIME, 'true',{ domain: '.eze.ink', path: '/' });
+  cookies.set(FIRST_TIME, 'true');
 };
 
 export const getIsFirstTime = () => {

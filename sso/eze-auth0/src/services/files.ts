@@ -11,11 +11,11 @@ const GroupId = '5577831';
 
 let date = new Date();
 let formattedDate = date.getUTCFullYear() + '-' +
-    ('0' + (date.getUTCMonth() + 1)).slice(-2) + '-' +
-    ('0' + date.getUTCDate()).slice(-2) + ' ' +
-    ('0' + date.getUTCHours()).slice(-2) + ':' +
-    ('0' + date.getUTCMinutes()).slice(-2) + ':' +
-    ('0' + date.getUTCSeconds()).slice(-2);
+  ('0' + (date.getUTCMonth() + 1)).slice(-2) + '-' +
+  ('0' + date.getUTCDate()).slice(-2) + ' ' +
+  ('0' + date.getUTCHours()).slice(-2) + ':' +
+  ('0' + date.getUTCMinutes()).slice(-2) + ':' +
+  ('0' + date.getUTCSeconds()).slice(-2);
 
 interface PostFileOptions {
   baseUrl?: string;
@@ -27,7 +27,7 @@ interface PostFileOptions {
   itemTitle: string;
   itemType: string;
   firstName: string,
-  lastName:string,
+  lastName: string,
   // authorName: string;
   filename?: string;
   note?: string;
@@ -40,7 +40,7 @@ export class PostFile {
   private userId: string;
   private groupId: string;
   private firstName: string;
-  private lastName:string;
+  private lastName: string;
   private filePath: string;
   private coverPageUrl: string;
   private itemTitle: string;
@@ -61,9 +61,9 @@ export class PostFile {
     coverPageUrl = '',
     itemTitle,
     itemType,
+    note,
     // authorName,
     filename = path.basename(filePath),
-    note = '',
     accessDate = formattedDate,
   }: PostFileOptions) {
     this.baseUrl = baseUrl;
@@ -105,6 +105,28 @@ export class PostFile {
     const headers = { Authorization: `Bearer ${this.apiKey}` };
     const response = await axios.get(url, { headers });
     return response.data;
+  }
+
+  private async deleteItemById(itemId: string, itemVersion: number) {
+    let config = {
+      method: 'delete',
+      maxBodyLength: Infinity,
+      url: `${this.baseUrl}/groups/${this.groupId}/items/${itemId}`,
+      headers: { 
+        'Authorization': `Bearer ${this.apiKey}`, 
+        'If-Unmodified-Since-Version': `${itemVersion}`,
+        'Content-Type': 'application/json',
+
+      }
+    };
+    
+    axios.request(config)
+    .then((response) => {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch((error) => {
+      console.error(error);
+    });
   }
 
   private async postParentItem() {
@@ -170,7 +192,15 @@ export class PostFile {
     if (response.status !== 200) {
       throw new Error('Unable to create child item');
     }
-    return response.data;
+
+    const parentItemDetail = {
+      "key": parentItem["successful"]["0"]["data"]["key"],
+      "version": parentItem["successful"]["0"]["data"]["version"]
+    }
+    return {
+      "data": response.data,
+      "parentItem": parentItemDetail
+    }
   }
 
   private async getUploadAuthorization() {
@@ -178,12 +208,12 @@ export class PostFile {
     // if (childItem.failed && childItem.failed['0'].code === 400) {
     //   throw new Error('Unable to create file environment');
     // }
-    console.log(childItem, 'childItem')
 
-    const url = `${this.baseUrl}/groups/${this.groupId}/items/${childItem.successful['0'].key}/file`;
+    const url = `${this.baseUrl}/groups/${this.groupId}/items/${childItem["data"].successful['0'].key}/file`;
     
 
     const { filename, filesize, mtime, md5Hash } = await this.getFileDetails();
+
     const payload = `md5=${md5Hash}&filename=${filename}&filesize=${filesize}&mtime=${mtime}`;
     const headers = {
       'If-None-Match': '*',
@@ -191,52 +221,67 @@ export class PostFile {
       'Content-Type': 'application/x-www-form-urlencoded',
     };
     const response = await axios.post(url, payload, { headers });
-    console.log(response, 'my response')
 
-    if (response.status !== 200) {
+    if (response.status !== 200 || ('exists' in response.data)) {
+      const baseError = "Cannot get upload authorization."
+      const deleteItem = await this.deleteItemById(childItem["parentItem"]["key"], childItem["parentItem"]["version"])
+
+      if (('exists' in response.data)) {
+        throw new Error(baseError + " Duplicate Files Not Allowed. Upload something new or update already existing file")
+      }
       throw new Error('Cannot get upload authorization');
     }
     return {
       ...response.data,
-      child_item_id: childItem.successful['0'].key,
+      child_item_id: childItem["data"].successful['0'].key,
     };
   }
 
   private async uploadFile() {
     const uploadAuthorization = await this.getUploadAuthorization();
-    // console.log("upload authorization: ", uploadAuthorization)
     const fileContent = fs.readFileSync(this.filePath);
     const uploadContent = Buffer.concat([
       Buffer.from(uploadAuthorization.prefix),
       fileContent,
       Buffer.from(uploadAuthorization.suffix),
     ]);
-    // console.log("upload content: ", uploadContent)
-    const response = await axios.post(uploadAuthorization.url, uploadContent, {
-      headers: { 'Content-Type': uploadAuthorization.contentType },
-    });
-    if (response.status !== 201) {
-      throw new Error('Failed to upload file to S3');
+
+    try {
+      const response = await axios.post(uploadAuthorization.url, uploadContent, {
+        headers: { 'Content-Type': uploadAuthorization.contentType },
+      });
+      if (response.status !== 201) {
+        throw new Error('Failed to upload file to S3');
+      }
+
+      return {
+        item_id: uploadAuthorization.child_item_id,
+        upload_key: uploadAuthorization.uploadKey,
+      };
+    } catch (error) {
+      throw new Error('File could not be uploaded to s3');
     }
-    return {
-      item_id: uploadAuthorization.child_item_id,
-      upload_key: uploadAuthorization.uploadKey,
-    };
+
   }
 
   public async registerUpload() {
     const uploadFile = await this.uploadFile();
     const url = `${this.baseUrl}/groups/${this.groupId}/items/${uploadFile.item_id}/file`;
-    const payload = `upload=${uploadFile.upload_key}`;
-    const headers = {
-      'If-None-Match': '*',
-      Authorization: `Bearer ${this.apiKey}`,
-      'Content-Type': 'application/x-www-form-urlencoded',
-    };
-    const response = await axios.post(url, payload, { headers });
-    if (response.status !== 204) {
-      throw new Error('File uploaded to Zotero S3 but failed to register');
+
+    try {
+      const payload = `upload=${uploadFile.upload_key}`;
+      const headers = {
+        'If-None-Match': '*',
+        Authorization: `Bearer ${this.apiKey}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      };
+      const response = await axios.post(url, payload, { headers });
+      if (response.status !== 204) {
+        throw new Error('File uploaded to Zotero S3 but failed to register');
+      }
+      return response.data;
+    } catch (error) {
+      throw new Error("File was not registered to s3")
     }
-    return response.data;
   }
 }

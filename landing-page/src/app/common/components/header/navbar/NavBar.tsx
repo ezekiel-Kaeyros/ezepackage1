@@ -83,10 +83,10 @@ const NavBar: React.FC<NavBarProps> = ({ lang, navigation }) => {
             )}
           </li>
           <li className="border-t-1 hover:text-primaryColor lg:border-none px-6 lg:px-3 2xl:px-6  pt-4 lg:pt-0 pb-2">
-            <Link href="https://kashapp.biz/auth/mo_saml/index.php"> {navigation.online}</Link>
+            <Link href={`${process.env.NEXT_PUBLIC_KASHAPP_AUTH_URL}`}> {navigation.online}</Link>
           </li>
           <li className="border-t-1 hover:text-primaryColor lg:border-none px-6 lg:px-3 2xl:px-6  pt-4 lg:pt-0 pb-2">
-            <Link href="http://library.eze.wiki:3010/">
+            <Link href={`${process.env.NEXT_PUBLIC_LIVING_LIBRARY_URL}`}>
               {' '}
               {navigation.library}
             </Link>
@@ -99,7 +99,7 @@ const NavBar: React.FC<NavBarProps> = ({ lang, navigation }) => {
           </li>
           <li className="border-t-1 hover:text-primaryColor lg:border-none px-6 lg:px-3 2xl:px-6  pt-4 lg:pt-0 pb-4">
             {token ? (
-              <Button href={COMMUNITIES_URL} className="w-fit py-3">
+              <Button href={`${COMMUNITIES_URL}`} className="w-fit py-3">
                 {navigation.dash}
               </Button>
             ) : (

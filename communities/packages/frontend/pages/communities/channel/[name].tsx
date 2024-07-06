@@ -14,7 +14,9 @@ import { openAuthPopup, PopupType } from '../../../store/auth';
 import ChannelInfoLayout from '../../../components/Layout/ChannelInfoLayout';
 import { useDispatchAuth } from '../../../utils/useDispatchAuth';
 import RepostCard from '../../../components/Post/RepostCard';
-
+import { useTranslation } from 'react-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { GetStaticProps } from 'next';
 const fetchChannelByName = async (channelName: string) => {
   const { data } = await axios.get(`/channels/${channelName}`);
   return data;
@@ -33,6 +35,9 @@ interface ChannelProps {
 }
 
 const Channel: FC<ChannelProps> = ({ channel }) => {
+
+  
+  
   console.log('channel===========',channel);
   
   const dispatch = useDispatch();
@@ -81,7 +86,7 @@ const Channel: FC<ChannelProps> = ({ channel }) => {
 
       {(authUser && isJoined && (
         <PostCreateButton queryKey={['postsByChannelName', channel._id]} channel={channel} />
-      )) || <h2>You need to join to be able to see posts</h2>}
+      )) || <h2></h2>}
 
       {!authUser && (
         <Spacing bottom="sm">
@@ -138,5 +143,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const channel = await fetchChannelByName(params.name as string);
   return { props: { channel: channel } };
 };
+
 
 export default Channel;

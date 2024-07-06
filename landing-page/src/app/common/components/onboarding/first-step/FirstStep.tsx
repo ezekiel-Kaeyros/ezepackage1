@@ -123,13 +123,15 @@ const FirstStep = () => {
     __v: 0;
     _id: string;
   }[]>();
+
   const {
     register,
     handleSubmit,
     watch,
     formState: { isValid, errors },
   } = useForm<FirstStepFormValues>();
-  let top=watch('topic')
+  let top = watch('topic')
+
   useEffect(() => {
     const response = new ChannelService()
       .channel()
@@ -141,8 +143,9 @@ const FirstStep = () => {
         console.log('error==============', error);
       });
   }, []);
-  useEffect(()=>{console.log('top2222222222',top);
-  },[top])
+  useEffect(() => {
+    console.log('top2222222222', top);
+  }, [top])
   const onSubmit: SubmitHandler<FirstStepFormValues> = (data) => {
     // const user = new AuthService().login(data);
   };
@@ -152,7 +155,7 @@ const FirstStep = () => {
       <div>
         <h1 className="font-bold text-3xl">Choose a topic</h1>
         <div className="flex mt-6 flex-wrap gap-2">
-          {topic && topic.length>0 && topic?.map((topic) => (
+          {topic && topic.length > 0 && topic?.map((topic) => (
             <CheckboxChip
               key={topic?._id}
               id={`${topic?._id}`}

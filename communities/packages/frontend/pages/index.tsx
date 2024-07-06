@@ -12,6 +12,9 @@ import { CommunityIcon } from '../components/ui/icons';
 import Seo from '../components/Seo';
 import { useDispatchAuth } from '../utils/useDispatchAuth';
 import RepostCard from '../components/Post/RepostCard';
+import { useTranslation } from 'react-i18next';
+import { GetStaticProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const fetchPostsByFollowing = async ({ pageParam = 0 }) => {
   const { data } = await axios.get(`/posts/follow?offset=${pageParam}&limit=${DataLimit.PostsByFollowing}`);
@@ -19,6 +22,8 @@ const fetchPostsByFollowing = async ({ pageParam = 0 }) => {
 };
 
 const Home: FC = () => {
+  const { t: translate } = useTranslation('common');
+  console.log('translation', translate('welcome'));
   const dispatch = useDispatch();
 
   const authUser = useSelector((state: RootState) => state.auth.user);
@@ -73,9 +78,9 @@ const Home: FC = () => {
             <Fragment key={i}>
               {posts?.map((post: Post) => {
                 if (post.postId && post.postId.length > 0) {
-                  return <RepostCard  queryKey="postsByFollowing" key={post._id} post={post} />;
+                  return <RepostCard queryKey="postsByFollowing" key={post._id} post={post} />;
                 } else {
-                  return <PostCard  queryKey="postsByFollowing" key={post._id} post={post} />;
+                  return <PostCard queryKey="postsByFollowing" key={post._id} post={post} />;
                 }
               })}
               {/* {posts?.map((post: Post) => (
@@ -90,5 +95,9 @@ const Home: FC = () => {
     </Layout>
   );
 };
-
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? 'en', ['common'])),
+  },
+});
 export default Home;

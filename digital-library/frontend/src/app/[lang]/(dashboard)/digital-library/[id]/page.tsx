@@ -9,6 +9,9 @@ import Carousel from "@/app/common/components/caroussel/Carousel";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import CarouselChannel from "@/app/common/components/caroussel/carousselChannel";
+import { useEffect } from "react";
+import { useToggleSidebar } from "@/app/hooks/useToggleSidebar";
+import { toggleFunc2 } from "@/redux/features/auth-slice";
 const arraytest = [
   { num: 3, save: true },
 
@@ -54,6 +57,8 @@ const arraytest1 = [
     { name: "Data Analytics", id: 7 },
   ];
 const home = () => {
+  const { dispatch } = useToggleSidebar();
+
     const pathname = usePathname();
     const name = channelarray.find(
       (item) => item.id.toString() == pathname.split("/")[pathname.split("/").length - 1]
@@ -65,9 +70,16 @@ const home = () => {
           pathname.split("/")[pathname.split("/").length - 1]
       );
     console.log('newArrayChannel',newArrayChannel);
-    
+     useEffect(() => {
+       dispatch(toggleFunc2(false));
+     }, []);
   return (
-    <div className="w-full h-full  p-2 ">
+    <div
+      className="w-full h-full  p-2 "
+      onClick={() => {
+        dispatch(toggleFunc2(false));
+      }}
+    >
       <Link
         href={"/digital-library"}
         className="flex justify-start items-center gap-2 text-[#015E44] pl-2"
@@ -98,7 +110,7 @@ const home = () => {
 
       <p className="font-bold text-xl">Other Categories</p>
       <div className="w-full  pb-14">
-        <CarouselChannel data={newArrayChannel}/>
+        <CarouselChannel data={newArrayChannel} />
       </div>
     </div>
   );

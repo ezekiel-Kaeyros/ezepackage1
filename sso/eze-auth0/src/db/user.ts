@@ -1,74 +1,38 @@
-// @ts-nocheck
-import { User } from '../models/user.model';
+import mongoose from 'mongoose';
+import User, { IUser } from '../models/user.model'
 
-export const getAuthUser = async (id: string): Promise<any> => {
-  const user = await User.findOneAndUpdate({ _id: id }, { isOnline: true })
-    .select('-password')
-
-  return user;
-};
-
-export const getUserById = async (id: string, hideBannedUser?: boolean): Promise<any> => {
-  const query = { _id: id };
-  if (hideBannedUser) {
-    query.banned = { $ne: true };
+// Function to check if it's the user's first time
+export const isFirstTime = async (email: string): Promise<boolean> => {
+  try {
+    const user = await User.findOne({ email }).exec();
+    console.log("USER IS: ", user)
+    if (user) {
+      return user.firstTime;
+    } else {
+      console.error('User not found')
+      return true
+    }
+  } catch (error) {
+    console.error('Error checking firstTime:', error);
   }
+}
 
-  const user = await User.findOne(query)
-    .select('-password')
+// Function to toggle user's firstTime field
+export const toggleFirstTime = async (email: string): Promise<boolean> => {
+  try {
+    const user = await User.findOneAndUpdate(
+      { email },
+      { $set: { firstTime: false } }, // Toggle firstTime to false
+      { new: true }
+    ).exec();
 
-  return user;
-};
-
-export const getUserByEmail = async (email: string): Promise<any> => {
-  const user = await User.findOne({ email });
-  return user;
-};
-
-export const getUserByUsername = async (username: string): Promise<any> => {
-  const user = await User.findOne({ username }).select('-password');
-  return user;
-};
-
-export const updateUserIsOnline = async (userId: string, isOnline: boolean): Promise<any> => {
-  const user = await User.findOneAndUpdate({ _id: userId }, { isOnline });
-  return user;
-};
-
-export const updateUserResetPasswordToken = async (userId: string, token: string): Promise<any> => {
-  const user = await User.findOneAndUpdate({ _id: userId }, { resetPasswordToken: token });
-  return user;
-};
-
-export const getUsers = async (): Promise<any> => {
-  const users = User.find(query).select('-password').sort({ createdAt: 'desc' });
-  return users;
-};
-
-export const countUsers = async (): Promise<any> => {
-  const total = await User.countDocuments({});
-  const verified = await User.countDocuments({ emailVerified: true });
-  return { total, verified };
-};
-
-export const onlineUsers = async (userId?: string): Promise<any> => {
-  const users = User.find({ isOnline: true, _id: { $ne: userId }, banned: { $ne: true } }).select('-password');
-  return users;
-};
-
-export const updateUser = async (id: string, fieldsToUpdate: any): Promise<any> => {
-  const user = await User.findOneAndUpdate({ _id: id }, { ...fieldsToUpdate }, { new: true })
-
-  return user;
-};
-
-export const deleteUser = async (id: string): Promise<any> => {
-  const user = await User.findByIdAndRemove(id);
-  return user;
-};
-
-export const updateUserBanned = async (id: string, banned: boolean): Promise<any> => {
-  const user = await User.findOneAndUpdate({ _id: id }, { banned: banned }, { new: true });
-
-  return user;
+    if (user) {
+      console.log(`User's firstTime toggled successfully for email: ${email}`);
+      return true
+    } else {
+      console.error("User Does Not Exist")
+    }
+  } catch (error) {
+    console.error('Error toggling firstTime:', error);
+  }
 };

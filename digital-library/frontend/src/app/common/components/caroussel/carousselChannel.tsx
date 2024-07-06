@@ -16,7 +16,7 @@ const CarouselChannel: React.FC<{
     dots: true,
     infinite: false,
     speed: 100,
-    slidesToShow: 5,
+    slidesToShow: 4,
     slidesToScroll: 1,
     initialSlide: 1,
     // appendDots: (dots: any) => (

@@ -37,7 +37,7 @@ function parseTextWithLinks(text) {
     return `<a  href='/communities/profile/${id}'>${name}</a>`;
   });
 
-  // console.log('parsed text', parsedText);
+  console.log('parsed text', parsedText);
 
   // Render HTML with Next.js Link components
   return parsedText;
@@ -73,12 +73,12 @@ const ReplyComment: FC<CommentProps> = ({ comment, author, queryKey, post , id})
   // });
     const hasLiked2 = comment?.likes?.find((post: any) => {
       if (post?.user?._id == authUser?._id) {
-        // console.log('postTrue', post);
+        console.log('postTrue', post);
 
         return post;
       } else {
-        // console.log('postFalse', post?.user?._id);
-        // console.log('id', authUser?._id);
+        console.log('postFalse', post?.user?._id);
+        console.log('id', authUser?._id);
       }
     });
  const likesLength = comment && comment.likes ? comment.likes.length : 0;
@@ -91,19 +91,19 @@ const ReplyComment: FC<CommentProps> = ({ comment, author, queryKey, post , id})
   //   const likes = likesLength > 0 ? likesLength + ' likes' : null;
   //   return likes;
   // };
-  // console.log(author,'=====================',authUser?._id);
+  console.log(author,'=====================',authUser?._id);
   
   const likeHandler = async (id: string) => {
     // setIsLike('');
     setLoadLike(true);
     if (comment.likes.length > 0) {
       const like = await getLikes(id);
-      // console.log('like', like);
+      console.log('like', like);
       const islike = like.filter((item: any) => item.user._id == authUser?._id);
       islike.length > 0 ? sethasLiked(islike[0]._id) : sethasLiked(null);
       // islike.length > 0 && console.log(islike[0].user);
 
-      // console.log('islike5698', islike);
+      console.log('islike5698', islike);
       setIsLike(id);
     } else {
       setIsLike(id);
@@ -182,7 +182,7 @@ const ReplyComment: FC<CommentProps> = ({ comment, author, queryKey, post , id})
           title="Remove the comment permanently?"
         />
 
-        {authUser && (authUser._id == author || authUser._id == author._id) && (
+        {authUser && (authUser._id == author || authUser._id==author._id) && (
           <StyledButton ghost onClick={() => setIsConfirmOpen(true)}>
             <CloseIcon width="10" />
           </StyledButton>

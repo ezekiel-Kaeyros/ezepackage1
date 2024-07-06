@@ -5,7 +5,10 @@ export const useToggleSidebar = () => {
   const isSidebarToggled: boolean = useSelector(
     (state: RootState) => state.AuthReducer.open
   );
+   const isToggled: boolean = useSelector(
+     (state: RootState) => state.AuthReducer.toggle
+   );
   const dispatch = useDispatch<AppDispatch>();
 
-  return { isSidebarToggled, dispatch };
+  return { isSidebarToggled, dispatch,isToggled };
 };

@@ -17,9 +17,9 @@ const Onboarding = () => {
 
   return (
     <div>
-      <h1 className="font-bold flex text-3xl mb-12">
-        Welcome{' '}
-        <h2 className="font-bold ml-2 text-primaryColor">{user?.fullName}</h2>
+      <h1 className="font-bold text-2xl lg:text-3xl mb-12 md:space-x-2">
+        <span className="block md:inline">Welcome</span>
+        <span className="font-bold text-primaryColor text-wrap">{user?.fullName}</span>
       </h1>
       {parseInt(`${step}`) === 1 ? <FirstStep /> : <SecondStep />}
 

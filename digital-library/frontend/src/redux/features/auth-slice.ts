@@ -19,6 +19,7 @@ type AuthState = {
   loading: boolean;
   isAuthenticad: boolean;
   open: boolean;
+  toggle:boolean
 };
 
 const initialState: AuthState = {
@@ -26,10 +27,11 @@ const initialState: AuthState = {
   loading: false,
   isAuthenticad: false,
   open: false,
+  toggle:true
 };
 
 export const auth = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     login: (state, action) => {
@@ -37,21 +39,19 @@ export const auth = createSlice({
       // setUserCookies(action.payload)
     },
 
-
- 
-
     toggleFunc: (state) => {
       state.open = !state.open;
       // redirect('/');
     },
 
     toggleFunc2: (state, action) => {
-     
-        state.open = action.payload;
-    
+      state.open = action.payload;
+    },
+    toggleSideBarFunc2: (state) => {
+      state.toggle = !state.toggle;
     },
   },
 });
 
-export const { login, toggleFunc, toggleFunc2 } = auth.actions;
+export const { login, toggleFunc, toggleFunc2, toggleSideBarFunc2 } = auth.actions;
 export default auth.reducer;

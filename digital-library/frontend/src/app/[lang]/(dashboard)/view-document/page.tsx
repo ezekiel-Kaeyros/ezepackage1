@@ -52,8 +52,8 @@ const ViewDocument = () => {
   return (
     <div className="w-full h-full pt-5">
       {doc.length > 0 && (
-        <div className="w-full px-2 md:h-[50vh] grid md:grid-cols-2 gap-5">
-          <div className=" overflow-auto h-full w-full no-scrollbar">
+        <div className="w-full px-2 xl:h-[772px]  grid md:grid-cols-2 gap-5">
+          <div className=" overflow-auto h-full w-full ">
             <Image
               src={doc[0].url!}
               height={30}
@@ -81,11 +81,14 @@ const ViewDocument = () => {
               </div>
             </div> */}
             {doc[0].file?.name.split(".").pop()?.toLocaleLowerCase() ==
-              "pdf" ? (
+            "pdf" ? (
               <iframe src={doc[0].urlFile} className="w-full h-full"></iframe>
-            ) : <div className="w-full h-full flex items-center justify-center bg-black text-white">
-                no preview available for {doc[0].file?.name.split(".").pop()} file
-              </div>}
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-black text-white">
+                no available preview for {doc[0].file?.name.split(".").pop()}{" "}
+                file
+              </div>
+            )}
             {/* {doc[0].file?.name.split(".").pop()?.toLocaleLowerCase() !=
               "pdf" && (
               <div className="w-full h-full flex items-center justify-center">

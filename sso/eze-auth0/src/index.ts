@@ -4,25 +4,21 @@ import passport from 'passport';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
-import cors from 'cors'; // Import the cors package
+import cors from 'cors';
 import authRouter from './auth';
 import fileRouter from './routes/files';
 import dotenv from 'dotenv';
 dotenv.config();
 
-
 const app = express();
 
 // Configure CORS to allow requests from your frontend origin
-app.use(cors
-  ({
-  // origin: process.env.REDIRECT_ORIGIN,
-  origin:"*",
-  methods: ['GET','POST','PUT'],
+app.use(cors({
+  origin: "*",
+  methods: ['GET', 'POST', 'PUT'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
-})
-);
+}));
 
 // Use session middleware
 app.use(session({ secret: 'your_secret_key', resave: false, saveUninitialized: true }));
@@ -30,7 +26,9 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-const connection= mongoose.connection;
+// Add body parser middleware for JSON and URL-encoded data
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Initialize passport
 app.use(passport.initialize());
@@ -54,8 +52,26 @@ app.get('/profile', (req, res) => {
 
 app.use('/api/files', fileRouter);
 
-const PORT = process.env.PORT;
+// MongoDB connection URI
+const mongoURI = process.env.MONGODB_URI
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// Mongoose connection options
+const options = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
+};
+
+// Connect to MongoDB and start the server
+mongoose.connect(mongoURI).then(
+  () => {
+    console.log('Connected to MongoDB');
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  },
+  err => {
+    console.error('Error connecting to MongoDB:', err.message);
+  }
+);

@@ -51,8 +51,9 @@ jobs:
         run: |
           cd landing-page && \
           touch .env && \
-          echo "NEXT_API_PRODUCTION_URL=https://backcommunities.eze.ink" > .env && \
           echo 'NEXT_PUBLIC_COMMUNITIES_URL="https://communities.eze.ink/"' >> .env && \
+          echo 'NEXT_PUBLIC_KASHAPP_AUTH_URL="https://kashapp.biz/auth/mo_saml/index.php"' >> .env && \
+          echo 'NEXT_PUBLIC_LIVING_LIBRARY_URL="https://library.eze.ink"' >> .env && \
           echo 'NEXT_PUBLIC_SSO_LOGIN_URL="https://sso.eze.ink/auth/login"' >> .env
       - name: Archive .env file
         run: tar -czf env-landing.tar.gz -C landing-page .env
@@ -72,12 +73,16 @@ jobs:
         run: |
           cd communities/packages/frontend && \
           touch .env && \
+          echo "NODE_ENV=https://backcommunities.eze.ink" >> .env && \
           echo "GOOGLE_ANALYTICS_ID=G-MD706N8TZV" >> .env && \
+          echo "NEXT_PUBLIC_ENV=production" >> .env && \
           echo "NEXT_API_PRODUCTION_URL=https://backcommunities.eze.ink" >> .env && \
           echo "NEXT_PUBLIC_COMMUNITIES_URL=https://communities.eze.ink" >> .env && \
+          echo "NEXT_PUBLIC_BACKENDCOMMUNITIES_URL=https://backcommunities.eze.ink" >> .env && \
+          echo "NEXT_PUBLIC_LIVING_LIBRARY_URL=https://library.eze.ink/en" >> .env && \
           echo "NEXT_PUBLIC_SSO_LOGIN_URL=https://sso.eze.ink/auth/login" >> .env && \
-          echo "NODE_ENV=https://backcommunities.eze.ink" >> .env && \
           echo "NEXT_PUBLIC_SSO_LOGOUT_URL=https://sso.eze.ink/auth/logout" >> .env && \
+          echo "NEXT_PUBLIC_KASHAPP_AUTH_URL=https://kashapp.biz/auth/mo_saml/index.php" >> .env && \
           echo "NEXT_PUBLIC_LANDINGPAGE_URL=https://eze.ink" >> .env
       - name: Archive .env file
         run: tar -czf env-frontend.tar.gz -C communities/packages/frontend .env
@@ -97,23 +102,13 @@ jobs:
         run: |
           cd sso/eze-auth0 && \
           touch .env && \
-          echo "MONGODB_URI=mongodb+srv://eze:mongodb123@cluster0.dbnvshu.mongodb.net/eze_sso?retryWrites=true&w=majority&appName=Cluster0" > .env && \
+          echo "MONGODB_URI=mongodb+srv://eze:nMWN2NG50nSLJrOC@eze-communities.ufwbl4d.mongodb.net/?retryWrites=true&w=majority" > .env && \
           echo "PORT=3000" >> .env && \
           echo "SSO_URL=https://sso.eze.ink" >> .env && \
           echo "REDIRECT_ORIGIN=https://eze.ink" >> .env && \
           echo "CALLBACK_URL=https://sso.eze.ink/auth/login/callback" >> .env && \
-          echo "AUTH0_DOMAIN=dev-7htaauz8ydzvm6gp.us.auth0.com" >> .env && \
-          echo "AUTH0_CLIENT_ID=p2f0pK2hzCYoiwXLlG6NO5tDaXzCzm3l" >> .env && \
-          echo "AUTH0_CLIENT_SECRET=5itAjOy-K0FtjVzkBe3ugV6GUV2HbMyCnlsiO0IWJFyFC6fiSAxhQUIQaJe2UV3l" >> .env && \
-          echo "AUTH0_CALLBACK_URL=https://b747-2a0d-3341-b19b-2f10-442c-9191-703e-3ce4.ngrok-free.app/callback" >> .env && \
-          echo "SESSION_SECRET=912bdba499a67a97b0ae1c6128f8d2216ecbcf2f81443a1c4dc859724f511296" >> .env && \
-          echo "MOODLE_URL=https://kashapp.biz" >> .env && \
-          echo "ZOTERO_CLIENT_ID=972cc555b59d4a99fb40" >> .env && \
-          echo "ZOTERO_REDIRECT_URI=https://www.zotero.org/connector_auth_complete" >> .env && \
-          echo "ZOTERO_CLIENT_SECRET=1587fa854f2e8a22cf90" >> .env && \
-          echo "ZOTERO_USER_ID=14487670" >> .env && \
-          echo "ZOTERO_URL=https://api.zotero.org" >> .env
-
+          echo "LANDINGPAGE_URL=https://eze.ink" >> .env && \
+          echo "COMMUNITIES_URL=https://communities.eze.ink" >> .env 
       - name: Archive .env file
         run: tar -czf env-sso.tar.gz -C sso/eze-auth0 .env
       - name: Upload .env file
@@ -212,10 +207,11 @@ jobs:
           cd digital-library/frontend && \
           touch .env && \
           echo "NEXT_PUBLIC_ZOTERO_API_KEY=7MdTpwHW7W7zyNPvE9zDea2k" >> .env && \
-          echo "NEXT_PUBLIC_ZOTERO_HOME_URL=https://eze.ink/" >> .env && \
-          # echo "NEXT_PUBLIC_COMMUNITIES_URL=https://eze.ink" >> .env && \
-          echo "NEXT_PUBLIC_ZOTERO_POST_FILES_URL=https://sso.eze.ink" >> .env && \
+          echo "NEXT_PUBLIC_ZOTERO_HOME_URL=https://eze.ink" >> .env && \
           echo "NEXT_PUBLIC_ZOTERO_API_KEY=ljJwZLSkS26ymt6DFd5D2Blc" >> .env && \
+          echo "NEXT_PUBLIC_DIGITAL_LIBRARY_HOME=https://library.eze.ink" >> .env && \
+          echo "NEXT_PUBLIC_ZOTERO_POST_FILES_URL=https://sso.eze.ink" >> .env && \
+          echo "NEXT_PUBLIC_COMMUNITIES_HOME=https://communities.eze.ink" >> .env && \
           echo "NEXT_PUBLIC_ZOTERO_USER_ID=14487670" >> .env
           
       - name: Login to DockerHub
@@ -224,3 +220,8 @@ jobs:
         run: docker build -t ezekielkaeyros/ezelibrary ./digital-library/frontend
       - name: Push SSO image
         run: docker push ezekielkaeyros/ezelibrary:latest
+
+
+ 
+
+      

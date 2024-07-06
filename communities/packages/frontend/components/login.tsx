@@ -5,7 +5,6 @@ const LoginRedirect = () => {
   const handleLogin = async () => {
     try {
       const returnUrl = process.env.NEXT_PUBLIC_COMMUNITIES_URL;
-      console.log(returnUrl, "RETURN URL")
       window.location.href = `${process.env.NEXT_PUBLIC_SSO_LOGIN_URL}?module=${encodeURIComponent(returnUrl)}`;
     } catch (error) {
       console.error('Error:', error);
@@ -19,7 +18,7 @@ const LoginRedirect = () => {
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="loader"></div>
-      <style>{`
+      <style >{`
         .loader {
           border: 4px solid rgba(0, 0, 0, 0.1);
           width: 36px;

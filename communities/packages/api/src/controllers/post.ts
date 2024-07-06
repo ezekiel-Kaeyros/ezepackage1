@@ -38,6 +38,8 @@ const PostController = {
     return res.send(post);
   },
   create: async (req: Request, res: Response): Promise<any> => {
+    console.log('1');
+    
     const authUser = req.user as AuthUser;
     const { title, channelId, repost } = req.body;
     const image = req.file;

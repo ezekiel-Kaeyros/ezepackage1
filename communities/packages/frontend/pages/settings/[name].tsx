@@ -5,7 +5,7 @@ import SettingsCommunity from '../../components/Settings/SettingsCommunity';
 import SettingsAccount from '../../components/Settings/SettingsAccount';
 import SettingsAuthentication from '../../components/Settings/SettingsAuthentication';
 import SettingsUsers from '../../components/Settings/SettingsUsers';
-// import { isAuthorized, redirectToHome } from '../../utils';
+import { isAuthorized, redirectToHome } from '../../utils';
 import { GetServerSideProps } from 'next';
 import { UserRole } from '../../constants';
 import Seo from '../../components/Seo';
@@ -54,14 +54,14 @@ const Settings: FC = () => {
   );
 };
 
-// export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
-//   const name = params.name as string;
-//   const isAuth = await isAuthorized(req, pages[name].authType);
-//   if (!isAuth) {
-//     return redirectToHome();
-//   }
+export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
+  const name = params.name as string;
+  const isAuth = await isAuthorized(req, pages[name].authType);
+  if (!isAuth) {
+    return redirectToHome();
+  }
 
-//   return { props: {} };
-// };
+  return { props: {} };
+};
 
 export default Settings;

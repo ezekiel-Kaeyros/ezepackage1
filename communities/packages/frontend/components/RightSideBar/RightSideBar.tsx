@@ -15,6 +15,7 @@ import {
 } from './style';
 import HomeEzeIcon from '../ui/icons/HomeEzeIcon';
 import MoreMemebers from '../ui/icons/MoreMembers';
+import { useTranslation } from 'react-i18next';
 
 const fetchOnlineUsers = async () => {
   const { data } = await axios.get('/users/online-users');
@@ -29,6 +30,8 @@ const fetchNewMembers = async () => {
 const REFETCH_INTERVAL = 10000;
 
 const RightSideBar: FC = () => {
+ const { t: translate } = useTranslation('common');
+
   const {
     data: onlineMembers,
     isFetching: isFetchingOnlineMembers,
@@ -65,15 +68,15 @@ const RightSideBar: FC = () => {
         <HomeEzeIcon />
       </HeadingIcon>
       <EzeText>
-        <H3>Event</H3>
+        <H3>{translate('Events')}</H3>
         <Text color="textSecondary" size="xs">
-          Welcome to grand opening of EZE. Reserve your place for 3 days of amazing knowledge{' '}
+          {translate('eventText')}
         </Text>
-        <ReserveBtn>Reserve</ReserveBtn>
+        <ReserveBtn>{translate('Reserve')}</ReserveBtn>
       </EzeText>
 
       <RightSideBarSections>
-        <H3>New Members</H3>
+        <H3>{translate('newMember')}</H3>
 
         {!isFetchingNewMembers && noNewMembers && (
           <Spacing top="sm">
@@ -89,19 +92,19 @@ const RightSideBar: FC = () => {
         )}
 
         <ViewMembers>
-          <Link href="/communities/members">View all members</Link>
+          <Link href="/communities/members">{translate('allMembers')}</Link>
           <MoreMemebers />
         </ViewMembers>
       </RightSideBarSections>
 
       <RightSideBarSections>
         {/* <Spacing top="md"> */}
-        <H3>Online Members</H3>
+        <H3>{translate('onlineMember')}</H3>
         {/* </Spacing> */}
 
         {!isFetchingOnlineMembers && noOnlineMembers && (
           <Spacing top="sm">
-            <Text color="textSecondary">No members are online.</Text>
+            <Text color="textSecondary">{translate('noOnline')}</Text>
           </Spacing>
         )}
 

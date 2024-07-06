@@ -29,6 +29,7 @@ import LivingLibraryIcon from '../ui/icons/LivingLibraryIcon';
 import EventsIcon from '../ui/icons/EventsIcon';
 import FundingAreaIcon from '../ui/icons/FundingAreIcon';
 import { useDispatchAuth } from '../../utils/useDispatchAuth';
+import LanguageSwitcher from './LanguageSwitcher';
 
 interface SubHeaderProps {
   toggleSidebar?: () => void;
@@ -84,7 +85,7 @@ const SubHeader: ForwardRefRenderFunction<HTMLButtonElement, SubHeaderProps> = (
   return (
     <CommunitiesHeaderRoot>
       <Logo>
-        <a href="https://eze.ink/en">
+        <a href="/">
           <img alt="logo" style={{ height: 35 }} src={logo} />
         </a>
       </Logo>
@@ -117,22 +118,22 @@ const SubHeader: ForwardRefRenderFunction<HTMLButtonElement, SubHeaderProps> = (
           />
         </ItemMenu> */}
         <ItemMenu>
-          {/* <NavTab
+            <NavTab
             icon={<OnlineCoursesIcon />}
-            link="/online-courses"
-            isActive={router.pathname === '/online-courses'}
-          /> */}
-          <a href="https://kashapp.biz/auth/mo_saml/index.php">
-            <OnlineCoursesIcon />
-          </a>
+            link={process.env.NEXT_PUBLIC_KASHAPP_AUTH_URL}
+            // isActive={router.pathname === '/online-courses'}
+          />
+            {/* <OnlineCoursesIcon /> */}
         </ItemMenu>
+
         <ItemMenu>
-          {/* <NavTab
-            icon={<LivingLibraryIcon width="32" />}
-            link="/living-library"
-            isActive={router.pathname === '/living-library'}
-          /> */}
-          <a href="https://library.eze.ink/">
+          <a href={process.env.NEXT_PUBLIC_LIVING_LIBRARY_URL}>
+            {/* <NavTab
+              icon={<LivingLibraryIcon width="32" />}
+              link=""
+              isActive={router.pathname === '/living-library'}
+              all
+            /> */}
             <LivingLibraryIcon width="32" />
           </a>
         </ItemMenu>
@@ -192,6 +193,10 @@ const SubHeader: ForwardRefRenderFunction<HTMLButtonElement, SubHeaderProps> = (
               closeDropDown={closeDropDown}
             />
           )}
+        </div>
+
+        <div>
+          <LanguageSwitcher />
         </div>
       </NotificationsAndAvatar>
     </CommunitiesHeaderRoot>

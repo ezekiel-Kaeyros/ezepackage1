@@ -25,7 +25,7 @@ const MembersCard: FC<MembersCardProps> = ({ user, queryKey }) => {
   }, []);
 
   const splitFullName = () => {
-    const splitWords =fullName ? fullName.split(' ').slice(0, 2).join(' '):'';
+    const splitWords = fullName ? fullName.split(' ').slice(0, 2).join(' ') : '';
     const firstLetters = splitWords
       .split(' ')
       .map((a) => a.charAt(0))
@@ -59,7 +59,7 @@ const MembersCard: FC<MembersCardProps> = ({ user, queryKey }) => {
         <Image alt="icon" src={iconButton} />
         &nbsp;Follow
       </Button> */}
-      {username ? <UserName>@{username}</UserName> : <Spacing top="sm" />}
+      {/* {username ? <UserName>@{username}</UserName> : <Spacing top="sm" />} */}
       <WrappButton>
         {authUser && <Follow queryKey={queryKey} user={user} />}
       </WrappButton>

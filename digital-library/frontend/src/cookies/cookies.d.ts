@@ -6,3 +6,7 @@ export const FLAG_ID = 'flag_id';
 export const FLAG = 'flag';
 export const SKIP= 'skip';
 export const CLIENT_DATA = 'client_data';
+export const FORM_STEP = 'form_step'
+export const FIRST_STEP = 'first_step'
+export const SECOND_STEP = 'second_step'
+export const THIRD_STEP = 'third_step'

@@ -8,7 +8,7 @@ import { RootState } from '../../store';
 import axios from 'axios';
 import { UserRole } from '../../constants';
 
-const HOME_PAGE = 'https://eze.ink';
+const HOME_PAGE = process.env.NEXT_PUBLIC_COMMUNITIES_URL
 
 interface HeaderUserProps {
   closeDropDown: () => void;
@@ -25,10 +25,16 @@ const HeaderUser: FC<HeaderUserProps> = ({ closeDropDown, isUserDropdownOpen, au
   const logout = async () => {
     try {
       await axios.post('/logout');
-      cookies.remove(Cookies.Token, { domain: '.eze.ink' });
-      cookies.remove(Cookies.User_data, { domain: '.eze.ink' });
+
+      if (process.env.NEXT_PUBLIC_ENV == 'development') {
+        cookies.remove(Cookies.Token);
+        cookies.remove(Cookies.User_data);
+      } else {
+        cookies.remove(Cookies.Token, { domain: '.eze.ink' })
+        cookies.remove(Cookies.User_data, { domain: '.eze.ink' })
+      }
       closeDropDown();
-      window.location.href = HOME_PAGE;
+      window.location.href = process.env.NEXT_PUBLIC_SSO_LOGOUT_URL
     } catch (error) {
       console.log('An error occurred while logging out: ', error);
     }

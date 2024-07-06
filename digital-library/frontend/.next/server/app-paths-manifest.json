@@ -1,4 +1,5 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
   "/[lang]/(dashboard)/add-document/page": "app/[lang]/(dashboard)/add-document/page.js",
   "/[lang]/(dashboard)/page": "app/[lang]/(dashboard)/page.js"
 }

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { UserRole } from '../constants';
 
-const HOME_URL = 'https://communities.eze.ink';
+const HOME_URL = process.env.NEXT_PUBLIC_COMMUNITIES_URL;
 // export const redirectToHome = () => {
 //   return {
 //     redirect: {

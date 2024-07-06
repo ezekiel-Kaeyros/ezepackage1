@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getNewMembers, getUserById, getUsers, onlineUsers, updateUser, updateUserBanned, joinChannel, leaveChannel } from '../db';
+import { getNewMembers, getUserById, getUsers, onlineUsers, updateUser, updateUserBanned, joinChannel, leaveChannel, getUserByEmail } from '../db';
 import { AuthUser, ErrorCodes, ErrorMessages, UserRole } from '../constants';
 import { uploadToCloudinary } from '../utils/cloudinary';
 
@@ -7,6 +7,13 @@ const UserController = {
   user: async (req: Request, res: Response): Promise<any> => {
     const { id } = req.params;
     const user = await getUserById(id, true);
+    return res.send(user);
+  },
+  userEmail: async (req: Request, res: Response): Promise<any> => {
+    const { email } = req.params;
+    console.log('email',email);
+    
+    const user = await getUserByEmail(email);
     return res.send(user);
   },
   getUsers: async (req: Request, res: Response): Promise<any> => {
@@ -94,7 +101,7 @@ const UserController = {
       console.error('Error leaving channel:', error);
       return res.status(ErrorCodes.Internal).send(ErrorMessages.Generic);
     }
-  }
+  },
 };
 
 export default UserController;

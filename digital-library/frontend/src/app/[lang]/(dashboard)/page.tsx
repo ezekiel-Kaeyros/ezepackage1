@@ -12,15 +12,10 @@ import { url } from "inspector";
 import { URL } from "url";
 import { idHandler } from "@/redux/features/addDocument-slice";
 import { useRouter } from "next/navigation";
-
-
-
+import { useEffect } from "react";
+import { toggleFunc2 } from "@/redux/features/auth-slice";
 const home = () => {
-
-  const { arrayDoc, dispatch } = useAddDocument();
-  const url = "http://localhost:3000/api/files/upload";
-
-  // Create the payload for the POST request
+  const { arrayDoc, dispatch } = useAddDocument()
 
   const{push}= useRouter()
   const arraytest = [
@@ -61,14 +56,24 @@ const home = () => {
         { num: 2, save: false },
       ];
     const channelarray=['health','Mines','Ict','Agro Food Sciences','Energie','Social Xciences', 'Data Analytics']
+  useEffect(() => {
+    dispatch(toggleFunc2(false));
+  }, []);
   return (
-    <div className="w-full h-full p-4  ">
-      <h1 className="mb-4 text-3xl">My Documents</h1>
+    <div
+      className="w-full h-full p-4  "
+      onClick={() => {
+        dispatch(toggleFunc2(false));
+      }}
+    >
+      <h1 className="mb-4 sm:text-3xl text-xl">My Documents</h1>
 
       <div className="flex flex-wrap w-full gap-5 mb-14">
         <Link href={"/en/add-document"}>
-          <div className="lg:w-56 lg:h-56 w-48 h-48 bg-[#B0D0C7] pt-3 px-2 pb-4 rounded-xl  flex flex-col">
-            <p>Add New Document</p>
+          <div className="lg:w-56 lg:h-56 md:w-48 md:h-48 w-36 h-36 bg-[#B0D0C7] pt-3 px-2 pb-4 rounded-xl  flex flex-col">
+            <p className="truncate sm:text-sm text-xs font-[500]">
+              Add New Document
+            </p>
 
             <div className="w-full flex-grow flex justify-center items-center  bg-[#D9E8E4] mt-2">
               <Image src={addIcon} alt="" />
@@ -80,13 +85,13 @@ const home = () => {
           arrayDoc.map((item, index) => (
             <div
               key={index}
-              className="lg:w-56 lg:h-56 w-48 h-48 bg-[#B0D0C7] pt-3 px-2 pb-1 rounded-xl  flex flex-col cursor-pointer"
+              className="lg:w-56 lg:h-56 md:w-48 md:h-48 w-36 h-36 bg-[#B0D0C7] pt-3 px-2 pb-1 rounded-xl  flex flex-col cursor-pointer"
               onClick={() => {
                 item.id && dispatch(idHandler(item.id));
                 push("/en/view-document");
               }}
             >
-              <p className="truncate">{item.firstName}</p>
+              <p className="truncate  sm:text-sm text-xs">{item.firstName}</p>
 
               <div className="w-full flex-grow mb-1 border  flex justify-center items-center  overflow-hidden mt-2">
                 <Image
@@ -97,7 +102,9 @@ const home = () => {
                   className="w-full h-full "
                 />
               </div>
-              <p className="truncate">{item.categorie}</p>
+              <p className="truncate text-xs text-[#47586E]">
+                {item.categorie}
+              </p>
             </div>
           ))}
       </div>

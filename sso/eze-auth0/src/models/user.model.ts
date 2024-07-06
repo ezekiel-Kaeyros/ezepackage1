@@ -55,6 +55,10 @@ const UserSchema = new Schema(
       default: '',
     },
     image: String,
+    firstTime: {
+      type: Boolean,
+      default: true
+    },
     isOnline: {
       type: Boolean,
       default: false,
@@ -78,6 +82,7 @@ export interface IUser extends Document {
   googleId: string;
   githubId: string;
   image: string;
+  firstTime: boolean;
   isOnline: boolean;
   isValidPassword: (password: string) => Promise<boolean>;
   _id?: string;

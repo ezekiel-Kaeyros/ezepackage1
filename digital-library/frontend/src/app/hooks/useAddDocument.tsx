@@ -20,6 +20,7 @@ export const useAddDocument = () => {
      );
   const idDoc: string = useSelector((state: RootState) => state.AddDocument.id);
     const arrayDoc: {
+      // name: ReactNode;
       id?: string;
       categorie?: string;
       type?: string;

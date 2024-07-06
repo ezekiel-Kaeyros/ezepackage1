@@ -12,8 +12,8 @@ import { i18n } from '@/i18n.config';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Airtime App',
-  description: 'Airtime App',
+  title: "digital-library",
+  description: "digital-library",
 };
 
 // Can be imported from a shared config

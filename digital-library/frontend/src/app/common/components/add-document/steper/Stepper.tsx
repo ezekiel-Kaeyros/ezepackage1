@@ -10,7 +10,7 @@ const Stepper: React.FC<{ step: number }> = ({ step }) => {
   ];
   return (
     <div className="w-full h-hull border-r md:pr-10 pr-2">
-      <div className="w-full flex flex-col gap-9">
+      <div className="w-full flex flex-col gap-8">
         {arrayStep.map((item) => (
           <div className="flex items-center gap-2">
             {step > item.id ? (
@@ -25,8 +25,8 @@ const Stepper: React.FC<{ step: number }> = ({ step }) => {
               </div>
             )}
             <div className="sm:block hidden">
-              <p className="font-semibold">{item.text}</p>
-              <p className="text-sm">{item.description}</p>
+              <p className="font-semibold lg:text-base text-sm">{item.text}</p>
+              <p className="lg:text-sm text-xs">{item.description}</p>
             </div>
           </div>
         ))}

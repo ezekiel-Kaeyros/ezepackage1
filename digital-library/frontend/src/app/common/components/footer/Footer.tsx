@@ -66,11 +66,11 @@ const Footer: React.FC<{ footer: any }> = ({ footer }) => {
           </p>
           <p className="text-[16px] m-0 cursor-pointer"> Football Stats</p>
         </div>
-        <div className="border flex gap-2 items-start">
-          <Image src={face} alt="" />
-          <Image src={what} alt="" />
-          <Image src={twit} alt="" />
-          <Image src={what} alt="" />
+        <div className=" flex gap-2 items-start">
+          <Image src={face} alt="" className="cursor-pointer" />
+          <Image src={what} alt="" className="cursor-pointer" />
+          <Image src={twit} alt="" className="cursor-pointer" />
+          <Image src={what} alt="" className="cursor-pointer" />
         </div>
       </div>
       <div className="  mt-4 flex justify-between sm:text-sm text-xs">

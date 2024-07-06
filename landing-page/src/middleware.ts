@@ -29,6 +29,9 @@ export function middleware(request: NextRequest) {
   const token = url.searchParams.get('token') || '';
   const userEncoded = url.searchParams.get('user') || '';
 
+  url.searchParams.delete('token');
+  url.searchParams.delete('user');
+
   if (userEncoded != '' || token != '') {
     // console.log('USER DATA: ', userEncoded, typeof userEncoded);
     // Decode the user data from the query parameter
@@ -40,7 +43,7 @@ export function middleware(request: NextRequest) {
     // const userJson = userData;
 
     if (token) {
-      const response = NextResponse.next();
+      const response = NextResponse.redirect(url);
       response.cookies.set('token', token, {
         httpOnly: false,
         secure: false,

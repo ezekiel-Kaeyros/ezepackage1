@@ -35,3 +35,10 @@ export interface IUser {
   startDate?: Date;
   endDate?: Date;
 }
+
+export interface StepProps {
+  step1:number;
+  step2:number;
+  step3:number;
+  step4:number;
+}

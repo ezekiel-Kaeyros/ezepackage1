@@ -37,17 +37,17 @@ const uploadFolder = path.join(__dirname, '..', 'uploads');
 
 // Multer configuration
 const storage = multer.diskStorage({
- destination: function (req: any, file: any, cb: any) {
-   cb(null, uploadFolder);
- },
- filename: function (req: any, file: any, cb: any) {
-   cb(null, file.originalname);
- }
+  destination: function(req: any, file: any, cb: any) {
+    cb(null, uploadFolder);
+  },
+  filename: function(req: any, file: any, cb: any) {
+    cb(null, file.originalname);
+  }
 });
 const upload = multer({ storage: storage });
 
 fileRouter.post('/upload', upload.single('file'), async (req: any, res: any) => {
- const { itemTitle, itemType, firstName, lastName } = req.body;
+ const { itemTitle, itemType, firstName, lastName, note } = req.body;
  const uploadedFilePath = path.join(uploadFolder, req.file.filename); // Example path, adjust as needed
 
  const postFileInstance = new PostFile({
@@ -55,19 +55,23 @@ fileRouter.post('/upload', upload.single('file'), async (req: any, res: any) => 
    itemType,
    firstName,
    lastName,
+   note,
    filePath: uploadedFilePath,
  });
 
- try {
-   // Process the uploaded file
-   const result = await postFileInstance.registerUpload();
+  try {
 
-   // Delete the uploaded file after processing
-   fs.unlinkSync(uploadedFilePath);
+    // Process the uploaded file
+    const result = await postFileInstance.registerUpload();
+
+   console.info(result, "RESULTS")
 
    res.json(result);
  } catch (error: any) {
-   res.status(500).json({ error: error.message });
+  // Delete the uploaded file after processing
+  fs.unlinkSync(uploadedFilePath);
+  console.error(error.message, "ERRORS")
+   res.status(500).json({error: error.message})
  }
 });
 

@@ -136,21 +136,21 @@ const FourthStep: React.FC<{ step: number, changeHandler: any }> = ({ step, chan
     ];
     // const { type } = step1;
     const type  = 'attachment';
-    const title = 'little mary'
     const { file } = step3;
-    const { firstName, lastName } = step2;
+    const { title, firstName, lastName, description } = step2;
 
     const formData = new FormData();
     formData.append("firstName", firstName);
     formData.append("lastName", lastName);
     formData.append("itemTitle", title);
+    formData.append("note", description);
     formData.append("itemType", type);
     if (file) {
         formData.append("file", file);
     }
 
     console.log(type, 'this is my type')
-    console.log(step2, 'step2')
+    console.log(formData, 'step2')
 
     // console.log({ firstName, lastName, title, file, type }, 'allSteps');
     // console.log(process.env.NEXT_PUBLIC_ZOTERO_POST_FILES_URL, 'zotro post file');
@@ -169,7 +169,7 @@ const FourthStep: React.FC<{ step: number, changeHandler: any }> = ({ step, chan
                     'Authorization': `Bearer ${process.env.NEXT_PUBLIC_ZOTERO_POST_FILES_URL}`
                 }
             });
-
+    
             setIsLoading(false);
             if (response.status !== 200) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -180,16 +180,31 @@ const FourthStep: React.FC<{ step: number, changeHandler: any }> = ({ step, chan
             // }
 
             // console.log('File uploaded successfully:', response);
-            const result = response.data;
             toast.success('File uploaded successfully!');
+            const result = response.data;
             push('/en')
         } catch (error: any) {
             setIsLoading(false);
-            console.error('Error uploading file:', error);
-            setErrorMessage(error.message || 'An error occurred during file upload');
-            toast.error('Please Upload another File, this File already exist');
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                console.error('Server error:', error.response.data);
+                setErrorMessage(error.response.data.error || 'An error occurred during file upload');
+                toast.error(error.response.data.error || 'An error occurred during file upload');
+            } else if (error.request) {
+                // The request was made but no response was received
+                console.error('No response from server:', error.request);
+                setErrorMessage('No response from server');
+                toast.error('No response from server');
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                console.error('Request setup error:', error.message);
+                setErrorMessage('Request setup error');
+                toast.error('Request setup error');
+            }
         }
     };
+    
 
     console.log(!!errorMessage, 'errorMessage')
     

@@ -1,3 +1,4 @@
+"use client"
 import CardDocument from "@/app/common/components/cardDocument/CardDocument";
 import cover2 from "../../../../../public/images/overview.svg";
 import searchIcon from "../../../../../public/images/search-normal (2).svg";
@@ -15,7 +16,11 @@ import secondImgBloc2 from "../../../../../public/images/Frame 535.svg";
 import firstImgBloc3 from "../../../../../public/images/search-normal (4).svg";
 import secondImgBloc3 from "../../../../../public/images/search-normal (3).svg";
 import Footer from "@/app/common/components/footer/Footer";
+import { useEffect, useState } from "react";
+import { useToggleSidebar } from "@/app/hooks/useToggleSidebar";
+import { toggleFunc2 } from "@/redux/features/auth-slice";
 const home = () => {
+  const [currentIndex, setCurrentIndex] = useState<number>(0)
   const arraytest = [
     { num: 3, save: true },
 
@@ -63,54 +68,77 @@ const home = () => {
 
   const priceArray = [
     {
+      id: 1,
       text: "Free Plan",
       price: 0,
-      description: "Great Fit For Big Organizations",
+      description: "Eze Basic",
       detail: [
-        { text: "2 Factor Authentication", active: true },
-        { text: "Access to Community", active: false },
-        { text: "3rd Party Integration", active: false },
-        { text: "Dedicated Assistant", active: false },
+        { text: "01 free training payant / year", active: true },
+        { text: "Communities", active: true },
+        // { text: "3rd Party Integration", active: false },
+        // { text: "Dedicated Assistant", active: false },
       ],
     },
     {
-      text: "Basic Plan",
-      price: 19,
-      description: "Great Fit For Big Organizations",
+      id: 2,
+      text: "Eze Plus",
+      price: '10,0000',
+      // description: "Eze Plus",
       detail: [
-        { text: "2 Factor Authentication", active: true },
-        { text: "Access to Community", active: true },
-        { text: "3rd Party Integration", active: false },
-        { text: "Dedicated Assistant", active: false },
+        { text: "Eze Basic", active: true },
+        { text: "Online Courses (10% discount)", active: true },
+        { text: "Digital Library Accesible", active: true },
+        // { text: "Dedicated Assistant", active: false },
       ],
     },
     {
-      text: "Business Plan",
-      price: 40,
-      description: "Great Fit For Big Organizations",
+      id: 3,
+      text: "Eze Premuim",
+      price: '20,000',
+      // description: "Eze Premuim",
       detail: [
-        { text: "2 Factor Authentication", active: true },
-        { text: "Access to Community", active: true },
-        { text: "3rd Party Integration", active: true },
-        { text: "Dedicated Assistant", active: false },
+        { text: "Eze Basic", active: true },
+        { text: "Online Courses (20% discount)", active: true },
+        { text: "Ask The Prof", active: true },
+        { text: "All Digital Library Contents", active: true },
+        { text: " 10% Discount on SCH & Partners events (IFYAR, OWSD, Kaeyros Analytics...)", active: true },
       ],
     },
-    {
-      text: "Enterprise Plan",
-      price: 99,
-      description: "Great Fit For Big Organizations",
-      detail: [
-        { text: "2 Factor Authentication", active: true },
-        { text: "Access to Community", active: true },
-        { text: "3rd Party Integration", active: true },
-        { text: "Dedicated Assistant", active: true },
-      ],
-    },
+    // {
+    //   text: "Enterprise Plan",
+    //   price: 99,
+    //   description: "Great Fit For Big Organizations",
+    //   detail: [
+    //     { text: "2 Factor Authentication", active: true },
+    //     { text: "Access to Community", active: true },
+    //     { text: "3rd Party Integration", active: true },
+    //     { text: "Dedicated Assistant", active: true },
+    //   ],
+    // },
   ];
+  const [choice,setChoice]=useState('')
+  const [choice1, setChoice1] = useState("");
+  const { dispatch }=useToggleSidebar()
+  const clickHandler = (text: string) => {
+    if (text!=choice1) {
+      setChoice1(text)
+    } else {
+      setChoice1('')
+    }
+  }
+
+  useEffect(() => {
+    dispatch(toggleFunc2(false))
+  },[])
   return (
-    <div className="w-full h-full bg-white ">
-      <div className="w-full bg-[#1E1E1E] text-white p-2">
-        <h1 className="text-center text-5xl mt-5">
+    <div
+      className="w-full h-full bg-white overflow-hidden "
+      onClick={() => {
+        dispatch(toggleFunc2(false));
+      }}
+    >
+      <div className="w-full bg-[#1E1E1E] text-white p-2 my-div">
+        <h1 className="text-center text-5xl sm:mt-24 mt-14">
           Welcome on Eze Digital Living Library
         </h1>
         <p className="flex justify-center my-10 w-6/12 m-auto text-center text-lg font-bold">
@@ -136,14 +164,14 @@ const home = () => {
           Visit the popular categories
         </p>
 
-        <div className=" w-full flex flex-wrap gap-5 justify-center mb-24 text-black">
+        <div className=" w-full flex flex-wrap gap-5 justify-center mb-24 text-black ">
           {channelarray.map((item) => (
             <CardChannel text={item.name} id={item.id.toString()} />
           ))}
         </div>
       </div>
 
-      <div className="w-full sm:grid sm:grid-cols-2 gap-x-48 items-center xl:px-48 md:px-10 px-2 text-[#1D242D] my-10">
+      <div className=" w-full sm:grid sm:grid-cols-2 gap-x-48 items-center xl:px-48 md:px-10 px-2 text-[#1D242D]  xl:py-24 sm:py-5">
         <div className="sm:mb-0 mb-10">
           <h1 className="w-36 text-3xl">Comprehensive Collection</h1>
           <p>Dive into a vast ocean of scientific knowledge</p>
@@ -168,7 +196,7 @@ const home = () => {
         <Image src={group} alt="" className="sm:mb-0 mb-10" />
       </div>
 
-      <div className="bg-[#505FF0] text-white sm:grid sm:grid-cols-2 gap-x-48 xl:px-48 md:px-10 px-2 py-10">
+      <div className="bg-[#505FF0]  text-white sm:grid sm:grid-cols-2 gap-x-48 xl:px-48 md:px-10 px-2 xl:py-24 sm:py-5">
         <div className="w-full h-96 relative sm:mb-0 mb-10  sm:h-full ">
           <Image
             src={firstImgBloc2}
@@ -182,44 +210,48 @@ const home = () => {
           />
         </div>
         <div className="sm:mb-0 mb-10">
-          <h1 className="w-36 text-3xl">Comprehensive Collection</h1>
-          <p>Dive into a vast ocean of scientific knowledge</p>
+          <h1 className="w-36 text-3xl">Curated Collections</h1>
+          <p>Let our expertise guide you</p>
           <ul className="my-4 lg:text-base  text-xs">
             <li className="flex items-center gap-2">
               <Image src={elips2} alt="" />
-              <span>Millions of peer-reviewed articles</span>
+              <span>Featured collections on trending topics.</span>
             </li>
             <li className="flex items-center gap-2 my-2">
               <Image src={elips2} alt="" />
-              <span>Datasets across various scientific disciplines</span>
+              <span>Subject-specific bibliographies for focused research.</span>
             </li>
             <li className="flex items-center gap-2">
               <Image src={elips2} alt="" />
-              <span>Continuously updated with the latest research</span>
+              <span>Expertly curated by librarians and scientists.</span>
             </li>
           </ul>
           <button className="rounded-full border bg-[#191B29] text-white font-semibold px-3 py-2 text-sm mt-2">
-            Show Collection
+            Start Searching
           </button>
         </div>
       </div>
 
-      <div className="w-full sm:grid sm:grid-cols-2 gap-x-48 bg-[#1D242D] text-white items-center xl:px-48 md:px-10 px-2 py-10">
+      <div className="w-full sm:grid sm:grid-cols-2 gap-x-48 bg-[#1D242D] text-white items-center xl:px-48 md:px-10 px-2 xl:py-24 sm:py-5">
         <div className="sm:mb-0 mb-10">
-          <h1 className="w-36 text-3xl">Comprehensive Collection</h1>
-          <p>Dive into a vast ocean of scientific knowledge</p>
+          <h1 className="w-36 text-3xl">Advanced Search Functionality</h1>
+          <p>Find what you need, fast</p>
           <ul className="my-4 lg:text-base  text-xs">
             <li className="flex items-center gap-2">
               <Image src={elips2} alt="" />
-              <span>Millions of peer-reviewed articles</span>
+              <span>
+                Keyword search with customizable filters for precise results.
+              </span>
             </li>
             <li className="flex items-center gap-2 my-2">
               <Image src={elips2} alt="" />
-              <span>Datasets across various scientific disciplines</span>
+              <span>Utilize Boolean operators to craft powerful searches.</span>
             </li>
             <li className="flex items-center gap-2">
               <Image src={elips2} alt="" />
-              <span>Continuously updated with the latest research</span>
+              <span>
+                Browse by subject, author, or date for a better experience.
+              </span>
             </li>
           </ul>
           <button className="rounded-full border bg-[#015E44] text-white font-semibold px-3 py-2 text-sm mt-2">
@@ -245,8 +277,8 @@ const home = () => {
             {channelarray.map((item)=> <div><NewCardDocument/></div>)}
       </div> */}
 
-      <div className="w-full px-2 pb-2">
-        <div className="w-full flex justify-between items-center mb-5 px-1">
+      <div className="w-full px-2 pb-2 mt-10">
+        <div className="w-full flex justify-between items-center mb-5 px-5">
           <p className="font-bold text-lg">Recent</p>
           <p className=" font-bold border-b-3 border-[green] text-[green]">
             See More
@@ -256,13 +288,22 @@ const home = () => {
           <Carousel data={arraytest} />
         </div>
 
-        <div className="flex justify-center flex-wrap  xl:gap-48 lg:gap-36 md:gap-[100px] gap-10   lg:px-5 px-2 mt-10 md:pb-24 pb-14">
+        <div className="flex 2xl:justify-between justify-center flex-wrap 2xl:gap-0 xl:gap-36 lg:gap-0 md:gap-[100px] gap-10   lg:px-5 px-2 mt-10 md:pb-24 pb-14">
           {priceArray.map((item) => (
             <Pricing
+            itemId={item.id}
+            currentIndex={currentIndex}
+            setCurrentIndex={setCurrentIndex}
               title={item.text}
               description={item.description}
               details={item.detail}
               price={item.price.toString()}
+              // periode={item.periode}
+              state={choice}
+              remove={() => setChoice("")}
+              take={() => setChoice(item.text)}
+              click={choice1}
+              chickHandler={clickHandler}
             />
           ))}
         </div>
@@ -282,3 +323,89 @@ const home = () => {
   );
 };
 export default home;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const Pricing: React.FC<{ title: string, setCurrentIndex: (index: number) => void; currentIndex:number,itemId:number, price: string, details: { text: string, active:boolean}[]}> = (props) => {
+
+//   const ActiveIndex = props.currentIndex === props.itemId;
+
+//   const handleClick = () => {
+//     if (ActiveIndex) {
+//       props.setCurrentIndex(null as any);
+//     } else {
+//       props.setCurrentIndex(props.itemId);
+//     }
+//   };
+//     return (
+//       <div className="bg-transparent mt-8 cursor-pointer flex justify-between flex-col" onClick={()=> handleClick()}>
+//         <div>
+//           <h1 className="text-xl font-bold">{props.title}</h1>
+//           <div className="my-5">
+//             <span className="text-xs text-[#999999]">only</span>
+//             <p>
+//               <span
+//                 className={`lg:text-5xl text-2xl font-normal ${
+//                   ActiveIndex
+//                     ? "text-[#015E44]"
+//                     : " text-[#1D242D]"
+//                 }`}
+//               >
+//                 {`${props.price} XAF`}
+//               </span>
+//               <span className="text-[#666666]">/month</span>
+//             </p>
+//           </div>
+
+//           <p className="mb-8 lg:text-base text-sm">Available Features</p>
+//           <div className="flex flex-col gap-5">
+//             {props.details.map((item) => (
+//               <p className={`flex items-center gap-3 lg:text-sm text-xs`}>
+//                 <Image src={item.active ? activeIcon : notActive} alt="" />
+//                 <span
+//                   className={` ${!item.active && "line-through text-[#999999]"}`}
+//                     >{item.text}</span>
+//               </p>
+//             ))}
+//           </div>
+//         </div>
+//         <button
+//           className={`w-[300px] text-center font-bold py-3 rounded-full mt-10 ${
+//             ActiveIndex ? "bg-[#015E44] text-white" : "bg-[#D9E8E4] text-[#1D242D]"
+//           }`}
+//         >
+//           Get Started
+//         </button>

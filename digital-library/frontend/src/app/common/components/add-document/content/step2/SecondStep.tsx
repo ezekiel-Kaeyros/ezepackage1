@@ -11,6 +11,8 @@ const SecondStep: React.FC<{ step: number; changeHandler: any }> = ({
   step,
   changeHandler,
 }) => {
+
+  console.log(step, 'this is my current step')
   const { step2,dispatch }=useAddDocument()
 const[img,setImag]=useState<File|undefined>(step2.coverImage)
   const {
@@ -24,7 +26,6 @@ const[img,setImag]=useState<File|undefined>(step2.coverImage)
    let firstName = watch("firstName");
    let lastName = watch("lastName");
    let description = watch("description");
-   let author = watch('author')
   const handleFileSelected = async (e: any) => {
    
   const ext:string = e.target?.files[0]?.name.split(".").pop();
@@ -46,11 +47,12 @@ console.log(e.target.files,'target');
   }
 };
 
+
+
   const onSubmit: SubmitHandler<{
     firstName: string;
     lastName: string;
     title: string;
-    author:string;
     description: string;
   }> = async (data) => { };
   
@@ -59,7 +61,6 @@ console.log(e.target.files,'target');
     setValue('firstName', step2.firstName)
     setValue('lastName',step2.lastName)
     setValue('description', step2.description)
-    setValue('author', step2.author)
   },[])
 
 
@@ -104,20 +105,6 @@ console.log(e.target.files,'target');
           name="lastname"
           type="text"
           props={register("lastName", {
-            required: true,
-          })}
-        />
-      </div>
-
-      {/* lastName */}
-      <div className="2xl:w-6/12 lg:9/12 sm:w-11/12 w-full">
-        <InputField
-          title="Author Name"
-          placeholder="Enter Author's Name"
-          id="authork"
-          name="author"
-          type="text"
-          props={register("author", {
             required: true,
           })}
         />
@@ -173,12 +160,11 @@ console.log(e.target.files,'target');
         </button>
         <button
           type="submit"
-          disabled={!author || !description || !firstName || !lastName || !title || !img ? true : false}
+          disabled={!description || !firstName || !lastName || !title || !img ? true : false}
           onClick={() => {
             changeHandler("add");
             dispatch(
               step2Handler({
-                author,
                 firstName,
                 description,
                 coverImage: img,
@@ -189,7 +175,7 @@ console.log(e.target.files,'target');
             );
           }}
           className={`bg-mainColor ${
-            !author || !description || !firstName || !lastName || !title || !img ? "opacity-60" : "opacity-100"
+            !description || !firstName || !lastName || !title || !img ? "opacity-60" : "opacity-100"
           } px-4 py-2 font-bold text-white text-sm flex justify-center items-center rounded-full mt-10`}
         >
           Continue

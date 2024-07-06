@@ -6,8 +6,7 @@ import { useDispatch } from 'react-redux';
 import { setAuthUser } from '../store/auth';
 import { useRouter } from 'next/router';
 
-// const HOME_URL = 'https://eze.ink';
-const HOME_URL = 'https://eze.ink';
+const HOME_URL = process.env.NEXT_PUBLIC_COMMUNITIES_URL;
 // const HOME_URL = 'http://localhost:3000'
 
 export const useDispatchAuth = () => {
@@ -21,9 +20,14 @@ export const useDispatchAuth = () => {
     // const token = JSON?.parse(cookies.get(Cookies.Token, { domain: '.eze.wiki' }));
     // const token = JSON?.parse(cookies.get(Cookies.Token));
     const token = cookies.get(Cookies.Token);
+      console.log('token', token);
+
     try {
       axios.defaults.headers.common = { Authorization: `bearer ${token}` };
       const { data } = await axios.get('/auth-user');
+      console.log('token', token);
+      console.log('tokenData', data);
+      
       if (data) {
         dispatch(
           setAuthUser({

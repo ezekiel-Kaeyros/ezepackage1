@@ -5,6 +5,7 @@ import fs from "fs";
 import path from "path";
 import jwt from "jsonwebtoken";
 import dotenv from 'dotenv';
+import { isFirstTime, toggleFirstTime } from "./db/user";
 dotenv.config();
 
 const authRouter = express.Router();
@@ -25,19 +26,16 @@ const samlOptions: SamlConfig = {
 
 // SAML strategy
 const samlStrategy = new SamlStrategy(samlOptions, (profile, done: any) => {
-  console.log("SAML Strategy - profile:", profile);
   return done(null, profile);
 }) as unknown as passport.Strategy;
 
 passport.use(samlStrategy);
 
 passport.serializeUser((user, done) => {
-  console.log("Serializing user:", user);
   done(null, user);
 });
 
 passport.deserializeUser((user: any, done) => {
-  console.log("Deserializing user:", user);
   done(null, user);
 });
 
@@ -63,7 +61,7 @@ authRouter.post(
     failureRedirect: "/",
     failureFlash: true,
   }),
-  (req, res) => {
+  async (req, res) => {
     console.log("Authentication successful, redirecting ...");
     const moduleCookie = req.cookies.module;
 
@@ -84,34 +82,78 @@ authRouter.post(
       userId: user_id,
     };
 
+
     // Generate a token
     const token = jwt.sign({ user: userdata2 }, "WriteYourSecret", { expiresIn: "1h" });
 
     const userdataString = JSON.stringify(userdata);
+    console.log("REDIRECT TO: ", moduleCookie)
 
-    if (moduleCookie) {
-      console.log("Module Cookie Retrieved Successfully: ", moduleCookie);
+    if (moduleCookie?.includes(process.env.LANDINGPAGE_URL)) {
+      try {
+        const firstTime = await isFirstTime(email);
+        console.log(`Is it the user's first time? ${firstTime}`);
+
+        if (firstTime) {
+          try {
+            console.log("FIRST TIME HERE??")
+            const isToggleFirstTime = await toggleFirstTime(email);
+            console.log("SECOND TIME HGER?", isToggleFirstTime)
+
+            res.redirect(`${process.env.LANDINGPAGE_URL}/en/onboarding/?step=1&token=${token}&user=${userdataString}`)
+          } catch(error) {
+            console.log('Error:', error.message)
+          }
+        } else {
+          // res.redirect(`${process.env.LANDINGPAGE_URL}/en/onboarding/?step=1&token=${token}&user=${userdataString}`)
+          res.redirect(`${process.env.COMMUNITIES_URL}?token=${token}&user=${userdataString}`)
+        }
+      } catch (error) {
+        console.error('Error:', error.message);
+        res.redirect(`${moduleCookie}?step=1&token=${token}&user=${userdataString}`);
+      }
     } else {
-      console.log("Unsuccessful Retrieval Of Module Cookie");
-    }
+      const firstTime = await isFirstTime(email);
+      if (firstTime) {
+        try {
+          const isToggleFirstTime = await toggleFirstTime(email);
+          console.log("SECOND TIME HGER?", isToggleFirstTime)
 
-    res.redirect(`${moduleCookie}?step=1&token=${token}&user=${userdataString}`);
+          res.redirect(`${process.env.LANDINGPAGE_URL}/en/onboarding/?step=1&token=${token}&user=${userdataString}`)
+        } catch(error) {
+          console.log('Error:', error.message)
+          res.redirect(`${process.env.LANDINGPAGE_URL}/?token=${token}&user=${userdataString}`)
+        }
+      } else {
+        // res.redirect(`${process.env.LANDINGPAGE_URL}/en/onboarding/?step=1&token=${token}&user=${userdataString}`)
+        res.redirect(`${process.env.COMMUNITIES_URL}?token=${token}&user=${userdataString}`)
+      }
+    }
   }
 );
 
 authRouter.get("/logout", (req, res) => {
   req.logout((err) => {
     if (err) {
-      console.error(err);
+      console.error("Logout error:", err);
       return res.redirect("/");
     }
+
     req.session.destroy((err) => {
       if (err) {
         console.error("Session destruction error:", err);
       }
-      res.clearCookie("connect.sid", { path: "/" }); // Clear the session cookie
-      const auth0LogoutUrl = "https://dev-7htaauz8ydzvm6gp.us.auth0.com/v2/logout?returnTo=http://localhost:3000&client_id=3MRQwdMikF9rCgf5pYqK1xuj75Ruaigk";
-      res.redirect(auth0LogoutUrl);
+
+      // Clear the session cookie
+      res.clearCookie("connect.sid", { path: "/" });
+
+      // Construct the Auth0 logout URL
+      const auth0LogoutUrl = new URL("https://dev-7htaauz8ydzvm6gp.us.auth0.com/v2/logout");
+      auth0LogoutUrl.searchParams.append("returnTo", process.env.REDIRECT_ORIGIN);
+      auth0LogoutUrl.searchParams.append("client_id", "3MRQwdMikF9rCgf5pYqK1xuj75Ruaigk");
+
+      // Redirect to Auth0 logout URL
+      res.redirect(auth0LogoutUrl.toString());
     });
   });
 });
