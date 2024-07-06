@@ -47,6 +47,7 @@ export async function middleware(request: NextRequest) {
         httpOnly: false,
         secure: false,
         expires: expires,
+        domain: '.eze.ink'
       });
 
       response.cookies.set('user_data', userData, {
@@ -54,6 +55,7 @@ export async function middleware(request: NextRequest) {
         httpOnly: false,
         secure: false,
         expires: expires,
+        domain: '.eze.ink'
       });
 
       // If you need to log or further manipulate the cookie
