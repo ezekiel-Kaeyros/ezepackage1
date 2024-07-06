@@ -21,6 +21,7 @@ jobs:
       - name: Create env file for API backend
         run: |
           cd communities/packages/api && \
+          rm -f .env && \
           touch .env && \
           echo "API_PORT=4000" > .env && \
           echo "API_URL=https://backcommunities.eze.ink" >> .env && \
@@ -50,6 +51,7 @@ jobs:
       - name: Create env file for landing page
         run: |
           cd landing-page && \
+          rm -f .env && \
           touch .env && \
           echo 'NEXT_PUBLIC_COMMUNITIES_URL="https://communities.eze.ink/"' >> .env && \
           echo 'NEXT_PUBLIC_KASHAPP_AUTH_URL="https://kashapp.biz/auth/mo_saml/index.php"' >> .env && \
@@ -72,6 +74,7 @@ jobs:
       - name: Create env file for communities frontend
         run: |
           cd communities/packages/frontend && \
+          rm -f .env && \
           touch .env && \
           echo "NODE_ENV=https://backcommunities.eze.ink" >> .env && \
           echo "GOOGLE_ANALYTICS_ID=G-MD706N8TZV" >> .env && \
@@ -205,6 +208,7 @@ jobs:
       - name: Create env file
         run: |
           cd digital-library/frontend && \
+          rm -f .env && \
           touch .env && \
           echo "NEXT_PUBLIC_ZOTERO_API_KEY=7MdTpwHW7W7zyNPvE9zDea2k" >> .env && \
           echo "NEXT_PUBLIC_ZOTERO_HOME_URL=https://eze.ink" >> .env && \
