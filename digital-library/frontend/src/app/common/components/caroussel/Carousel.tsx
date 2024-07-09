@@ -84,6 +84,7 @@ const Carousel: React.FC<{
     const fetchData = async () => {
       setLoading(true)
       try {
+        console.log('this is my groups')
         const groups = await fetchGroups()
         const allPdfUrls: string[] = []
         // console.log(groups, 'groups')

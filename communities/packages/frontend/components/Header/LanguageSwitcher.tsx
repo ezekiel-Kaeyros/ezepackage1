@@ -13,7 +13,7 @@ const LanguageSwitcher = () => {
   const router = useRouter();
   const pathName=router.pathname
  const [toggle, setToggle] = useState<boolean>(false);
-  const changeLanguage = (lng: string) => {
+  const changeLang = (lng: string) => {
     i18n.changeLanguage(lng);
     router.push(router.pathname, router.asPath, { locale: lng });
   };
@@ -25,8 +25,9 @@ const LanguageSwitcher = () => {
     {toggle && 
       <div className={styles.btn_dropdown}>
         {langs.filter(({ lang }) => lang !== language).map(({lang, id}) => {
+          console.log(lang, 'this is my lang')
           return (
-            <div onClick={() => {setLanguage(lang), changeLanguage(lang), setToggle(false)}} className={styles.dropdown}>
+            <div onClick={() => {setLanguage(lang), changeLang(`${lang}`), setToggle(false)}} className={styles.dropdown}>
               {lang.toUpperCase()}
             </div>
           )

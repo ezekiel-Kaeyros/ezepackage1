@@ -32,14 +32,14 @@ const Pricing: React.FC<{
   const [active, setActive] = useState(false);
   return (
     <div
-      className={`bg-transparent mt-8 cursor-pointer w-[350px] p-1 ${
-        props.click == props.title && "border border-mainColor rounded-xl"
+      className={`bg-transparent mt-8 cursor-pointer w-[350px] p-1 flex flex-col justify-between mb-20 ${
+        props.click == props.title && "rounded-xl"
       }`}
-      onMouseEnter={() => props.take()}
-      onMouseLeave={() => props.remove()}
+      // onMouseEnter={() => props.take()}
+      // onMouseLeave={() => props.remove()}
       onClick={() => props.chickHandler(props.title)}
     >
-      <h1 className="lg:text-lg">{props.title}</h1>
+      <h1 className="lg:text-2xl">{props.title}</h1>
       <span className="text-[#999999] md:text-sm text-xs ">
         {props.description}
       </span>
@@ -54,6 +54,7 @@ const Pricing: React.FC<{
             }`}
           >
             {props.price}
+            <small className="text-xl">/XAF</small>
           </span>
           {/* <span className="text-[#666666]">/{props.periode}</span> */}
         </p>

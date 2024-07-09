@@ -222,6 +222,8 @@ export class PostFile {
     };
     const response = await axios.post(url, payload, { headers });
 
+    console.log(response, 'this is my response')
+
     if (response.status !== 200 || ('exists' in response.data)) {
       const baseError = "Cannot get upload authorization."
       const deleteItem = await this.deleteItemById(childItem["parentItem"]["key"], childItem["parentItem"]["version"])

@@ -28,13 +28,13 @@ const NewCardDocument: React.FC<{
   return (
 
     <div>
-      <Link href={props.url} target="_blank">
+      {/* <Link href={'#'} target="_blank"> */}
         <div
-          className="w-full hover:border"
-          onClick={() => {
-            props.id && dispatch(idHandler(props.id));
-            push("/view-document");
-          }}
+          className="w-full cursor-pointer"
+          // onClick={() => {
+          //   props.id && dispatch(idHandler(props.id));
+          //   push("/view-document");
+          // }}
         >
           <div className="h-[200px]">
             <div className="h-[56px]"></div>
@@ -93,7 +93,7 @@ const NewCardDocument: React.FC<{
             </div>
           </div>
         </div>
-      </Link>
+      {/* </Link> */}
     </div>
   );
 };

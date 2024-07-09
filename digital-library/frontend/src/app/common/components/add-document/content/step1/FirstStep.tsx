@@ -1,21 +1,20 @@
 import { useAddDocument } from "@/app/hooks/useAddDocument";
-import { getFormCookies } from "@/cookies/cookies";
+import { getFormCookies, setFormCookies } from "@/cookies/cookies";
 import { step1Handler } from "@/redux/features/addDocument-slice";
 import { useEffect, useState } from "react";
-import { setFormCookies } from "@/cookies/cookies";
-import {FIRST_STEP} from "@/cookies/cookies.d";
+import { FIRST_STEP } from "@/cookies/cookies.d";
 
 interface FirstFormProps {
-  step:number;
-    catValue: string,
-    valueDoc:string,
+  step: number;
+  catValue: string;
+  valueDoc: string;
 }
 
 const FirstStep: React.FC<{ step: number; changeHandler: any }> = ({
   step,
   changeHandler,
 }) => {
-  const { step1 ,dispatch}=useAddDocument()
+  const { step1, dispatch } = useAddDocument();
   const channelarray = [
     { name: "health", id: 1 },
     { name: "Mines", id: 2 },
@@ -24,7 +23,6 @@ const FirstStep: React.FC<{ step: number; changeHandler: any }> = ({
     { name: "Energie", id: 5 },
     { name: "Social Sciences", id: 6 },
     { name: "Data Analytics", id: 7 },
-    
   ];
 
   const Docarray = [
@@ -36,44 +34,46 @@ const FirstStep: React.FC<{ step: number; changeHandler: any }> = ({
     { name: "book", id: 6 },
     { name: "Other", id: 7 },
   ];
-  const [catValue, setCatValue] = useState(step1.categorie);
-  const [valueDoc, setValueDoc] = useState(step1.type);
-  const firstStepValues = {
-    step,
-    catValue,
-    valueDoc
-  }
 
-  setFormCookies(firstStepValues, FIRST_STEP)
-  
-  
+  const [catValue, setCatValue] = useState("");
+  const [valueDoc, setValueDoc] = useState("");
+
+  useEffect(() => {
+    const formData: FirstFormProps = getFormCookies(FIRST_STEP);
+    if (formData) {
+      formData.catValue && setCatValue(formData.catValue);
+      formData.valueDoc && setValueDoc(formData.valueDoc);
+    }
+  }, []);
   
   useEffect(() => {
-    const formData:FirstFormProps = getFormCookies(FIRST_STEP)
-    formData.catValue && setCatValue(formData.catValue)
-    formData.valueDoc && setValueDoc(formData.valueDoc)
-    
-    console.log(formData, 'my formData')
-  }, [catValue, valueDoc])
-
+    const firstStepValues = {
+      step,
+      catValue,
+      valueDoc,
+    };
+    setFormCookies(firstStepValues, FIRST_STEP);
+  }, [catValue, valueDoc]);
+  
+  console.log(catValue, valueDoc, 'my formData');
   return (
-    <div className="lg:w-full  sm:w-[450px] w-[290px]">
+    <div className="lg:w-full sm:w-[450px] w-[290px]">
       <h1>Settings</h1>
       <p className="text-xs">Document Settings</p>
       <p className="text-sm mt-9 mb-5">Science Category :</p>
 
-      <div className="flex gap-2  overflow-auto w-full">
+      <div className="flex gap-2 overflow-auto w-full">
         {channelarray.map((item, index) => (
           <div
             onClick={() => {
-              if (catValue == item.name) {
+              if (catValue === item.name) {
                 setCatValue("");
               } else {
                 setCatValue(item.name);
               }
             }}
-            className={`h-24 w-24 flex items-center justify-center  ${
-              item.name != catValue
+            className={`h-24 w-24 flex items-center justify-center ${
+              item.name !== catValue
                 ? "border-black border"
                 : "border-mainColor border-3"
             } rounded-xl text-xs text-center cursor-pointer object-cover px-3`}
@@ -86,17 +86,17 @@ const FirstStep: React.FC<{ step: number; changeHandler: any }> = ({
 
       <p className="text-sm mt-9 mb-5">Document type :</p>
       <div className="flex gap-5 items-center overflow-auto w-full border">
-        {Docarray.map((item,index) => (
+        {Docarray.map((item, index) => (
           <div
             onClick={() => {
-              if (valueDoc == item.name) {
+              if (valueDoc === item.name) {
                 setValueDoc("");
               } else {
                 setValueDoc(item.name);
               }
             }}
-            className={`h-[90px] w-[90px]  lg:px-0 px-6   flex items-center justify-center  ${
-              item.name != valueDoc
+            className={`h-[90px] w-[90px] lg:px-0 px-6 flex items-center justify-center ${
+              item.name !== valueDoc
                 ? "border-black border"
                 : "border-mainColor border-3"
             } rounded-xl text-xs text-center cursor-pointer`}
@@ -108,13 +108,13 @@ const FirstStep: React.FC<{ step: number; changeHandler: any }> = ({
       </div>
 
       <button
-        disabled={catValue == "" || valueDoc == ""}
+        disabled={catValue === "" || valueDoc === ""}
         onClick={() => {
           dispatch(step1Handler({ categorie: catValue, type: valueDoc }));
           changeHandler("add");
         }}
         className={`bg-mainColor ${
-          valueDoc == "" || catValue == "" ? "opacity-60" : "opacity-100"
+          valueDoc === "" || catValue === "" ? "opacity-60" : "opacity-100"
         } px-4 py-2 font-bold text-white text-sm flex justify-center items-center rounded-full mt-10`}
       >
         Continue
@@ -122,4 +122,5 @@ const FirstStep: React.FC<{ step: number; changeHandler: any }> = ({
     </div>
   );
 };
+
 export default FirstStep;

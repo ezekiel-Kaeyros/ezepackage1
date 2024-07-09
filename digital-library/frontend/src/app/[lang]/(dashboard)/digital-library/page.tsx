@@ -71,7 +71,7 @@ const home = () => {
       id: 1,
       text: "Free Plan",
       price: 0,
-      description: "Eze Basic",
+      // description: "Eze Basic",
       detail: [
         { text: "01 free training payant / year", active: true },
         { text: "Communities", active: true },
@@ -82,7 +82,7 @@ const home = () => {
     {
       id: 2,
       text: "Eze Plus",
-      price: '10,0000',
+      price: '10,000',
       // description: "Eze Plus",
       detail: [
         { text: "Eze Basic", active: true },
@@ -288,14 +288,14 @@ const home = () => {
           <Carousel data={arraytest} />
         </div>
 
-        <div className="flex 2xl:justify-between justify-center flex-wrap 2xl:gap-0 xl:gap-36 lg:gap-0 md:gap-[100px] gap-10   lg:px-5 px-2 mt-10 md:pb-24 pb-14">
+        <div className="flex gap-x-20 items-center justify-center">
           {priceArray.map((item) => (
             <Pricing
             itemId={item.id}
             currentIndex={currentIndex}
             setCurrentIndex={setCurrentIndex}
               title={item.text}
-              description={item.description}
+              // description={item.description}
               details={item.detail}
               price={item.price.toString()}
               // periode={item.periode}

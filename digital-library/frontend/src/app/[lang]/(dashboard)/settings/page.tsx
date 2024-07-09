@@ -7,6 +7,7 @@ import { getDictionary } from '../../../../../lib/dictionary';
 import { GetServerSideProps } from 'next';
 import { useToggleSidebar } from '@/app/hooks/useToggleSidebar';
 import { toggleFunc2 } from '@/redux/features/auth-slice';
+import { UploadFile } from '@/app/common/components/settings/fileUpload';
 
 
 const Settings: GetServerSideProps | any = async ({ params: { lang } }: { params: { lang: string | any } }) => {
@@ -23,7 +24,9 @@ const Settings: GetServerSideProps | any = async ({ params: { lang } }: { params
       // onClick={() => {
       //   dispatch(toggleFunc2(false));
       // }}
-    ></div>
+    >
+      {/* <UploadFile /> */}
+    </div>
   );
 };
 

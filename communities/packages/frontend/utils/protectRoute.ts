@@ -2,15 +2,15 @@ import axios from 'axios';
 import { UserRole } from '../constants';
 
 const HOME_URL = process.env.NEXT_PUBLIC_COMMUNITIES_URL;
-// export const redirectToHome = () => {
-//   return {
-//     redirect: {
-//       permanent: false,
-//       destination: HOME_URL,
-//     },
-//     props: {},
-//   };
-// };
+export const redirectToHome = () => {
+  return {
+    redirect: {
+      permanent: false,
+      destination: HOME_URL,
+    },
+    props: {},
+  };
+};
 
 export const isAuthorized = async (req, requiredRole = UserRole.Regular): Promise<boolean> => {
   try {

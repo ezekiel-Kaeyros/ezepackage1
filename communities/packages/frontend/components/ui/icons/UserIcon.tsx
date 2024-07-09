@@ -8,7 +8,7 @@ interface UserIconProps {
 
 const UserIcon: FC<UserIconProps> = ({ width, color }) => {
   const DEFAULT_WIDTH = '24';
-  const DEFAULT_COLOR = theme.colors.general.primary;
+  const DEFAULT_COLOR = theme.colors.general.ezeColor;
 
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width={width || DEFAULT_WIDTH} viewBox="0 0 53 53">

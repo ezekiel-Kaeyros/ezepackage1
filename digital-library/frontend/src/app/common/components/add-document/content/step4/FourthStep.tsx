@@ -206,9 +206,6 @@ const FourthStep: React.FC<{ step: number, changeHandler: any }> = ({ step, chan
     };
     
 
-    console.log(!!errorMessage, 'errorMessage')
-    
-
     return (
         <div>
             <Toaster />
@@ -249,7 +246,7 @@ const FourthStep: React.FC<{ step: number, changeHandler: any }> = ({ step, chan
                     back
                 </button>
                 <button
-                    disabled={value == ""}
+                    disabled={value == "" || isLoading}
                     onClick={() => {
                         uploadFile();
                     //   {  !errorMessage 
@@ -260,7 +257,7 @@ const FourthStep: React.FC<{ step: number, changeHandler: any }> = ({ step, chan
                         
                     }}
                     className={`bg-mainColor ${
-                        value == "" ? "opacity-60" : "opacity-100"
+                        value == "" || isLoading ? "opacity-60" : "opacity-100"
                         } px-4 py-2 font-bold text-white text-sm flex justify-center items-center rounded-full mt-10`}
                 >
                     {isLoading ? "loading..." : "Done"}
@@ -271,5 +268,3 @@ const FourthStep: React.FC<{ step: number, changeHandler: any }> = ({ step, chan
 };
 
 export default FourthStep;
-
-
