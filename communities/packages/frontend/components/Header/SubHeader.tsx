@@ -21,7 +21,7 @@ import { openAuthPopup, cleanUserNotifications, PopupType } from '../../store/au
 import HeaderUser from './HeaderUser';
 import HeaderNotifications from './HeaderNotifications';
 import { RootState } from '../../store';
-import { useBreakpoints } from '../../utils';
+import { config, useBreakpoints } from '../../utils';
 import NavTab from '../NavTab';
 import CommunitiesIcon from '../ui/icons/CommunitiesIcon';
 import OnlineCoursesIcon from '../ui/icons/OnlineCoursesIcon';
@@ -85,7 +85,7 @@ const SubHeader: ForwardRefRenderFunction<HTMLButtonElement, SubHeaderProps> = (
   return (
     <CommunitiesHeaderRoot>
       <Logo>
-        <a href="/">
+        <a href={config.landingPageUrl}>
           <img alt="logo" style={{ height: 35 }} src={logo} />
         </a>
       </Logo>
@@ -118,16 +118,16 @@ const SubHeader: ForwardRefRenderFunction<HTMLButtonElement, SubHeaderProps> = (
           />
         </ItemMenu> */}
         <ItemMenu>
-            <NavTab
+          <NavTab
             icon={<OnlineCoursesIcon />}
-            link={process.env.NEXT_PUBLIC_KASHAPP_AUTH_URL}
-            // isActive={router.pathname === '/online-courses'}
+            link={config.kashAppAuthUrl}
+          // isActive={router.pathname === '/online-courses'}
           />
-            {/* <OnlineCoursesIcon /> */}
+          {/* <OnlineCoursesIcon /> */}
         </ItemMenu>
 
         <ItemMenu>
-          <a href={process.env.NEXT_PUBLIC_LIVING_LIBRARY_URL}>
+          <a href={config.livingLibraryUrl}>
             {/* <NavTab
               icon={<LivingLibraryIcon width="32" />}
               link=""

@@ -5,7 +5,7 @@ import { Container, InputText, Button, Spacing, Text, LinkButton } from '../ui';
 import { RootState } from '../../store';
 import axios from 'axios';
 import { useMutation } from 'react-query';
-import { Config, Cookies, setCookie } from '../../utils';
+import { config, Cookies, setCookie } from '../../utils';
 import { SocialButton, Or, Bottom } from './style';
 import { GithubIcon, GoogleIcon, FacebookIcon } from '../ui/icons';
 
@@ -78,19 +78,19 @@ const Login: FC = () => {
         {(facebookLoginEnabled || githubLoginEnabled || googleLoginEnabled) && (
           <>
             {facebookLoginEnabled && (
-              <SocialButton href={`${Config.API_URL}/facebook`}>
+              <SocialButton href={`${config.apiUrl}/facebook`}>
                 <FacebookIcon color="facebook" /> Continue with Facebook <div></div>
               </SocialButton>
             )}
 
             {googleLoginEnabled && (
-              <SocialButton href={`${Config.API_URL}/google`}>
+              <SocialButton href={`${config.apiUrl}/google`}>
                 <GoogleIcon /> Continue with Google <div></div>
               </SocialButton>
             )}
 
             {githubLoginEnabled && (
-              <SocialButton href={`${Config.API_URL}/github`}>
+              <SocialButton href={`${config.apiUrl}/github`}>
                 <GithubIcon /> Continue with Github <div></div>
               </SocialButton>
             )}

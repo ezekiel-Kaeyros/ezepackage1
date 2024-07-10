@@ -7,6 +7,7 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { User } from './models';
 import { getUserInfoFromFacebook, getUserInfoFromGithub, getUserInfoFromGoogle, SocialProfile } from './utils';
 import { updateUser } from './db';
+import config from './utils/config';
 
 export enum SocialProvider {
   Facebook = 'facebook',
@@ -55,7 +56,7 @@ export const initPassport = (): void => {
         {
           clientID: process.env.GITHUB_CLIENT_ID,
           clientSecret: process.env.GITHUB_CLIENT_SECRET,
-          callbackURL: `${process.env.API_URL}/github/callback`,
+          callbackURL: `${config.apiUrl}/github/callback`,
           scope: ['user'],
         },
         async (accessToken, refreshToken, profile, done) => {
@@ -82,7 +83,7 @@ export const initPassport = (): void => {
         {
           clientID: process.env.FACEBOOK_APP_ID,
           clientSecret: process.env.FACEBOOK_APP_SECRET,
-          callbackURL: `${process.env.API_URL}/facebook/callback`,
+          callbackURL: `${config.apiUrl}/facebook/callback`,
           profileFields: [
             'id',
             'displayName',
@@ -119,7 +120,7 @@ export const initPassport = (): void => {
         {
           clientID: process.env.GOOGLE_CLIENT_ID,
           clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-          callbackURL: `${process.env.API_URL}/google/callback`,
+          callbackURL: `${config.apiUrl}/google/callback`,
         },
         async (accessToken, refreshToken, profile, done) => {
           const user = await User.findOne({ googleId: profile.id });

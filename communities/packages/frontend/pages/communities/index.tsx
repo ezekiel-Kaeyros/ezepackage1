@@ -12,6 +12,7 @@ import { useQuery, useQueryClient } from 'react-query';
 import { useTranslation } from 'react-i18next';
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+// import '../../i18n';
 
 
 function extractUniquePostIds(data) {
@@ -43,7 +44,6 @@ const fetchPostsById = async (id) => {
 
 const Home: FC = () => {
   const { t: translate } = useTranslation('common');
-  console.log('translation', translate('communityNotJoin'));
   const [datas, setDatas] = useState([])
   const authUser = useSelector((state: RootState) => state.auth.user);
 
@@ -59,31 +59,10 @@ const Home: FC = () => {
     }
   };
 
-  // const [posts, setPosts] = useState([]);
-  // const { data, isFetching, isFetchingNextPage } = useInfiniteScroll({
-  //   key: 'postsByFollowing',
-  //   apiCall: fetchPosts,
-  //   enabled: authUser !== null,
-  //   dataLimit: DataLimit.PostsByFollowing,
-  // });
 
   const { data, isLoading } = useQuery('posts', { queryFn: () => fetchPosts() });
   const clientQuery = useQueryClient();
 
-  // useEffect(() => {
-  //   if (isRefresh) {
-  //     clientQuery.invalidateQueries({ queryKey: ['posts'] });
-  //     dispatch(refeshPost(false))
-  //     // setDatas(data)
-  //   }
-
-  // //   if (!isLoading && data && data.length > 0) {
-  // //    setDatas(data)
-  // //  }
-  // }, [isRefresh,isLoading]);
-  // const openAuthModal = () => {
-  //   dispatch(openAuthPopup(PopupType.Sign_Up));
-  // };
 
   if (isLoading) {
     return (
@@ -92,8 +71,6 @@ const Home: FC = () => {
       </LayoutCommunities>
     );
   }
-
-  // const isEmpty = !data?.pages[0] || data.pages.every((p) => p.length === 0);
 
   const isEmpty = data?.length === 0 || false;
   return (
@@ -120,16 +97,14 @@ const Home: FC = () => {
           {data?.reverse().map((post: Post) => (
             <PostCard displayChannelName queryKey="postsByFollowing" key={post._id} post={post} />
           ))}
-
-          {/* {isFetchingNextPage && <LoadingDots />} */}
         </>
       </div>
     </LayoutCommunities>
   );
 };
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale ?? 'en', ['common'])),
-  },
-});
+// export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+//   props: {
+//     ...(await serverSideTranslations(locale ?? 'en', ['common'])),
+//   },
+// });
 export default Home;

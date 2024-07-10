@@ -23,7 +23,7 @@ const fetchUsers = async ({ queryKey, pageParam = 0 }) => {
 };
 
 const MembersPage: FC = () => {
- const { t: translate } = useTranslation('common');
+ const { t: translate } = useTranslation();
 
   const { isEmailVerificationRequired } = useSelector((state: RootState) => state.settings);
   const { data, isFetching, isFetchingNextPage } = useInfiniteScroll({

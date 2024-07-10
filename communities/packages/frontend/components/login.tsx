@@ -1,11 +1,12 @@
 'use client';
 import React, { useEffect } from 'react';
+import { config } from '../utils'
 
 const LoginRedirect = () => {
   const handleLogin = async () => {
     try {
-      const returnUrl = process.env.NEXT_PUBLIC_COMMUNITIES_URL;
-      window.location.href = `${process.env.NEXT_PUBLIC_SSO_LOGIN_URL}?module=${encodeURIComponent(returnUrl)}`;
+      const returnUrl = config.communitiesUrl;
+      window.location.href = `${config.communitiesUrl}?module=${encodeURIComponent(returnUrl)}`;
     } catch (error) {
       console.error('Error:', error);
     }

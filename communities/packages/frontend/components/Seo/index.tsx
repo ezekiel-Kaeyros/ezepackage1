@@ -2,7 +2,6 @@ import React, { FC } from 'react';
 import NextHead from 'next/head';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import { Config } from '../../utils';
 import { DefaultCommunity } from '../../constants';
 
 interface SeoProps {
@@ -27,7 +26,7 @@ const Seo: FC<SeoProps> = ({ title, image, url }) => {
           <script
             key="google-tag-manager"
             async
-            src={`https://www.googletagmanager.com/gtag/js?id=${Config.GOOGLE_ANALYTICS_ID}`}
+            src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_ANALYTICS_ID}`}
           />
           <script
             key="google-analytics-snippet"
@@ -36,7 +35,7 @@ const Seo: FC<SeoProps> = ({ title, image, url }) => {
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', '${Config.GOOGLE_ANALYTICS_ID}', { page_path: '${window.location.pathname}' });
+              gtag('config', '${process.env.GOOGLE_ANALYTICS_ID}', { page_path: '${window.location.pathname}' });
             `,
             }}
           />

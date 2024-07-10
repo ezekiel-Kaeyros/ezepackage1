@@ -4,7 +4,7 @@ import { Container } from '../ui';
 export const Root = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  // justify-content: space-between;
   align-items: start;
   margin: 0 auto;
   width: 100%;
@@ -29,7 +29,7 @@ interface StyledContainerProps {
   marginTop?: string;
 }
 
-export const StyledContainer = styled(Container)<StyledContainerProps>`
+export const StyledContainer = styled(Container) <StyledContainerProps>`
   ${(p) => p.marginTop && `margin-top: 2rem`};
 
   @media (min-width: ${(p) => parseInt(p.theme.screen.md, 10) + 20 + 'px'}) {
@@ -48,10 +48,10 @@ export const StyledContainer = styled(Container)<StyledContainerProps>`
 
 export const Wrapper = styled.div`
   margin: 0 auto;
+  width: 100%;
 
   @media (max-width: ${(p) => parseInt(p.theme.screen.lg, 10) + 20 + 'px'}) {
     margin: 0;
-    width: 100%;
   }
 `;
 
@@ -65,11 +65,11 @@ export const ContentWrapper = styled.div`
 `;
 
 export const MainContent = styled.div`
-  margin: 0 16rem;
   width: 100%;
+  margin: 0 16rem;
 
   @media (max-width: ${(p) => parseInt(p.theme.screen.xl, 10) + 20 + 'px'}) {
-    margin: 0rem;
     width: 100%;
+    margin: 0;
   }
 `;

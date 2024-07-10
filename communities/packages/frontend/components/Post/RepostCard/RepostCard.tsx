@@ -64,11 +64,10 @@ const RepostCard: FC<PostCardProps> = ({
   const [isReostCreateOpen, setIsRepostCreateOpen] = useState(false);
   const sharePopoverRef = useRef(null);
   const shareButtonRef = useRef(null);
-  const [edit,setedit]=useState(false)
+  const [edit, setedit] = useState(false)
   useClickOutside([sharePopoverRef, shareButtonRef], isShareOpen, () => {
     toggleShare();
   });
-console.log('post12654789====',post);
   const { data } = useQuery(['post', post.postId], fetchPost, { initialData: post });
 
   const likesLength = post.likes.length;
@@ -237,8 +236,8 @@ console.log('post12654789====',post);
           size="xs"
           weight="bold"
           onClick={() => {
-             setedit(false);
-             setIsRepostCreateOpen(true);
+            setedit(false);
+            setIsRepostCreateOpen(true);
           }}
         >
           <RepostIcon />
@@ -267,7 +266,6 @@ console.log('post12654789====',post);
           </Spacing>
 
           {post.comments.map((comment: any) => {
-            // console.log(comment, "]]]]]]]]]]]]]]]]]]]]]]")
             if (!comment.parentComment) {
               return (
                 <Comment key={comment._id} queryKey={queryKey} post={post} author={comment.author} comment={comment} />

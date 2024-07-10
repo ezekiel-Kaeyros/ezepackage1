@@ -39,7 +39,7 @@ interface LikeProps {
   likeHandler?: any;
   likeHandler2?: any;
   arrayLikes?: any
-  updateLikes?:any
+  updateLikes?: any
 }
 
 const StyledButton = styled(Button)`
@@ -61,17 +61,16 @@ const Like: FC<LikeProps> = ({
   arrayLikes,
   updateLikes
 }) => {
-  const [isBlue,setIsBlue]=useState(id)
+  const [isBlue, setIsBlue] = useState(id)
   const dispatch = useDispatch();
   const authUser = useSelector((state: RootState) => state.auth.user);
-  const color = hasLiked  ? 'primary' : 'textSecondary';
+  const color = hasLiked ? 'primary' : 'textSecondary';
   const queryClient = useQueryClient();
   const { createNotification, deleteNotification } = useNotifications();
   const [checkLike, setCheckLike] = useState('');
   const { mutateAsync: createLikeMutation } = useMutation(createLike);
   const { mutateAsync: createLikeCommentMutation } = useMutation(createLikeComment);
   const { mutateAsync: deleteLikeMutation } = useMutation(deleteLike);
-console.log('hfgkhgnfhgnf hjgfhjg',id);
 
   const updateAfterLike = (like) => {
     if (!type) {
@@ -193,8 +192,8 @@ console.log('hfgkhgnfhgnf hjgfhjg',id);
       // alert(likeId);
 
       queryClient.setQueryData(queryKey, (existingPosts: any) => {
-        console.log('existingPosts',existingPosts);
-        
+        console.log('existingPosts', existingPosts);
+
         if (!existingPosts.pages) {
           const comments = existingPosts.comments.map((item: any) => {
             let row = item;

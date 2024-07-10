@@ -147,7 +147,7 @@ const Header: ForwardRefRenderFunction<HTMLButtonElement, HeaderProps> = ({ togg
             )}
           </div>
           <div className='pl-2'>
-            <LanguageSwitcher/>
+            <LanguageSwitcher />
           </div>
         </NotificationsAndAvatar>
       </Wrapper>

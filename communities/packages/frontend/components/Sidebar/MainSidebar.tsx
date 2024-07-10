@@ -18,6 +18,7 @@ import OnlineCoursesIcon from '../ui/icons/OnlineCoursesIcon';
 import EventsIcon from '../ui/icons/EventsIcon';
 import FundingAreaIcon from '../ui/icons/FundingAreIcon';
 import { useTranslation } from 'react-i18next';
+import { config } from '../../utils';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -40,7 +41,7 @@ const MainSidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ i
   const [modal, setModal] = useState(false);
   const closeModal = () => setModal(false);
   const router = useRouter();
-   const { t: translate } = useTranslation('common');
+   const { t: translate } = useTranslation();
 
   const { data: channels } = useQuery('channels', fetchChannels);
   const [channelItems, setChannelItems] = useState([]);
@@ -58,6 +59,8 @@ const MainSidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ i
       reorderChannelsMutation({ sortedChannels: channelItems });
     }
   }, [channelItems, reorderChannelsMutation, isAdmin]);
+
+  console.log(translate('titkeCommunities'), 'translation')
 
   return (
     <Root ref={ref} isOpen={isOpen}>
@@ -111,7 +114,7 @@ const MainSidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ i
           <ButtonLink
             fullWidth
             radius="none"
-            href={process.env.NEXT_PUBLIC_KASHAPP_AUTH_URL}
+            href={config.kashAppAuthUrl}
             color="text"
             active={router.pathname === '/online-courses'}
             size="sm"
@@ -125,7 +128,7 @@ const MainSidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ i
           <ButtonLink
             fullWidth
             radius="none"
-            href={process.env.NEXT_PUBLIC_LIVING_LIBRARY_URL}
+            href={config.livingLibraryUrl}
             color="text"
             active={router.pathname === '/living-library'}
             size="sm"

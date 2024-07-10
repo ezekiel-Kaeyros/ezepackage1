@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { io, Socket } from 'socket.io-client';
 import { RootState } from '../store';
 import { setSocket } from '../store/auth';
-import { Config } from '../utils';
+import config from './config';
 
 const useSocket = (): Socket => {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ const useSocket = (): Socket => {
       return;
     }
 
-    const socketInstance = io(Config.API_URL, {
+    const socketInstance = io(config.apiUrl, {
       withCredentials: true,
     });
     dispatch(setSocket(socketInstance));
@@ -23,8 +23,6 @@ const useSocket = (): Socket => {
       console.log(event, args);
     });
   }, [user, dispatch, socket]);
-console.log('Config.API_URL', Config.API_URL);
-console.log('socket',socket);
 
   return socket;
 };

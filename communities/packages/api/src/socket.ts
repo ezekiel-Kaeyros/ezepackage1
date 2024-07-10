@@ -1,7 +1,7 @@
 import { Server } from 'socket.io';
-import jwt from 'jsonwebtoken';
 import { Events } from './constants';
 import { onlineUsers, updateUserIsOnline } from './db';
+import config from "./utils/config"
 
 const users = {};
 
@@ -29,7 +29,8 @@ setInterval(async () => {
 export default (httpServer) => {
   const io = new Server(httpServer, {
     cors: {
-      origin: '*'
+      credentials: true,
+      origin: [config.frontendUrl, config.landingPageUrl],
     },
   });
 
@@ -50,12 +51,11 @@ export default (httpServer) => {
 
   io.on('connection', (socket: any) => {
     console.log('Socket connection. socket.connected: ', socket.connected);
-    const userId = socket.authUser._id;
+    const userId = socket.authUser?._id;
     if (!users[userId]) {
-      console.log('user')
       users[userId] = {
         socketId: socket.id,
-        userId: socket.authUser._id,
+        userId: socket.authUser?._id,
       };
     }
 
@@ -82,8 +82,7 @@ export default (httpServer) => {
      * Messaging.
      */
     socket.on(Events.CREATE_MESSAGE, (data) => {
-      console.log('data_send',data);
-      
+
       const receiverId = data.receiver._id;
       const senderId = data.sender._id;
       if (users[receiverId] && users[senderId]) {
@@ -95,7 +94,7 @@ export default (httpServer) => {
     socket.on('disconnect', () => {
       console.log('Socket disconnected');
       updateUserIsOnline(userId, false);
-      delete users[socket.authUser._id];
+      delete users[socket.authUser?._id];
     });
   });
 };

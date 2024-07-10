@@ -47,19 +47,14 @@ const topics = [
 ];
 
 
-
-
 const HeroSection: React.FC<{ home: any }> = ({ home }) => {
-  
+
   useEffect(() => {
     const response = new ChannelService().channel().then((result) => {
-      console.log('result======',result);
-      
     }).catch((error) => {
-      console.log('error==============',error);
-      
+      console.log('error==============', error);
     })
-  },[])
+  }, [])
   return (
     <div className="flex w-full items-center justify-between px-8">
       <div className="w-full text-center lg:text-start lg:max-w-lg xl:max-w-2xl 2xl:max-w-3xl">
@@ -70,9 +65,6 @@ const HeroSection: React.FC<{ home: any }> = ({ home }) => {
               {home?.section1.block1.span}
             </span>
           </h1>
-          {/* <h1 className="flex space-x-2">
-            <h3>Ideas</h3> <h3 className="text-primaryColor">Spark</h3>
-          </h1> */}
         </div>
         <p className="my-6 text-md lg:text-xl">{home?.section1.block1.p}</p>
         <div className="mb-6 mt-12">

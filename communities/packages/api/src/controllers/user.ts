@@ -11,8 +11,7 @@ const UserController = {
   },
   userEmail: async (req: Request, res: Response): Promise<any> => {
     const { email } = req.params;
-    console.log('email',email);
-    
+
     const user = await getUserByEmail(email);
     return res.send(user);
   },

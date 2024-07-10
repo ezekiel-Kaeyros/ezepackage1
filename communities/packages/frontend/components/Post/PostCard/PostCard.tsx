@@ -39,7 +39,7 @@ interface PostCardProps {
   isCommentsOpen?: boolean;
   refetch?: any;
   disableNavigation?: boolean;
-  isrepost?:boolean
+  isrepost?: boolean
 }
 
 const PostCard: FC<PostCardProps> = ({
@@ -61,7 +61,6 @@ const PostCard: FC<PostCardProps> = ({
   useClickOutside([sharePopoverRef, shareButtonRef], isShareOpen, () => {
     toggleShare();
   });
-console.log('authUser', authUser);
 
   const likesLength = post.likes.length;
   const commentsLength = post.comments.length;

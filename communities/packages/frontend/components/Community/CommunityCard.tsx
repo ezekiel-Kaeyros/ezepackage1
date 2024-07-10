@@ -41,7 +41,7 @@ const CommunityCards: React.FC<{ search: boolean; channels?: any; categoryStep: 
   //     item.descriptionJob.toLowerCase().includes(value.toLowerCase()) ||
   //     item.descriptionCommunity.toLowerCase().includes(value.toLowerCase())
   // );
- const { t: translate } = useTranslation('common');
+ const { t: translate } = useTranslation();
 
   useEffect(() => {
     if (categoryStep == 'Data Analytics' && !search) {

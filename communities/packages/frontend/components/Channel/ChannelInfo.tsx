@@ -46,7 +46,7 @@ interface ChannelInfoProps {
   description?: string;
   member?: number;
   image?: string
-  cover?:string
+  cover?: string
 }
 
 export enum ProfileLoading {
@@ -75,6 +75,7 @@ const leaveChannel = async ({ userId, channelId }) => {
 };
 
 const updateChannel = async (data: any) => {
+  console.log(data)
   const response = await axios.put(`/channels/update-member/`, data, config);
   return response;
 };
@@ -86,10 +87,10 @@ const fetchUserById = async ({ userId }) => {
   return response;
 };
 
-const ChannelInfo: FC<ChannelInfoProps> = ({ channelId, name, creationDate, description, member ,image,cover}) => {
+const ChannelInfo: FC<ChannelInfoProps> = ({ channelId, name, creationDate, description, member, image, cover }) => {
   const sharePopoverRef = useRef(null);
-  
-  const [imageProfil,setImageprofile]=useState(image)
+
+  const [imageProfil, setImageprofile] = useState(image)
   const [imageCover, setImageCover] = useState(cover);
   const [number, setNumber] = useState(member);
   const [load, setLoad] = useState(false);
@@ -98,13 +99,12 @@ const ChannelInfo: FC<ChannelInfoProps> = ({ channelId, name, creationDate, desc
   const { mutateAsync: joinChannelMutation } = useMutation(joinChannel);
   const { mutateAsync: leaveChannelMutation } = useMutation(leaveChannel);
   const { mutateAsync: updateChannelMutation } = useMutation(updateChannel);
-  console.log('authUser==========', authUser);
   const setprofilHandler = (url: string) => {
     setImageprofile(url)
   }
-   const setCoverHandler = (url: string) => {
-     setImageCover(url);
-   };
+  const setCoverHandler = (url: string) => {
+    setImageCover(url);
+  };
   const [openShareModal, setOpenShareModal] = useState<boolean>(false);
 
   useClickOutside([sharePopoverRef], openShareModal, () => {
@@ -150,7 +150,7 @@ const ChannelInfo: FC<ChannelInfoProps> = ({ channelId, name, creationDate, desc
 
   // Logic for leaving
   const handleLeave = async () => {
-      setLoad(true);
+    setLoad(true);
 
     const leavingDetails = {
       userId: authUser._id,
@@ -159,9 +159,8 @@ const ChannelInfo: FC<ChannelInfoProps> = ({ channelId, name, creationDate, desc
     try {
       const data = await leaveChannelMutation(leavingDetails);
       await queryClient.refetchQueries('userById');
-      console.log('data==========',data.status);
       if (data.status === 200) {
-        
+
         const val = number - 1;
         const value = {
           _id: channelId,
@@ -176,7 +175,7 @@ const ChannelInfo: FC<ChannelInfoProps> = ({ channelId, name, creationDate, desc
           val < 0 && setNumber(0);
         }
         notify('leaved');
-      setLoad(false);
+        setLoad(false);
 
       }
     } catch (error) {
@@ -239,10 +238,9 @@ const ChannelInfo: FC<ChannelInfoProps> = ({ channelId, name, creationDate, desc
     return formattedDate;
   }
   const isJoined = authUser?.joinedChannels?.find((channel) => channel._id === channelId);
-  console.log("isJoined222222222222",isJoined);
-  
+
   return (
-    <div style={{ position: 'relative' }}>
+    <div style={{ width: 'relative' }}>
       <CoverPhoto isLoading={isLoadingProfile} image={imageCover && imageCover}>
         {isLoadingProfile === ProfileLoading.CoverPicture && (
           <CoverLoading>
@@ -302,21 +300,21 @@ const ChannelInfo: FC<ChannelInfoProps> = ({ channelId, name, creationDate, desc
           </DetailsList>
           {/* Buttons group */}
           <ButtonGroup>
-            {(!isJoined && (
-              <JoinButton disabled={load} style={{ opacity: load ? '0.8' : '1' }}>
+            {(!isJoined ? (
+              <JoinButton onClick={() => handleJoin()} disabled={load} style={{ opacity: load ? '0.8' : '1' }}>
                 <Image alt="invite button" src={JoinIcon} />
-                <H3 onClick={() => handleJoin()} color="white" size="sm">
-                  {load ? '...' : 'Join'}
+                <H3 color="white" size="sm">
+                  {load ? 'Joining...' : 'Join'}
                 </H3>
               </JoinButton>
-            )) || (
-              <LeaveButton disabled={load} style={{ opacity: load ? '0.8' : '1' }}>
+            ) : (
+              <LeaveButton onClick={() => handleLeave()} disabled={load} style={{ opacity: load ? '0.8' : '1' }}>
                 <Image alt="invite button" src={JoinIcon} />
-                <H3 onClick={() => handleLeave()} color="white" size="sm">
-                  {load ? '...' : 'Leave'}
+                <H3 color="white" size="sm">
+                  {load ? 'Leave...' : 'Leave'}
                 </H3>
               </LeaveButton>
-            )}
+            ))}
 
             <ShareButton onClick={() => setOpenShareModal((prev) => !prev)}>
               <Image alt="share button" src={ShareIcon} />

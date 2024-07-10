@@ -15,9 +15,10 @@ import { EmailRegex, ErrorCodes, ErrorMessages } from '../constants';
 import { sendEmail, getEmailTemplate, checkEmailVerification } from '../utils';
 import { URLSearchParams } from 'url';
 import { SocialProvider } from '../authentication';
+import config from '../utils/config';
 
 const AuthController = {
-  authUser: async (req: Request, res: Response,next:NextFunction): Promise<any> => {
+  authUser: async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     passport.authenticate('jwt', { session: false }, async (err, user) => {
       if (!user) {
         return res.send(null);
@@ -234,7 +235,7 @@ const AuthController = {
   githubCallback: async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     passport.authenticate(
       'github',
-      { failureRedirect: `${process.env.FRONTEND_URL}?auth=social&responseType=error`, session: false },
+      { failureRedirect: `${config.frontendUrl}?auth=social&responseType=error`, session: false },
       async (err, user) => {
         req.login(user, { session: false }, async (error) => {
           if (error) return next(error);
@@ -249,7 +250,7 @@ const AuthController = {
             token,
           };
           const queryString = new URLSearchParams(payload).toString();
-          return res.cookie('token', token).redirect(`${process.env.FRONTEND_URL}/?${queryString}`);
+          return res.cookie('token', token).redirect(`${config.frontendUrl}/?${queryString}`);
         });
       }
     )(req, res, next);
@@ -257,7 +258,7 @@ const AuthController = {
   googleCallback: async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     passport.authenticate(
       'google',
-      { failureRedirect: `${process.env.FRONTEND_URL}?auth=social&responseType=error`, session: false },
+      { failureRedirect: `${config.frontendUrl}?auth=social&responseType=error`, session: false },
       async (err, user) => {
         req.login(user, { session: false }, async (error) => {
           if (error) return next(error);
@@ -272,7 +273,7 @@ const AuthController = {
             token,
           };
           const queryString = new URLSearchParams(payload).toString();
-          return res.cookie('token', token).redirect(`${process.env.FRONTEND_URL}/?${queryString}`);
+          return res.cookie('token', token).redirect(`${config.frontendUrl}/?${queryString}`);
         });
       }
     )(req, res, next);
@@ -280,7 +281,7 @@ const AuthController = {
   facebookCallback: async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     passport.authenticate(
       'facebook',
-      { failureRedirect: `${process.env.FRONTEND_URL}?auth=social&responseType=error`, session: false },
+      { failureRedirect: `${config.frontendUrl}?auth=social&responseType=error`, session: false },
       async (err, user) => {
         req.login(user, { session: false }, async (error) => {
           if (error) return next(error);
@@ -295,7 +296,7 @@ const AuthController = {
             token,
           };
           const queryString = new URLSearchParams(payload).toString();
-          return res.cookie('token', token).redirect(`${process.env.FRONTEND_URL}/?${queryString}`);
+          return res.cookie('token', token).redirect(`${config.frontendUrl}/?${queryString}`);
         });
       }
     )(req, res, next);

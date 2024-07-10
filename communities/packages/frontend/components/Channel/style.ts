@@ -194,14 +194,17 @@ export const ButtonGroup = styled.div`
 
 export const JoinButton = styled.button`
   display: flex;
-  padding: 10px 1.5rem;
+  align-items: center;
+  justify-content: center;
+  width: 26rem;
+  max-width: 240px;
+  // padding: 10px 1.5rem;
   column-gap: 5px;
   cursor: pointer;
   border-radius: 0.5rem;
   background-color: ${(p) => p.theme.colors.general.link};
   color: ${(p) => p.theme.colors.general.white};
   border: none;
-  align-items: center;
 `;
 
 export const LeaveButton = styled.button`

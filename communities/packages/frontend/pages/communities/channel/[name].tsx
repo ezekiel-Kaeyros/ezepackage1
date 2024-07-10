@@ -35,11 +35,6 @@ interface ChannelProps {
 }
 
 const Channel: FC<ChannelProps> = ({ channel }) => {
-
-  
-  
-  console.log('channel===========',channel);
-  
   const dispatch = useDispatch();
   const authUser = useSelector((state: RootState) => state.auth.user);
 
@@ -77,7 +72,7 @@ const Channel: FC<ChannelProps> = ({ channel }) => {
             member={channel.members}
             image={channel.image}
             cover={channel.coverImage}
-            // img={channel.coverImage}
+          // img={channel.coverImage}
           />
         </Spacing>
       }

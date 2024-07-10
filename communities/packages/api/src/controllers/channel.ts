@@ -18,7 +18,6 @@ const channelNameReg = /[-!$%^&*()_+|~=`\\#{}[\]:";'<>?,./]/;
 const ChannelController = {
   channels: async (req: Request, res: Response): Promise<any> => {
     const channels = await getChannels();
-    console.log('channels');
     return res.send(channels);
   },
   channelByName: async (req: Request, res: Response): Promise<any> => {
@@ -28,8 +27,6 @@ const ChannelController = {
   },
   create: async (req: Request, res: Response): Promise<any> => {
     const { name, authRequired, description, order, authUserId } = req.body;
-    // console.log('Auth required', authRequired);
-    // console.log('req user', authUserId);
     const trimmedName = name.trim();
 
     if (channelNameReg.test(name) || !name || name.length > 20) {
@@ -45,8 +42,6 @@ const ChannelController = {
 
     const newChannel = await createChannel(trimmedName, authRequired, order, description);
 
-    console.log('new channel', newChannel);
-
     if (newChannel._id) {
       try {
         await joinChannel(newChannel._id, authUserId);
@@ -60,7 +55,7 @@ const ChannelController = {
     const { _id, name, authRequired, description, members } = req.body;
     const trimmedName = name.trim();
     let member: any;
-  
+
 
     if (channelNameReg.test(trimmedName) || !trimmedName || trimmedName.length > 20) {
       return res
@@ -77,7 +72,6 @@ const ChannelController = {
     } else {
       member = channelExists.members && channelExists.mebers;
     }
-    // console.log('authRequired222222222222', member);
 
     const updatedChannel = await updateChannel(_id, trimmedName, authRequired, null, description, member);
     return res.send(updatedChannel);
@@ -86,8 +80,6 @@ const ChannelController = {
     const { _id, name, authRequired, description, members } = req.body;
     const trimmedName = name.trim();
     let member: any;
-    // console.log('description', description);
-    // console.log('member===========', members);
 
     if (channelNameReg.test(trimmedName) || !trimmedName || trimmedName.length > 20) {
       return res
@@ -104,7 +96,6 @@ const ChannelController = {
     } else {
       member = channelExists.members && channelExists.mebers;
     }
-    // console.log('authRequired222222222222', member);
 
     const updatedChannel = await updateChannel(_id, trimmedName, authRequired, null, description, member);
     return res.send(updatedChannel);
@@ -114,9 +105,7 @@ const ChannelController = {
     const { imagePublicId, coverImagePublicId, isCover, name, authRequired, id, description, members } = req.body;
     const channelId = id;
     const image = req.file;
-    // console.log('authRequired222222222222', req.body);
 
-    console.log('I am here');
     const auth = authRequired == 'true' ? true : false;
     if (!image) {
       return res.status(ErrorCodes.Bad_Request).send('Please upload an image.');
@@ -124,7 +113,6 @@ const ChannelController = {
     if (image && !image.mimetype.match(/image-*/)) {
       return res.status(ErrorCodes.Bad_Request).send('Please upload an image.');
     }
-    console.log('image', image);
 
     const coverOrImagePublicId = isCover === 'true' ? coverImagePublicId : imagePublicId;
     const uploadImage = await uploadToCloudinary(image, 'channel', coverOrImagePublicId);

@@ -11,6 +11,7 @@ import socket from './socket';
 import { initDb } from './db';
 import { initPassport } from './authentication';
 import { errorHandler } from './utils/errorHandler';
+import config from './utils/config';
 
 initDb();
 initPassport();
@@ -21,8 +22,8 @@ app.use(compression());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: true,
     credentials: true,
+    origin: [config.frontendUrl, config.landingPageUrl],
   })
 );
 

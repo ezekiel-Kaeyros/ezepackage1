@@ -22,8 +22,8 @@ const fetchPostsByFollowing = async ({ pageParam = 0 }) => {
 };
 
 const Home: FC = () => {
-  const { t: translate } = useTranslation('common');
-  console.log('translation', translate('welcome'));
+  const { t } = useTranslation();
+  console.log('translationwsws', t('channelNotJoin'));
   const dispatch = useDispatch();
 
   const authUser = useSelector((state: RootState) => state.auth.user);

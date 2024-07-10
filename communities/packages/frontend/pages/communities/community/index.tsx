@@ -46,7 +46,7 @@ const CommunityPage = () => {
       SetIsSearch(false);
     }
   };
- const { t: translate } = useTranslation('common');
+ const { t: translate } = useTranslation();
  console.log('translation', translate('communityNotJoin'));
   useDispatchAuth();
 

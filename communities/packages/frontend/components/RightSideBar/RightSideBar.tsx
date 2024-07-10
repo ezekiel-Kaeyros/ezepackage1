@@ -30,7 +30,7 @@ const fetchNewMembers = async () => {
 const REFETCH_INTERVAL = 10000;
 
 const RightSideBar: FC = () => {
- const { t: translate } = useTranslation('common');
+ const { t: translate } = useTranslation();
 
   const {
     data: onlineMembers,

@@ -9,6 +9,6 @@ export { default as useSocket } from './useSocket';
 export { default as date } from './date';
 export { default as useFetchSettings } from './useFetchSettings';
 export { default as useBreakpoints } from './useBreakpoints';
+export { default as config } from './config'
 export * from './cookie';
 export * from './protectRoute';
-export * from './config';

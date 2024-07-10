@@ -12,10 +12,12 @@ import App from '../components/App';
 import { store } from '../store';
 import AuthPopup from '../components/Auth';
 import currentTheme, { Theme } from '../theme';
-import { Config } from '../utils';
+import { config } from '../utils';
+import { I18nextProvider } from 'react-i18next';
+import i18n from '../i18n';
 import { appWithTranslation } from 'next-i18next';
 import nextI18NextConfig from '../../../next-i18next.config.js';
-axios.defaults.baseURL = Config.API_URL;
+axios.defaults.baseURL = config.apiUrl;
 axios.defaults.withCredentials = true;
 
 const NextApp: FC<AppProps> = ({ Component, pageProps }) => {
@@ -54,9 +56,11 @@ const NextApp: FC<AppProps> = ({ Component, pageProps }) => {
         <Hydrate state={pageProps.dehydratedState}>
           <ReduxProvider store={store}>
             <ThemeProvider theme={theme || currentTheme}>
-              <App setTheme={setTheme}>
-                <Component {...pageProps} />
-              </App>
+              <I18nextProvider i18n={i18n}>
+                <App setTheme={setTheme}>
+                  <Component {...pageProps} />
+                </App>
+              </I18nextProvider>
               <AuthPopup />
             </ThemeProvider>
           </ReduxProvider>
@@ -69,3 +73,4 @@ const NextApp: FC<AppProps> = ({ Component, pageProps }) => {
 };
 
 export default appWithTranslation(NextApp, nextI18NextConfig);
+// export default NextApp;
