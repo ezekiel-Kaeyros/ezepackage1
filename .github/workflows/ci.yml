@@ -78,7 +78,7 @@ jobs:
           touch .env && \
           echo "NEXT_PUBLIC_APP_ENV=staging" >> .env && \
           echo "GOOGLE_ANALYTICS_ID=G-MD706N8TZV" >> .env && \
-          echo "NEXT_PUBLIC_ENV=production" >> .env && \
+          echo "NEXT_PUBLIC_ENV=production" >> .env
       - name: Archive .env file
         run: tar -czf env-frontend.tar.gz -C communities/packages/frontend .env
       - name: Upload .env file
