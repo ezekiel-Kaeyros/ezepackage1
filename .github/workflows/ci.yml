@@ -99,6 +99,9 @@ jobs:
           echo "SSO_URL=https://sso.eze.ink" >> .env && \
           echo "REDIRECT_ORIGIN=https://eze.ink" >> .env && \
           echo "CALLBACK_URL=https://sso.eze.ink/auth/login/callback" >> .env && \
+          echo "CLOUDINARY_CLOUD_NAME=dyekwrvwe" >> .env && \
+          echo "CLOUDINARY_API_KEY=981519692274267" >> .env && \
+          echo "CLOUDINARY_API_SECRET=EnwDIzzscMxY5SacVWoqUXE0mzw" >> .env && \
           echo "LANDINGPAGE_URL=https://eze.ink" >> .env && \
           echo "COMMUNITIES_URL=https://communities.eze.ink" >> .env 
       - name: Archive .env file
