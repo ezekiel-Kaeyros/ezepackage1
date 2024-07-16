@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package.json ./
 
 # Install dependencies
-RUN npm install
+RUN yarn 
 
 # Install TypeScript globally
 RUN npm install -g typescript
