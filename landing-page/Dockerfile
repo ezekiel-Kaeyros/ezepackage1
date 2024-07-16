@@ -8,7 +8,7 @@ COPY next.config.js ./
 
 # Nettoyer le cache npm et installer les dépendances
 RUN npm cache clean --force
-RUN npm install
+RUN npm install --force
 
 # Copier le reste des fichiers et construire l'application
 COPY . .
