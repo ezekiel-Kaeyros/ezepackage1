@@ -12,6 +12,7 @@ import coverPhoto from '../../../../../public/images/coverphoto.svg';
 import Link from "next/link";
 import axios from "axios";
 import AnimateClick from "../animateClick/AnimateClick";
+import config from "@/utils/config";
 
 interface Item {
   key: string;
@@ -87,7 +88,7 @@ const Carousel: React.FC<{
     setLoading(true)
     async function fetchData() {
       try {
-        const url = `${process.env.NEXT_PUBLIC_SSO_URL}/api/items/5577831`;
+        const url = `${config.ssoUrl}/api/items/5577831`;
         console.log('response response98376')
         const res = await axios.get(url);
         console.log(res, 'response')
@@ -195,7 +196,7 @@ const Carousel: React.FC<{
           {items.length > 0 && items.map((item: any, index) => {
             return (
               <Link href={`/en/digital-library/${item.key}`} key={item.key}>
-                 <AnimateClick>
+                <AnimateClick>
                   <div className="px-4" key={index}>
                     {/* <Link href={item.pdfUrl} target="_blank">{item.pdfUrl}</Link> */}
                     <NewCardDocument

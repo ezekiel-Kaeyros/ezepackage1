@@ -23,6 +23,7 @@ import logo51 from "../../../../public/icons/add1.svg";
 import Image from "next/image";
 import Link from "next/link";
 import { toggleFunc, toggleSideBarFunc2 } from "@/redux/features/auth-slice";
+import config from '@/utils/config';
 type SidebarProps = {
   lang: string;
   sidebar: {
@@ -49,20 +50,18 @@ const Sidebar: FC<SidebarProps> = ({ lang, sidebar }) => {
 
   return (
     <div
-      className={`flex duration-300 flex-shrink-0 ease-linear sm:translate-x-0 flex-col justify-start   sm:relative fixed  z-[200] bg-white border h-screen border-r-1 sm:pt-4 pt-1  text-xs font-bold ${
-        !isSidebarToggled
+      className={`flex duration-300 flex-shrink-0 ease-linear sm:translate-x-0 flex-col justify-start   sm:relative fixed  z-[200] bg-white border h-screen border-r-1 sm:pt-4 pt-1  text-xs font-bold ${!isSidebarToggled
           ? "sm:translate-x-0 -translate-x-full"
           : "translate-x-0"
-      }
+        }
       
-      ${
-        isToggled
+      ${isToggled
           ? "lg:items-start sm:items-center sm:!w-[15vw] !w-fit "
           : "sm:items-center sm:!w-[7vw] !w-fit "
-      }  `}
+        }  `}
     >
       <div className="md:pl-2 sm:pl-0 pl-4 sm:block flex justify-between">
-        <Link href={`${process.env.NEXT_PUBLIC_ZOTERO_HOME_URL}`}>
+        <Link href={`${config.livingLibraryUrl}`}>
           <Image
             src={logoNew}
             alt=""
@@ -73,9 +72,8 @@ const Sidebar: FC<SidebarProps> = ({ lang, sidebar }) => {
             src={logo}
             alt=""
             // onClick={() => setView((view) => !view)}
-            className={` ${
-              isToggled ? "lg:hidden sm:block hidden" : "sm:block hidden"
-            }`}
+            className={` ${isToggled ? "lg:hidden sm:block hidden" : "sm:block hidden"
+              }`}
           />
         </Link>
 
@@ -89,29 +87,27 @@ const Sidebar: FC<SidebarProps> = ({ lang, sidebar }) => {
       <div className="mt-14 flex flex-col gap-6 w-full ">
         <Link
           href={"/en/"}
-          className={`w-full md:p-2 sm:pl-0 pl-4 ${
-            !pathName.includes("digital-library") &&
+          className={`w-full md:p-2 sm:pl-0 pl-4 ${!pathName.includes("digital-library") &&
             !pathName.includes("settings") &&
             !pathName.includes("create") &&
             !pathName.includes("add-document") &&
             "bg-[#daeeda]"
-          }`}
+            }`}
         >
           {" "}
           <div className="flex items-center gap-2">
             <Image
               src={
                 !pathName.includes("digital-library") &&
-                !pathName.includes("settings") &&
-                !pathName.includes("create") &&
-                !pathName.includes("add-document")
+                  !pathName.includes("settings") &&
+                  !pathName.includes("create") &&
+                  !pathName.includes("add-document")
                   ? logo2
                   : logo21
               }
               alt=""
-              className={`${
-                isToggled ? "lg:m-0 sm:m-auto m-0" : "sm:m-auto m-0"
-              }`}
+              className={`${isToggled ? "lg:m-0 sm:m-auto m-0" : "sm:m-auto m-0"
+                }`}
             />
             <p
               className={`${isToggled ? "lg:block sm:hidden" : "sm:hidden"}   `}
@@ -122,18 +118,16 @@ const Sidebar: FC<SidebarProps> = ({ lang, sidebar }) => {
         </Link>
         <Link
           href={"/en/digital-library"}
-          className={`w-full md:p-2 sm:pl-0 pl-4 ${
-            pathName.includes("digital-library") && "bg-[#daeeda]"
-          }`}
+          className={`w-full md:p-2 sm:pl-0 pl-4 ${pathName.includes("digital-library") && "bg-[#daeeda]"
+            }`}
         >
           {" "}
           <div className={`flex items-center gap-2 `}>
             <Image
               src={pathName.includes("digital-library") ? logo3 : logo31}
               alt=""
-              className={`${
-                isToggled ? "lg:m-0 sm:m-auto m-0" : "sm:m-auto m-0"
-              }`}
+              className={`${isToggled ? "lg:m-0 sm:m-auto m-0" : "sm:m-auto m-0"
+                }`}
             />
             <p
               className={`${isToggled ? "lg:block sm:hidden" : "sm:hidden"}   `}
@@ -144,17 +138,15 @@ const Sidebar: FC<SidebarProps> = ({ lang, sidebar }) => {
         </Link>
         <Link
           href={"/en/settings"}
-          className={`w-full md:p-2 sm:pl-0 pl-4 ${
-            pathName.includes("setting") && "bg-[#daeeda]"
-          }`}
+          className={`w-full md:p-2 sm:pl-0 pl-4 ${pathName.includes("setting") && "bg-[#daeeda]"
+            }`}
         >
           <div className="flex items-center gap-2">
             <Image
               src={pathName.includes("setting") ? logo4 : logo41}
               alt=""
-              className={`${
-                isToggled ? "lg:m-0 sm:m-auto m-0" : "sm:m-auto m-0"
-              }`}
+              className={`${isToggled ? "lg:m-0 sm:m-auto m-0" : "sm:m-auto m-0"
+                }`}
             />
             <p
               className={`${isToggled ? "lg:block sm:hidden" : "sm:hidden"}   `}
@@ -165,17 +157,15 @@ const Sidebar: FC<SidebarProps> = ({ lang, sidebar }) => {
         </Link>
         <Link
           href={"/en/add-document"}
-          className={`w-full md:p-2 sm:pl-0 pl-4 mt-8 flex items-center gap-2 ${
-            pathName.includes("add-document") && "bg-[#daeeda]"
-          }`}
+          className={`w-full md:p-2 sm:pl-0 pl-4 mt-8 flex items-center gap-2 ${pathName.includes("add-document") && "bg-[#daeeda]"
+            }`}
         >
           {" "}
           <Image
             src={pathName.includes("add-document") ? logo5 : logo51}
             alt=""
-            className={`${
-              isToggled ? "lg:m-0 sm:m-auto m-0" : "sm:m-auto m-0"
-            }`}
+            className={`${isToggled ? "lg:m-0 sm:m-auto m-0" : "sm:m-auto m-0"
+              }`}
           />
           <p className={`${isToggled ? "lg:block sm:hidden" : "sm:hidden"}   `}>
             Create file

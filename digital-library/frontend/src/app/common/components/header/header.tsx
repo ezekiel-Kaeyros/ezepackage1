@@ -19,6 +19,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useToggleSidebar } from '@/app/hooks/useToggleSidebar';
 import { toggleFunc } from '@/redux/features/auth-slice';
+import config from '@/utils/config';
 
 type NavbarProps = {
   lang: string;
@@ -30,8 +31,8 @@ const Header: FC<NavbarProps> = ({ lang, navigation }) => {
   const [view, setView] = useState(false)
   const [view2, setView2] = useState(false);
   const pathName = usePathname();
-  const {dispatch}= useToggleSidebar()
-  
+  const { dispatch } = useToggleSidebar()
+
   return (
     <>
       <div className="sm:hidden w-full h-[80px] bg-white flex justify-end items-center pr-2">
@@ -46,18 +47,16 @@ const Header: FC<NavbarProps> = ({ lang, navigation }) => {
       </div>
       <div className="w-full border md:h-[80px] h-[66px] bg-white px-3 sm:flex hidden justify-between items-center overflow-hidden">
         <div
-          className={`${
-            !view && !view2 ? "w-14" : "lg:w-[34%] w-[36%]"
-          } duration-300 ease-linear h-14 relative border rounded-full bg-[#E9ECEF] cursor-pointer`}
+          className={`${!view && !view2 ? "w-14" : "lg:w-[34%] w-[36%]"
+            } duration-300 ease-linear h-14 relative border rounded-full bg-[#E9ECEF] cursor-pointer`}
           onMouseEnter={() => setView(true)}
           onClick={() => setView2((preview) => !preview)}
           onMouseLeave={() => setView(false)}
         >
           <input
             type="text"
-            className={`w-full h-full pl-12 bg-transparent border rounded-full ${
-              !view && !view2 ? "hidden" : "block"
-            }`}
+            className={`w-full h-full pl-12 bg-transparent border rounded-full ${!view && !view2 ? "hidden" : "block"
+              }`}
             placeholder={view ? "Search..." : ""}
             autoFocus={true}
           />
@@ -72,12 +71,11 @@ const Header: FC<NavbarProps> = ({ lang, navigation }) => {
           <div className="flex xl:gap-8 gap-2 ">
             <Link
               href={"/en/"}
-              className={`pb-2 hover:border-b-3 ${
-                !pathName.includes("digital-library") &&
+              className={`pb-2 hover:border-b-3 ${!pathName.includes("digital-library") &&
                 !pathName.includes("settings") &&
                 !pathName.includes("create") &&
                 "border-b-3 border-[#015E44]"
-              }`}
+                }`}
             >
               {" "}
               <Image src={home} alt="" className="" />
@@ -86,22 +84,22 @@ const Header: FC<NavbarProps> = ({ lang, navigation }) => {
               <Image
                 src={userSquar}
                 alt=""
-                // className="hover:border-b-3 border-[#015E44] pb-3"
+              // className="hover:border-b-3 border-[#015E44] pb-3"
               />
             </Link>
-            <Link href={`${process.env.NEXT_PUBLIC_COMMUNITIES_HOME}`} className={`pb-2 px-2 hover:border-b-3 `}>
+            <Link href={`${config.communitiesUrl}`} className={`pb-2 px-2 hover:border-b-3 `}>
               {" "}
               <Image
                 src={peopleIcon}
                 alt=""
-                // className="hover:border-b-3 border-[#015E44] pb-3"
+              // className="hover:border-b-3 border-[#015E44] pb-3"
               />
             </Link>
             <Link href={"#"} className={`pb-2 px-2 hover:border-b-3 `}>
               <Image
                 src={user}
                 alt=""
-                // className="hover:border-b-3 border-[#015E44] pb-3"
+              // className="hover:border-b-3 border-[#015E44] pb-3"
               />
             </Link>
             <Link href={"https://kashapp.biz/auth/mo_saml/index.php"} className={`pb-2 px-2 hover:border-b-3 `}>
@@ -109,16 +107,15 @@ const Header: FC<NavbarProps> = ({ lang, navigation }) => {
               <Image
                 src={note}
                 alt=""
-                // className="hover:border-b-3 border-[#015E44] pb-2"
+              // className="hover:border-b-3 border-[#015E44] pb-2"
               />
             </Link>
 
             <Link
               href={"digital-library"}
-              className={`pb-2 px-2 hover:border-b-3 ${
-                pathName.includes("digital-library") &&
+              className={`pb-2 px-2 hover:border-b-3 ${pathName.includes("digital-library") &&
                 "border-b-3 border-[#015E44] "
-              }`}
+                }`}
             >
               {" "}
               <Image src={libraryIcon} alt="" className="" />
