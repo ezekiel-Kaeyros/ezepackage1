@@ -204,7 +204,8 @@ jobs:
           touch .env && \
           echo "NEXT_PUBLIC_ZOTERO_API_KEY=ljJwZLSkS26ymt6DFd5D2Blc" >> .env && \
           echo "NEXT_PUBLIC_APP_ENV=staging" >> .env && \
-          echo "NEXT_PUBLIC_ZOTERO_USER_ID=14487670" >> .env
+          echo "NEXT_PUBLIC_APP_ENV=staging" >> .env && \
+          echo "NEXT_PUBLIC_ZOTERO_GROUP_ID=5577831" >> .env
           
       - name: Login to DockerHub
         run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
