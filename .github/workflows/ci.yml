@@ -53,7 +53,7 @@ jobs:
           cd landing-page && \
           rm -f .env && \
           touch .env && \
-          echo "NEXT_PUBLIC_APP_ENV=staging" >> .env && \
+          echo "NEXT_PUBLIC_APP_ENV=staging" >> .env 
       - name: Archive .env file
         run: tar -czf env-landing.tar.gz -C landing-page .env
       - name: Upload .env file
