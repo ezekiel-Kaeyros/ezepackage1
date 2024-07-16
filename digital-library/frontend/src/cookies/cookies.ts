@@ -37,18 +37,6 @@ export const getFormCookies = (formData:any) => {
   return getFormData ? JSON.parse(getFormData) : null
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 export const getUserCookies = () => {
   const user = cookies.get(USER_DATA);
 
@@ -58,5 +46,7 @@ export const getUserCookies = () => {
 
 
 export const removeUserCookies = () => {
-  cookies.remove(USER_DATA);
+  cookies.remove(FIRST_STEP)
+  // cookies.remove(USER_DATA);
+  cookies.remove(SECOND_STEP)
 };

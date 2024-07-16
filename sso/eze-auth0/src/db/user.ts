@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import User, { IUser } from '../models/user.model'
+import {User} from '../models/user.model'
 
 // Function to check if it's the user's first time
 export const isFirstTime = async (email: string): Promise<boolean> => {

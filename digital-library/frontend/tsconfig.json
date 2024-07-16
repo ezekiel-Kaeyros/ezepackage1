@@ -16,6 +16,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
+    "typeRoots": ["./node_modules/@types", "./types"],
     "incremental": true,
     "plugins": [
       {
@@ -26,6 +27,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/common/components/nextDropdown/NextDropdown.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/common/components/nextDropdown/NextDropdown.jsx", "src/**/*", "typings/**/*" ],
   "exclude": ["node_modules"]
 }

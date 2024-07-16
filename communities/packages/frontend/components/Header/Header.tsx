@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useMutation } from 'react-query';
 import { useRouter } from 'next/router';
 import { updateNotificationSeen } from '../../pages/communities/notifications';
+import {config} from '../../utils';
+
 import {
   Root,
   Wrapper,
@@ -72,6 +74,12 @@ const Header: ForwardRefRenderFunction<HTMLButtonElement, HeaderProps> = ({ togg
     }
   };
 
+  const SSOLoginRedirect = () => {
+    const returnUrl = window.location.href
+    const ssoLoginUrl = `${config.ssoLoginUrl}?module=${encodeURIComponent(returnUrl)}`
+    window.location.href = ssoLoginUrl
+  }
+
   const isSmallScreen = breakpoint === 'xs' || breakpoint === 'sm';
 
   return (
@@ -133,7 +141,7 @@ const Header: ForwardRefRenderFunction<HTMLButtonElement, HeaderProps> = ({ togg
                 ghost={isSmallScreen}
                 size="sm"
                 color="primary"
-                onClick={() => dispatch(openAuthPopup(PopupType.Log_In))}
+                onClick={SSOLoginRedirect}
               >
                 {isSmallScreen ? <Avatar /> : 'Log in'}
               </Button>

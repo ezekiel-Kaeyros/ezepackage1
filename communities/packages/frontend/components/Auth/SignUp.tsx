@@ -71,6 +71,12 @@ const SignUp: FC = () => {
     }
   };
 
+  const SSOLoginRedirect = () => {
+    const returnUrl = window.location.href
+    const ssoLoginUrl = `${config.ssoLoginUrl}?module=${encodeURIComponent(returnUrl)}`
+    window.location.href = ssoLoginUrl
+  }
+
   useEffect(() => {
     if (isPopupOpen) {
       setErrorMessage('');
@@ -146,9 +152,7 @@ const SignUp: FC = () => {
                 <LinkButton
                   size="xs"
                   type="button"
-                  onClick={() => {
-                    dispatch(openAuthPopup(PopupType.Log_In));
-                  }}
+                  onClick={SSOLoginRedirect}
                 >
                   Log in
                 </LinkButton>

@@ -11,6 +11,7 @@ import LayoutCommunities from '../../../components/Layout/CommuntiesLayout';
 import { Cookies } from '../../../utils';
 import axios from 'axios';
 import { useDispatchAuth } from '../../../utils/useDispatchAuth';
+import {config} from '../../../utils';
 
 const MessagesPage: FC = () => {
   const authUser = useSelector((state: RootState) => state.auth.user);
@@ -19,6 +20,12 @@ const MessagesPage: FC = () => {
   const openAuthModal = () => {
     dispatch(openAuthPopup(PopupType.Sign_Up));
   };
+
+  const SSOLoginRedirect = () => {
+    const returnUrl = window.location.href
+    const ssoLoginUrl = `${config.ssoLoginUrl}?module=${encodeURIComponent(returnUrl)}`
+    window.location.href = ssoLoginUrl
+  }
 
   useDispatchAuth();
 
@@ -30,7 +37,7 @@ const MessagesPage: FC = () => {
 
           <Spacing top="sm">
             {!authUser && (
-              <Button inline onClick={openAuthModal} color="primary">
+              <Button inline onClick={SSOLoginRedirect} color="primary">
                 Sign up
               </Button>
             )}

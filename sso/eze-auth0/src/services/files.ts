@@ -122,7 +122,7 @@ export class PostFile {
     
     axios.request(config)
     .then((response) => {
-      console.log(JSON.stringify(response.data));
+      // console.log(JSON.stringify(response.data));
     })
     .catch((error) => {
       console.error(error);
@@ -222,8 +222,6 @@ export class PostFile {
     };
     const response = await axios.post(url, payload, { headers });
 
-    console.log(response, 'this is my response')
-
     if (response.status !== 200 || ('exists' in response.data)) {
       const baseError = "Cannot get upload authorization."
       const deleteItem = await this.deleteItemById(childItem["parentItem"]["key"], childItem["parentItem"]["version"])
@@ -281,7 +279,13 @@ export class PostFile {
       if (response.status !== 204) {
         throw new Error('File uploaded to Zotero S3 but failed to register');
       }
-      return response.data;
+
+      const data = {
+        "data": response.data,
+        "itemKey": uploadFile.item_id
+      }
+      // response.data["itemKey"] = uploadFile.item_id
+      return data;
     } catch (error) {
       throw new Error("File was not registered to s3")
     }

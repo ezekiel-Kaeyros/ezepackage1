@@ -53,11 +53,7 @@ jobs:
           cd landing-page && \
           rm -f .env && \
           touch .env && \
-          echo 'NEXT_PUBLIC_COMMUNITIES_URL="https://communities.eze.ink/"' >> .env && \
-          echo 'NEXT_PUBLIC_KASHAPP_AUTH_URL="https://kashapp.biz/auth/mo_saml/index.php"' >> .env && \
-          echo 'NEXT_PUBLIC_LIVING_LIBRARY_URL="https://library.eze.ink"' >> .env && \
-          echo 'NEXT_PUBLIC_API_URL ="https://backcommunities.eze.ink"' >> .env && \
-          echo 'NEXT_PUBLIC_SSO_LOGIN_URL="https://sso.eze.ink/auth/login"' >> .env
+          echo "NEXT_PUBLIC_APP_ENV=staging" >> .env && \
       - name: Archive .env file
         run: tar -czf env-landing.tar.gz -C landing-page .env
       - name: Upload .env file

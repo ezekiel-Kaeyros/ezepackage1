@@ -13,15 +13,13 @@ import { useClickOutside } from '@/app/hooks/useClickOutside';
 import { getUserCookies } from '@/cookies/cookies';
 import { useAuth } from '@/app/hooks/useAuth';
 import { useRouter } from 'next/navigation';
+import config from '@/utils/config';
 
 type NavBarProps = {
   lang: string;
   navigation: any;
 };
-// const COMMUNITIES_URL = 'https://communities.eze.wiki';
-const COMMUNITIES_URL = process.env.NEXT_PUBLIC_COMMUNITIES_URL;
-
-console.log(COMMUNITIES_URL, "URLLL")
+const COMMUNITIES_URL = config.communitiesUrl
 
 const NavBar: React.FC<NavBarProps> = ({ lang, navigation }) => {
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
@@ -36,11 +34,20 @@ const NavBar: React.FC<NavBarProps> = ({ lang, navigation }) => {
   const handleLogin = async () => {
     try {
       const returnUrl = window.location.href + '/onboarding';
-      window.location.href = `${process.env.NEXT_PUBLIC_SSO_LOGIN_URL}?module=${encodeURIComponent(returnUrl)}`;
+      window.location.href = `${config.ssoLoginUrl}?module=${encodeURIComponent(returnUrl)}`;
     } catch (error) {
       console.error('Error:', error);
     }
   };
+
+  const handleVisitLibrary = async () => {
+    try {
+      const returnUrl = window.location.href + `${process.env.NEXT_PUBLIC_LIVING_LIBRARY_URL}/en/`;
+      window.location.href = `${process.env.NEXT_PUBLIC_SSO_LOGIN_URL}?module=${encodeURIComponent(returnUrl)}`;
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
 
   return (
     <nav
@@ -52,11 +59,10 @@ const NavBar: React.FC<NavBarProps> = ({ lang, navigation }) => {
       </Link>
 
       <div
-        className={`absolute lg:w-fit lg:relative  top-0 ${
-          toggleMenu
-            ? '-right-[100%] hidden lg:right-0 lg:block transition-all ease-soft-spring 2s'
-            : 'right-0 transition-all ease-soft-spring 2s'
-        }  h-screen lg:h-fit transition-all ease-soft-spring 2s  bg-white shadow-lg lg:shadow-none lg:ml-auto w-[16rem] lg:w-fit`}
+        className={`absolute lg:w-fit lg:relative  top-0 ${toggleMenu
+          ? '-right-[100%] hidden lg:right-0 lg:block transition-all ease-soft-spring 2s'
+          : 'right-0 transition-all ease-soft-spring 2s'
+          }  h-screen lg:h-fit transition-all ease-soft-spring 2s  bg-white shadow-lg lg:shadow-none lg:ml-auto w-[16rem] lg:w-fit`}
       >
         {/* Close icon */}
 
@@ -83,13 +89,18 @@ const NavBar: React.FC<NavBarProps> = ({ lang, navigation }) => {
             )}
           </li>
           <li className="border-t-1 hover:text-primaryColor lg:border-none px-6 lg:px-3 2xl:px-6  pt-4 lg:pt-0 pb-2">
-            <Link href={`${process.env.NEXT_PUBLIC_KASHAPP_AUTH_URL}`}> {navigation.online}</Link>
+            <Link href={`${config.kashAppAuthUrl}`}> {navigation.online}</Link>
           </li>
           <li className="border-t-1 hover:text-primaryColor lg:border-none px-6 lg:px-3 2xl:px-6  pt-4 lg:pt-0 pb-2">
-            <Link href={`${process.env.NEXT_PUBLIC_LIVING_LIBRARY_URL}`}>
-              {' '}
-              {navigation.library}
-            </Link>
+            {token ? (
+              <Link href={`${config.livingLibraryUrl}`}>
+                {navigation.library}
+              </Link>
+            ) : (
+              <Link href="#" onClick={handleLogin}>
+                {navigation.library}
+              </Link>
+            )}
           </li>
           <li className="border-t-1 hover:text-primaryColor lg:border-none px-6 lg:px-3 2xl:px-6  pt-4 lg:pt-0 pb-2">
             <Link href="#"> {navigation.fuding}</Link>

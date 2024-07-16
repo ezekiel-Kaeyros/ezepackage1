@@ -20,10 +20,31 @@ const NewCardDocument: React.FC<{
   id?: string;
   name?:string;
   url?:any;
+  date?:any;
+  price?:string;
 }> = (props) => {
   const { push } = useRouter();
   const { dispatch, idDoc } = useAddDocument();
-  console.log(props.id);
+
+  const convertDateToFrenchFormat = (dateString: string) => {
+    const date = new Date(dateString);
+
+    const day = date.getDate();
+    const month = date.getMonth();
+    const year = date.getFullYear();
+
+    const monthNames = [
+        "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+        "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+    ];
+
+    const formattedDate = `${day} ${monthNames[month]} ${year}`;
+    return formattedDate;
+};
+
+
+const newFormat = convertDateToFrenchFormat(props.date);
+console.log(props.imgCover, 'coverImage')
   
   return (
 
@@ -43,8 +64,8 @@ const NewCardDocument: React.FC<{
                 src={props.imgCover ? props.imgCover : cover}
                 alt=""
                 width={192}
-                height={192}
-                className="w-48 h-48 -mt-12 object-cover"
+                height={200}
+                className="w-48 h-80 -mt-12 object-cover"
               />
 
               <p className="lg:text-base sm:text-sm text-xs px-3 py-2 bg-[#47586E] font-semibold text-white rounded-tl-full rounded-bl-full rounded-tr-full">
@@ -68,17 +89,18 @@ const NewCardDocument: React.FC<{
             </div>
             <p className="my-2 text-[#909DAD] text-sm font-semibold">By {props.name}</p>
             <p className="flex justify-between text-[#47586E] font-bold">
-              <span>feb 2004</span>
-              <span>{Math.floor(10000 + Math.random() * 90000)}</span>
+              <span>{newFormat.includes('undefined') ? '' : newFormat}</span>
+              {/* <span>{Math.floor(10000 + Math.random() * 90000)}</span> */}
+              <span>{props.price} XAF</span>
             </p>
 
             <div className="flex justify-between items-center my-4">
               <div className="flex justify-start sm:gap-2  items-center">
-                {arrayTest.map((item) => {
+                {arrayTest.map((item, index) => {
                   if (props.number && props.number > 0 && item <= props.number) {
-                    return <Image src={start} alt="" />;
+                    return <Image src={start} alt="" key={index}/>;
                   } else {
-                    return <Image src={startGrey} alt="" />;
+                    return <Image src={startGrey} alt="" key={index}/>;
                   }
                 })}
               </div>

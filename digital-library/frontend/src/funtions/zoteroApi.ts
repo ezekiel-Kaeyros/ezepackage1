@@ -35,7 +35,7 @@ export const fetchGroups = async (): Promise<ZoteroGroup[]> => {
       }
     });
 
-    console.log(response, "RESPONSE DATA");
+    // console.log(response, "RESPONSE DATA");
 
     if (response.status !== 200) {
       throw new Error(`Failed to fetch groups, status: ${response.status}`);

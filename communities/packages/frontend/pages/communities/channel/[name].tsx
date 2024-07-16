@@ -17,6 +17,8 @@ import RepostCard from '../../../components/Post/RepostCard';
 import { useTranslation } from 'react-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { GetStaticProps } from 'next';
+import {config} from '../../../utils';
+
 const fetchChannelByName = async (channelName: string) => {
   const { data } = await axios.get(`/channels/${channelName}`);
   return data;
@@ -47,6 +49,12 @@ const Channel: FC<ChannelProps> = ({ channel }) => {
   const openAuthModal = () => {
     dispatch(openAuthPopup(PopupType.Sign_Up));
   };
+
+  const SSOLoginRedirect = () => {
+    const returnUrl = window.location.href
+    const ssoLoginUrl = `${config.ssoLoginUrl}?module=${encodeURIComponent(returnUrl)}`
+    window.location.href = ssoLoginUrl
+  }
 
   useDispatchAuth();
 
@@ -89,7 +97,7 @@ const Channel: FC<ChannelProps> = ({ channel }) => {
             <CommunityIcon width="40" />
 
             <Spacing top="sm">
-              <Button inline onClick={openAuthModal} color="primary">
+              <Button inline onClick={SSOLoginRedirect} color="primary">
                 Sign up
               </Button>
 

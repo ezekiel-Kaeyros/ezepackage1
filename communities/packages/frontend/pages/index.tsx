@@ -15,6 +15,7 @@ import RepostCard from '../components/Post/RepostCard';
 import { useTranslation } from 'react-i18next';
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import {config} from '../utils';
 
 const fetchPostsByFollowing = async ({ pageParam = 0 }) => {
   const { data } = await axios.get(`/posts/follow?offset=${pageParam}&limit=${DataLimit.PostsByFollowing}`);
@@ -33,6 +34,12 @@ const Home: FC = () => {
     enabled: authUser !== null,
     dataLimit: DataLimit.PostsByFollowing,
   });
+
+  const SSOLoginRedirect = () => {
+    const returnUrl = window.location.href
+    const ssoLoginUrl = `${config.ssoLoginUrl}?module=${encodeURIComponent(returnUrl)}`
+    window.location.href = ssoLoginUrl
+  }
 
   useDispatchAuth();
 
@@ -62,7 +69,7 @@ const Home: FC = () => {
 
             <Spacing top="sm">
               {!authUser && (
-                <Button inline onClick={openAuthModal} color="primary">
+                <Button inline onClick={SSOLoginRedirect} color="primary">
                   Sign up
                 </Button>
               )}

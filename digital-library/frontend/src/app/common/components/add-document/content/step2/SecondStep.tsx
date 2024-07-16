@@ -256,10 +256,10 @@ const SecondStep: React.FC<{ step: number; changeHandler: any }> = ({ step, chan
     const completeData = {
       ...data,
       coverImage:img,
+      // url: img,
       url: img ? URL.createObjectURL(img) : '',
       step:step
     }
-    console.log(completeData, 'this is my completeData');
     setFormCookies(completeData, SECOND_STEP);
 
     dispatch(
@@ -269,6 +269,7 @@ const SecondStep: React.FC<{ step: number; changeHandler: any }> = ({ step, chan
         coverImage: img,
         lastName: lastName,
         title,
+        // url: img,
         url: img ? URL.createObjectURL(img) : '',
       })
     );

@@ -9,7 +9,6 @@ import {
 import React from 'react';
 import { ModalPropsType } from './modal';
 import { Button } from '../button/Button';
-import { usePathname } from 'next/navigation';
 
 const CustomModal: React.FC<ModalPropsType & ModalProps> = ({
   children,
@@ -18,57 +17,63 @@ const CustomModal: React.FC<ModalPropsType & ModalProps> = ({
   closeButtonTitle,
   validateButtonTitle,
   onClose,
+  classStyle,
+  iconTitle,
   onValidateButton,
-  id,
+  showFooter,
+  positon,
+  hideCloseButton,
+  modalClass,
 }) => {
-  const pathname = usePathname();
-  const lang1 = pathname.split('/');
-
   return (
-    // eslint-disable-next-line react/no-children-prop
-    <Modal backdrop="blur" isOpen={isOpen} onOpenChange={onClose}>
-      {/* <ModalContent className="bg-cardDark overflow-y-scroll h-8/12 xl:h-[80vh] xl:max-w-2xl"> */}
-      <ModalContent className="white h-8/12 xl:h-40 xl:max-w-2xl p-5">
-        {/* {(onClose) => (
-          <> */}
+    <Modal
+      className={classStyle}
+      backdrop="blur"
+      isOpen={isOpen}
+      onClose={onClose}
+      placement={positon}
+      hideCloseButton={hideCloseButton}
+    >
+      <ModalContent>
+        {(onClose) => (
+          <>
             {title && (
-              <ModalHeader
-                className="flex 
-              flex-col gap-1"
-              >
+              <ModalHeader className="flex flex-col gap-1 ml-[2%] font-[900] text-2xl">
                 {title}
               </ModalHeader>
             )}
-            <ModalBody>
-              {/* <div>
-                <h1 className="font-medium text-xl text-red-600">
-                  Are You sure you want to delete this client?
-                </h1>
-              </div> */}
-              {children}
-            </ModalBody>
-            <ModalFooter>
-              {closeButtonTitle && (
+            <ModalBody className={modalClass}>{children}</ModalBody>
+
+            {showFooter ? (
+              <ModalFooter>
+                {/* {closeButtonTitle && (
+                    <Button variant="secondary" onClick={onClose}>
+                      {closeButtonTitle}
+                    </Button>
+                  )}
+                  {validateButtonTitle && (
+                    <Button onClick={onValidateButton}>
+                      {validateButtonTitle}
+                    </Button>
+                  )} */}
                 <Button
-                  className="bg-[lightgray] text-black rounded-md"
+                  // disabled={  }
+                  // variant={'mainColor'}
+                  // icon={ bulk_messageIcon }
+                  // rightIcon={ true }
+                  // leftIcon={ true }
+                  // iconSize={30}
                   onClick={onClose}
-                >
-                  {closeButtonTitle}
-                </Button>
-              )}
-              {validateButtonTitle && (
-                <Button
-                  className="bg-[lightgray] text-black rounded-md"
-                  onClick={() => {
-                    onValidateButton(lang1[4]);
-                  }}
+                  className="w-[15%]"
                 >
                   {validateButtonTitle}
                 </Button>
-              )}
-            </ModalFooter>
-          {/* </>
-        )} */}
+              </ModalFooter>
+            ) : (
+              ''
+            )}
+          </>
+        )}
       </ModalContent>
     </Modal>
   );

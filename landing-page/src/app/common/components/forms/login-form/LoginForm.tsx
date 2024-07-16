@@ -17,10 +17,9 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import toast, { Toaster } from 'react-hot-toast';
 import { getIsFirstTime, setUserCookies } from '@/cookies/cookies';
-import { getUserInfo } from '@/utils/getUserInfo';
+import config from '@/utils/config';
 
-// const COMMUNITIES_URL = 'https://communities.eze.wiki/';
-const COMMUNITIES_URL: any = process.env.NEXT_PUBLIC_COMMUNITIES_URL
+const COMMUNITIES_URL: any = config.communitiesUrl
 
 const LoginForm: React.FC<{ login: any }> = ({ login }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -58,9 +57,7 @@ const LoginForm: React.FC<{ login: any }> = ({ login }) => {
     console.log('isFirstTime: ', isFirstTime);
     if (!moduleExists || isCommunity) {
       try {
-        console.log('FOR HERE???');
         const res = await new AuthService().login(data);
-        console.log('<RES>: ', res);
 
         if (res?.status !== 200) {
           setErrorMessage(res?.data);
@@ -76,7 +73,6 @@ const LoginForm: React.FC<{ login: any }> = ({ login }) => {
         toast.error(error.response?.data);
       }
     } else {
-      console.log('EI ENTER FOR HERE?');
       try {
         // const loginuser = SSOClient.loginUser(); // <-- Added semicolon
         // console.log("Login User", loginuser)

@@ -63,7 +63,7 @@ const Pricing: React.FC<{
       <p className="mb-8 lg:text-base text-sm font-bold">Available Features</p>
       <div className="flex flex-col gap-5 h-64 mb-5">
         {props.details.map((item) => (
-          <p className={`flex items-center gap-3 lg:text-sm text-xs`}>
+          <p className={`flex items-center gap-3 lg:text-sm text-xs`} key={item.text}>
             <Image src={item.active ? activeIcon : notActive} alt="" />
 
             <span

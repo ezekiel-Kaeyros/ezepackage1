@@ -6,7 +6,7 @@ export enum Cookies {
 
 export const setCookie = (name: string, value: string, days = 360): void => {
   const d = new Date();
-  d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
+  d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000000);
   const expires = 'expires=' + d.toUTCString();
   document.cookie = name + '=' + value + ';' + expires + ';path=/';
 };
@@ -28,6 +28,6 @@ export const getCookie = (cname: string): string => {
 
 export const deleteCookie = (name: string): void => {
   const date = new Date();
-  date.setTime(date.getTime() + -1 * 24 * 60 * 60 * 1000);
+  date.setTime(date.getTime() + -1 * 24 * 60 * 60 * 1000000);
   document.cookie = name + '=; expires=' + date.toUTCString() + '; path=/';
 };

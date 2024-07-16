@@ -80,7 +80,7 @@ const CarouselChannel: React.FC<{
     <div className="w-full ">
       <Slider {...settings}>
         {data?.map((item) => (
-          <div className="px-2">
+          <div className="px-2" key={item.id}>
             <CardChannel text={item.name} id={item.id.toString()} />
           </div>
         ))}

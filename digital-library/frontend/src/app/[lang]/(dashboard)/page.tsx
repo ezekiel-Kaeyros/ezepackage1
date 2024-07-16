@@ -14,7 +14,9 @@ import { idHandler } from "@/redux/features/addDocument-slice";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { toggleFunc2 } from "@/redux/features/auth-slice";
-const home = () => {
+
+
+const Home = () => {
   const { arrayDoc, dispatch } = useAddDocument()
 
   const{push}= useRouter()
@@ -81,7 +83,7 @@ const home = () => {
           </div>
         </Link>
 
-        {arrayDoc.length > 0 &&
+        {/* {arrayDoc.length > 0 &&
           arrayDoc.map((item, index) => (
             <div
               key={index}
@@ -106,29 +108,9 @@ const home = () => {
                 {item.categorie}
               </p>
             </div>
-          ))}
+          ))} */}
       </div>
-
-      {/* <div className="w-full flex justify-between items-center mb-5 px-1">
-        <p className="font-bold text-lg">Recent</p>
-        <p className=" font-bold border-b-3 border-[green] text-[green]">
-          See More
-        </p>
-      </div>
-      <div className="w-full  pb-14">
-        <Carousel data={arraytest} />
-      </div>
-
-      <div className="w-full flex justify-between items-center mb-5 px-1">
-        <p className="font-bold text-lg">Trending</p>
-        <p className=" font-bold border-b-3 border-[green] text-[green]">
-          See More
-        </p>
-      </div>
-      <div className="w-full  pb-14">
-        <Carousel data={arraytest1} />
-      </div> */}
     </div>
   );
 };
-export default home;
+export default Home;

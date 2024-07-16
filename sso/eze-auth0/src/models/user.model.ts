@@ -1,108 +1,21 @@
-import mongoose, { Document } from 'mongoose';
-import bcrypt from 'bcrypt';
-import { UserRole } from '../constants/types'
+import mongoose, { Schema, Document } from 'mongoose';
 
-const Schema = mongoose.Schema;
-
-const UserSchema = new Schema(
-  {
-    role: {
-      type: String,
-      required: true,
-      default: UserRole.Regular,
-      enum: Object.values(UserRole),
-    },
-    fullName: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      lowercase: true,
-      trim: true,
-      unique: true,
-      required: true,
-    },
-    emailVerified: {
-      type: Boolean,
-      default: false,
-    },
-    banned: {
-      type: Boolean,
-      default: false,
-    },
-    password: {
-      type: String,
-    },
-    username: {
-      type: String,
-      lowercase: true,
-      trim: true,
-      unique: true,
-      sparse: true,
-    },
-    resetPasswordToken: String,
-    facebookId: {
-      type: String,
-      default: '',
-    },
-    googleId: {
-      type: String,
-      default: '',
-    },
-    githubId: {
-      type: String,
-      default: '',
-    },
-    image: String,
-    firstTime: {
-      type: Boolean,
-      default: true
-    },
-    isOnline: {
-      type: Boolean,
-      default: false,
-    }
-  },
-  {
-    timestamps: true,
-  }
-);
-
-export interface IUser extends Document {
-  role: string;
+interface IUser extends Document {
   fullName: string;
-  email: string;
-  emailVerified: boolean;
-  banned: boolean;
-  password: string;
   username: string;
-  resetPasswordToken: string;
-  facebookId: string;
-  googleId: string;
-  githubId: string;
-  image: string;
+  email: string;
+  role: string;
+  subscription: string;
   firstTime: boolean;
-  isOnline: boolean;
-  isValidPassword: (password: string) => Promise<boolean>;
-  _id?: string;
 }
 
-UserSchema.pre<IUser>('save', async function (next) {
-  if (this.password) {
-    const hash = await bcrypt.hash(this.password, 10);
-
-    this.password = hash;
-  }
-  next();
+const UserSchema: Schema = new Schema({
+  fullName: { type: String, required: true },
+  username: { type: String, required: true },
+  email: { type: String, required: true },
+  role: { type: String, required: true },
+  subscription: { type: String, required: true },
+  firstTime: { type: Boolean, required: false }
 });
 
-UserSchema.methods.isValidPassword = async function (password: any) {
-  const user = this as IUser;
-  const compare = await bcrypt.compare(password, user.password);
-
-  // return compare;
-  return true;
-};
-
-export default mongoose.model<IUser>('User', UserSchema);
+export const User = mongoose.model<IUser>('User', UserSchema);

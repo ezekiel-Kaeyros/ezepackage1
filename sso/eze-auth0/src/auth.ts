@@ -84,7 +84,7 @@ authRouter.post(
 
 
     // Generate a token
-    const token = jwt.sign({ user: userdata2 }, "WriteYourSecret", { expiresIn: "1h" });
+    const token = jwt.sign({ user: userdata2 }, "WriteYourSecret");
 
     const userdataString = JSON.stringify(userdata);
     console.log("REDIRECT TO: ", moduleCookie)

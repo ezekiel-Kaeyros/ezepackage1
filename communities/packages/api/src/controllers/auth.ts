@@ -61,7 +61,7 @@ const AuthController = {
     }
 
     const user = await createUser(fullName, username, email, password, true);
-    const token = jwt.sign({ user: { userId: user._id, email } }, process.env.SECRET, { expiresIn: '1h' }); // Follipi's code
+    const token = jwt.sign({ user: { userId: user._id, email } }, process.env.SECRET); // Follipi's code
 
     if (isEmailVerificationRequired) {
       try {
@@ -187,7 +187,7 @@ const AuthController = {
       return res.status(ErrorCodes.Bad_Request).send("A user with a given email address doesn't exist.");
     }
 
-    const token = jwt.sign({ user: { email } }, process.env.SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ user: { email } }, process.env.SECRET);
     await updateUserResetPasswordToken(user._id, token);
 
     const template = await getEmailTemplate({

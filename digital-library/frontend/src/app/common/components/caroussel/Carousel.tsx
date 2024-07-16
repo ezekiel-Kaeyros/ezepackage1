@@ -9,6 +9,9 @@ import { useAddDocument } from "@/app/hooks/useAddDocument";
 // import { fetchGroupItems, fetchGroups } from "@/functions/zoteroApi";
 import { fetchGroupItems, fetchGroups } from "@/funtions/zoteroApi";
 import coverPhoto from '../../../../../public/images/coverphoto.svg';
+import Link from "next/link";
+import axios from "axios";
+import AnimateClick from "../animateClick/AnimateClick";
 
 interface Item {
   key: string;
@@ -26,31 +29,31 @@ const api_key = 'ljJwZLSkS26ymt6DFd5D2Blc'
 const user_id = '14487670'
 
 type ZoteroGroup = {
- id: number
+  id: number
 }
 
 type ZoteroItem = {
- key?: any;
- data?: {
-   key?: any;
-   contentType?: string;
-   itemType?: string
- };
- links?: {
-   enclosure?: {
-     type?: string;
-     href: string;
-   };
- };
- library?: {
-   name?: string | any;
- }
- meta: {
-  createdByUser: {
-    username:string;
-    name:string;
+  key?: any;
+  data?: {
+    key?: any;
+    contentType?: string;
+    itemType?: string
+  };
+  links?: {
+    enclosure?: {
+      type?: string;
+      href: string;
+    };
+  };
+  library?: {
+    name?: string | any;
   }
- }
+  meta: {
+    createdByUser: {
+      username: string;
+      name: string;
+    }
+  }
 };
 
 
@@ -77,35 +80,32 @@ const Carousel: React.FC<{
   const { arrayDoc } = useAddDocument();
   const array = [...arrayDoc, ...data];
   const [loading, setLoading] = useState(false)
-
-  const [pdfUrls, setPdfUrls] = useState<string[]>([])
+  const [items, setItems] = useState<any[]>([])
+  const [error, setError] = useState<any>([])
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true)
+    setLoading(true)
+    async function fetchData() {
       try {
-        console.log('this is my groups')
-        const groups = await fetchGroups()
-        const allPdfUrls: string[] = []
-        // console.log(groups, 'groups')
-        for (const group of groups) {
-          // console.log(group, 'this is my group')
-          const groupPdfUrls: any = await fetchGroupItems(group.id)
-          console.log(groupPdfUrls, 'pdfurl')
-          allPdfUrls.push(...groupPdfUrls)
-        }
-        setLoading(false)
-        setPdfUrls(allPdfUrls)
+        const url = `${process.env.NEXT_PUBLIC_SSO_URL}/api/items/5577831`;
+        console.log('response response98376')
+        const res = await axios.get(url);
+        console.log(res, 'response')
+        setItems(res.data);
       } catch (error) {
-        setLoading(false)
-        console.error('Error fetching Zotero data:', error)
+        setError(error);
+        console.log(error)
+      } finally {
+        setLoading(false);
       }
     }
 
-    fetchData()
+    fetchData();
+    // fetchData()
   }, [])
 
 
+  console.log(items, 'pdfUrls')
 
 
   const settings = {
@@ -189,23 +189,31 @@ const Carousel: React.FC<{
       </Slider> */}
 
       {loading ? <div className="flex justify-center items-center">
-  <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-500"></div>
-</div> : 
+        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-500"></div>
+      </div> :
         <Slider {...settings}>
-        {pdfUrls.length > 0 && pdfUrls.map((item: any, index) => (
-            <div className="px-4" key={index}>
-            {/* <Link href={item.pdfUrl} target="_blank">{item.pdfUrl}</Link> */}
-            <NewCardDocument
-                imgCover={coverPhoto}
-                description={item.data.note}
-                title={item.data.title}
-                categorie={item.data.itemType}
-                id={item.id}
-                name={item.meta.createdByUser.name}
-                url={item.pdfUrl}
-              />
-          </div>
-          ))}
+          {items.length > 0 && items.map((item: any, index) => {
+            return (
+              <Link href={`/en/digital-library/${item.key}`} key={item.key}>
+                 <AnimateClick>
+                  <div className="px-4" key={index}>
+                    {/* <Link href={item.pdfUrl} target="_blank">{item.pdfUrl}</Link> */}
+                    <NewCardDocument
+                      imgCover={item.coverImage}
+                      description={item.data.note}
+                      title={item.data.title}
+                      categorie={item.data.itemType}
+                      id={item.id}
+                      name={item.meta.createdByUser.name}
+                      url={item.pdfUrl}
+                      date={item.data.accessDate}
+                      price={item.price}
+                    />
+                  </div>
+                </AnimateClick>
+              </Link>
+            )
+          })}
         </Slider>
       }
       {/* <p className="font-bold text-xl text-800-red">Hello there jimmy</p>

@@ -8,6 +8,7 @@ import cors from 'cors';
 import authRouter from './auth';
 import fileRouter from './routes/files';
 import dotenv from 'dotenv';
+import getItemRouter from './routes/getItem';
 dotenv.config();
 
 const app = express();
@@ -51,6 +52,7 @@ app.get('/profile', (req, res) => {
 });
 
 app.use('/api/files', fileRouter);
+app.use('/api/items', getItemRouter)
 
 // MongoDB connection URI
 const mongoURI = process.env.MONGODB_URI

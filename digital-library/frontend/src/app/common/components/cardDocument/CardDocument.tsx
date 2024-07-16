@@ -5,7 +5,7 @@ import startGrey from "../../../../../public/images/Shape.svg";
 import start from "../../../../../public/images/star.svg";
 import saveGrey from "../../../../../public/images/Save to library.svg";
 import save from "../../../../../public/images/Save to library (1).svg";
-import { number } from "zod";
+// import { number } from "zod";
 const arrayTest = [1, 2, 3, 4, 5];
 const CardDocument: React.FC<{
   img?: any;
@@ -35,11 +35,11 @@ const CardDocument: React.FC<{
 
         <div className="flex justify-between items-center">
           <div className="flex justify-start sm:gap-2  items-center">
-            {arrayTest.map((item) => {
+            {arrayTest.map((item, index) => {
               if (props.number > 0 && item <= props.number) {
-                return <Image src={start} alt="" />;
+              return   <div key={index}><Image src={start} alt="" /></div>;
               } else {
-                return <Image src={startGrey} alt="" />;
+                return <div key={index}><Image src={startGrey} alt="" /></div>;
               }
             })}
           </div>

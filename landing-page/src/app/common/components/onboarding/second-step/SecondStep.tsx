@@ -4,41 +4,19 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { SecondStepFormValues } from './secondStep';
 import { Button } from '../../button/Button';
 import CheckboxCommunityChip from '../checkbox-community-chip/CheckboxCommunityChip';
-import { redirect, useRouter } from 'next/navigation';
-import { isFirstTime } from '@/cookies/cookies';
+import { useRouter } from 'next/navigation';
 import ChannelService from '@/services/channelService';
 import { useAuth } from '@/app/hooks/useAuth';
-import { getUserInfo } from '@/utils/getUserInfo';
 import axios from 'axios';
-import { API_URL } from '@/services/dataService';
-import { url } from 'inspector';
+import { default as C } from '@/utils/config';
 
-// const COMMUNITIES_URL = 'https://communities.eze.wiki/';
-const COMMUNITIES_URL: any = process.env.NEXT_PUBLIC_COMMUNITIES_URL;
-// const communities = [
-//   {
-//     id: 1,
-//     name: 'community',
-//     title: 'Health Sciences',
-//     value: 'Health Sciences',
-//     description:
-//       'Quantitative researchers on microbiology research. With discussion on advanced technique',
-//   },
-// };
-
-// Getting new info from user
-
-// Joining request
-
+const COMMUNITIES_URL: any = C.communitiesUrl
 const config = {
   headers: {
     'content-type': 'application/json',
   }
 }
 const joinChannel = async ({ channelId, userId, url }: any) => {
-  console.log('channelId', channelId);
-  console.log('userId', userId);
-
   const response = await axios.post(
     `${url}/channels/join/${channelId}`,
     { userId },
@@ -48,9 +26,6 @@ const joinChannel = async ({ channelId, userId, url }: any) => {
 };
 
 const getUserEmail = async (url: string, data: { email: string }) => {
-  // console.log('channelId', channelId);
-  // console.log('userId', userId);
-
   const response = await axios.get(`${url}/users/email/${data.email}`);
   return response;
 };
@@ -67,8 +42,6 @@ const updateChannel = async (
   },
   url: string
 ) => {
-  // console.log('channelId', channelId);
-  // console.log('userId', userId);
 
   const response = await axios.put(
     `${url}/channels/update-member`,
@@ -77,67 +50,6 @@ const updateChannel = async (
   );
   return response;
 };
-// const COMMUNITIES_URL = 'https://communities.eze.wiki/';
-// const COMMUNITIES_URL = 'http://localhost:3001';
-// const communities = [
-//   {
-//     id: 1,
-//     name: 'community',
-//     title: 'Health Sciences',
-//     value: 'Health Sciences',
-//     description:
-//       'Quantitative researchers on microbiology research. With discussion on advanced technique',
-//   },
-//   {
-//     id: 2,
-//     name: 'community',
-//     title: 'Mines',
-//     value: 'Mines',
-//     description:
-//       'Mines researchers on microbiology research. With discussion on advanced technique',
-//   },
-//   {
-//     id: 3,
-//     name: 'community',
-//     title: 'ICT',
-//     value: 'ICT',
-//     description:
-//       'ICT researchers on microbiology research. With discussion on advanced technique',
-//   },
-//   {
-//     id: 4,
-//     name: 'community',
-//     title: 'Agro-food Sciences',
-//     value: 'Agro-food Sciences',
-//     description:
-//       'Agro-food researchers on microbiology research. With discussion on advanced technique',
-//   },
-//   {
-//     id: 5,
-//     name: 'community',
-//     title: 'Energy',
-//     value: 'Energy',
-//     description:
-//       'Energy researchers on microbiology research. With discussion on advanced technique',
-//   },
-//   {
-//     id: 6,
-//     name: 'community',
-//     title: 'Social Sciences',
-//     value: 'Social Sciences',
-//     description:
-//       'Social researchers on microbiology research. With discussion on advanced technique',
-//   },
-//   ,
-//   {
-//     id: 7,
-//     name: 'community',
-//     title: 'Data Analytics',
-//     value: 'Data Analytics',
-//     description:
-//       'Data Anal researchers on microbiology research. With discussion on advanced technique',
-//   },
-// ];
 
 const SecondStep = () => {
   const [topic, setTopic] = useState<
@@ -186,29 +98,21 @@ const SecondStep = () => {
   const handleSend = async () => {
     // isFirstTime('true');
     push(COMMUNITIES_URL);
-    console.log(communities);
   };
   useEffect(() => {
     const response = new ChannelService()
       .channel()
       .then((result) => {
-        console.log('result======', result.data);
         setTopic(result.data);
       })
       .catch((error) => {
-        console.log('error==============', error);
       });
-    console.log('user11111111', number);
-    console.log('val11111111111', communities.length);
   }, []);
 
   useEffect(() => {
     if (typeof number == 'number' && number == communities.length) {
       push(COMMUNITIES_URL);
     }
-    console.log('user11111111', number);
-    console.log(communities, 'long');
-
   }, [number, communities]);
 
   const getTopic = (value: {
@@ -236,8 +140,7 @@ const SecondStep = () => {
   const handleJoin = async () => {
     console.log('ok');
     setLoad(true)
-    const userNew = await getUserEmail(API_URL, { email: user?.email! })
-    console.log('userNew++++++', userNew);
+    const userNew = await getUserEmail(C.apiUrl, { email: user?.email! })
     if (userNew.status == 200) {
       if (communities && communities.length > 0) {
         let row = 0;
@@ -245,7 +148,7 @@ const SecondStep = () => {
           const joiningDetails = {
             userId: userNew.data?._id,
             channelId: item._id,
-            url: API_URL,
+            url: C.apiUrl,
           }; handleSend;
           try {
             const response = await joinChannel(joiningDetails);
@@ -258,7 +161,7 @@ const SecondStep = () => {
                   description: item.description,
                   members: item.members ? item.members + 1 : 1,
                 },
-                API_URL
+                C.apiUrl
               );
               row = row + 1;
 

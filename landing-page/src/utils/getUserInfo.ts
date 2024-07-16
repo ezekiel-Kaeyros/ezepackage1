@@ -1,28 +1,18 @@
 'use server'
 import { setUserCookies } from "@/cookies/cookies";
-import { API_URL } from "@/services/dataService";
 import axios from "axios";
+import config from "./config";
 
-export const getUserInfo = async (token:string) => {
-  // const token = JSON?.parse(cookies.get(Cookies.Token, { domain: '.eze.wiki' }));
-//   const token = JSON?.parse(cookies.get(Cookies.Token));
+export const getUserInfo = async (token: string) => {
   try {
     axios.defaults.headers.common = { Authorization: `bearer ${token}` };
-    const { data } = await axios.get(API_URL+'/auth-user');
-      if (data) {
-        setUserCookies({
-          ...data,
-          isOnline: true,
-        });
-          console.log('data123456789',data);
-          return data
-        // dispatch(
-          
-        // setAuthUser({
-        //   ...data,
-        //   isOnline: true,
-        // })
-    //   );
+    const { data } = await axios.get(config.apiUrl + '/auth-user');
+    if (data) {
+      setUserCookies({
+        ...data,
+        isOnline: true,
+      });
+      return data
     }
   } catch (error) {
     console.log(`error ${error}`);

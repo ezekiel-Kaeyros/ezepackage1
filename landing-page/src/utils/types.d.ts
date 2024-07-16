@@ -12,3 +12,15 @@ export interface IPointOfSalesType {
     lng: number;
   };
 }
+
+export interface IConfig {
+  ["staging" | "development" | "production"]: {
+    apiUrl: string,
+    landingPageUrl: string,
+    communitiesUrl: string,
+    livingLibraryUrl: string,
+    kashAppAuthUrl: string,
+    ssoLoginUrl: string,
+    ssoLogoutUrl: string,
+  }
+}

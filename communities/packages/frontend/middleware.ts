@@ -46,6 +46,8 @@ export async function middleware(request: NextRequest) {
         });
 
         response.cookies.set('user_data', userData, {
+          httpOnly: false,
+          secure: false,
           path: '/'
         });
       } else {
@@ -57,6 +59,8 @@ export async function middleware(request: NextRequest) {
         });
 
         response.cookies.set('user_data', userData, {
+          httpOnly: false,
+          secure: false,
           path: '/',
           domain: '.eze.ink'
         });

@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google';
 import Head from 'next/head';
 // import { ThemeProvider } from '../common/dark-mode/theme-provider/theme-provider';
 import ReduxProvider from '@/redux/provider';
+import { NextUIProvider } from "@nextui-org/react";
 
 import Header from '../common/components/header/header';
 import { Providers } from '../common/nextui/providers';
@@ -36,17 +37,19 @@ export default function RootLayout({
       <Head>
         <meta name="description">{metadata.description}</meta>
       </Head>
-      
+
       <body className={`${inter.className}`}>
         <ReduxProvider>
           {/* <ThemeProvider attribute="class" defaultTheme="white" enableSystem> */}
-            <Providers>
+          <Providers>
+            <NextUIProvider>
               <div className="bg-white">{children}</div>
-            </Providers>
+            </NextUIProvider>
+          </Providers>
           {/* </ThemeProvider> */}
         </ReduxProvider>
         <p></p>
-        
+
       </body>
     </html>
   );

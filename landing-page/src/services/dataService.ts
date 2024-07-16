@@ -1,13 +1,11 @@
 import axios from 'axios';
-
-export const API_URL = 'https://backcommunities.eze.ink';
-// export const API_URL = 'http://localhost:4000';
+import config from "@/utils/config"
 
 export default class DataService {
   client: any;
   constructor() {
     this.client = axios.create({
-      baseURL: API_URL,
+      baseURL: config.apiUrl,
       timeout: 30000,
       timeoutErrorMessage: 'Time out!',
       headers: {

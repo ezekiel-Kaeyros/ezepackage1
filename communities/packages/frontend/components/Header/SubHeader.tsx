@@ -80,6 +80,12 @@ const SubHeader: ForwardRefRenderFunction<HTMLButtonElement, SubHeaderProps> = (
     }
   };
 
+  const SSOLoginRedirect = () => {
+    const returnUrl = window.location.href
+    const ssoLoginUrl = `${config.ssoLoginUrl}?module=${encodeURIComponent(returnUrl)}`
+    window.location.href = ssoLoginUrl
+  }
+
   const isSmallScreen = breakpoint === 'xs' || breakpoint === 'sm';
 
   return (
@@ -181,7 +187,7 @@ const SubHeader: ForwardRefRenderFunction<HTMLButtonElement, SubHeaderProps> = (
               ghost={isSmallScreen}
               size="sm"
               color="primary"
-              onClick={() => dispatch(openAuthPopup(PopupType.Log_In))}
+              onClick={SSOLoginRedirect}
             >
               {isSmallScreen ? <Avatar /> : 'Log in'}
             </Button>

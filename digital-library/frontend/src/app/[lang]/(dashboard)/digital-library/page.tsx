@@ -19,7 +19,10 @@ import Footer from "@/app/common/components/footer/Footer";
 import { useEffect, useState } from "react";
 import { useToggleSidebar } from "@/app/hooks/useToggleSidebar";
 import { toggleFunc2 } from "@/redux/features/auth-slice";
-const home = () => {
+
+
+
+const Home = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0)
   const arraytest = [
     { num: 3, save: true },
@@ -166,7 +169,7 @@ const home = () => {
 
         <div className=" w-full flex flex-wrap gap-5 justify-center mb-24 text-black ">
           {channelarray.map((item) => (
-            <CardChannel text={item.name} id={item.id.toString()} />
+            <CardChannel text={item.name} id={item.id.toString()} key={item.id}/>
           ))}
         </div>
       </div>
@@ -291,6 +294,7 @@ const home = () => {
         <div className="flex gap-x-20 items-center justify-center">
           {priceArray.map((item) => (
             <Pricing
+            key={item.id}
             itemId={item.id}
             currentIndex={currentIndex}
             setCurrentIndex={setCurrentIndex}
@@ -322,7 +326,7 @@ const home = () => {
     </div>
   );
 };
-export default home;
+export default Home;
 
 
 

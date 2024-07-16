@@ -9,6 +9,7 @@ import { openAuthPopup, PopupType } from '../../store/auth';
 import Seo from '../../components/Seo';
 import { CommunityIcon } from '../../components/ui/icons';
 import LayoutCommunities from '../../components/Layout/CommuntiesLayout';
+import { config } from '../../utils';
 
 export const updateNotificationSeen = async (): Promise<any> => {
   const { data } = await axios.put('/notifications/seen');
@@ -31,6 +32,12 @@ const NotificationsPage: FC = () => {
   const openAuthModal = () => {
     dispatch(openAuthPopup(PopupType.Sign_Up));
   };
+
+  const SSOLoginRedirect = () => {
+    const returnUrl = window.location.href
+    const ssoLoginUrl = `${config.ssoLoginUrl}?module=${encodeURIComponent(returnUrl)}`
+    window.location.href = ssoLoginUrl
+  }
 
   useEffect(() => {
     if (authUser?._id) {
@@ -58,7 +65,7 @@ const NotificationsPage: FC = () => {
 
           <Spacing top="sm">
             {!authUser && (
-              <Button inline onClick={openAuthModal} color="primary">
+              <Button inline onClick={SSOLoginRedirect} color="primary">
                 Sign up
               </Button>
             )}
