@@ -114,3 +114,10 @@ h4 {
     z-index: 2; /* Placer le dégradé au-dessus de la page PDF */
 }
 
+.react-pdf__Page__canvas {
+  width: 100% !important;
+  max-width: 800px;
+  margin:auto;
+  
+}
+
