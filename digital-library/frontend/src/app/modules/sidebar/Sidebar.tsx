@@ -19,6 +19,10 @@ import logo5 from "../../../../public/icons/community-frame.svg";
 import logo31 from "../../../../public/icons/community-link (1)1.svg";
 import logo41 from "../../../../public/icons/community-link (2)1.svg";
 import logo51 from "../../../../public/icons/add1.svg";
+import coloredOwned from '../../../../public/icons/coloredOwned.svg';
+import uncoloredOwned from '../../../../public/icons/uncoloredOwned.svg';
+import bookmarksUncolored from '../../../../public/icons/bookmarkUncolored.svg';
+import bookmarkscolored from '../../../../public/icons/bookmarkcolored.svg';
 
 import Image from "next/image";
 import Link from "next/link";
@@ -61,7 +65,7 @@ const Sidebar: FC<SidebarProps> = ({ lang, sidebar }) => {
         }  `}
     >
       <div className="md:pl-2 sm:pl-0 pl-4 sm:block flex justify-between">
-        <Link href={`${config.livingLibraryUrl}`}>
+        <Link href={`${config.landingPageUrl}`}>
           <Image
             src={logoNew}
             alt=""
@@ -85,23 +89,17 @@ const Sidebar: FC<SidebarProps> = ({ lang, sidebar }) => {
         </span>
       </div>
       <div className="mt-14 flex flex-col gap-6 w-full ">
-        <Link
-          href={"/en/"}
-          className={`w-full md:p-2 sm:pl-0 pl-4 ${!pathName.includes("digital-library") &&
-            !pathName.includes("settings") &&
-            !pathName.includes("create") &&
-            !pathName.includes("add-document") &&
-            "bg-[#daeeda]"
-            }`}
+      <Link
+          href={"/digital-library"}
+          className={`w-full md:p-2 sm:pl-0 pl-4 ${
+            pathName.includes("digital-library") && "bg-[#daeeda]"
+          }`}
         >
           {" "}
           <div className="flex items-center gap-2">
             <Image
               src={
-                !pathName.includes("digital-library") &&
-                  !pathName.includes("settings") &&
-                  !pathName.includes("create") &&
-                  !pathName.includes("add-document")
+                pathName.includes("digital-library") 
                   ? logo2
                   : logo21
               }
@@ -110,40 +108,32 @@ const Sidebar: FC<SidebarProps> = ({ lang, sidebar }) => {
                 }`}
             />
             <p
-              className={`${isToggled ? "lg:block sm:hidden" : "sm:hidden"}   `}
-            >
-              My Document
-            </p>
-          </div>
-        </Link>
-        <Link
-          href={"/en/digital-library"}
-          className={`w-full md:p-2 sm:pl-0 pl-4 ${pathName.includes("digital-library") && "bg-[#daeeda]"
-            }`}
-        >
-          {" "}
-          <div className={`flex items-center gap-2 `}>
-            <Image
-              src={pathName.includes("digital-library") ? logo3 : logo31}
-              alt=""
-              className={`${isToggled ? "lg:m-0 sm:m-auto m-0" : "sm:m-auto m-0"
-                }`}
-            />
-            <p
-              className={`${isToggled ? "lg:block sm:hidden" : "sm:hidden"}   `}
+              className={`${isToggled ? "lg:block sm:hidden" : "sm:hidden"}`}
             >
               Digital Library
             </p>
           </div>
         </Link>
         <Link
-          href={"/en/settings"}
-          className={`w-full md:p-2 sm:pl-0 pl-4 ${pathName.includes("setting") && "bg-[#daeeda]"
+          href={"/en/"}
+          className={`w-full md:p-2 sm:pl-0 pl-4 ${
+            !pathName.includes("digital-library") &&
+            !pathName.includes("bookmarks") &&
+            !pathName.includes("owned") &&
+            !pathName.includes("add-document") &&
+            "bg-[#daeeda]"
             }`}
         >
-          <div className="flex items-center gap-2">
+          {" "}
+          <div className={`flex items-center gap-2 `}>
             <Image
-              src={pathName.includes("setting") ? logo4 : logo41}
+              src={
+                !pathName.includes("digital-library") &&
+                !pathName.includes("owned") &&
+                !pathName.includes("bookmarks") &&
+                !pathName.includes("create") &&
+                !pathName.includes("add-document")
+                ? logo3 : logo31}
               alt=""
               className={`${isToggled ? "lg:m-0 sm:m-auto m-0" : "sm:m-auto m-0"
                 }`}
@@ -151,7 +141,48 @@ const Sidebar: FC<SidebarProps> = ({ lang, sidebar }) => {
             <p
               className={`${isToggled ? "lg:block sm:hidden" : "sm:hidden"}   `}
             >
-              Setting
+              My Library
+            </p>
+          </div>
+        </Link>
+        <Link
+          href={"/bookmarks"}
+          className={`w-full md:p-2 sm:pl-0 pl-4 ${
+            pathName.includes("bookmarks") && "bg-[#daeeda]"
+          }`}
+        >
+          <div className="flex items-center gap-2">
+            <Image
+              src={pathName.includes("bookmarks") ? bookmarkscolored : bookmarksUncolored}
+              alt=""
+              className={`${isToggled ? "lg:m-0 sm:m-auto m-0" : "sm:m-auto m-0"
+                }`}
+            />
+            <p
+              className={`${isToggled ? "lg:block sm:hidden" : "sm:hidden"}   `}
+            >
+              Bookmarks
+            </p>
+          </div>
+        </Link>
+        <Link
+          href={"/owned"}
+          className={`w-full md:p-2 sm:pl-0 pl-4 ${
+            pathName.includes("owned") && "bg-[#daeeda]"
+          }`}
+        >
+          <div className="flex items-center gap-2">
+            <Image
+              src={pathName.includes("owned") ? coloredOwned : uncoloredOwned}
+              alt=""
+              className={`${
+                isToggled ? "lg:m-0 sm:m-auto m-0" : "sm:m-auto m-0"
+              }`}
+            />
+            <p
+              className={`${isToggled ? "lg:block sm:hidden" : "sm:hidden"}   `}
+            >
+              Owned
             </p>
           </div>
         </Link>

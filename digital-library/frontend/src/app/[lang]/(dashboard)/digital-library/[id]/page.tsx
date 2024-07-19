@@ -196,6 +196,8 @@ import fetchFile from "@/app/api/fetchFiles";
 import FileViewer from "@/app/common/components/pdf-viewer/Viewer";
 import PdfViewer from "@/app/common/components/pdf-viewer/PdfViewer";
 import LibraryItem from "@/app/common/components/LibraryItem/LibraryItem01";
+import { useRouter } from "next/navigation";
+import AnimateClick from "@/app/common/components/animateClick/AnimateClick";
 
 const arraytest = [
   { num: 3, save: true },
@@ -240,6 +242,7 @@ const Home: React.FC = () => {
   const [fileUrl, setFileUrl] = useState<string>('');
   const [fileData, setFileData] = useState<{ data: Uint8Array } | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter()
 
   const zoteroConfig = {
     zoteroBaseUrl: 'https://api.zotero.org',
@@ -288,9 +291,11 @@ const Home: React.FC = () => {
 
       <div className="w-full flex justify-between items-center mb-5 px-1 mt-5">
         <p className="font-bold text-lg">Trending</p>
-        <p className="font-bold border-b-3 border-[green] text-[green]">
-          See More
-        </p>
+        <AnimateClick>
+          <p className="font-bold border-b-3 border-[green] text-[green] cursor-pointer" onClick={() => router.push('/en/')}>
+            See More
+          </p>
+        </AnimateClick>
       </div>
 
       <div className="w-full overflow-hidden mt-5">

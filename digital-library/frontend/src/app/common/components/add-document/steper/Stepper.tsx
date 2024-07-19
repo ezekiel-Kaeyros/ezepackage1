@@ -10,24 +10,31 @@ const Stepper: React.FC<{ step: number }> = ({ step }) => {
   ];
   return (
     <div className="w-full h-hull border-r md:pr-10 pr-2">
-      <div className="w-full flex flex-col gap-8">
+      <div className="w-full flex flex-col gap-y-1">
         {arrayStep.map((item) => (
-          <div className="flex items-center gap-2" key={item.id}>
-            {step > item.id ? (
-              <Image src={check} alt="" className="h-10 w-10"/>
-            ) : (
-              <div
-                className={` ${
-                  item.id == step ? "bg-[#1D242D]" : "bg-[#3D4C5E] "
-                } h-10 border w-10 rounded-full p-1 flex items-center justify-center text-white`}
-              >
-                {item.id}
+          <div key={item.id} className="flex flex-col">
+            <div className="flex items-center">
+              <div className="flex gap-x-1">
+                {step > item.id ? (
+                  <div className="flex items-center flex-col">
+                    <Image src={check} alt="" className="h-10 w-10 mb-1" />
+                    {/* <div className="w-[2px] h-8 bg-green-800"></div> */}
+                  </div>
+                ) : (
+                  <div
+                    className={` ${item.id == step ? "bg-[#1D242D]" : "bg-[#3D4C5E]"
+                      } h-10 w-10 rounded-full p-1 flex items-center justify-center text-white`}
+                  >
+                    {item.id}
+                  </div>
+                )}
+                <div className="sm:block hidden">
+                  <p className="font-semibold lg:text-base text-sm">{item.text}</p>
+                  <p className="lg:text-sm text-xs">{item.description}</p>
+                </div>
               </div>
-            )}
-            <div className="sm:block hidden">
-              <p className="font-semibold lg:text-base text-sm">{item.text}</p>
-              <p className="lg:text-sm text-xs">{item.description}</p>
             </div>
+            {item.id !== 4 && <div className="w-[2px] h-8 bg-[grey] ml-5"></div>}
           </div>
         ))}
       </div>

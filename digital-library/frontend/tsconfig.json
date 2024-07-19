@@ -24,9 +24,10 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "/*": ["./public/*"],
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/common/components/nextDropdown/NextDropdown.jsx", "src/**/*", "typings/**/*" ],
-  "exclude": ["node_modules"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/common/components/nextDropdown/NextDropdown.jsx", "src/**/*", "typings/**/*", "src/custom.d.ts" ],
+  "exclude": ["node_modules"],
 }

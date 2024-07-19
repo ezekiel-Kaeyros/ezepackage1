@@ -20,6 +20,10 @@ import { usePathname } from 'next/navigation';
 import { useToggleSidebar } from '@/app/hooks/useToggleSidebar';
 import { toggleFunc } from '@/redux/features/auth-slice';
 import config from '@/utils/config';
+import logoutIcon from '../../../../../public/icons/logout.svg'
+import axios from 'axios';
+import cookies from 'js-cookie';
+import { Cookies } from '../../../../utils'
 
 type NavbarProps = {
   lang: string;
@@ -32,6 +36,26 @@ const Header: FC<NavbarProps> = ({ lang, navigation }) => {
   const [view2, setView2] = useState(false);
   const pathName = usePathname();
   const { dispatch } = useToggleSidebar()
+
+  const json = 'development'
+
+  const logout = async () => {
+    try {
+      // await axios.post('/logout');
+
+      if (process.env.NODE_ENV == 'development') {
+        cookies.remove(Cookies.Token);
+        cookies.remove(Cookies.User_data);
+      } else {
+        cookies.remove(Cookies.Token, { domain: '.eze.ink' })
+        cookies.remove(Cookies.User_data, { domain: '.eze.ink' })
+      }
+      // closeDropDown();
+      window.location.href = config.ssoLogoutUrl
+    } catch (error) {
+      console.log('An error occurred while logging out: ', error);
+    }
+  };
 
   return (
     <>
@@ -129,6 +153,7 @@ const Header: FC<NavbarProps> = ({ lang, navigation }) => {
             <Image src={notIcon} alt="" />
             <Image src={msgIcon} alt="" />
             <Image src={userIcon} alt="" />
+            <Image src={logoutIcon} alt="" className='w-5 cursor-pointer' onClick={logout} />
           </div>
         </div>
 

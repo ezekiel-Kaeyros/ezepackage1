@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useRef, useState } from "react";
 import Stepper from "./steper/Stepper";
-import ContentAdd from "./content/ContentAdd";
+import ContentAdd from "./steps/ContentAdd";
 import { toggleFunc2 } from "@/redux/features/auth-slice";
 import { useToggleSidebar } from "@/app/hooks/useToggleSidebar";
 

@@ -1,5 +1,5 @@
 .bnt_container {
-    margin-left: 3px;
+    margin-left: 40px;
     display: flex;
     gap: 2px;
     position: relative;
@@ -8,31 +8,57 @@
 .btn_dropdown {
     position: absolute;
     bottom: 0;
-    bottom: -32px;
+    bottom: -50px;
+    left: 12px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: start;
     gap: 2px;
-    background-color: lightgray;
+    background-color: white;
+    /* border: 1px solid gray; */
+    width: 80px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);;
 }
 
 .dropdown {
     cursor: pointer;
     padding: 5px;
+    font-size: 15px;
 }
 
 .dropdown:hover {
-    background-color: rgb(235, 229, 229);
+    background-color: rgb(247, 247, 247);
+    width: 100%;
 }
 
 .btn {
     border: none;
     outline: none;
-    background-color: rgb(1, 94, 68);
-    color: white;
+    /* background-color: rgb(1, 94, 68); */
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
     padding: 5px;
     cursor: pointer;
     border-radius: 5px;
     font-size: 14px;
+}
+
+.langbtn {
+    color: black;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.btn:hover {
+    color: #004632;
+}
+
+.global {
+    width: 23px;
+}
+
+.active {
+    font-weight: 800;
 }

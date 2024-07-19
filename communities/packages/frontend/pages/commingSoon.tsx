@@ -58,7 +58,8 @@ const ComingSoon = ({ slug }: { slug?: string }) => {
            <span className="label">Seconds</span>
          </div>
        </div>
-       <Link href="/">Go Back Home
+       <Link href="/" className='mt-5'>
+       <h2 className='font-semibold'>Go Back Home</h2>
        </Link>
      </div>
 

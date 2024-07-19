@@ -16,4 +16,5 @@ const config = {
   }
 }
 
-export default config[process.env.NODE_ENV]
+const environ = process.env.NEXT_PUBLIC_APP_ENV || "development"
+export default config[environ]

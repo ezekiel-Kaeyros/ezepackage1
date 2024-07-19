@@ -1,27 +1,4 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
-
-  // const arraytest = [
-  //   { num: 3, save: true },
-
-  //   { num: 2, save: false, img: cover2 },
-
-  //   { num: 2, save: false },
-  //   { num: 3, save: false },
-  //   { num: 2, save: true },
-  //   { num: 2, save: false },
-  //   { num: 2, save: false, img: cover2 },
-
-  //   { num: 1, save: true },
-
-  //   { num: 2, save: false },
-
-  //   { num: 2, save: false, img: cover2 },
-
-  //   { num: 7, save: true },
-
-  //   { num: 2, save: false },
-  // ];
-// Just a boiler plate, this file needs to be updated
 export type Step1T = {
   toLowerCase(): { type: any; };
   categorie: string;
@@ -36,6 +13,7 @@ export type Step2T = {
   coverImage: any;
   url:string
 };
+
 type AddDocumentState = {
   step1: Step1T;
   step2: Step2T;

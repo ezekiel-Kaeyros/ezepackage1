@@ -23,7 +23,7 @@ import { toggleFunc2 } from "@/redux/features/auth-slice";
 
 
 const Home = () => {
-  const [currentIndex, setCurrentIndex] = useState<number>(0)
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
   const arraytest = [
     { num: 3, save: true },
 
@@ -60,7 +60,7 @@ const Home = () => {
     { num: 2, save: false },
   ];
   const channelarray = [
-    { name: "health", id: 1 },
+    { name: "Health", id: 1 },
     { name: "Mines", id: 2 },
     { name: "Ict", id: 3 },
     { name: "Agro Food Sciences", id: 4 },
@@ -168,9 +168,9 @@ const Home = () => {
         </p>
 
         <div className=" w-full flex flex-wrap gap-5 justify-center mb-24 text-black ">
-          {channelarray.map((item) => (
-            <CardChannel text={item.name} id={item.id.toString()} key={item.id}/>
-          ))}
+          {channelarray.map((item) => {
+            return <CardChannel text={item.name} id={item.id.toString()} key={item.id}/>
+})}
         </div>
       </div>
 
@@ -311,16 +311,6 @@ const Home = () => {
             />
           ))}
         </div>
-
-        {/* <div className="w-full flex justify-between items-center mb-5 px-1">
-          <p className="font-bold text-lg">Trending</p>
-          <p className=" font-bold border-b-3 border-[green] text-[green]">
-            See More
-          </p>
-        </div>
-        <div className="w-full  pb-14">
-          <Carousel data={arraytest1} />
-        </div> */}
       </div>
       <Footer footer={{}} />
     </div>

@@ -8,7 +8,7 @@ const Config = {
     apiUrl: "https://backcommunities.eze.ink",
     landingPageUrl: "https://eze.ink",
     communitiesUrl: "https://communities.eze.ink",
-    livingLibraryUrl: "https://library.eze.ink/en",
+    livingLibraryUrl: "https://library.eze.ink/en/digital-library",
     kashAppAuthUrl: "https://kashapp.biz/auth/mo_saml/index.php",
     ssoLoginUrl: "https://sso.eze.ink/auth/login",
     ssoLogoutUrl: "https://sso.eze.ink/auth/logout",
@@ -17,7 +17,7 @@ const Config = {
     apiUrl: "http://localhost:4000",
     landingPageUrl: "http://localhost:3001",
     communitiesUrl: "http://localhost:3002",
-    livingLibraryUrl: "http://localhost:3003/en",
+    livingLibraryUrl: "http://localhost:3003/en/digital-library",
     kashAppAuthUrl: "https://kashapp.biz/auth/mo_saml/index.php",
     ssoLoginUrl: "http://localhost:3000/auth/login",
     ssoLogoutUrl: "http://localhost:3000/auth/logout",
@@ -26,7 +26,7 @@ const Config = {
     apiUrl: "https://backcommunities.eze.ink",
     landingPageUrl: "https://eze.ink",
     communitiesUrl: "https://communities.eze.ink",
-    livingLibraryUrl: "https://library.eze.ink/en",
+    livingLibraryUrl: "https://library.eze.ink/en/digital-library",
     kashAppAuthUrl: "https://kashapp.biz/auth/mo_saml/index.php",
     ssoLoginUrl: "https://sso.eze.ink/auth/login",
     ssoLogoutUrl: "https://sso.eze.ink/auth/logout",
@@ -35,5 +35,6 @@ const Config = {
   GOOGLE_ANALYTICS_ID: 'G-MD706N8TZV',
 };
 
-const config: IConfigs = Config[process.env.NEXT_PUBLIC_APP_ENV];
+const environ = process.env.NEXT_PUBLIC_APP_ENV || "development"
+const config: IConfigs = Config[environ];
 export default config

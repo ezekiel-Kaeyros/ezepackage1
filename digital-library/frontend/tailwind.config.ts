@@ -12,6 +12,20 @@ const config: Config = {
   darkMode: ["class"],
   theme: {
     extend: {
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        zoomIn: {
+          '0%': { transform: 'scale(0.95)', opacity: '0' },
+          '100%': { transform: 'scale(1)', opacity: '1' },
+        },
+      },
+      animation: {
+        fadeIn: 'fadeIn 0.5s ease-in-out',
+        zoomIn: 'zoomIn 0.5s ease-in-out',
+      },
       screens: {
         tall: { raw: "(min-height: 660px)" },
         // => @media (max-height: 1234px) { ... }

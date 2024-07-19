@@ -3,16 +3,14 @@ import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import CardDocument from "../cardDocument/CardDocument";
 import NewCardDocument from "../newCardDocument/NewCardDocument";
 import { useAddDocument } from "@/app/hooks/useAddDocument";
-// import { fetchGroupItems, fetchGroups } from "@/functions/zoteroApi";
-import { fetchGroupItems, fetchGroups } from "@/funtions/zoteroApi";
-import coverPhoto from '../../../../../public/images/coverphoto.svg';
 import Link from "next/link";
-import axios from "axios";
 import AnimateClick from "../animateClick/AnimateClick";
-import config from "@/utils/config";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { setResponseData } from "@/redux/features/auth-slice";
+import axios from "axios";
 
 interface Item {
   key: string;
@@ -83,30 +81,29 @@ const Carousel: React.FC<{
   const [loading, setLoading] = useState(false)
   const [items, setItems] = useState<any[]>([])
   const [error, setError] = useState<any>([])
+  const dispatch = useDispatch();
+
+  const {responseData} = useSelector((item:RootState) => item.setResponseData)
 
   useEffect(() => {
+    if (responseData && responseData.length > 0) return;
     setLoading(true)
     async function fetchData() {
-      try {
-        const url = `${config.ssoUrl}/api/items/5577831`;
-        console.log('response response98376')
-        const res = await axios.get(url);
-        console.log(res, 'response')
-        setItems(res.data);
-      } catch (error) {
-        setError(error);
-        console.log(error)
-      } finally {
-        setLoading(false);
-      }
+        try {
+            const url = `${process.env.NEXT_PUBLIC_SSO_URL}/api/items/5577831`;
+            const res = await axios.get(url);
+            dispatch(setResponseData(res.data));
+            console.log(res, 'response20')
+            // setPdfs(res.data);
+        } catch (error: any) {
+            setLoading(false);
+            throw Error("Data Not Fetched", error)
+        }
     }
 
     fetchData();
     // fetchData()
-  }, [])
-
-
-  console.log(items, 'pdfUrls')
+}, [dispatch])
 
 
   const settings = {
@@ -116,25 +113,6 @@ const Carousel: React.FC<{
     slidesToShow: 4,
     slidesToScroll: 1,
     initialSlide: 1,
-    // appendDots: (dots: any) => (
-    //   <div
-    //     style={{
-    //       padding: "10px",
-    //     }}
-    //   >
-    //     <ul style={{ margin: "0px" }}> {dots} </ul>
-    //   </div>
-    // ),
-    // customPaging: (i: number) => (
-    //   <div
-    //     style={{
-    //       width: "30px",
-    //       color: "blue",
-    //     }}
-    //   >
-    //     <div className=" mt-6 h-2 rounded-full w-6"></div>
-    //   </div>
-    // ),
     responsive: [
       {
         breakpoint: 1300,
@@ -175,30 +153,15 @@ const Carousel: React.FC<{
 
   return (
     <div className="w-full">
-      {/* <Slider {...settings}>
-        {arrayDoc.map((item) => (
-          <div className="px-2">
-            <NewCardDocument
-              imgCover={item.url && item.url}
-              description={item.description}
-              title={item.name}
-              categorie={item.type}
-              id={item.id}
-            />
-          </div>
-        ))}
-      </Slider> */}
-
-      {loading ? <div className="flex justify-center items-center">
+      {responseData.length == 0 ? <div className="flex justify-center items-center">
         <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-500"></div>
       </div> :
         <Slider {...settings}>
-          {items.length > 0 && items.map((item: any, index) => {
+          {responseData !== null && responseData.map((item: any) => {
             return (
               <Link href={`/en/digital-library/${item.key}`} key={item.key}>
-                <AnimateClick>
-                  <div className="px-4" key={index}>
-                    {/* <Link href={item.pdfUrl} target="_blank">{item.pdfUrl}</Link> */}
+                 <AnimateClick>
+                  <div className="px-4" key={item.key}>
                     <NewCardDocument
                       imgCover={item.coverImage}
                       description={item.data.note}
@@ -217,21 +180,6 @@ const Carousel: React.FC<{
           })}
         </Slider>
       }
-      {/* <p className="font-bold text-xl text-800-red">Hello there jimmy</p>
-      {pdfUrls.length > 0 && pdfUrls.map((item: any, index) => (
-          <div style={{ height: '300px' }} key={index}>
-          <Link href={item.pdfUrl} target="_blank">{item.pdfUrl}</Link>
-          <NewCardDocument
-              imgCover={coverPhoto}
-              description={item.data.note}
-              title={item.data.title}
-              categorie={item.data.itemType}
-              id={item.id}
-              name={item.meta.createdByUser.name}
-              url={item.pdfUrl}
-            />
-        </div>
-        ))} */}
     </div>
   );
 };

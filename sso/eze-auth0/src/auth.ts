@@ -5,7 +5,7 @@ import fs from "fs";
 import path from "path";
 import jwt from "jsonwebtoken";
 import dotenv from 'dotenv';
-import { isFirstTime, toggleFirstTime } from "./db/user";
+import { isFirstTime, toggleFirstTime, getUserByEmail } from "./db/user";
 dotenv.config();
 
 const authRouter = express.Router();
@@ -48,10 +48,8 @@ authRouter.get("/login", (req, res, next) => {
 
   if (moduleParam) {
     res.cookie("module", moduleParam, { httpOnly: true, secure: true });
-    console.log(`Module parameter value saved in cookie: ${moduleParam}`);
   }
 
-  console.log("Redirecting to Auth0 login");
   passport.authenticate("saml")(req, res, next);
 });
 
@@ -71,59 +69,38 @@ authRouter.post(
     const fullname = user["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
     const user_id = user["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
 
+    const getUserInfo = await getUserByEmail(email)
+
     const userdata = {
-      username: username,
-      fullName: fullname,
-      email: email,
+      username: (getUserInfo && getUserInfo.username) || username,
+      fullName: (getUserInfo && getUserInfo.fullName) || fullname,
+      email: (getUserInfo && getUserInfo.email) || email,
     };
 
     const userdata2 = {
-      email: email,
-      userId: user_id,
+      email: (getUserInfo && getUserInfo.email) || email,
+      userId: (getUserInfo && getUserInfo._id) || user_id,
     };
-
 
     // Generate a token
     const token = jwt.sign({ user: userdata2 }, "WriteYourSecret");
 
     const userdataString = JSON.stringify(userdata);
-    console.log("REDIRECT TO: ", moduleCookie)
+    console.log("REDIRECT TO: ", req.cookies.module)
 
-    if (moduleCookie?.includes(process.env.LANDINGPAGE_URL)) {
+    const firstTime = await isFirstTime(email);
+
+    if (firstTime) {
       try {
-        const firstTime = await isFirstTime(email);
-        console.log(`Is it the user's first time? ${firstTime}`);
+        const isToggleFirstTime = await toggleFirstTime(email);
 
-        if (firstTime) {
-          try {
-            console.log("FIRST TIME HERE??")
-            const isToggleFirstTime = await toggleFirstTime(email);
-            console.log("SECOND TIME HGER?", isToggleFirstTime)
-
-            res.redirect(`${process.env.LANDINGPAGE_URL}/en/onboarding/?step=1&token=${token}&user=${userdataString}`)
-          } catch(error) {
-            console.log('Error:', error.message)
-          }
-        } else {
-          // res.redirect(`${process.env.LANDINGPAGE_URL}/en/onboarding/?step=1&token=${token}&user=${userdataString}`)
-          res.redirect(`${process.env.COMMUNITIES_URL}?token=${token}&user=${userdataString}`)
-        }
+        res.redirect(`${process.env.LANDINGPAGE_URL}/en/onboarding/?step=1&token=${token}&user=${userdataString}`)
       } catch (error) {
-        console.error('Error:', error.message);
-        res.redirect(`${moduleCookie}?step=1&token=${token}&user=${userdataString}`);
+        console.log('Error:', error.message)
       }
     } else {
-      const firstTime = await isFirstTime(email);
-      if (firstTime) {
-        try {
-          const isToggleFirstTime = await toggleFirstTime(email);
-          console.log("SECOND TIME HGER?", isToggleFirstTime)
-
-          res.redirect(`${process.env.LANDINGPAGE_URL}/en/onboarding/?step=1&token=${token}&user=${userdataString}`)
-        } catch(error) {
-          console.log('Error:', error.message)
-          res.redirect(`${process.env.LANDINGPAGE_URL}/?token=${token}&user=${userdataString}`)
-        }
+      if (req.cookies.module) {
+        res.redirect(`${req.cookies.module}?token=${token}&user=${userdataString}`)
       } else {
         // res.redirect(`${process.env.LANDINGPAGE_URL}/en/onboarding/?step=1&token=${token}&user=${userdataString}`)
         res.redirect(`${process.env.COMMUNITIES_URL}?token=${token}&user=${userdataString}`)

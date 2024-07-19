@@ -29,6 +29,8 @@ export function middleware(request: NextRequest) {
   const token = url.searchParams.get('token') || '';
   const userEncoded = url.searchParams.get('user') || '';
 
+  console.log("USer DAta: ", userEncoded)
+
   url.searchParams.delete('token');
   url.searchParams.delete('user');
 
@@ -51,6 +53,8 @@ export function middleware(request: NextRequest) {
       });
       response.cookies.set('user_data', userJson, {
         path: '/',
+        secure: false,
+        httpOnly: false,
       });
       return response;
     }

@@ -25,6 +25,7 @@ jobs:
           touch .env && \
           echo "API_PORT=4000" > .env && \
           echo "API_URL=https://backcommunities.eze.ink" >> .env && \
+          echo "NEXT_PUBLIC_APP_ENV=staging" >> .env && \
           echo "NODE_ENV=production" >> .env && \
           echo "SECRET=WriteYourSecret" >> .env && \
           echo "FRONTEND_URL=https://communities.eze.ink" >> .env && \

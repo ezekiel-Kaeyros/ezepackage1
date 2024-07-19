@@ -21,7 +21,7 @@ const Onboarding = () => {
         <span className="block md:inline">Welcome</span>
         <span className="font-bold text-primaryColor text-wrap">{user?.fullName}</span>
       </h1>
-      {parseInt(`${step}`) === 1 ? <FirstStep /> : <SecondStep />}
+      {parseInt(`${step}`) === 1 &&<SecondStep />}
 
       {/* Form image */}
       <Image

@@ -14,6 +14,10 @@ import { getUserCookies } from '@/cookies/cookies';
 import { useAuth } from '@/app/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import config from '@/utils/config';
+import logoutIcon from '../../../../../../public/icons/logout.svg';
+import cookies from 'js-cookie';
+import { Cookies } from '@/utils';
+
 
 type NavBarProps = {
   lang: string;
@@ -42,12 +46,31 @@ const NavBar: React.FC<NavBarProps> = ({ lang, navigation }) => {
 
   const handleVisitLibrary = async () => {
     try {
-      const returnUrl = window.location.href + `${process.env.NEXT_PUBLIC_LIVING_LIBRARY_URL}/en/`;
-      window.location.href = `${process.env.NEXT_PUBLIC_SSO_LOGIN_URL}?module=${encodeURIComponent(returnUrl)}`;
+      const returnUrl = window.location.href + `${config.livingLibraryUrl}/en/`;
+      window.location.href = `${config.ssoLoginUrl}?module=${encodeURIComponent(returnUrl)}`;
     } catch (error) {
       console.error('Error:', error);
     }
   }
+
+  const tokenExists = cookies.get(Cookies.Token) !== undefined;
+  const userDataExists = cookies.get(Cookies.User_data) !== undefined;
+
+  const logout = async () => {
+    try {
+      if (process.env.NODE_ENV == 'development') {
+        cookies.remove(Cookies.Token);
+        cookies.remove(Cookies.User_data);
+      } else {
+        cookies.remove(Cookies.Token, { domain: '.eze.ink' })
+        cookies.remove(Cookies.User_data, { domain: '.eze.ink' })
+      }
+      // closeDropDown();
+      window.location.href = config.ssoLogoutUrl
+    } catch (error) {
+      console.log('An error occurred while logging out: ', error);
+    }
+  };
 
   return (
     <nav
@@ -125,6 +148,9 @@ const NavBar: React.FC<NavBarProps> = ({ lang, navigation }) => {
           <li className="border-t-1 hover:text-primaryColor lg:border-none px-6 lg:px-3 2xl:px-6  pt-4 lg:pt-0 pb-4">
             <LocaleSwitcher />
           </li>
+          {tokenExists && <li className="border-t-1 hover:text-primaryColor lg:border-none px-6 lg:px-3 2xl:px-6  pt-4 lg:pt-0 pb-4">
+            <Image src={logoutIcon} alt="" className='w-5 cursor-pointer' onClick={logout} />
+          </li>}
         </ul>
       </div>
 

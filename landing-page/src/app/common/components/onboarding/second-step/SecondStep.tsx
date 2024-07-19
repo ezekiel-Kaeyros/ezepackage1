@@ -9,6 +9,7 @@ import ChannelService from '@/services/channelService';
 import { useAuth } from '@/app/hooks/useAuth';
 import axios from 'axios';
 import { default as C } from '@/utils/config';
+import { Spinner } from '@nextui-org/react';
 
 const COMMUNITIES_URL: any = C.communitiesUrl
 const config = {
@@ -66,7 +67,7 @@ const SecondStep = () => {
     }[]
   >();
   const [number, setnumber] = useState<any>();
-  const [load, setLoad] = useState(false);
+  const [load, setLoad] = useState(true);
   const {
     register,
     handleSubmit,
@@ -106,6 +107,8 @@ const SecondStep = () => {
         setTopic(result.data);
       })
       .catch((error) => {
+      }).finally(() => {
+        setLoad(false)
       });
   }, []);
 
@@ -176,6 +179,8 @@ const SecondStep = () => {
             // console.log(row);
 
             setnumber(row);
+          } finally {
+            setLoad(false)
           }
         });
         // row == communities.length && push(COMMUNITIES_URL);
@@ -187,46 +192,64 @@ const SecondStep = () => {
 
   };
   return (
-    <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <h1 className="font-bold text-3xl">Choose at least one community</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 mt-8">
-          {topic &&
-            topic.length > 0 &&
-            topic?.map((community) => (
-              <CheckboxCommunityChip
-                description={`${community?.description}`}
-                key={community?._id}
-                id={`${community?._id}`}
-                name={community?.name}
-                label={community?.name}
-                register={register('communities', { required: true })}
-                value={community?._id}
-                gettopic={getTopic}
-                item={community}
-              // getTopic={getTopic}
-              />
-            ))}
+    <>
+      {load && (
+        <div className=" w-full h-screen flex flex-col gap-2 justify-center items-center text-black">
+          <Spinner
+            // label="Loading . . . "
+            color="primary"
+            size="lg"
+            classNames={{ label: 'text-white hidden' }}
+            className="text-white"
+          />
+          <p className="text-xl">Loading...</p>
         </div>
-      </div>
-      <div className="mt-8 w-fit">
-        <Button
-          disabled={load}
-          variant={load ? 'disabled' : 'default'}
-          onClick={() => {
-            if (communities.length > 0) {
-              handleJoin()
-            } else {
-              handleSend()
-            }
-          }}
-          type="submit"
-          className="w-fit"
-        >
-          Continue
-        </Button>
-      </div>
-    </form>
+      )}
+      {!load && (
+        <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
+          <div>
+            <h1 className="font-bold text-3xl">
+              Choose at least one community
+            </h1>
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 mt-8">
+              {topic &&
+                topic.length > 0 &&
+                topic?.map((community) => (
+                  <CheckboxCommunityChip
+                    description={`${community?.description}`}
+                    key={community?._id}
+                    id={`${community?._id}`}
+                    name={community?.name}
+                    label={community?.name}
+                    register={register('communities', { required: true })}
+                    value={community?._id}
+                    gettopic={getTopic}
+                    item={community}
+                    // getTopic={getTopic}
+                  />
+                ))}
+            </div>
+          </div>
+          <div className="mt-8 w-fit">
+            <Button
+              disabled={load}
+              variant={load ? 'disabled' : 'default'}
+              onClick={() => {
+                if (communities.length > 0) {
+                  handleJoin();
+                } else {
+                  handleSend();
+                }
+              }}
+              type="submit"
+              className="w-fit"
+            >
+              Continue
+            </Button>
+          </div>
+        </form>
+      )}
+    </>
   );
 };
 

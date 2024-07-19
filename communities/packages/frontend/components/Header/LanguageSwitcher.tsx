@@ -65,6 +65,9 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './styles.module.css';
+import downIcon from '../../public/downIcon.svg';
+import globalIcon from '../../public/localeIcon.svg';
+import Image from 'next/image';
 
 const LanguageSwitcher = () => {
   const router = useRouter();
@@ -86,19 +89,22 @@ const LanguageSwitcher = () => {
 
   return (
     <div className={styles.bnt_container}>
-      <div onClick={() => setToggle(!toggle)} className={styles.btn}>
-        {currentLanguage.toUpperCase()}
-      </div>
+      <animateMotion>
+        <div onClick={() => setToggle(!toggle)} className={styles.btn}>
+          <Image src={globalIcon} alt='global' className={styles.global}/>
+          <h3 className={styles.langbtn}>{currentLanguage.toUpperCase()}</h3>
+          <Image src={downIcon} alt='dropdown'/>
+        </div>
+      </animateMotion>
 
       {toggle && (
         <div className={styles.btn_dropdown}>
           {Object.keys(lngs)
-            .filter((lng) => lng !== currentLanguage)
             .map((lng) => (
               <div
                 key={lng}
                 onClick={() => changeLanguage(lng)}
-                className={styles.dropdown}
+                className={`${styles.dropdown} ${lng === currentLanguage ? styles.active : ''}`}
               >
                 {lngs[lng].nativeName}
               </div>

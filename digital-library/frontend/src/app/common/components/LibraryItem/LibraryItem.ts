@@ -61,6 +61,7 @@ interface Link {
         length: number;
       };
     };
+    coverImage?:string | any;
     meta: Meta;
     data: Data;
     pdfUrl: string;

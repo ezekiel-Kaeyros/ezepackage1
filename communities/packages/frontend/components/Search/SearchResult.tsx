@@ -25,13 +25,13 @@ const SearchResult: FC<SearchResultProps> = ({
 }) => {
   const updateText = (text: string, keyword: string) => {
     const regex = new RegExp(keyword.trim(), 'i');
-    const chunks = text.split(/[.?!]/).filter((n) => regex.test(n));
+    const chunks = text?.split(/[.?!]/).filter((n) => regex.test(n));
 
-    if (chunks.length <= 0) {
+    if (chunks?.length <= 0) {
       return;
     }
 
-    const result = chunks[0]
+    const result = chunks && chunks[0]
       .toLocaleLowerCase()
       .replace(new RegExp(`${keyword.toLocaleLowerCase()}`, 'g'), `<b>${keyword}</b>`);
     return result + '...';

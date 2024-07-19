@@ -5,7 +5,6 @@ import {User} from '../models/user.model'
 export const isFirstTime = async (email: string): Promise<boolean> => {
   try {
     const user = await User.findOne({ email }).exec();
-    console.log("USER IS: ", user)
     if (user) {
       return user.firstTime;
     } else {
@@ -35,4 +34,9 @@ export const toggleFirstTime = async (email: string): Promise<boolean> => {
   } catch (error) {
     console.error('Error toggling firstTime:', error);
   }
+};
+
+export const getUserByEmail = async (email: string) => {
+  const user = await User.findOne({ email }).exec();
+  return user;
 };

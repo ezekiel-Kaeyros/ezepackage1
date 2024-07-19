@@ -13,7 +13,7 @@ export const useAuth = () => {
 
   const userAuth0: { fullName: string; username: string; email: string } | any =
     getUserCookiesAuth0();
-  const token: string | undefined = getToken();
+  const token: string | undefined = getUserCookies();
 
   const dispatch = useDispatch<AppDispatch>();
 
