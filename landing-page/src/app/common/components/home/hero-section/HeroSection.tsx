@@ -12,37 +12,37 @@ const topics = [
   {
     id: 1,
     title: 'Health Sciences',
-    href: '#',
+    href: 'Health',
   },
   {
     id: 2,
     title: 'Mines',
-    href: '#',
+    href: 'Mines',
   },
   {
     id: 3,
     title: 'ICT',
-    href: '#',
+    href: 'Ict',
   },
   {
     id: 4,
     title: 'Agro-food Sciences',
-    href: '#',
+    href: 'Agro food Sciences',
   },
   {
     id: 5,
     title: 'Energy',
-    href: '#',
+    href: 'Energie',
   },
   {
     id: 6,
     title: 'Data Analytics',
-    href: '#',
+    href: 'Data Analytics',
   },
   {
     id: 7,
     title: 'Social Sciences',
-    href: '#',
+    href: 'Social Xciences',
   },
 ];
 
@@ -52,7 +52,7 @@ const HeroSection: React.FC<{ home: any }> = ({ home }) => {
   useEffect(() => {
     const response = new ChannelService().channel().then((result) => {
     }).catch((error) => {
-      console.log('error==============', error);
+      console.error('Error: ', error);
     })
   }, [])
   return (

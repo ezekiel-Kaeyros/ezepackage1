@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server';
 import { i18n } from './i18n.config';
 import { match as matchLocale } from '@formatjs/intl-localematcher';
 import Negotiator from 'negotiator';
-import { default as C } from './utils/config';
 import type { NextRequest } from 'next/server';
+import { config as C } from "@/utils"
 
 function getLocale(request: NextRequest): string | undefined {
   const negotiatorHeaders: Record<string, string> = {};
@@ -17,7 +17,8 @@ function getLocale(request: NextRequest): string | undefined {
 }
 
 export async function middleware(request: NextRequest) {
-  const url = request.nextUrl.clone();
+  const token = request.cookies.get("token")
+  if (!token) return NextResponse.redirect(`${C.ssoUrl}/auth/login`)
   const pathname = request.nextUrl.pathname;
 
   // Locale-based redirection logic
@@ -37,73 +38,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // Token-based redirection logic
-  const accessTokenExist = request.cookies.get('token');
-  const accessToken = url.searchParams.get('token');
-  const userData = url.searchParams.get('user');
-
-  if (accessTokenExist) {
-    if (accessToken) {
-      url.searchParams.delete('token');
-      url.searchParams.delete('user');
-      url.searchParams.delete('step');
-      return NextResponse.redirect(url);
-    }
-    return NextResponse.next();
-  } else {
-    if (accessToken) {
-      url.searchParams.delete('token');
-      url.searchParams.delete('user');
-      url.searchParams.delete('step');
-
-      const response = NextResponse.redirect(url);
-      const expires = new Date();
-      expires.setDate(expires.getDate() + 28);
-
-      const userDataValue = userData || '';
-
-      console.log("IS IT HERE????")
-
-      console.log("NODE ENV: ", process.env.NODE_ENV)
-      if (process.env.NODE_ENV === 'development') {
-        response.cookies.set('token', accessToken, {
-          httpOnly: false,
-          secure: false,
-          path: '/'
-        });
-
-        response.cookies.set('user_data', userDataValue, {
-          httpOnly: false,
-          secure: false,
-          path: '/'
-        });
-      } else {
-        response.cookies.set('token', accessToken, {
-          httpOnly: false,
-          secure: false,
-          path: '/',
-          domain: '.eze.ink'
-        });
-
-        response.cookies.set('user_data', userDataValue, {
-          httpOnly: false,
-          secure: false,
-          path: '/',
-          domain: '.eze.ink'
-        });
-      }
-
-      return response;
-    } else {
-      try {
-        const returnUrl = C.livingLibraryUrl;
-        const ssoLoginUrl = `${C.ssoLoginUrl}?module=${encodeURIComponent(returnUrl)}`;
-        return NextResponse.redirect(ssoLoginUrl);
-      } catch (error) {
-        url.pathname = '/login';
-        return NextResponse.redirect(url);
-      }
-    }
-  }
+  return NextResponse.next()
 }
 
 export const config = {

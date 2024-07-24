@@ -27,7 +27,6 @@ const ChannelCreate: FC<ChannelCreateProps> = ({ closeModal, channels }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const authUser = useSelector((state: RootState) => state.auth.user);
-  console.log('auth user', authUser)
 
   const queryClient = useQueryClient();
   const { mutateAsync, isLoading, error } = useMutation(createChannel);

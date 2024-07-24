@@ -31,18 +31,11 @@ const LoginForm: React.FC<{ login: any }> = ({ login }) => {
 
   // Using ternary operator to check if module exists
   const moduleExists = moduleAuth0 ? true : false;
-  console.log('MODULE EXISTS? :: ', moduleExists);
 
   // Check if moduleParam equals "community"
   const isCommunity = moduleAuth0 === 'community';
 
-  console.log('isCommunity:: ', isCommunity);
-
-  console.log('HMMM MMMM');
-
-  const { dispatch } = useAuth();
-
-  console.log('HMMM MMMM 222');
+  // const { dispatch } = useAuth();
 
   const {
     register,
@@ -54,7 +47,7 @@ const LoginForm: React.FC<{ login: any }> = ({ login }) => {
 
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     const isFirstTime = getIsFirstTime();
-    console.log('isFirstTime: ', isFirstTime);
+
     if (!moduleExists || isCommunity) {
       try {
         const res = await new AuthService().login(data);
@@ -62,14 +55,14 @@ const LoginForm: React.FC<{ login: any }> = ({ login }) => {
         if (res?.status !== 200) {
           setErrorMessage(res?.data);
         } else {
-          dispatch(setAuthUser({ user: res?.data }));
+          // dispatch(setAuthUser({ user: res?.data }));
           toast.success('Logged in successfully');
           // (isFirstTime && push(COMMUNITIES_URL)) ||
           //   push('/fr/onboarding?step=1');
           push(COMMUNITIES_URL);
         }
       } catch (error: any) {
-        console.log(`An error occured`, error);
+        console.error(`An error occured`, error);
         toast.error(error.response?.data);
       }
     } else {

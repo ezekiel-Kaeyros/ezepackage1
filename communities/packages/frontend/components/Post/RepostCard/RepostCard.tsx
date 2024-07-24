@@ -124,13 +124,13 @@ const RepostCard: FC<PostCardProps> = ({
 
       <Top>
         <Author>
-          <Link disableBorderOnHover href={`/communities/profile/${post.author._id}`}>
+          <Link disableBorderOnHover href={`/communities/profile/${post.author?._id}`}>
             <Avatar image={post.author?.image} size={1.25} />
           </Link>
 
           <Spacing left="xs">
-            <Link href={`/communities/profile/${post.author._id}`} color="text">
-              <Name>{post.author.fullName} </Name>
+            <Link href={`/communities/profile/${post.author?._id}`} color="text">
+              <Name>{post.author?.fullName} </Name>
             </Link>
             <CreatedAt>
               {post.pinned && (
@@ -154,7 +154,7 @@ const RepostCard: FC<PostCardProps> = ({
           </Spacing>
         </Author>
 
-        {(post.author._id === authUser?._id || authUser?.role === UserRole.SuperAdmin) && (
+        {(post.author?._id === authUser?._id || authUser?.role === UserRole.SuperAdmin) && (
           <PostCardPopover
             queryKey={queryKey}
             postId={post._id}

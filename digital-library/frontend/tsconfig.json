@@ -5,7 +5,11 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "es6",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -16,7 +20,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "typeRoots": ["./node_modules/@types", "./types"],
+    "typeRoots": [
+      "./node_modules/@types",
+      "./types"
+    ],
     "incremental": true,
     "plugins": [
       {
@@ -24,10 +31,25 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"],
-      "/*": ["./public/*"],
+      "@/*": [
+        "./src/*"
+      ],
+      "@/public*": [
+        "./public/*"
+      ]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/common/components/nextDropdown/NextDropdown.jsx", "src/**/*", "typings/**/*", "src/custom.d.ts" ],
-  "exclude": ["node_modules"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/app/common/components/nextDropdown/NextDropdown.jsx",
+    "src/**/*",
+    "typings/**/*",
+    "src/custom.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

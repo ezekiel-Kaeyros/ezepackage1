@@ -1,17 +1,15 @@
-import { IConfigs } from "../types";
-//const API_PRODUCTION_URL = 'https://backcommunities.eze.wiki';
-// const API_PRODUCTION_URL = process.env.NEXT_PUBLIC_PRODUCTION_URL
-// const API_DEV_URL = process.env.NEXT_PUBLIC_BACKENDCOMMUNITIES_URL;
+import { IConfigs, IConfigSet } from "../types";
 
-const Config = {
+const Config: IConfigSet = {
   production: {
-    apiUrl: "https://backcommunities.eze.ink",
-    landingPageUrl: "https://eze.ink",
-    communitiesUrl: "https://communities.eze.ink",
-    livingLibraryUrl: "https://library.eze.ink/en/digital-library",
-    kashAppAuthUrl: "https://kashapp.biz/auth/mo_saml/index.php",
-    ssoLoginUrl: "https://sso.eze.ink/auth/login",
-    ssoLogoutUrl: "https://sso.eze.ink/auth/logout",
+    apiUrl: "http://backcommunities.eze.ink",
+    landingPageUrl: "http://eze.ink",
+    communitiesUrl: "http://communities.eze.ink",
+    livingLibraryUrl: "http://library.eze.ink/en/digital-library",
+    kashAppAuthUrl: "http://kashapp.biz/auth/mo_saml/index.php",
+    ssoLoginUrl: "http://sso.eze.ink/auth/login",
+    ssoUrl: "http://sso.eze.ink",
+    ssoLogoutUrl: "http://sso.eze.ink/auth/logout",
   },
   development: {
     apiUrl: "http://localhost:4000",
@@ -20,6 +18,7 @@ const Config = {
     livingLibraryUrl: "http://localhost:3003/en/digital-library",
     kashAppAuthUrl: "https://kashapp.biz/auth/mo_saml/index.php",
     ssoLoginUrl: "http://localhost:3000/auth/login",
+    ssoUrl: "http://localhost:3000",
     ssoLogoutUrl: "http://localhost:3000/auth/logout",
   },
   staging: {
@@ -28,13 +27,13 @@ const Config = {
     communitiesUrl: "https://communities.eze.ink",
     livingLibraryUrl: "https://library.eze.ink/en/digital-library",
     kashAppAuthUrl: "https://kashapp.biz/auth/mo_saml/index.php",
-    ssoLoginUrl: "https://sso.eze.ink/auth/login",
-    ssoLogoutUrl: "https://sso.eze.ink/auth/logout",
+    ssoLoginUrl: "http://sso.eze.ink/auth/login",
+    ssoUrl: "http://sso.eze.ink",
+    ssoLogoutUrl: "http://sso.eze.ink/auth/logout",
   },
-  // API_URL: process.env.NODE_ENV === 'production' ? API_PRODUCTION_URL : API_DEV_URL,
-  GOOGLE_ANALYTICS_ID: 'G-MD706N8TZV',
 };
 
-const environ = process.env.NEXT_PUBLIC_APP_ENV || "development"
-const config: IConfigs = Config[environ];
-export default config
+const environ = (process.env.NEXT_PUBLIC_APP_ENV as keyof IConfigSet) || "development";
+const config: IConfigs = Config[environ] || Config.development;
+
+export default config;

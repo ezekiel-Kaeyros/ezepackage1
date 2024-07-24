@@ -166,33 +166,33 @@ const CommunityPage = () => {
                 <>
                   <Title>Data Analytics Community</Title>
 
-                  <CommunityCard search={isSearch} value={value2} categoryStep={'Data Analytics'} />
+                  <CommunityCard search={isSearch} channels={value2} categoryStep={'Data Analytics'} />
 
                   {/* {isFetchingNextPage && <LoadingDots />} */}
 
                   <Title>Agro-Food Sciences Community</Title>
-                  <CommunityCard search={isSearch} value={value2} categoryStep={'Agro-Food Sciences'} />
+                  <CommunityCard search={isSearch} channels={value2} categoryStep={'Agro-Food Sciences'} />
 
                   <Title>Microbiologist Community</Title>
-                  <CommunityCard search={isSearch} value={value2} categoryStep={'Microbiologist'} />
+                  <CommunityCard search={isSearch} channels={value2} categoryStep={'Microbiologist'} />
                 </>
               )}
               {step == 2 && (
                 <>
                   <Title>Data Analytics Community</Title>
-                  <CommunityCard search={isSearch} value={value2} categoryStep={'Data Analytics'} />
+                  <CommunityCard search={isSearch} channels={value2} categoryStep={'Data Analytics'} />
                 </>
               )}
               {step == 3 && (
                 <>
                   <Title>Agro-Food Sciences Community</Title>
-                  <CommunityCard search={isSearch} value={value2} categoryStep={'Agro-Food Sciences'} />
+                  <CommunityCard search={isSearch} channels={value2} categoryStep={'Agro-Food Sciences'} />
                 </>
               )}
               {step == 4 && (
                 <>
                   <Title>Microbiologist Community</Title>
-                  <CommunityCard search={isSearch} value={value2} categoryStep={'Microbiologist'} />
+                  <CommunityCard search={isSearch} channels={value2} categoryStep={'Microbiologist'} />
                 </>
               )}
             </>

@@ -66,7 +66,7 @@ export const ContentWrapper = styled.div`
 
 export const MainContent = styled.div`
   width: 100%;
-  margin: 0 16rem;
+  margin: 0 6rem;
 
   @media (max-width: ${(p) => parseInt(p.theme.screen.xl, 10) + 20 + 'px'}) {
     width: 100%;

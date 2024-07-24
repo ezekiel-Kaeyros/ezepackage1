@@ -10,6 +10,7 @@ import { useAuth } from '@/app/hooks/useAuth';
 import axios from 'axios';
 import { default as C } from '@/utils/config';
 import { Spinner } from '@nextui-org/react';
+import { User } from '@/app/api/models/User';
 
 const COMMUNITIES_URL: any = C.communitiesUrl
 const config = {
@@ -27,6 +28,7 @@ const joinChannel = async ({ channelId, userId, url }: any) => {
 };
 
 const getUserEmail = async (url: string, data: { email: string }) => {
+  console.log("EMAIL: ", data.email)
   const response = await axios.get(`${url}/users/email/${data.email}`);
   return response;
 };
@@ -74,7 +76,10 @@ const SecondStep = () => {
     watch,
     formState: { isValid, errors },
   } = useForm<SecondStepFormValues>();
-  const { token, user } = useAuth();
+  const { user } = useAuth<{ email: string }>();
+
+  console.log("IS THIS USER:", user)
+  
   const [communities, setCommunities] = useState<
     {
       authRequired: string;
@@ -141,9 +146,8 @@ const SecondStep = () => {
   };
 
   const handleJoin = async () => {
-    console.log('ok');
     setLoad(true)
-    const userNew = await getUserEmail(C.apiUrl, { email: user?.email! })
+    const userNew = await getUserEmail(C.apiUrl, { email: user?.email || "" })
     if (userNew.status == 200) {
       if (communities && communities.length > 0) {
         let row = 0;
@@ -172,7 +176,7 @@ const SecondStep = () => {
               setnumber(row);
             }
           } catch (error) {
-            console.log('error', error);
+            console.error('Error', error);
             row = row + 1;
 
             // const row = number ? number + 1 : 1;
@@ -225,7 +229,7 @@ const SecondStep = () => {
                     value={community?._id}
                     gettopic={getTopic}
                     item={community}
-                    // getTopic={getTopic}
+                  // getTopic={getTopic}
                   />
                 ))}
             </div>

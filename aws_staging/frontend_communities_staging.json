@@ -1,0 +1,54 @@
+{
+    "family": "eze_frontend_staging",
+    "containerDefinitions": [
+        {
+            "name": "eze_staging_frontend_container",
+            "image": "ghcr.io/kaeyros-analytics/eze_frontend_staging:latest",
+            "repositoryCredentials": {
+                "credentialsParameter": "arn:aws:secretsmanager:eu-central-1:108165532263:secret:githubcred-TW3q7Z"
+            },
+            "cpu": 512,
+            "memory": 819,
+            "memoryReservation": 819,
+            "portMappings": [
+                {
+                    "name": "eze_staging_frontend_container-3000-tcp",
+                    "containerPort": 3000,
+                    "hostPort": 0,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "environment": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "dockerLabels": {
+                "traefik.http.routers.frontend_eze_staging.rule": "Host(`communities.eze.ink`)",
+                "traefik.enable": "true"
+            },
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/eze_frontend_staging",
+                    "awslogs-create-group": "true",
+                    "awslogs-region": "eu-central-1",
+                    "awslogs-stream-prefix": "ecs"
+                },
+                "secretOptions": []
+            },
+            "systemControls": []
+        }
+    ],
+    "taskRoleArn": "arn:aws:iam::108165532263:role/ecs_role_task_again",
+    "executionRoleArn": "arn:aws:iam::108165532263:role/ecs_role_task_again",
+    "requiresCompatibilities": [
+        "EC2"
+    ],
+    "cpu": "512",
+    "memory": "819",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    }
+}

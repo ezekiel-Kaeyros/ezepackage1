@@ -1,16 +1,19 @@
 {
-    "family": "backend_communitie",
+    "family": "eze_landing_staging",
     "containerDefinitions": [
         {
-            "name": "backend_communities",
-            "image": "ezekielkaeyros/backend_eze_communities:latest",
-            "cpu": 1024,
-            "memory": 2048,
-            "memoryReservation": 2048,
+            "name": "eze_staging_landing_container",
+            "image": "ghcr.io/kaeyros-analytics/eze_landing_staging:latest",
+            "repositoryCredentials": {
+                "credentialsParameter": "arn:aws:secretsmanager:eu-central-1:108165532263:secret:githubcred-TW3q7Z"
+            },
+            "cpu": 307,
+            "memory": 307,
+            "memoryReservation": 307,
             "portMappings": [
                 {
-                    "name": "backend_communities-4000-tcp",
-                    "containerPort": 4000,
+                    "name": "eze_staging_landing_container-3000-tcp",
+                    "containerPort": 3000,
                     "hostPort": 0,
                     "protocol": "tcp",
                     "appProtocol": "http"
@@ -21,14 +24,14 @@
             "mountPoints": [],
             "volumesFrom": [],
             "dockerLabels": {
-                "traefik.enable": "true",
-                "traefik.http.routers.backcomunities.rule": "Host(`backcommunities.eze.wiki`)"
+                "traefik.http.routers.landing.rule": "Host(`eze.ink`)",
+                "traefik.enable": "true"
             },
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
+                    "awslogs-group": "/ecs/eze_landing_staging",
                     "awslogs-create-group": "true",
-                    "awslogs-group": "/ecs/backend_communitie",
                     "awslogs-region": "eu-central-1",
                     "awslogs-stream-prefix": "ecs"
                 },
@@ -37,13 +40,14 @@
             "systemControls": []
         }
     ],
-    "taskRoleArn": "arn:aws:iam::108165532263:role/ecsTaskExecutionRole",
-    "executionRoleArn": "arn:aws:iam::108165532263:role/ecsTaskExecutionRole",
+    "taskRoleArn": "arn:aws:iam::108165532263:role/ecs_role_task_again",
+    "executionRoleArn": "arn:aws:iam::108165532263:role/ecs_role_task_again",
+    "networkMode": "bridge",
     "requiresCompatibilities": [
         "EC2"
     ],
-    "cpu": "1024",
-    "memory": "2048",
+    "cpu": "307",
+    "memory": "307",
     "runtimePlatform": {
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"

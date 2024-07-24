@@ -2,13 +2,12 @@ import { IConfig } from "./types"
 
 const Config = {
   production: {
-    apiUrl: "https://backcommunities.eze.ink",
-    landingPageUrl: "https://eze.ink",
-    communitiesUrl: "https://communities.eze.ink",
-    livingLibraryUrl: "https://library.eze.ink/en/digital-library",
-    kashAppAuthUrl: "https://kashapp.biz/auth/mo_saml/index.php",
-    ssoLoginUrl: "https://sso.eze.ink/auth/login",
-    ssoLogoutUrl: "https://sso.eze.ink/auth/logout",
+    apiUrl: "http://backcommunities.eze.ink",
+    landingPageUrl: "http://eze.ink",
+    communitiesUrl: "http://communities.eze.ink",
+    livingLibraryUrl: "http://library.eze.ink/en/digital-library",
+    kashAppAuthUrl: "http://kashapp.biz/auth/mo_saml/index.php",
+    ssoUrl: "http://sso.eze.ink",
   },
   development: {
     apiUrl: "http://localhost:4000",
@@ -16,8 +15,7 @@ const Config = {
     communitiesUrl: "http://localhost:3002",
     livingLibraryUrl: "http://localhost:3003/en/digital-library",
     kashAppAuthUrl: "https://kashapp.biz/auth/mo_saml/index.php",
-    ssoLoginUrl: "http://localhost:3000/auth/login",
-    ssoLogoutUrl: "http://localhost:3000/auth/logout",
+    ssoUrl: "http://localhost:3000",
   },
   staging: {
     apiUrl: "https://backcommunities.eze.ink",
@@ -25,8 +23,7 @@ const Config = {
     communitiesUrl: "https://communities.eze.ink",
     livingLibraryUrl: "https://library.eze.ink/en/digital-library",
     kashAppAuthUrl: "https://kashapp.biz/auth/mo_saml/index.php",
-    ssoLoginUrl: "https://sso.eze.ink/auth/login",
-    ssoLogoutUrl: "https://sso.eze.ink/auth/logout",
+    ssoUrl: "https://sso.eze.ink",
   },
 };
 

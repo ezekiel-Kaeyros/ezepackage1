@@ -20,7 +20,6 @@ const deleteComment = async (id: string) => {
 };
 export const getLikes = async (comment_id: string) => {
   const newComment = await axios.get(`/likes/comment/${comment_id}`);
-  console.log('newComment', newComment);
 
   return newComment.data;
 };
@@ -70,7 +69,6 @@ const Comment: FC<CommentProps> = ({ comment, author, queryKey, post }) => {
   const hasLiked2 = comment?.likes?.find((post: any) => {
 
     if (post?.user?._id == authUser?._id) {
-      console.log('postTrue',post);
       
       return post
     } else {
@@ -80,7 +78,6 @@ const Comment: FC<CommentProps> = ({ comment, author, queryKey, post }) => {
       
     }
   });
-   console.log('hasLiked2',hasLiked2);
   
   // const view = comment.likes.filter((post: any) => {
   //   console.log(post);
@@ -102,7 +99,6 @@ const Comment: FC<CommentProps> = ({ comment, author, queryKey, post }) => {
     setLoadLike(true);
     if (comment.likes.length > 0) {
       const like = await getLikes(id);
-      console.log('like', like);
       const islike = like.filter((item: any) => item.user._id == authUser?._id);
       islike.length > 0 ? sethasLiked(islike[0]._id) : sethasLiked(null);
       // islike.length > 0 && console.log(islike[0].user);

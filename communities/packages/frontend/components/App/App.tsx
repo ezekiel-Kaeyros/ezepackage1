@@ -57,7 +57,7 @@ const App: FC<AppProps> = ({ children, setTheme }) => {
   if (authError) {
     const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
     if (isDevelopment) {
-      console.error(authError);
+      console.error("authError Here", authError);
     }
     const devErrorMessage =
       'Sorry, something went wrong. Please open the browser console to view the detailed error message.';

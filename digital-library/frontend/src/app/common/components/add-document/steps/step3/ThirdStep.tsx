@@ -34,7 +34,6 @@ const ThirdStep: React.FC<{ step: number; changeHandler: any }> = ({
     // setFileName(e.target?.files[0].name);
     if (extArray.includes(ext.toLocaleLowerCase())) {
       // files && setInputValue(files);
-      console.log(e.target.files[0], "target file");
 
       // const reader = new FileReader();
       setFile(e.target.files[0]);
@@ -111,7 +110,7 @@ const ThirdStep: React.FC<{ step: number; changeHandler: any }> = ({
           }}
           className={`px-4 py-2 font-bold text-black text-sm flex justify-center items-center rounded-full mt-10`}
         >
-          back
+          Back
         </button>
         <button
           type="submit"

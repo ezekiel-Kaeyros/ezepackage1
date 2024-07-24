@@ -41,7 +41,7 @@ const NewCardDocument: React.FC<{
   const newFormat = convertDateToFrenchFormat(props.date);
   return (
 
-    <div>
+    <div className="">
       {/* <Link href={'#'} target="_blank"> */}
       <div
         className="w-full cursor-pointer"

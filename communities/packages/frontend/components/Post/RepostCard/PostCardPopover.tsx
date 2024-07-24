@@ -61,7 +61,7 @@ const PostCardPopover: FC<PostCardPopoverProps> = ({
         refetch();
       }
     } catch (error) {
-      console.log('An error occurred while pinning the post, error: ', error);
+      console.error('An error occurred while pinning the post, error: ', error);
     }
 
     setIsPopoverOpen(false);
@@ -98,7 +98,7 @@ const PostCardPopover: FC<PostCardPopoverProps> = ({
         router.push('/');
       }
     } catch (error) {
-      console.log('An error occurred while deleting a post: ', error);
+      console.error('An error occurred while deleting a post: ', error);
       dispatch(
         openAlert({
           message: 'An error occurred while deleting a post.',

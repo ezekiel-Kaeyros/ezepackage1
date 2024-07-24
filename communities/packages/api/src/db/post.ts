@@ -13,7 +13,6 @@ export const postById = async (id: string): Promise<any> => {
 };
 
 export const getFollowedPosts = async (userId: string, offset: number, limit: number): Promise<any> => {
-    console.log('============================================');
   const userFollowing = [];
   const follow = await Follow.find({ follower: userId }, { _id: 0 }).select('user');
   follow.map((f) => userFollowing.push(f.user));
@@ -57,12 +56,12 @@ export const getFollowedPosts = async (userId: string, offset: number, limit: nu
 };
 
 export const getChannelPosts = async (channelId: any): Promise<any> => {
+
   const posts: any = await Post.find({ channel: channelId });
   return posts;
 };
 
 export const getPostsByChannelId = async (channelId: any, offset: number, limit: number): Promise<any> => {
-
   
   const posts = await Post.find({ channel: channelId })
     .populate('author')
@@ -83,13 +82,12 @@ export const getPostsByChannelId = async (channelId: any, offset: number, limit:
       ['createdAt', -1],
     ])
     .exec();
-// console.log(posts,'post==========');
 
   return posts.filter((p: any) => p?.author?.banned !== true);
 };
 
 export const getPostsByAuthorId = async (authorId: any, offset: number, limit: number): Promise<any> => {
-  // console.log('============================================');
+
   const posts = await Post.find({ author: authorId })
     .populate({
       path: 'author',
@@ -153,7 +151,6 @@ export const createPost = async (
   authorId: string,
   repost: any
 ): Promise<any> => {
-  console.log('repost123654789',repost);
   
   const newPost = await new Post({
     title,

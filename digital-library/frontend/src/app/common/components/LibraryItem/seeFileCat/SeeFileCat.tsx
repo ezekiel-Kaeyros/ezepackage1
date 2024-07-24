@@ -1,6 +1,6 @@
 "use client"
 
-import Carousel from '@/app/common/components/caroussel/Carousel';
+import FilterdCarousel from '../../caroussel/filteredCarousel';
 import cover2 from '../../../../../../public/images/overview.svg'
 import arrowIcon from '../../../../../../public/images/arrow-left (2).svg'
 import React from 'react'
@@ -8,6 +8,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useSelector, UseSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
+import { usePathname } from 'next/navigation';
 
 const arraytest = [
     { num: 3, save: true },
@@ -34,8 +35,16 @@ const arraytest = [
 
 function SeeFileCat() {
     const {cathegoryName} = useSelector((item:RootState) => item.setCathegoryName)
+    const pathname = usePathname();
+    const pathParts = pathname.split('/');
+    const dynamicSegment = pathParts[pathParts.length - 1];
 
-    console.log(cathegoryName, 'cathegoryName')
+    function decodeString(encodedString: string) {
+        return decodeURIComponent(encodedString);
+    }
+    
+    const data = dynamicSegment;
+    const decodedData = decodeString(data);
 
     return (
         <div className='mt-5'>
@@ -48,11 +57,11 @@ function SeeFileCat() {
             </Link>
             <div className='pl-4 text-xl'>
                 <h1>
-                    {cathegoryName ? cathegoryName : "Cathegories"}
+                    {decodedData}
                 </h1>
             </div>
             <div className="w-full  pb-14 overflow-hidden">
-                <Carousel data={arraytest} />
+                <FilterdCarousel data={arraytest} path={dynamicSegment} />
             </div>
         </div>
     )

@@ -78,27 +78,36 @@ const ChannelController = {
   },
   updateMember: async (req: Request, res: Response): Promise<any> => {
     const { _id, name, authRequired, description, members } = req.body;
+    
+    
     const trimmedName = name.trim();
+
     let member: any;
 
-    if (channelNameReg.test(trimmedName) || !trimmedName || trimmedName.length > 20) {
-      return res
-        .status(ErrorCodes.Bad_Request)
-        .send(`Channel names can only use letters, numbers, underscores, and periods by max character 20.`);
-    }
+    // if (channelNameReg.test(trimmedName) || !trimmedName || trimmedName.length > 20) {
+    //   return res
+    //     .status(ErrorCodes.Bad_Request)
+    //     .send(`Channel names can only use letters, numbers, underscores, and periods by max character 20.`);
+    // }
 
-    const channelExists = await getChannelByName(trimmedName);
-    if (channelExists && channelExists?._id.toString() !== _id) {
-      return res.status(ErrorCodes.Bad_Request).send(`A channel with the name "${trimmedName}" already exists.`);
-    }
-    if (members) {
-      member = members;
-    } else {
-      member = channelExists.members && channelExists.mebers;
-    }
+    try {
+      const channelExists = await getChannelByName(trimmedName);
 
-    const updatedChannel = await updateChannel(_id, trimmedName, authRequired, null, description, member);
-    return res.send(updatedChannel);
+      if (channelExists && channelExists?._id.toString() !== _id) {
+        return res.status(ErrorCodes.Bad_Request).send(`A channel with the name "${trimmedName}" already exists.`);
+      }
+      if (members) {
+        member = members;
+      } else {
+        member = channelExists.members && channelExists.mebers;
+      }
+
+      const updatedChannel = await updateChannel(_id, trimmedName, authRequired, null, description, member);
+      return res.send(updatedChannel);
+    } catch(error: any) {
+      console.error("Update Member Error: ", error)
+      return res.status(ErrorCodes.Bad_Request).send(`Update Member Error: ${error}`)
+    }
   },
 
   uploadPhoto: async (req: Request, res: Response): Promise<any> => {

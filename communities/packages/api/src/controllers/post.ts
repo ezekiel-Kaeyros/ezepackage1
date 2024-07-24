@@ -22,6 +22,7 @@ const PostController = {
   },
   postsByChannelId: async (req: Request, res: Response): Promise<any> => {
     const { channelId } = req.params;
+    
     const { offset, limit } = req.query;
     const posts = await getPostsByChannelId(channelId, +offset, +limit);
     return res.send(posts);
@@ -38,12 +39,10 @@ const PostController = {
     return res.send(post);
   },
   create: async (req: Request, res: Response): Promise<any> => {
-    console.log('1');
     
     const authUser = req.user as AuthUser;
     const { title, channelId, repost } = req.body;
     const image = req.file;
-    console.log('title again', title);
 
     if (!title && !image) {
       return res.status(400).send('Post title or image is required.');
@@ -51,7 +50,7 @@ const PostController = {
     if (image && !image.mimetype.match(/image-*/)) {
       return res.status(ErrorCodes.Bad_Request).send('Please upload an image.');
     }
-    console.log('Hey');
+
     let imageUrl: string;
     let imagePublicId: string;
     let repost_test: string;
@@ -68,9 +67,7 @@ const PostController = {
       repost_test = repost;
     }
 
-    console.log('This is the title', title);
     const newPost: any = await createPost(title, imageUrl, imagePublicId, channelId, authUser._id, repost_test);
-    console.log('newPost123456789',newPost);
     
     return res.send(newPost);
   },

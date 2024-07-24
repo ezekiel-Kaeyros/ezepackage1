@@ -144,8 +144,6 @@ export const updateUserBanned = async (id: string, banned: boolean): Promise<any
 };
 
 export const joinChannel = async (channelId: string, userId: string): Promise<any> => {
-  console.log('channelId===',channelId);
-  console.log('userId======',userId);
   
   try {
     const user = await User.findById(userId);
@@ -160,10 +158,7 @@ export const joinChannel = async (channelId: string, userId: string): Promise<an
 
     user.joinedChannels.push(channelId);
 
-    console.log('User before saving', user);
-
     await user.save();
-    console.log('user after saving', user);
 
     return user;
   } catch (error) {

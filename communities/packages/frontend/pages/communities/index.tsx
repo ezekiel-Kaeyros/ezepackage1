@@ -55,7 +55,7 @@ const Home: FC = () => {
       const postsData = await Promise.all(uniquePostsIds.map((id) => fetchPostsById(id)));
       return postsData;
     } catch (error) {
-      console.log(`An error occured ${error}`);
+      console.error(`An error occured ${error}`);
     }
   };
 

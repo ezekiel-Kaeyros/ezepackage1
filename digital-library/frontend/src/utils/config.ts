@@ -2,14 +2,12 @@ import { IConfig } from "./types"
 
 const Config = {
   production: {
-    apiUrl: "https://backcommunities.eze.ink",
-    landingPageUrl: "https://eze.ink",
-    communitiesUrl: "https://communities.eze.ink",
-    livingLibraryUrl: "https://library.eze.ink/en",
-    kashAppAuthUrl: "https://kashapp.biz/auth/mo_saml/index.php",
-    ssoLoginUrl: "https://sso.eze.ink/auth/login",
-    ssoUrl: "https://sso.eze.ink",
-    ssoLogoutUrl: "https://sso.eze.ink/auth/logout",
+    apiUrl: "http://backcommunities.eze.ink",
+    landingPageUrl: "http://eze.ink",
+    communitiesUrl: "http://communities.eze.ink",
+    livingLibraryUrl: "http://library.eze.ink/en",
+    kashAppAuthUrl: "http://kashapp.biz/auth/mo_saml/index.php",
+    ssoUrl: "http://sso.eze.ink",
   },
   development: {
     apiUrl: "http://localhost:4000",

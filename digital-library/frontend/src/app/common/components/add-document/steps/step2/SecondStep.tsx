@@ -380,7 +380,7 @@ const SecondStep: React.FC<{ step: number; changeHandler: any }> = ({ step, chan
           }}
           className={`px-4 py-2 font-bold text-black text-sm flex justify-center items-center rounded-full mt-10`}
         >
-          back
+          Back
         </button>
         <button
           type="submit"

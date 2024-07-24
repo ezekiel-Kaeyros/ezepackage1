@@ -26,7 +26,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 fileRouter.post('/upload', upload.fields([{ name: 'file', maxCount: 1 }, { name: 'coverImage', maxCount: 1 }]), async (req: any, res: any) => {
-  const { itemTitle, itemType, firstName, lastName, note, price, email } = req.body;
+  const { itemTitle, itemType, firstName, lastName, note, price, email, category } = req.body;
 
   const itemPrice = Number(price);
   if (isNaN(itemPrice)) {
@@ -66,7 +66,7 @@ fileRouter.post('/upload', upload.fields([{ name: 'file', maxCount: 1 }, { name:
     const result = await postFileInstance.registerUpload();
 
     // Continue the code here...
-    const localUpload = await uploadBook(result.itemKey, email, coverImageSecureUrl, itemPrice);
+    const localUpload = await uploadBook(result.itemKey, email, coverImageSecureUrl, itemPrice, category);
 
     // Delete the cover image file from local storage after uploading to Cloudinary
     fs.unlinkSync(coverImagePath);

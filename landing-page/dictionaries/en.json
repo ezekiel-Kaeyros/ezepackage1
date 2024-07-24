@@ -1,14 +1,13 @@
 {
   "Navigation": {
     "home": "Home page",
-    "comunity":"Communities",
-    "online":"Online Courses",
-    "fuding":"Funding Area",
-    "library":"Visit Library",
-    "events":"Events",
-    "dash":" Go to Dashboard",
-    "btn":"Login"
-
+    "comunity": "Communities",
+    "online": "Online Courses",
+    "fuding": "Funding Area",
+    "library": "Visit Library",
+    "events": "Events",
+    "dash": " Go to Dashboard",
+    "btn": "Login"
   },
   "page": {
     "signup": {
@@ -59,7 +58,7 @@
           "block2": {
             "title": " Vibrant Online Communities",
             "p": "Connect with like-minded individuals in our vibrant online communities.",
-            "btn": "expolre communities"
+            "btn": "Explore communities"
           }
         }
       },
@@ -109,16 +108,16 @@
       }
     }
   },
-  "footer":{
+  "footer": {
     "block1": {
       "title": "Visit",
-      "ligne1": "communities",
+      "ligne1": "Communities",
       "ligne2": "Online Courses",
       "ligne3": "Library",
       "ligne4": "Funding Area"
     },
     "block2": {
-      "title": "communities",
+      "title": "Communities",
       "ligne1": "Health Sciences",
       "ligne2": "Mines",
       "ligne3": "ICT",
@@ -132,7 +131,7 @@
       "ligne1": "Health Sciences",
       "ligne2": "Mines",
       "ligne3": "ICT",
-      "ligne4": " Agro-food Sciences"
+      "ligne4": "Agro-food Sciences"
     },
     "block4": {
       "title": "Popular Articles",
@@ -140,8 +139,8 @@
       "ligne2": " Medical Consumption Insights",
       "ligne3": "Football Stats"
     },
-    "social":"Our Socials",
-    "design":"Designed by",
-    "copy":"Copyright"
+    "social": "Our Socials",
+    "design": "Designed by",
+    "copy": "Copyright"
   }
 }

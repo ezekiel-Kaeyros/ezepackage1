@@ -10,18 +10,18 @@ import { useAuth } from '@/app/hooks/useAuth';
 
 const Onboarding = () => {
   const searchParams = useSearchParams();
-  const { userAuth0, user } = useAuth();
+  const { user } = useAuth();
   const step = searchParams.get('step');
 
-  console.log(userAuth0, 'userAuth0');
+  // console.log(userAuth0, 'userAuth0');
 
   return (
     <div>
       <h1 className="font-bold text-2xl lg:text-3xl mb-12 md:space-x-2">
         <span className="block md:inline">Welcome</span>
-        <span className="font-bold text-primaryColor text-wrap">{user?.fullName}</span>
+        {/* <span className="font-bold text-primaryColor text-wrap">{user?.fullName}</span> */}
       </h1>
-      {parseInt(`${step}`) === 1 &&<SecondStep />}
+      {parseInt(`${step}`) === 1 && <SecondStep />}
 
       {/* Form image */}
       <Image

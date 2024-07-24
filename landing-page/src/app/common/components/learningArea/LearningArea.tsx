@@ -1,13 +1,18 @@
+"use client"
 import React from 'react'
 import Learning from '../../../../../public/learningAREA/line-trasvers.svg'
 import Image from 'next/image'
-import { Button } from '../button/Button'
+import { Button } from '../button/Button';
+import { useRouter } from 'next/navigation';
+import config from '@/utils/config'
 export type HomeProps = {
     home: any;
     lang: any;
   };
 
 const LearningArea: React.FC<HomeProps> = ({ home, lang}) => {
+    const router = useRouter();
+
   return (
     <section className="mt-20 max-sm:mb-96 w-full max-sm:px-5 max-lg:px-10">
         <div className=" relative flex justify-center ">
@@ -45,7 +50,8 @@ const LearningArea: React.FC<HomeProps> = ({ home, lang}) => {
                 </span>
               </div>
               <Button
-                className="w-[70%] sm:w-[30%] bg-[#015E44] text-xl mx-auto "
+                className="w-[70%] sm:w-[30%] bg-[#015E44] text-xl mx-auto"
+                onClick={() => router.push(`${config.kashAppAuthUrl}`)}
               >
              {home.home.section2.sec2.paragragph4}
               </Button>

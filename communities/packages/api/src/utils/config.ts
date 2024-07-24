@@ -5,9 +5,9 @@ const config = {
     apiUrl: "http://localhost:4000"
   },
   production: {
-    frontendUrl: "https://communities.eze.ink",
-    landingPageUrl: "https://eze.ink",
-    apiUrl: "https://backcommunities.eze.ink"
+    frontendUrl: "http://communities.eze.ink",
+    landingPageUrl: "http://eze.ink",
+    apiUrl: "http://backcommunities.eze.ink"
   },
   staging: {
     frontendUrl: "https://communities.eze.ink",

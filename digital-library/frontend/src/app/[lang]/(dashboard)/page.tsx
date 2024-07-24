@@ -70,8 +70,8 @@ const Home = () => {
       }}
     >
 
-      <div className="flex items-center justify-between mb-10">
-        <h1 className="sm:text-3xl text-xl">My Documents</h1>
+      <div className="flex flex-col lg:flex-row items-center justify-between mb-10">
+        <h1 className="sm:text-3xl text-xl lg:mb-0 mb-4">My Documents</h1>
         <div className="">
           <Filter />
         </div>

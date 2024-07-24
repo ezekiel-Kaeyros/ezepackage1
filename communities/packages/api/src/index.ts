@@ -23,7 +23,7 @@ app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
-    origin: [config.frontendUrl, config.landingPageUrl],
+    origin: [config.frontendUrl,  config.communitiesUrl, config.landingPageUrl],
   })
 );
 

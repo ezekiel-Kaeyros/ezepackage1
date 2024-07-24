@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only --watch \"src/**\" --poll src/index.ts",
-    "build": "tsc",
-    "start": "node build/index.js",
+    "dev": "cross-env NODE_ENV=development ts-node-dev --respawn --transpile-only --watch \"src/**\" --poll src/index.ts",
+    "build": "cross-env NODE_ENV=production tsc",
+    "start": "cross-env NODE_ENV=production node build/index.js",
     "lint": "eslint . --ext .ts",
     "ts:check": "tsc -p tsconfig.json --noEmit"
   },
@@ -49,6 +49,7 @@
     "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.28.4",
     "@typescript-eslint/parser": "^4.28.4",
+    "cross-env": "^7.0.3",
     "eslint": "^7.31.0",
     "faker": "^5.4.0",
     "ts-node-dev": "^1.1.6",

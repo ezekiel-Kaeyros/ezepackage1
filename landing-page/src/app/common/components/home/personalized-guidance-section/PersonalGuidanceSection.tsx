@@ -1,15 +1,27 @@
+'use client'
+
 import React from 'react';
 import { Button } from '../../button/Button';
 import Image from 'next/image';
 import VideoImage from '../../../../../../public/images/video.png';
+import config from '@/utils/config';
 
-const PersonalGuidanceSection:React.FC<{home:any}> = ({home}) => {
+
+const PersonalGuidanceSection: React.FC<{ home: any }> = ({ home }) => {
+
+  const handleLogin = async () => {
+    try {
+      window.location.href = `${config.ssoUrl}/auth/login`;
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
   return (
     <div className="mt-20 max-lg:mt-80 max-sm:mt-[30rem] w-full flex flex-col lg:flex-row items-start gap-x-11 px-8">
       <div className="lg:w-4/12 w-full flex flex-col justify-start space-y-4">
         <h2 className="font-bold text-2xl lg:text-3xl "></h2>
         <p className="text-base font-normal">{home?.section2.sec3.des2}</p>
-        <Button className="w-fit text-sm px-8">
+        <Button className="w-fit text-sm px-8" onClick={handleLogin}>
           {home?.section2.sec3.paragragph1}
         </Button>
       </div>

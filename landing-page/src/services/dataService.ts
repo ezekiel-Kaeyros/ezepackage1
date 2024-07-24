@@ -5,7 +5,7 @@ export default class DataService {
   client: any;
   constructor() {
     this.client = axios.create({
-      baseURL: config.apiUrl,
+      baseURL: `${config.apiUrl}`,
       timeout: 30000,
       timeoutErrorMessage: 'Time out!',
       headers: {

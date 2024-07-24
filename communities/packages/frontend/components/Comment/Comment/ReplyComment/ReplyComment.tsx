@@ -37,8 +37,6 @@ function parseTextWithLinks(text) {
     return `<a  href='/communities/profile/${id}'>${name}</a>`;
   });
 
-  console.log('parsed text', parsedText);
-
   // Render HTML with Next.js Link components
   return parsedText;
 }
@@ -91,19 +89,17 @@ const ReplyComment: FC<CommentProps> = ({ comment, author, queryKey, post , id})
   //   const likes = likesLength > 0 ? likesLength + ' likes' : null;
   //   return likes;
   // };
-  console.log(author,'=====================',authUser?._id);
   
   const likeHandler = async (id: string) => {
     // setIsLike('');
     setLoadLike(true);
     if (comment.likes.length > 0) {
       const like = await getLikes(id);
-      console.log('like', like);
+
       const islike = like.filter((item: any) => item.user._id == authUser?._id);
       islike.length > 0 ? sethasLiked(islike[0]._id) : sethasLiked(null);
       // islike.length > 0 && console.log(islike[0].user);
 
-      console.log('islike5698', islike);
       setIsLike(id);
     } else {
       setIsLike(id);

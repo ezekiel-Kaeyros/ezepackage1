@@ -85,7 +85,7 @@ const Sidebar: FC<SidebarProps> = ({ lang, sidebar }) => {
           className="sm:hidden font-semibold text-5xl p-3 cursor-pointer"
           onClick={() => dispatch(toggleFunc())}
         >
-          X
+         <small>x</small>
         </span>
       </div>
       <div className="mt-14 flex flex-col gap-6 w-full ">

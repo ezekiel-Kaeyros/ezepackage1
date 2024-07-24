@@ -6,6 +6,7 @@ interface IItem extends Document {
   price: number;
   rating: number;
   poster: mongoose.Types.ObjectId;
+  category:string;
 }
 
 const ItemSchema: Schema = new Schema({
@@ -13,7 +14,8 @@ const ItemSchema: Schema = new Schema({
   coverImage: { type: String, required: true },
   price: { type: Number, required: true },
   rating: { type: Number, required: true },
-  poster: { type: Schema.Types.ObjectId, ref: 'User', required: true }
+  poster: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  category:{type: String, required:true}
 });
 
 export const Item = mongoose.model<IItem>('Item', ItemSchema);

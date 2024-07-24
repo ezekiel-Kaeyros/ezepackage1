@@ -9,7 +9,7 @@ import AnimateClick from '../animate-click/AnimateClick';
 
 interface ButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+  VariantProps<typeof buttonVariants> {
   href?: any;
   icon?: any;
 }
@@ -52,7 +52,7 @@ const Button: FC<ButtonProps> = ({
             href={...href}
             className={cn(buttonVariants({ variant, className }))}
           >
-            <span className="mr-2">
+            <span>
               {icon ? <Image src={icon} alt={'Icon'} /> : ''}
             </span>
             {children}
@@ -71,8 +71,8 @@ const Button: FC<ButtonProps> = ({
   return (
     <AnimateClick>
       <button {...props} className={cn(buttonVariants({ variant, className }))}>
-        <div className="flex items-center">
-          <span className="mr-2">
+        <div className="flex items-center md:px-4">
+          <span>
             {icon ? <Image src={icon} alt={'Icon'} /> : ''}
           </span>
           {children}

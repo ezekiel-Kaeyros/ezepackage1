@@ -1,16 +1,19 @@
 {
-    "family": "communitie_frontend",
+    "family": "eze_backend_staging",
     "containerDefinitions": [
         {
-            "name": "communitie_frontend",
-            "image": "ezekielkaeyros/eze_communities:latest",
+            "name": "eze_staging_backend_container",
+            "image": "ghcr.io/kaeyros-analytics/eze_backend_staging:latest",
+            "repositoryCredentials": {
+                "credentialsParameter": "arn:aws:secretsmanager:eu-central-1:108165532263:secret:githubcred-TW3q7Z"
+            },
             "cpu": 512,
             "memory": 1024,
             "memoryReservation": 1024,
             "portMappings": [
                 {
-                    "name": "communitie_frontend-3002-tcp",
-                    "containerPort": 3000,
+                    "name": "eze_staging_backend_container-4000-tcp",
+                    "containerPort": 4000,
                     "hostPort": 0,
                     "protocol": "tcp",
                     "appProtocol": "http"
@@ -21,14 +24,14 @@
             "mountPoints": [],
             "volumesFrom": [],
             "dockerLabels": {
-                "traefik.enable": "true",
-                "traefik.http.routers.communities.rule": "Host(`communities.eze.wiki`)"
+                "traefik.http.routers.backend_eze_staging.rule": "Host(`backcommunities.eze.ink`)",
+                "traefik.enable": "true"
             },
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
+                    "awslogs-group": "/ecs/eze_backend_staging",
                     "awslogs-create-group": "true",
-                    "awslogs-group": "/ecs/communitie_frontend",
                     "awslogs-region": "eu-central-1",
                     "awslogs-stream-prefix": "ecs"
                 },
@@ -37,8 +40,8 @@
             "systemControls": []
         }
     ],
-    "taskRoleArn": "arn:aws:iam::108165532263:role/ecsTaskExecutionRole",
-    "executionRoleArn": "arn:aws:iam::108165532263:role/ecsTaskExecutionRole",
+    "taskRoleArn": "arn:aws:iam::108165532263:role/ecs_role_task_again",
+    "executionRoleArn": "arn:aws:iam::108165532263:role/ecs_role_task_again",
     "requiresCompatibilities": [
         "EC2"
     ],

@@ -1,0 +1,54 @@
+{
+    "family": "library_staging",
+    "containerDefinitions": [
+        {
+            "name": "library_container",
+            "image": "ghcr.io/kaeyros-analytics/eze_library_staging:latest",
+            "repositoryCredentials": {
+                "credentialsParameter": "arn:aws:secretsmanager:eu-central-1:108165532263:secret:githubcred-TW3q7Z"
+            },
+            "cpu": 205,
+            "memory": 307,
+            "memoryReservation": 307,
+            "portMappings": [
+                {
+                    "name": "zotero_containeer-3000-tcp",
+                    "containerPort": 3000,
+                    "hostPort": 0,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "environment": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "dockerLabels": {
+                "traefik.http.routers.library.rule": "Host(`library.eze.ink`)",
+                "traefik.enable": "true"
+            },
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/zotero",
+                    "awslogs-create-group": "true",
+                    "awslogs-region": "eu-central-1",
+                    "awslogs-stream-prefix": "ecs"
+                },
+                "secretOptions": []
+            },
+            "systemControls": []
+        }
+    ],
+    "taskRoleArn": "arn:aws:iam::108165532263:role/ecs_role_task_again",
+    "executionRoleArn": "arn:aws:iam::108165532263:role/ecs_role_task_again",
+    "requiresCompatibilities": [
+        "EC2"
+    ],
+    "cpu": "205",
+    "memory": "307",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    }
+}

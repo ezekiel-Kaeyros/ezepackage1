@@ -1,26 +1,23 @@
-import {
-  getToken,
-  getUserCookies,
-  getUserCookiesAuth0,
-} from '@/cookies/cookies';
-import { AppDispatch } from '@/redux/store';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import axios from "axios";
+import { config } from "@/utils";
 
-export const useAuth = () => {
-  const user:
-    | { fullName: string; role: string | null; email: string }
-    | undefined = getUserCookies();
+export function useAuth<T>(): { user: T | null } {
+  const [user, setUser] = useState(null)
 
-  const userAuth0: { fullName: string; username: string; email: string } | any =
-    getUserCookiesAuth0();
-  const token: string | undefined = getUserCookies();
+  useEffect(() => {
+    const getUserInfo = async () => {
+      try {
+        const response = await axios.get(config.ssoUrl + '/auth', { withCredentials: true });
+        setUser(response.data)
+      } catch (error) {
+        console.error(`Error ${error}`);
+      } finally {
+        console.log('finally');
+      }
+    }
+    getUserInfo()
+  }, [])
 
-  const dispatch = useDispatch<AppDispatch>();
-
-  return {
-    userAuth0,
-    user,
-    token,
-    dispatch,
-  };
+  return { user: user };
 };

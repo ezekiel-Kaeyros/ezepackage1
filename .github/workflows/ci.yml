@@ -1,9 +1,227 @@
-name: Pipelines Staging
+# name: Pipelines Staging
+
+# on:
+#   push:
+#     branches:
+#       - main
+
+# jobs:
+#   checkout-repository:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
+
+#   create-env-file-api:
+#     runs-on: ubuntu-latest
+#     needs: checkout-repository
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
+#       - name: Create env file for API backend
+#         run: |
+#           cd communities/packages/api && \
+#           rm -f .env && \
+#           touch .env && \
+#           echo "API_PORT=4000" > .env && \
+#           echo "API_URL=https://backcommunities.eze.ink" >> .env && \
+#           echo "NEXT_PUBLIC_APP_ENV=staging" >> .env && \
+#           echo "NODE_ENV=production" >> .env && \
+#           echo "SECRET=WriteYourSecret" >> .env && \
+#           echo "FRONTEND_URL=https://communities.eze.ink" >> .env && \
+#           echo "MONGO_URL=mongodb+srv://eze:nMWN2NG50nSLJrOC@eze-communities.ufwbl4d.mongodb.net/?retryWrites=true&w=majority" >> .env && \
+#           echo "CLOUDINARY_CLOUD_NAME=dyekwrvwe" >> .env && \
+#           echo "CLOUDINARY_API_KEY=981519692274267" >> .env && \
+#           echo "CLOUDINARY_SECRET=EnwDIzzscMxY5SacVWoqUXE0mzw" >> .env && \
+#           echo "MAILGUN_API_KEY=YOUR_MAILGUN_API_KEY" >> .env && \
+#           echo "MAILGUN_DOMAIN=YOUR_MAILGUN_DOMAIN" >> .env
+#       - name: Archive .env file
+#         run: tar -czf env-api.tar.gz -C communities/packages/api .env
+#       - name: Upload .env file
+#         uses: actions/upload-artifact@v3
+#         with:
+#           name: env-api
+#           path: env-api.tar.gz
+
+#   create-env-file-landing-page:
+#     runs-on: ubuntu-latest
+#     needs: checkout-repository
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
+#       - name: Create env file for landing page
+#         run: |
+#           cd landing-page && \
+#           rm -f .env && \
+#           touch .env && \
+#           echo "NEXT_PUBLIC_APP_ENV=staging" >> .env 
+#       - name: Archive .env file
+#         run: tar -czf env-landing.tar.gz -C landing-page .env
+#       - name: Upload .env file
+#         uses: actions/upload-artifact@v3
+#         with:
+#           name: env-landing
+#           path: env-landing.tar.gz
+
+#   create-env-file-communities-packages:
+#     runs-on: ubuntu-latest
+#     needs: checkout-repository
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
+#       - name: Create env file for communities frontend
+#         run: |
+#           cd communities/packages/frontend && \
+#           rm -f .env && \
+#           touch .env && \
+#           echo "NEXT_PUBLIC_APP_ENV=staging" >> .env && \
+#           echo "GOOGLE_ANALYTICS_ID=G-MD706N8TZV" >> .env && \
+#           echo "NEXT_PUBLIC_ENV=production" >> .env
+#       - name: Archive .env file
+#         run: tar -czf env-frontend.tar.gz -C communities/packages/frontend .env
+#       - name: Upload .env file
+#         uses: actions/upload-artifact@v3
+#         with:
+#           name: env-frontend
+#           path: env-frontend.tar.gz
+
+#   create-env-file-sso:
+#     runs-on: ubuntu-latest
+#     needs: checkout-repository
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
+#       - name: Create env file for SSO
+#         run: |
+#           cd sso/eze-auth0 && \
+#           touch .env && \
+#           echo "MONGODB_URI=mongodb+srv://eze:nMWN2NG50nSLJrOC@eze-communities.ufwbl4d.mongodb.net/?retryWrites=true&w=majority" > .env && \
+#           echo "PORT=3000" >> .env && \
+#           echo "SSO_URL=https://sso.eze.ink" >> .env && \
+#           echo "REDIRECT_ORIGIN=https://eze.ink" >> .env && \
+#           echo "CALLBACK_URL=https://sso.eze.ink/auth/login/callback" >> .env && \
+#           echo "CLOUDINARY_CLOUD_NAME=dyekwrvwe" >> .env && \
+#           echo "CLOUDINARY_API_KEY=981519692274267" >> .env && \
+#           echo "CLOUDINARY_API_SECRET=EnwDIzzscMxY5SacVWoqUXE0mzw" >> .env && \
+#           echo "LANDINGPAGE_URL=https://eze.ink" >> .env && \
+#           echo "COMMUNITIES_URL=https://communities.eze.ink" >> .env 
+#       - name: Archive .env file
+#         run: tar -czf env-sso.tar.gz -C sso/eze-auth0 .env
+#       - name: Upload .env file
+#         uses: actions/upload-artifact@v3
+#         with:
+#           name: env-sso
+#           path: env-sso.tar.gz
+
+#   build-and-push-frontend-image:
+#     runs-on: ubuntu-latest
+#     needs: [create-env-file-api, create-env-file-landing-page, create-env-file-communities-packages, create-env-file-sso]
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
+#       - name: Download env file
+#         uses: actions/download-artifact@v3
+#         with:
+#           name: env-frontend
+#           path: .
+#       - name: Extract env file
+#         run: tar -xzf env-frontend.tar.gz -C communities/packages/frontend
+#       - name: Login to DockerHub
+#         run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+#       - name: Build frontend Docker image
+#         run: docker build -t ezekielkaeyros/frontend_eze_staging ./communities
+#       - name: Push frontend Docker image
+#         run: docker push ezekielkaeyros/frontend_eze_staging:latest
+
+#   build-and-push-backend-image:
+#     runs-on: ubuntu-latest
+#     needs: create-env-file-api
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
+#       - name: Download env file
+#         uses: actions/download-artifact@v3
+#         with:
+#           name: env-api
+#           path: .
+#       - name: Extract env file
+#         run: tar -xzf env-api.tar.gz -C communities/packages/api
+#       - name: Login to DockerHub
+#         run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+#       - name: Build backend Docker image
+#         run: docker build -t ezekielkaeyros/backend_communities_staging ./communities/packages/api
+#       - name: Push backend Docker image
+#         run: docker push ezekielkaeyros/backend_communities_staging:latest
+
+#   build-and-push-landing-image:
+#     runs-on: ubuntu-latest
+#     needs: create-env-file-landing-page
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
+#       - name: Download env file
+#         uses: actions/download-artifact@v3
+#         with:
+#           name: env-landing
+#           path: .
+#       - name: Extract env file
+#         run: tar -xzf env-landing.tar.gz -C landing-page
+#       - name: Login to DockerHub
+#         run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+#       - name: Build landing Docker image
+#         run: docker build -t ezekielkaeyros/eze_landing_staging ./landing-page
+#       - name: Push landing Docker image
+#         run: docker push ezekielkaeyros/eze_landing_staging:latest
+
+#   build-and-push-sso-image:
+#     runs-on: ubuntu-latest
+#     needs: create-env-file-sso
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
+#       - name: Download env file
+#         uses: actions/download-artifact@v3
+#         with:
+#           name: env-sso
+#           path: .
+#       - name: Extract env file
+#         run: tar -xzf env-sso.tar.gz -C sso/eze-auth0
+#       - name: Login to DockerHub
+#         run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+#       - name: Build SSO image
+#         run: docker build -t ezekielkaeyros/sso_staging ./sso/eze-auth0
+#       - name: Push SSO image
+#         run: docker push ezekielkaeyros/sso_staging:latest
+
+#   build-and-push-library-image:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
+#       - name: Create env file
+#         run: |
+#           cd digital-library/frontend && \
+#           rm -f .env && \
+#           touch .env && \
+#           echo "NEXT_PUBLIC_ZOTERO_API_KEY=ljJwZLSkS26ymt6DFd5D2Blc" >> .env && \
+#           echo "NEXT_PUBLIC_APP_ENV=staging" >> .env && \
+#           echo "NEXT_PUBLIC_ZOTERO_USER_ID=14487670" >> .env && \
+#           echo "NEXT_PUBLIC_ZOTERO_GROUP_ID=5577831" >> .env
+          
+#       - name: Login to DockerHub
+#         run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+#       - name: Build library image
+#         run: docker build -t ezekielkaeyros/ezelibrary ./digital-library/frontend
+#       - name: Push SSO image
+#         run: docker push ezekielkaeyros/ezelibrary:latest
+
+
+name: CI_Pipeline_staging
 
 on:
   push:
     branches:
-      - main
+      - develop
 
 jobs:
   checkout-repository:
@@ -27,7 +245,7 @@ jobs:
           echo "API_URL=https://backcommunities.eze.ink" >> .env && \
           echo "NEXT_PUBLIC_APP_ENV=staging" >> .env && \
           echo "NODE_ENV=production" >> .env && \
-          echo "SECRET=WriteYourSecret" >> .env && \
+          echo "SECRET=d41d8cd98f00b204e9800998ecf8427w" >> .env && \
           echo "FRONTEND_URL=https://communities.eze.ink" >> .env && \
           echo "MONGO_URL=mongodb+srv://eze:nMWN2NG50nSLJrOC@eze-communities.ufwbl4d.mongodb.net/?retryWrites=true&w=majority" >> .env && \
           echo "CLOUDINARY_CLOUD_NAME=dyekwrvwe" >> .env && \
@@ -99,9 +317,14 @@ jobs:
           echo "PORT=3000" >> .env && \
           echo "SSO_URL=https://sso.eze.ink" >> .env && \
           echo "REDIRECT_ORIGIN=https://eze.ink" >> .env && \
+          echo "NODE_ENV=production" >> .env && \
+          echo "NEXT_PUBLIC_APP_ENV=staging" >> .env && \
           echo "CALLBACK_URL=https://sso.eze.ink/auth/login/callback" >> .env && \
           echo "CLOUDINARY_CLOUD_NAME=dyekwrvwe" >> .env && \
           echo "CLOUDINARY_API_KEY=981519692274267" >> .env && \
+          echo "AUTH0_ID=dev-7htaauz8ydzvm6gp" >> .env && \
+          echo "AUTH0_CLIENT_ID=3MRQwdMikF9rCgf5pYqK1xuj75Ruaigk" >> .env && \
+          echo "SECRET=d41d8cd98f00b204e9800998ecf8427w" >> .env && \
           echo "CLOUDINARY_API_SECRET=EnwDIzzscMxY5SacVWoqUXE0mzw" >> .env && \
           echo "LANDINGPAGE_URL=https://eze.ink" >> .env && \
           echo "COMMUNITIES_URL=https://communities.eze.ink" >> .env 
@@ -127,11 +350,11 @@ jobs:
       - name: Extract env file
         run: tar -xzf env-frontend.tar.gz -C communities/packages/frontend
       - name: Login to DockerHub
-        run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+        run: echo "${{ secrets.TOKEN }}" | docker login ghcr.io -u "${{ secrets.USERNAME }}" --password-stdin
       - name: Build frontend Docker image
-        run: docker build -t ezekielkaeyros/frontend_eze_staging ./communities
+        run: docker build -t ghcr.io/kaeyros-analytics/eze_frontend_staging:latest ./communities
       - name: Push frontend Docker image
-        run: docker push ezekielkaeyros/frontend_eze_staging:latest
+        run: docker push ghcr.io/kaeyros-analytics/eze_frontend_staging:latest
 
   build-and-push-backend-image:
     runs-on: ubuntu-latest
@@ -147,11 +370,11 @@ jobs:
       - name: Extract env file
         run: tar -xzf env-api.tar.gz -C communities/packages/api
       - name: Login to DockerHub
-        run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+        run: echo "${{ secrets.TOKEN }}" | docker login ghcr.io -u "${{ secrets.USERNAME }}" --password-stdin
       - name: Build backend Docker image
-        run: docker build -t ezekielkaeyros/backend_communities_staging ./communities/packages/api
+        run: docker build -t ghcr.io/kaeyros-analytics/eze_backend_staging:latest ./communities/packages/api
       - name: Push backend Docker image
-        run: docker push ezekielkaeyros/backend_communities_staging:latest
+        run: docker push ghcr.io/kaeyros-analytics/eze_backend_staging:latest
 
   build-and-push-landing-image:
     runs-on: ubuntu-latest
@@ -167,18 +390,18 @@ jobs:
       - name: Extract env file
         run: tar -xzf env-landing.tar.gz -C landing-page
       - name: Login to DockerHub
-        run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+        run: echo "${{ secrets.TOKEN }}" | docker login ghcr.io -u "${{ secrets.USERNAME }}" --password-stdin
       - name: Build landing Docker image
-        run: docker build -t ezekielkaeyros/eze_landing_staging ./landing-page
+        run: docker build -t ghcr.io/kaeyros-analytics/eze_landing_staging:latest ./landing-page
       - name: Push landing Docker image
-        run: docker push ezekielkaeyros/eze_landing_staging:latest
+        run: docker push ghcr.io/kaeyros-analytics/eze_landing_staging:latest
 
   build-and-push-sso-image:
     runs-on: ubuntu-latest
     needs: create-env-file-sso
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Download env file
         uses: actions/download-artifact@v3
         with:
@@ -187,11 +410,11 @@ jobs:
       - name: Extract env file
         run: tar -xzf env-sso.tar.gz -C sso/eze-auth0
       - name: Login to DockerHub
-        run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+        run: echo "${{ secrets.TOKEN }}" | docker login ghcr.io -u "${{ secrets.USERNAME }}" --password-stdin
       - name: Build SSO image
-        run: docker build -t ezekielkaeyros/sso_staging ./sso/eze-auth0
+        run: docker build -t ghcr.io/kaeyros-analytics/eze_sso_staging:latest ./sso/eze-auth0
       - name: Push SSO image
-        run: docker push ezekielkaeyros/sso_staging:latest
+        run: docker push ghcr.io/kaeyros-analytics/eze_sso_staging:latest
 
   build-and-push-library-image:
     runs-on: ubuntu-latest
@@ -209,13 +432,129 @@ jobs:
           echo "NEXT_PUBLIC_ZOTERO_GROUP_ID=5577831" >> .env
           
       - name: Login to DockerHub
-        run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+        run: echo "${{ secrets.TOKEN }}" | docker login ghcr.io -u "${{ secrets.USERNAME }}" --password-stdin
       - name: Build library image
-        run: docker build -t ezekielkaeyros/ezelibrary ./digital-library/frontend
+        run: docker build -t ghcr.io/kaeyros-analytics/eze_library_staging:latest ./digital-library/frontend
       - name: Push SSO image
-        run: docker push ezekielkaeyros/ezelibrary:latest
+        run: docker push ghcr.io/kaeyros-analytics/eze_library_staging:latest
+
+  deploy-to-ecs:    
+  
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: [build-and-push-frontend-image, build-and-push-backend-image, build-and-push-landing-image, build-and-push-sso-image, build-and-push-library-image]
+    environment: staging
+    env:
+      IMAGE_NAME_FRONTEND_COMMUNITIES: ghcr.io/kaeyros-analytics/eze_frontend_staging:latest
+      IMAGE_NAME_BACKEND_COMMUNITIES: ghcr.io/kaeyros-analytics/eze_backend_staging:latest
+      IMAGE_NAME_LANDING_PAGE: ghcr.io/kaeyros-analytics/eze_landing_staging:latest
+      IMAGE_NAME_SSO: ghcr.io/kaeyros-analytics/eze_sso_staging:latest
+      IMAGE_NAME_LIBRARY: ghcr.io/kaeyros-analytics/eze_library_staging:latest
+      AWS_REGION: eu-central-1
+      ECS_SERVICE_FRONTEND_COMMUNITIES: eze_staging_frontend_service
+      ECS_SERVICE_BACKEND_COMMUNITIES: eze_backend_service_staging
+      ECS_SERVICE_LANDING_PAGE_COMMUNITIES: eze_landing_staging_service
+      ECS_SERVICE_SSO: sso_service_staging
+      ECS_SERVICE_LIBRARY: librar_service
+      ECS_CLUSTER: ezeStaging
+      ECS_TASK_DEFINITION_FRONTEND: aws_staging/frontend_communities_staging.json
+      ECS_TASK_DEFINITION_BACKEND: aws_staging/backend_communities_staging.json
+      ECS_TASK_DEFINITION_LANDING_PAGE: aws_staging/landing_page_staging.json
+      ECS_TASK_DEFINITION_SSO: aws_staging/sso_staging.json
+      ECS_TASK_DEFINITION_LIBRARY: aws_staging/library_staging.json
+      CONTAINER_NAME_FRONTEND: eze_staging_frontend_container
+      CONTAINER_NAME_BACKEND: eze_staging_backend_container
+      CONTAINER_NAME_LANDING_PAGE: eze_staging_landing_container
+      CONTAINER_NAME_SSO: eze_sso_container_staging
+      CONTAINER_NAME_LIBRARY: library_container
 
 
- 
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Fill in the new image ID in the Amazon ECS task definition for frontend
+        id: task-def-frontend
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ env.ECS_TASK_DEFINITION_FRONTEND }}
+          container-name: ${{ env.CONTAINER_NAME_FRONTEND }}
+          image: ${{ env.IMAGE_NAME_FRONTEND_COMMUNITIES }}
+
+      - name: Deploy Amazon ECS task definition for frontend
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def-frontend.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE_FRONTEND_COMMUNITIES }}
+          cluster: ${{ env.ECS_CLUSTER }}
+
+      - name: Fill in the new image ID in the Amazon ECS task definition for backend
+        id: task-def-backend
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ env.ECS_TASK_DEFINITION_BACKEND }}
+          container-name: ${{ env.CONTAINER_NAME_BACKEND }}
+          image: ${{ env.IMAGE_NAME_BACKEND_COMMUNITIES }}
+
+      - name: Deploy Amazon ECS task definition for backend
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def-backend.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE_BACKEND_COMMUNITIES }}
+          cluster: ${{ env.ECS_CLUSTER }}
+
+      - name: Fill in the new image ID in the Amazon ECS task definition for landing page
+        id: task-def-landing
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ env.ECS_TASK_DEFINITION_LANDING_PAGE }}
+          container-name: ${{ env.CONTAINER_NAME_LANDING_PAGE }}
+          image: ${{ env.IMAGE_NAME_LANDING_PAGE }}
+
+      - name: Deploy Amazon ECS task definition for landing page
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def-landing.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE_LANDING_PAGE_COMMUNITIES }}
+          cluster: ${{ env.ECS_CLUSTER }}
+
+      - name: Fill in the new image ID in the Amazon ECS task definition for sso
+        id: task-def-sso
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ env.ECS_TASK_DEFINITION_SSO }}
+          container-name: ${{ env.CONTAINER_NAME_SSO }}
+          image: ${{ env.IMAGE_NAME_SSO }}
+
+      - name: Deploy Amazon ECS task definition for sso
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def-sso.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE_SSO }}
+          cluster: ${{ env.ECS_CLUSTER }}
+
+      - name: Fill in the new image ID in the Amazon ECS task definition for library
+        id: task-def-library
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ env.ECS_TASK_DEFINITION_LIBRARY }}
+          container-name: ${{ env.CONTAINER_NAME_LIBRARY }}
+          image: ${{ env.IMAGE_NAME_LIBRARY }}
+
+      - name: Deploy Amazon ECS task definition for library
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def-library.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE_LIBRARY }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          wait-for-service-stability: true
+
 
       

@@ -65,6 +65,7 @@ interface Link {
     meta: Meta;
     data: Data;
     pdfUrl: string;
+    price:any;
   }
   
   

@@ -31,7 +31,6 @@ export default function RootLayout({
   params: { lang: string };
 }) {
   // Validate that the incoming `locale` parameter is valid
-  console.log("NODE ENV: ", process.env.NODE_ENV)
 
   return (
     <html lang={lang}>

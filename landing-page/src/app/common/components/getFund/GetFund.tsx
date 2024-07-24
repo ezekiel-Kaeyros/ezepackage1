@@ -1,11 +1,22 @@
+'use client'
+
 import React from 'react';
 import Frame from '../../../../../public/getfund/Frame 368.svg';
 import Image from 'next/image';
 import { Button } from '../button/Button';
+import config from '@/utils/config'
 
 export type HomeProps = {
   home: any;
   lang: any;
+};
+
+const handleLogin = async () => {
+  try {
+    window.location.href = `${config.ssoUrl}/auth/login`;
+  } catch (error) {
+    console.error('Error:', error);
+  }
 };
 
 const GetFund: React.FC<HomeProps> = ({ home, lang }) => {
@@ -22,7 +33,7 @@ const GetFund: React.FC<HomeProps> = ({ home, lang }) => {
           <p className="mt-3 text-[15px] sm:text-[18px] xl:text-[20px] text-[#47586E]">
             {home.home.section2.sec3.des1}
           </p>
-          <Button className="mt-5 w-2/4 max-sm:w-3/4 bg-[#015E44] text-[18px] sm:text-xl">
+          <Button className="mt-5 w-2/4 max-sm:w-3/4 bg-[#015E44] text-[18px] sm:text-xl" onClick={handleLogin}>
             {home.home.section2.sec3.paragragph1}
           </Button>
         </div>

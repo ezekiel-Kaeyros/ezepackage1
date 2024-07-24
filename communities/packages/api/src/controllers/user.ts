@@ -79,7 +79,7 @@ const UserController = {
   joinChannel: async (req: Request, res: Response): Promise<any> => {
     const { channelId } = req.params;
     const { userId } = req.body;
-
+    
     try {
       await joinChannel(channelId, userId);
       return res.send(`User ${userId} joined channel ${channelId}`);

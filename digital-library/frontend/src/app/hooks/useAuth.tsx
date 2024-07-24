@@ -7,7 +7,7 @@ export const useAuth = () => {
   //   (state: RootState) => state.AuthReducer.user
   // );
   const isAuthenticated: boolean = useSelector(
-    (state: RootState) => state.AuthReducer.isAuthenticad
+    (state: RootState) => state.AuthReducer.isAuthenticated
   );
   const dispatch = useDispatch<AppDispatch>();
 

@@ -16,6 +16,14 @@ body {
   overflow-x: hidden;
 }
 
-.slick-dots .slick-active div div {
+/* .slick-dots .slick-active div div {
   background-color: #015e44;
+} */
+
+.slick-dots ul li div div {
+  background-color: #dfe9e6 !important;
+}
+
+.slick-dots ul .slick-active div div {
+  background-color: #015e44 !important;
 }

@@ -32,6 +32,7 @@ interface PostFileOptions {
   filename?: string;
   note?: string;
   accessDate?: string;
+  category?:string;
 }
 
 export class PostFile {
@@ -49,6 +50,7 @@ export class PostFile {
   private filename: string;
   private note: string;
   private accessDate: string;
+  private category:string;
 
   constructor({
     baseUrl = BaseUrl,
@@ -62,6 +64,7 @@ export class PostFile {
     itemTitle,
     itemType,
     note,
+    category,
     // authorName,
     filename = path.basename(filePath),
     accessDate = formattedDate,
@@ -71,6 +74,7 @@ export class PostFile {
     this.userId = userId;
     this.groupId = groupId;
     this.firstName = firstName;
+    this.category = category;
     this.lastName = lastName;
     this.filePath = filePath;
     this.coverPageUrl = coverPageUrl;
@@ -180,6 +184,7 @@ export class PostFile {
         filename: this.filename,
         md5: null,
         mtime: null,
+        category:this.category,
       },
     ];
     const headers = {

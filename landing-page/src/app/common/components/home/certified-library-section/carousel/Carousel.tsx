@@ -119,8 +119,12 @@ const Carousel: React.FC<{ section6: any }> = ({ section6 }) => {
         breakpoint: 768,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 1,
+          slidesToScroll: 2,
           initialSlide: 1,
+          autoplay: true,
+          autoplaySpeed: 5000,
+          // infinite: true,
+          dots: false,
         },
       },
       {
@@ -128,13 +132,17 @@ const Carousel: React.FC<{ section6: any }> = ({ section6 }) => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
+          // infinite: true,
+          dots: false,
+          autoplay: true,
+          autoplaySpeed: 5000
         },
       },
     ],
   };
 
   return (
-    <div className=" lg:w-[70vw] xl:w-[67vw] md:w-[80vw] w-screen px-8 lg:-mr-48">
+    <div className=" lg:w-[70vw] xl:w-[67vw] md:w-[80vw] w-screen px-3 sm:px-8 lg:-mr-48">
       <Slider {...settings}>
         {reports?.map((report) => (
           <ReportCard

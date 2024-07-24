@@ -70,11 +70,10 @@ export default class PostFile {
     const filename = path.basename(this.filePath);
 
     const filePath = path.join(process.cwd(), this.filePath);
-    console.log('this is my fileContent', this.filePath);
 
     // Perform the file operations synchronously, as we are running on the server
     const fileBuffer = fs.readFileSync(filePath);
-    console.log('this is my fileContent02');
+    
     const stats = fs.statSync(filePath);
     const filesize = stats.size;
     const mtime = Math.floor(stats.mtimeMs);

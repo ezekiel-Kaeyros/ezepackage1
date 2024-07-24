@@ -38,10 +38,8 @@ const Follow: FC<FollowProps> = ({ refetch, user, queryKey }) => {
   const { mutateAsync: createFollowMutation } = useMutation(createFollow);
   const { mutateAsync: deleteFollowMutation } = useMutation(deleteFollow);
 
-  console.log(refresh, "outside mutate")
-
   const followMutation = async () => {
-    console.log(refresh, "inside mutate")
+    
     const follow = isfollowing
       ? await deleteFollowMutation(isfollowing._id)
       : await createFollowMutation({ userId: user._id });

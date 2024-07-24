@@ -1,13 +1,12 @@
 {
   "Navigation": {
     "home": "Accueil",
-
     "comunity": "Communautés",
     "online": "Cours en ligne",
-    "fuding": " Domaine de financement ",
-    "library": "Visitez la bibliothèque",
+    "fuding": "Financement ",
+    "library": "Bibliothèque",
     "events": "Événements",
-    "dash": " Aller au tableau de bord",
+    "dash": " Tableau de bord",
     "btn": "Connexion"
   },
   "page": {
@@ -43,7 +42,7 @@
       "section1": {
         "block1": {
           "h1": "Où les esprits se rencontrent, les idées",
-          "span": "jaillissent.",
+          "span": "Jaillissent.",
           "placeholder": "Recherche d'un article, d'un document, d'un utilisateur, d'un événement, ...",
           "p": "Libérez tout le potentiel de votre voyage scientifique avec Eze, votre portail vers une communauté florissante de chercheurs, d'apprenants et d'experts.",
           "btn": "Recherche",
@@ -59,7 +58,7 @@
           "block2": {
             "title": " Des communautés en ligne dynamiques",
             "p": "Rencontrez des personnes partageant les mêmes idées au sein de nos communautés en ligne dynamiques.",
-            "btn": "explorer les communautés"
+            "btn": "Explorer les communautés"
           }
         }
       },
@@ -112,13 +111,13 @@
   "footer": {
     "block1": {
       "title": "Visite",
-      "ligne1": "communautés",
+      "ligne1": "Communautés",
       "ligne2": "Cours en ligne",
       "ligne3": "Bibliothèque",
       "ligne4": "Domaine de financement"
     },
     "block2": {
-      "title": "communautés",
+      "title": "Communautés",
       "ligne1": "Sciences de la santé",
       "ligne2": "Mines",
       "ligne3": "ICT",

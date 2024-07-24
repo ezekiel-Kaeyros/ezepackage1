@@ -27,7 +27,6 @@ interface SidebarProps {
 const fetchChannels = async () => {
   const { data } = await axios.get('/channels');
 
-  console.log('list of channels and its data', data);
   return data;
 };
 
@@ -59,8 +58,6 @@ const MainSidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ i
       reorderChannelsMutation({ sortedChannels: channelItems });
     }
   }, [channelItems, reorderChannelsMutation, isAdmin]);
-
-  console.log(translate('titkeCommunities'), 'translation')
 
   return (
     <Root ref={ref} isOpen={isOpen}>
@@ -182,6 +179,7 @@ const MainSidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ i
           }}
           renderList={({ children, props }) => <UL {...props}>{children}</UL>}
           renderItem={({ value, props }) => {
+
             return (
               <LI {...props}>
                 <ButtonLink

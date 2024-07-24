@@ -8,35 +8,27 @@ import { setAuthUser } from '../store/auth';
 
 export const useDispatchAuth = () => {
   const dispatch = useDispatch();
-  const token = cookies.get(Cookies.User_data);
   const fetch = async () => {
-    const token = cookies.get(Cookies.Token);
-
     try {
-      axios.defaults.headers.common = { Authorization: `bearer ${token}` };
-      const { data } = await axios.get('/auth-user');
+      const response = await axios.get('/auth-user');
 
-      if (data) {
+      if (response.data) {
         dispatch(
           setAuthUser({
-            ...data,
+            ...response.data,
             isOnline: true,
           })
         );
       }
     } catch (error) {
-      console.log(`error ${error}`);
+      console.error(`Error: ${error}`);
     } finally {
       console.log('finally');
     }
   };
 
   useEffect(() => {
-    if (token) {
-      fetch();
-    } else {
-      // push(HOME_URL);
-    }
+    fetch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token]);
+  }, []);
 };

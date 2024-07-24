@@ -31,7 +31,7 @@ const reorderChannels = async ({ sortedChannels }) => {
 };
 
 const Sidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ isOpen }, ref) => {
-  const { t: translate } = useTranslation('common');
+  const { t: translate } = useTranslation();
 
   const authUser = useSelector((state: RootState) => state.auth.user);
   const [modal, setModal] = useState(false);
@@ -73,7 +73,7 @@ const Sidebar: ForwardRefRenderFunction<HTMLDivElement, SidebarProps> = ({ isOpe
           >
             <CommunitiesIcon width="32" isActive={router.pathname.includes('/communities/members')} />
             {'\u00A0'}
-            {'\u00A0'} {translate('member') + 's'}
+            {'\u00A0'} {translate('Member') + 's'}
           </ButtonLink>
         </LI>
 

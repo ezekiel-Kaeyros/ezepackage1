@@ -2,10 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Head from 'next/head';
-import { ThemeProvider } from '../common/dark-mode/theme-provider/theme-provider';
 import ReduxProvider from '@/redux/provider';
-
-import Header from '../common/components/header/header';
 import { Providers } from '../common/nextui/providers';
 import { i18n } from '@/i18n.config';
 import { Suspense } from 'react';

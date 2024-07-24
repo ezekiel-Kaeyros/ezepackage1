@@ -37,23 +37,12 @@ const Header: FC<NavbarProps> = ({ lang, navigation }) => {
   const pathName = usePathname();
   const { dispatch } = useToggleSidebar()
 
-  const json = 'development'
-
   const logout = async () => {
     try {
-      // await axios.post('/logout');
-
-      if (process.env.NODE_ENV == 'development') {
-        cookies.remove(Cookies.Token);
-        cookies.remove(Cookies.User_data);
-      } else {
-        cookies.remove(Cookies.Token, { domain: '.eze.ink' })
-        cookies.remove(Cookies.User_data, { domain: '.eze.ink' })
-      }
       // closeDropDown();
-      window.location.href = config.ssoLogoutUrl
+      window.location.href = `${config.ssoUrl}/auth/logout`
     } catch (error) {
-      console.log('An error occurred while logging out: ', error);
+      console.error('An error occurred while logging out: ', error);
     }
   };
 

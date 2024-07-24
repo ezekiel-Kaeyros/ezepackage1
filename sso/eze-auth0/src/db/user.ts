@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import {User} from '../models/user.model'
+import { User } from '../models/user.model'
 
 // Function to check if it's the user's first time
 export const isFirstTime = async (email: string): Promise<boolean> => {
@@ -13,6 +13,7 @@ export const isFirstTime = async (email: string): Promise<boolean> => {
     }
   } catch (error) {
     console.error('Error checking firstTime:', error);
+    return false
   }
 }
 
@@ -26,13 +27,14 @@ export const toggleFirstTime = async (email: string): Promise<boolean> => {
     ).exec();
 
     if (user) {
-      console.log(`User's firstTime toggled successfully for email: ${email}`);
       return true
     } else {
       console.error("User Does Not Exist")
+      return false
     }
   } catch (error) {
     console.error('Error toggling firstTime:', error);
+    return false
   }
 };
 

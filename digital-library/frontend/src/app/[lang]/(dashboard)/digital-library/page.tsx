@@ -16,14 +16,18 @@ import secondImgBloc2 from "../../../../../public/images/Frame 535.svg";
 import firstImgBloc3 from "../../../../../public/images/search-normal (4).svg";
 import secondImgBloc3 from "../../../../../public/images/search-normal (3).svg";
 import Footer from "@/app/common/components/footer/Footer";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useToggleSidebar } from "@/app/hooks/useToggleSidebar";
 import { toggleFunc2 } from "@/redux/features/auth-slice";
+import BookSearch from "@/app/common/components/LibraryItem/searchBook/BookSearch";import { useRouter } from "next/navigation";
+
 
 
 
 const Home = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const router = useRouter();
+  const bookSearchRef = useRef<HTMLDivElement>(null);
   const arraytest = [
     { num: 3, save: true },
 
@@ -130,6 +134,12 @@ const Home = () => {
     }
   }
 
+  const handleStartSearchingClick = () => {
+    if (bookSearchRef.current) {
+      bookSearchRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   useEffect(() => {
     dispatch(toggleFunc2(false))
   },[])
@@ -149,19 +159,9 @@ const Home = () => {
           educational resources. Explore our digital repository to access a
           wealth of knowledge
         </p>
-        <div className="relative h-14 lg:w-6/12 w-11/12 m-auto rounded-full overflow-hidden bg-transparent border-2 mb-8 bg-[#E9ECEF] border-[#E9ECEF]">
-          <input
-            type="text"
-            className="w-full h-full pl-12 border rounded-full bg-[#E9ECEF] border-[#E9ECEF]"
-            placeholder="Search Articles, Resarch Works, Documentation, Thesis ..."
-          />
-          <Image
-            src={searchIcon}
-            alt=""
-            className="absolute h-7 w-7 top-[13px] left-3"
-          />
+        <div ref={bookSearchRef}>
+          <BookSearch />
         </div>
-
         <p className="text-center font-bold text-lg mb-10">
           or <br />
           Visit the popular categories
@@ -192,7 +192,7 @@ const Home = () => {
               <span>Continuously updated with the latest research</span>
             </li>
           </ul>
-          <button className="rounded-full border bg-[#015E44] text-white font-semibold px-3 py-2 text-sm mt-2">
+          <button className="rounded-full border bg-[#015E44] text-white font-semibold px-3 py-2 text-sm mt-2" onClick={() => router.push('/bookmarks')}>
             Show Collection
           </button>
         </div>
@@ -229,7 +229,7 @@ const Home = () => {
               <span>Expertly curated by librarians and scientists.</span>
             </li>
           </ul>
-          <button className="rounded-full border bg-[#191B29] text-white font-semibold px-3 py-2 text-sm mt-2">
+          <button className="rounded-full border bg-[#191B29] text-white font-semibold px-3 py-2 text-sm mt-2" onClick={handleStartSearchingClick}>
             Start Searching
           </button>
         </div>
@@ -257,7 +257,7 @@ const Home = () => {
               </span>
             </li>
           </ul>
-          <button className="rounded-full border bg-[#015E44] text-white font-semibold px-3 py-2 text-sm mt-2">
+          <button className="rounded-full border bg-[#015E44] text-white font-semibold px-3 py-2 text-sm mt-2" onClick={() => router.push('/bookmarks')}>
             Show Collection
           </button>
         </div>
@@ -280,18 +280,18 @@ const Home = () => {
             {channelarray.map((item)=> <div><NewCardDocument/></div>)}
       </div> */}
 
-      <div className="w-full px-2 pb-2 mt-10">
+      <div className="w-full px-2 pb-2 pt-10 bg-[#F5F7F9]">
         <div className="w-full flex justify-between items-center mb-5 px-5">
           <p className="font-bold text-lg">Recent</p>
-          <p className=" font-bold border-b-3 border-[green] text-[green]">
+          {/* <p className=" font-bold border-b-3 border-[green] text-[green]">
             See More
-          </p>
+          </p> */}
         </div>
         <div className="w-full  pb-14 overflow-hidden">
           <Carousel data={arraytest} />
         </div>
 
-        <div className="flex gap-x-20 items-center justify-center">
+        <div className="flex gap-x-20 items-center justify-center flex-wrap">
           {priceArray.map((item) => (
             <Pricing
             key={item.id}

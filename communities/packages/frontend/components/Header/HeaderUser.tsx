@@ -1,11 +1,9 @@
 import React, { FC, RefObject } from 'react';
-import cookies from 'js-cookie';
 import { useSelector } from 'react-redux';
 import { config, Cookies, deleteCookie, useClickOutside } from '../../utils';
 import { UserDropDown, UserDropDownItem } from './style';
 import { ButtonLink } from '../ui';
 import { RootState } from '../../store';
-import axios from 'axios';
 import { UserRole } from '../../constants';
 
 interface HeaderUserProps {
@@ -22,19 +20,10 @@ const HeaderUser: FC<HeaderUserProps> = ({ closeDropDown, isUserDropdownOpen, au
 
   const logout = async () => {
     try {
-      await axios.post('/logout');
-
-      if (process.env.NEXT_PUBLIC_ENV == 'development') {
-        cookies.remove(Cookies.Token);
-        cookies.remove(Cookies.User_data);
-      } else {
-        cookies.remove(Cookies.Token, { domain: '.eze.ink' })
-        cookies.remove(Cookies.User_data, { domain: '.eze.ink' })
-      }
       closeDropDown();
-      window.location.href = config.ssoLogoutUrl
+      window.location.href = `${config.ssoUrl}/auth/logout`
     } catch (error) {
-      console.log('An error occurred while logging out: ', error);
+      console.error('An error occurred while logging out: ', error);
     }
   };
 

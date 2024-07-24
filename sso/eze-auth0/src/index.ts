@@ -1,3 +1,4 @@
+require("dotenv").config()
 import express from 'express';
 import session from 'express-session';
 import passport from 'passport';
@@ -7,15 +8,14 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import authRouter from './auth';
 import fileRouter from './routes/files';
-import dotenv from 'dotenv';
 import getItemRouter from './routes/getItem';
-dotenv.config();
+import config from './config';
 
 const app = express();
 
 // Configure CORS to allow requests from your frontend origin
 app.use(cors({
-  origin: "*",
+  origin: [config.landingPageUrl, config.communitiesUrl, config.livingLibraryUrl],
   methods: ['GET', 'POST', 'PUT'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
@@ -38,24 +38,19 @@ app.use(passport.session());
 app.use('/auth', authRouter);
 
 app.get('/', (req, res) => {
-  res.send('Home Page');
+  res.json({ status: "Okay" });
 });
 
 app.get('/profile', (req, res) => {
   if (req.isAuthenticated()) {
-    console.log('User is authenticated:', req.user);
     res.send(`Hello ${(req.user as any)?.nameID}`);
   } else {
-    console.log('User not authenticated, redirecting to /auth/login');
     res.redirect('/auth/login');
   }
 });
 
 app.use('/api/files', fileRouter);
 app.use('/api/items', getItemRouter)
-
-// MongoDB connection URI
-const mongoURI = process.env.MONGODB_URI
 
 // Mongoose connection options
 const options = {
@@ -65,11 +60,13 @@ const options = {
 };
 
 // Connect to MongoDB and start the server
-mongoose.connect(mongoURI).then(
+mongoose.connect(config.mongodbUri).then(
   () => {
     console.log('Connected to MongoDB');
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
+      console.log("NODE ENV: ", process.env.NODE_ENV)
+      console.log("APP ENV: ", process.env.NEXT_PUBLIC_APP_ENV)
       console.log(`Server is running on port ${PORT}`);
     });
   },

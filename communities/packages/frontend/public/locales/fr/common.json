@@ -4,7 +4,7 @@
   "btnCardCommunity": "Voir la communauté",
   "titkeCommunities": "Communautés",
   "home": "Accueil",
-  "member": "Membre",
+  "Member": "Membre",
   "All": "Tout",
   "searchCom": "Recherche de communautés",
   "AllCom": "Toutes les communautés",
@@ -19,7 +19,7 @@
   "eventText": "Bienvenue à la grande ouverture de l'EZE. Réservez votre place pour 3 jours de connaissances étonnantes",
   "Reserve": "Reserver",
   "newMember": "Nouveaux Membres",
-  "allMembers":"voir tous les membres",
-  "onlineMember":"Membres en lignes",
-  "noOnline":"Aucun membre en ligne"
+  "allMembers": "voir tous les membres",
+  "onlineMember": "Membres en lignes",
+  "noOnline": "Aucun membre en ligne"
 }

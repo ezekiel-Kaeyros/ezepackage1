@@ -4,7 +4,7 @@ import { User } from '../models/user.model';
 // import { uploadToZotero } from '../utils/zotero';
 // import { UserItems } from '../models/UserItems';
 
-const uploadBook = async (itemKey: string, email: string, coverImage: string, price: number) => {
+const uploadBook = async (itemKey: string, email: string, coverImage: string, price: number, category:string) => {
 
   try {
 
@@ -17,6 +17,7 @@ const uploadBook = async (itemKey: string, email: string, coverImage: string, pr
       itemKey,
       coverImage,
       price,
+      category,
       rating: 0,
       poster: user._id
     });
@@ -38,7 +39,8 @@ const getItems = async (zoteroItems: any) => {
         coverImage: localItem?.coverImage,
         price: localItem?.price,
         rating: localItem?.rating,
-        poster: localItem?.poster
+        poster: localItem?.poster, 
+        cathegory:localItem?.category
       };
     }));
 

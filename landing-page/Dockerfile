@@ -4,7 +4,6 @@ WORKDIR /app
 COPY package*.json ./
 COPY next.config.js ./
 RUN npm update
-
 RUN npm install
 COPY . .
 RUN  npm run build

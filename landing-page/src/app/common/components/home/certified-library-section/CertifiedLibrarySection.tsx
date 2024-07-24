@@ -1,9 +1,16 @@
+"use client"
+
 import React from 'react';
 import Carousel from './carousel/Carousel';
+import { useRouter } from 'next/navigation';
+import config from '@/utils/config';
+import Link from 'next/link';
 
-const CertifiedLibrarySection:React.FC<{home:any}> = ({home}) => {
+const CertifiedLibrarySection: React.FC<{ home: any }> = ({ home }) => {
+  const router = useRouter()
+
   return (
-    <div className="mt-[10%] bg-white md:flex md:justify-between  text-black block overflow-hidden w-full md:pl-3 ">
+    <div className="mt-[10%] bg-white md:flex md:justify-between  text-black block overflow-hidden w-full md:pl-3 mx-8">
       <div className=" md:w-[31%] w-fit md:px-0 md:m-0  md:mt-0 mt-[2%] ">
         <h1 className="lg:mb-4 mb-4  md:mb-2 text-xl font-[700] md:mt-2">
           {home?.section2.sec1.title1}
@@ -21,11 +28,13 @@ const CertifiedLibrarySection:React.FC<{home:any}> = ({home}) => {
             <p>{home?.section2.sec1.paragragph2}</p>
           </div>
         </div>
-        <button className="bg-[#015E44] rounded-3xl px-4 py-3 text-white font-[700]">
+        <Link href={config.livingLibraryUrl}>
+        <div className="bg-[#015E44] rounded-3xl px-4 py-3 text-white font-[700] w-fit">
           <p>{home?.section2.sec1.paragragph3}</p>
-        </button>
+        </div>
+        </Link>
       </div>
-      <div className="md:w-[68%] box-border md:px-0 w-full m-auto md:m-0	md:mt-0 mt-[2%]  h-[600px]">
+      <div className="md:w-[68%] box-border md:px-0 w-full m-auto md:m-0	md:mt-0 mt-[20%]  sm:h-[500px] h-[450px] ">
         <Carousel section6={home?.section2.sec6} />
       </div>
     </div>

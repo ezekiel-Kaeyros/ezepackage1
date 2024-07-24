@@ -40,7 +40,6 @@ export const createLikeComment = async (userId: string, commentId: string): Prom
 
 export const deleteLike = async (id: string): Promise<any> => {
   const like = await Like.findByIdAndRemove(id);
-console.log(like);
 
   // Delete the like from the user and post collection.
   await User.findOneAndUpdate({ _id: like.user }, { $pull: { likes: like._id } });

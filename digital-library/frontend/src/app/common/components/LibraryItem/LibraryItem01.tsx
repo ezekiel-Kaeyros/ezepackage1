@@ -9,6 +9,11 @@ import saveStar from '../../../../../public/icons/save.svg';
 import { Button } from '../button/Button';
 import Image from 'next/image';
 import AnimateClick from '../animateClick/AnimateClick';
+import { RootState } from '@/redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import { config } from '@/utils';
+import { setResponseData } from '@/redux/features/auth-slice';
 
 interface ItemIdProps {
     itemKey: string;
@@ -18,34 +23,53 @@ function LibraryItem() {
     const pathname = usePathname();
     const itemKey: any = pathname.split('/').pop();
     const [loading, setLoading] = useState(false);
-    const [pdfs, setPdfs] = useState<Item[] | any>([]);
+    const { responseData } = useSelector((item: RootState) => item.setResponseData)
+    const dispatch = useDispatch();
+
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         setLoading(true);
+    //         try {
+    //             const groups = await fetchGroups();
+    //             const allPdfUrls: Item[] = [];
+    //             for (const group of groups) {
+    //                 const groupPdfUrls: Item[] | any = await fetchGroupItems(group.id);
+    //                 allPdfUrls.push(...groupPdfUrls);
+    //             }
+    //             setLoading(false);
+    //             setPdfs(allPdfUrls);
+    //         } catch (error) {
+    //             setLoading(false);
+    //             console.error('Error fetching Zotero data:', error);
+    //         }
+    //     };
+
+    //     fetchData();
+    // }, []);
 
     useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            try {
-                const groups = await fetchGroups();
-                const allPdfUrls: Item[] = [];
-                for (const group of groups) {
-                    const groupPdfUrls: Item[] | any = await fetchGroupItems(group.id);
-                    allPdfUrls.push(...groupPdfUrls);
-                }
-                setLoading(false);
-                setPdfs(allPdfUrls);
-            } catch (error) {
-                setLoading(false);
-                console.error('Error fetching Zotero data:', error);
-            }
-        };
-
+        if (responseData && responseData.length > 0) return;
+        setLoading(true)
+        async function fetchData() {
+          try {
+            const url = `${config.ssoUrl}/api/items/5577831`;
+            const res = await axios.get(url);
+            dispatch(setResponseData(res.data));
+          } catch (error: any) {
+            setLoading(false);
+            throw Error("Data Not Fetched", error)
+          }
+        }
+    
         fetchData();
-    }, []);
+        // fetchData()
+      }, [dispatch])
 
     const findItemByKey = (items: Item[], key: string): Item | undefined => {
         return items.find((item: Item) => item.key === key);
     };
 
-    const matchedItem = findItemByKey(pdfs, itemKey);
+    const matchedItem = findItemByKey(responseData, itemKey);
 
     const getFileExtension = (fileName: string): string => {
         const parts: any = fileName.split('.');
@@ -122,7 +146,7 @@ function LibraryItem() {
                     </span>
                     <span>
                         <h1>Price</h1>
-                        <p>Free</p>
+                        <p>{matchedItem?.price}<small>XAF</small></p>
                     </span>
                     <span className='flex justify-between'>
                         <div className='flex gap-x-3'>

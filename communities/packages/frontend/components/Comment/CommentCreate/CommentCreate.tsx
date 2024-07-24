@@ -110,7 +110,7 @@ const CommentCreate: FC<CommentCreateProps> = ({ autoFocus, post, queryKey, type
        
         try {
           const newComment = await createCommentReplyMutation({ comment_id: id, comment, postId: post._id, userId:authUser._id });
-          console.log('newComment',newComment);
+          
            queryClient.setQueryData(queryKey, (existingPosts: any) => {
              if (!existingPosts.pages) {
                return {
