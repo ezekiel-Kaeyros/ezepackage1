@@ -221,7 +221,7 @@ name: CI_Pipeline_staging
 on:
   push:
     branches:
-      - develop
+      - main
 
 jobs:
   checkout-repository:
