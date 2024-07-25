@@ -53,7 +53,7 @@ const SettingsAccount: FC = () => {
         })
       );
     } catch (error) {
-      console.error('An error occurred while updating your profile: ', error);
+      console.log('An error occurred while updating your profile: ', error);
       setApiError(error.response.data);
     }
   };

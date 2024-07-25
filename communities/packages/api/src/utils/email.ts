@@ -14,7 +14,7 @@ const nodemailerMailgun = nodemailer.createTransport(
 export const sendEmail = ({ to, subject, html }) => {
   return new Promise((resolve, reject) => {
     if (!process.env.MAILGUN_API_KEY || !process.env.MAILGUN_DOMAIN) {
-      console.error('You need to provide MAILGUN_API_KEY and MAILGUN_DOMAIN environment variables for sending emails.');
+      console.log('You need to provide MAILGUN_API_KEY and MAILGUN_DOMAIN environment variables for sending emails.');
       return resolve('An error occurred while sending an email: (Credentials missing).');
     }
 
@@ -27,7 +27,7 @@ export const sendEmail = ({ to, subject, html }) => {
       },
       function (err, info) {
         if (err) {
-          console.error('An error occurred while sending an email: ', err);
+          console.log('An error occurred while sending an email: ', err);
           return reject(err);
         } else {
           return resolve(info);

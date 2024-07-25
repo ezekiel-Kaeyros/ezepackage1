@@ -34,6 +34,7 @@ const ThirdStep: React.FC<{ step: number; changeHandler: any }> = ({
     // setFileName(e.target?.files[0].name);
     if (extArray.includes(ext.toLocaleLowerCase())) {
       // files && setInputValue(files);
+      console.log(e.target.files[0], "target file");
 
       // const reader = new FileReader();
       setFile(e.target.files[0]);

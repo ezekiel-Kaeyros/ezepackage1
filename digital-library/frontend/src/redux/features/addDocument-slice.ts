@@ -79,11 +79,12 @@ export const addDocument = createSlice({
       state.step1 = action.payload;
     },
     step2Handler: (state, action) => {
+    console.log(action.payload, 'this is my type')
       state.step2 = action.payload;
     },
     step3Handler: (state, action) => {
       state.step3 = action.payload;
-      
+        console.log(action.payload, "payload..............");
         // console.log(
         //   "111111111111",
         //   URL.createObjectURL(state.step2.coverImage)

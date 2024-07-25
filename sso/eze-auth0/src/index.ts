@@ -43,8 +43,10 @@ app.get('/', (req, res) => {
 
 app.get('/profile', (req, res) => {
   if (req.isAuthenticated()) {
+    console.log('User is authenticated:', req.user);
     res.send(`Hello ${(req.user as any)?.nameID}`);
   } else {
+    console.log('User not authenticated, redirecting to /auth/login');
     res.redirect('/auth/login');
   }
 });

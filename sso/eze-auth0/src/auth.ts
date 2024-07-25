@@ -67,7 +67,8 @@ authRouter.post(
     if (!user) return res.status(404).redirect(`${config.landingPageUrl}`)
     const email: string = user["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"]
     const user_id = user["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
-    const username = user["'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'"]
+    const username = user["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+    const fullname = user["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
 
     const getUserInfo = await getUserByEmail(email)
 
@@ -76,26 +77,26 @@ authRouter.post(
       userId: (getUserInfo && getUserInfo._id) || user_id,
     };
 
-    const UserData = {
-      email: (getUserInfo && getUserInfo.email) || email,
-      _id: (getUserInfo && getUserInfo._id) || user_id,
-      username: (getUserInfo && getUserInfo.username) || username,
-    };
-
     // Generate a token
     const token = jwt.sign({ user: userdata2 }, config.secret);
 
-    console.log("REDIRECT TO: ", req.cookies.module)
+    const userdata = {
+      username: (getUserInfo && getUserInfo.username) || username,
+      fullName: (getUserInfo && getUserInfo.fullName) || fullname,
+      email: (getUserInfo && getUserInfo.email) || email,
+    };
+    const userdataString = JSON.stringify(userdata);
+    console.log("REDIRECT TO: ", moduleRedirect)
 
 
     const firstTime = await isFirstTime(email);
     res.clearCookie("module")
     if (process.env.NODE_ENV === "production") {
       res.cookie("token", token, { domain: ".eze.ink" })
-      res.cookie("user_data", JSON.stringify(UserData), { domain: ".eze.ink" })
+      res.cookie("user_data", userdataString, { domain: ".eze.ink" })
     } else {
       res.cookie("token", token, { path: "/" })
-      res.cookie("user_data", JSON.stringify(UserData), { path: "/"})
+      res.cookie("user_data", userdataString, { path: "/" })
     }
 
     if (firstTime) {
@@ -107,8 +108,8 @@ authRouter.post(
         console.log('Error:', error.message)
       }
     } else {
-      if (req.cookies.module) {
-        res.redirect(`${req.cookies.module}`)
+      if (moduleRedirect) {
+        res.redirect(`${moduleRedirect}`)
       } else {
         res.redirect(`${config.communitiesUrl}`)
       }
@@ -148,8 +149,10 @@ authRouter.get("/logout", (req, res) => {
       res.clearCookie("connect.sid", { path: "/" });
       if (process.env.NODE_ENV === "production") {
         res.clearCookie("token", { domain: ".eze.ink" });
+        res.clearCookie("user_data", { domain: ".eze.ink" });
       } else {
         res.clearCookie("token", { path: "/" });
+        res.clearCookie("user_data", { path: "/" });
       }
 
       // Construct the Auth0 logout URL

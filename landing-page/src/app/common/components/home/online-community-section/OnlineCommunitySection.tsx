@@ -29,7 +29,7 @@ const OnlineCommunitySection: React.FC<{ home: any }> = ({ home }) => {
             {home?.section1.block1.block2.p}
           </h3>
           <div className="mt-6">
-            <Button onClick={() => router.push(`${config.communitiesUrl}/communities/community`)} className="w-fit text-sm">
+            <Button onClick={() => router.push(`${config.communitiesUrl}/communities/community`)} className="w-fit text-sm lg:text-xl">
               {home?.section1.block1.block2.btn}
             </Button>
           </div>
@@ -48,7 +48,7 @@ const OnlineCommunitySection: React.FC<{ home: any }> = ({ home }) => {
           <h1 className="font-bold max-w-xs sm:max-w-md text-center lg:max-w-full text-[14px] sm:text-2xl xl:text-3xl 2xl:text-4xl">
             {home?.section1.block1.block2.title}
           </h1>
-          <h3 className="mt-4 text-[12px] sm:text-xl lg:text-medium max-w-xs sm:max-w-md text-center w-full 2xl:text-2xl ">
+          <h3 className="mt-4 text-[12px] sm:text-xl lg:text-medium max-w-[200px] sm:max-w-md text-center w-full 2xl:text-2xl ">
             {home?.section1.block1.block2.p}
           </h3>
           <div className="mt-6">

@@ -18,7 +18,7 @@ function getLocale(request: NextRequest): string | undefined {
 
 export async function middleware(request: NextRequest) {
   const token = request.cookies.get("token")
-  if (!token) return NextResponse.redirect(`${C.ssoUrl}/auth/login`)
+  if (!token) return NextResponse.redirect(`${C.ssoUrl}/auth/login/?module=${request.url}`)
   const pathname = request.nextUrl.pathname;
 
   // Locale-based redirection logic

@@ -4,7 +4,6 @@ import arrowDown from '../../../../../../../../public/icons/arrow-down.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { Item } from '../../../LibraryItem';
-import { UseDispatch } from 'react-redux';
 import { setModificationDate } from '@/redux/features/auth-slice';
 
 const FilterDocDate = () => {
@@ -28,15 +27,16 @@ const FilterDocDate = () => {
         const month = date.getMonth();
         const year = date.getFullYear();
         const monthNames = [
-          "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
-          "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+            "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+            "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
         ];
-        const formattedDate = `${day} ${monthNames[month]} ${year}`;
-        return formattedDate;
+        return `${day} ${monthNames[month]} ${year}`;
     };
 
-    const dateFormat = responseData.map((item: Item) => convertDateToFrenchFormat(item.data.accessDate));
-
+    // Filter out duplicate dates using a Set
+    const uniqueDates = Array.from(
+        new Set(responseData.map((item: Item) => convertDateToFrenchFormat(item.data.accessDate)))
+    );
 
     return (
         <div className='relative'>
@@ -52,7 +52,7 @@ const FilterDocDate = () => {
             </div>
             {isDropdownOpen && (
                 <ul className='absolute z-10 mt-2 w-full bg-white border rounded-lg shadow-lg'>
-                    {dateFormat.map((date: any, index: any) => (
+                    {uniqueDates.map((date: any, index: number) => (
                         <li
                             key={index}
                             className='px-4 py-2 cursor-pointer hover:bg-gray-100'
@@ -64,7 +64,7 @@ const FilterDocDate = () => {
                 </ul>
             )}
         </div>
-    )
+    );
 }
 
 export default FilterDocDate;

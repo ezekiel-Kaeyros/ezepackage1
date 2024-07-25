@@ -41,13 +41,19 @@ const ProfilePage: FC<ProfilePageProps> = () => {
 
   const router = useRouter ()
   const { id } = router.query
+  console.log(id, ">,>,>,>,>,")
 
   const fetchAllUsers = async () => {
     const user = await fetchUser({ queryKey: ['user', id] });
     setUser (user)
   }
 
+  
+  
+  console.log(refresh, "inside PostPage")
+
   const authUser = useSelector((state: RootState) => state.auth.user);
+  console.log(user, 'user dataaaaaa')
 
   const {
     data: posts,

@@ -29,7 +29,7 @@ const createUploadImage = async ({ image, isCover, imagePublicId, coverImagePubl
   formData.append('members', members);
 
   const newImage = await axios.post('/channels/upload-photo', formData);
-
+  console.log('new image', newImage);
   return newImage;
 };
 
@@ -68,7 +68,7 @@ const UploadImage: FC<UploadChannelImageProps> = ({ isCover, setIsLoading,channe
         members: channel.members,
         description:channel.description
       });
-      
+      console.log("updateImage----------------------------",updateImage);
       if (updateImage.status==200) {
         !isCover ? imagehandler(updateImage.data.image) : imagehandler(updateImage.data.coverImage)
       }

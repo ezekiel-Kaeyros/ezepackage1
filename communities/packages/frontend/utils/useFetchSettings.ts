@@ -102,7 +102,7 @@ const useFetchSettings = (setTheme: (theme?: Theme) => void): useFetchSettingsPa
           dispatch(setGithubLoginEnabled(githubLoginEnabled));
         }
       } catch (error) {
-        console.error('Fetching settings failed: ', error);
+        console.log('Fetching settings failed: ', error);
       } finally {
         setIsSettingsFetching(false);
       }

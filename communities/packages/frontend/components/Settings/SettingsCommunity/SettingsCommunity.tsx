@@ -74,7 +74,7 @@ const SettingsCommunity: FC = () => {
         })
       );
     } catch (error) {
-      console.error('An error ocurred while updating the community: ', error);
+      console.log('An error ocurred while updating the community: ', error);
     }
   };
 

@@ -136,14 +136,15 @@ const FirstStep = () => {
     const response = new ChannelService()
       .channel()
       .then((result) => {
+        console.log('result======', result.data);
         setTopic(result.data)
       })
       .catch((error) => {
-        console.error('Error: ', error);
+        console.log('error==============', error);
       });
   }, []);
   useEffect(() => {
-    console.log('Top', top);
+    console.log('top2222222222', top);
   }, [top])
   const onSubmit: SubmitHandler<FirstStepFormValues> = (data) => {
     // const user = new AuthService().login(data);

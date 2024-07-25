@@ -30,7 +30,8 @@ import PdfViewer from "@/app/common/components/pdf-viewer/PdfViewer";
 const ViewDocument = () => {
   const { dispatch, idDoc, arrayDoc } = useAddDocument();
     const doc = arrayDoc.filter((item) => item.id == idDoc);
-    
+    console.log('arrayDoc++++++++++',arrayDoc);
+    console.log("idDoc++++++++++", idDoc);
      const [numPages, setNumPages] = useState<number | null>(null);;
      const [pageNumber, setPageNumber] = useState(1);
 

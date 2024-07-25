@@ -23,7 +23,7 @@ const urls = {
 }
 
 const staticVariables = {
-  secret: process.env.SECRET || "",
+  secret: process.env.SECRET || "WriteYourOwn",
   auth0ID: process.env.AUTH0_ID || "",
   auth0ClientId: process.env.AUTH0_CLIENT_ID || "",
   mongodbUri: process.env.MONGODB_URI || "",

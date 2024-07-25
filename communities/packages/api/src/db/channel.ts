@@ -9,7 +9,6 @@ export const getChannels = async (): Promise<any> => {
 
 export const getChannelByName = async (name: string): Promise<any> => {
   const channel = await Channel.findOne({ name });
-
   return channel;
 };
 
@@ -36,6 +35,9 @@ export const updateChannel = async (
   description?: any,
   member?: any
 ): Promise<any> => {
+  // console.log('member==================',member);
+  // console.log('authRequired11111111111', authRequired);
+  // console.log('fieldsToUpdate****************', fieldsToUpdate);
   
   
   const updatedChannel = await Channel.findOneAndUpdate(
@@ -43,6 +45,7 @@ export const updateChannel = async (
     { name, authRequired, description, members:member, ...fieldsToUpdate },
     { new: true }
   );
+  // console.log('updateChannel', updatedChannel);
   
   return updatedChannel;
 };

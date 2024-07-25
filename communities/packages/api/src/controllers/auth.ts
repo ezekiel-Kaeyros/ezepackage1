@@ -174,8 +174,6 @@ const AuthController = {
   },
   logout: async (req: Request, res: Response): Promise<any> => {
     if (req.cookies['token']) {
-      if (process.env.NODE_ENV === "production")
-        return res.clearCookie('token', { domain: ".eze.ink" }).send('You have been successfully logged out.');
       return res.clearCookie('token').send('You have been successfully logged out.');
     } else {
       return res.send('You have been successfully logged out.');

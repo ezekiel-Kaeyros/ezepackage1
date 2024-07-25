@@ -115,6 +115,7 @@ export const updateCache = ({
     return;
   }
   key = typeof queryKey === 'string' ? queryKey : queryKey[0];
+console.log('key',key);
 
   switch (key) {
     case 'postsByFollowing':

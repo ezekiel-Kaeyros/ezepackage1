@@ -64,7 +64,6 @@ const config = {
 
 // Joining request
 const joinChannel = async ({ userId, channelId }) => {
-  
   const response = await axios.post(`/channels/join/${channelId}`, { userId }, config);
   return response;
 };
@@ -76,6 +75,7 @@ const leaveChannel = async ({ userId, channelId }) => {
 };
 
 const updateChannel = async (data: any) => {
+  console.log(data)
   const response = await axios.put(`/channels/update-member/`, data, config);
   return response;
 };
@@ -143,7 +143,7 @@ const ChannelInfo: FC<ChannelInfoProps> = ({ channelId, name, creationDate, desc
         setLoad(false)
       }
     } catch (error) {
-      console.error('Error: ', error);
+      console.log('An error occured', error);
       setLoad(false)
     }
   };
@@ -179,7 +179,7 @@ const ChannelInfo: FC<ChannelInfoProps> = ({ channelId, name, creationDate, desc
 
       }
     } catch (error) {
-      console.error(`An error occured, try again`, error);
+      console.log(`An error occured, try again`, error);
       setLoad(false)
     }
   };

@@ -5,7 +5,7 @@ import { ErrorCodes, UserRole } from '../constants';
 export const checkIfUser = (req: Request, res: Response, next: NextFunction) => {
   passport.authenticate('jwt', { session: false }, (err, user) => {
     if (err) {
-      console.error('Error: ', err);
+      console.log('err', err);
 
       return next(err);
     }

@@ -15,7 +15,7 @@ interface UploadImageProps {
 }
 
 const createUploadImage = async ({ image, isCover, imagePublicId, coverImagePublicId }) => {
-  
+  console.log('iimage', imagePublicId);
   const formData = new FormData();
   formData.append('image', image);
   formData.append('isCover', isCover);

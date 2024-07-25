@@ -58,13 +58,13 @@ const SignupForm: React.FC<{ signup: any }> = ({ signup }) => {
           toast.error('Registration failed');
         } else {
           toast.success('Registration completed');
-
+          console.log('data...: ', res?.data);
           // dispatch(setAuthUser({ user: res?.data }));
           // Redirecting to onboarding
           push('/fr/onboarding?step=1');
         }
       } catch (error: any) {
-        console.error(`An error occured`, error);
+        console.log(`An error occured`, error);
         toast.error(error?.response?.data);
       }
     } else {
@@ -74,7 +74,7 @@ const SignupForm: React.FC<{ signup: any }> = ({ signup }) => {
           email: data.email,
           password: data.password,
         };
-        
+        console.log('DATA DATA DATA: ', data);
         // const createUser = SSOClient.createUser(postData); // <-- Added semicolon
         // console.log("create User", createUser)
         push('/fr/onboarding?step=1');

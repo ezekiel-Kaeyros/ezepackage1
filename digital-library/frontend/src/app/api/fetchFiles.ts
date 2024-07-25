@@ -7,6 +7,8 @@ const fetchFile = async (url: string, groupId: any, itemId: any, token: any) => 
           responseType:'stream'
         },
       });
+
+      console.log(response, 'this is my response')
       
       if (!response.ok) {
         const errorDetails = await response.text();

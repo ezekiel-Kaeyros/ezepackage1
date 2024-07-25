@@ -42,7 +42,7 @@ const Header: FC<NavbarProps> = ({ lang, navigation }) => {
       // closeDropDown();
       window.location.href = `${config.ssoUrl}/auth/logout`
     } catch (error) {
-      console.error('An error occurred while logging out: ', error);
+      console.log('An error occurred while logging out: ', error);
     }
   };
 

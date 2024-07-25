@@ -42,6 +42,8 @@ const FourthStep: React.FC<{ step: number, changeHandler: any }> = ({ step, chan
     'price'
   );
 
+  console.log(price, 'price')
+
 
   const channelarray = [
     { name: "private", id: 1 },
@@ -99,7 +101,7 @@ const FourthStep: React.FC<{ step: number, changeHandler: any }> = ({ step, chan
       setIsLoading(false);
       reset();
       dispatch(step4Handler(value));
-      
+      console.log(response.data)
       window.location.href = `/digital-library/${response.data.itemKey}`;
     } catch (error: any) {
       setIsLoading(false);

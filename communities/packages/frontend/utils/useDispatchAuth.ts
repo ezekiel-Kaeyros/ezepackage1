@@ -21,7 +21,7 @@ export const useDispatchAuth = () => {
         );
       }
     } catch (error) {
-      console.error(`Error: ${error}`);
+      console.log(`error ${error}`);
     } finally {
       console.log('finally');
     }

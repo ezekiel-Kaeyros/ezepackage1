@@ -11,7 +11,7 @@ export function useAuth<T>(): { user: T | null } {
         const response = await axios.get(config.ssoUrl + '/auth', { withCredentials: true });
         setUser(response.data)
       } catch (error) {
-        console.error(`Error ${error}`);
+        console.log(`error ${error}`);
       } finally {
         console.log('finally');
       }

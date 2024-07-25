@@ -20,18 +20,12 @@ import { GetStaticProps } from 'next';
 import {config} from '../../../utils';
 
 const fetchChannelByName = async (channelName: string) => {
-  
   const { data } = await axios.get(`/channels/${channelName}`);
-
   return data;
 };
 
 const fetchPostsByChannelId = async ({ queryKey, pageParam = 0 }) => {
-  
-  // queryKey is an array containing channel name and channel id at index 0 and 1 respectively
-  // const [channelId] = queryKey;
-  const channelId = queryKey.at(1)
-
+  const [, channelId] = queryKey;
   const { data } = await axios.get(
     `/posts/channel/${channelId}?offset=${pageParam}&limit=${DataLimit.PostsByChannelName}`
   );

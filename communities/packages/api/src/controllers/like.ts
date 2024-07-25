@@ -24,6 +24,7 @@ const LikeController = {
   like_comment: async (req: Request, res: Response): Promise<any> => {
     const { commentId } = req.body;
     const authUser = req.user as AuthUser;
+    console.log('authUser', authUser._id);
     
     const like = await createLikeComment(authUser._id, commentId);
     return res.send(like);
@@ -31,6 +32,7 @@ const LikeController = {
   delete: async (req: Request, res: Response): Promise<any> => {
     const { id } = req.body;
     const authUser = req.user as AuthUser;
+    console.log(id);
     
     // Check if the like author is removing the like.
     const like: any = await likeById(id);

@@ -20,7 +20,7 @@ export const useItems = () => {
         const res = await axios.get(url);
         dispatch(setResponseData(res.data));
       } catch (error: any) {
-        console.error("Data Not Fetched", error)
+        console.log("Data Not Fetched", error)
         setError(error)
       } finally {
         return

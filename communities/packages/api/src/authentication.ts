@@ -8,7 +8,6 @@ import { User } from './models';
 import { getUserInfoFromFacebook, getUserInfoFromGithub, getUserInfoFromGoogle, SocialProfile } from './utils';
 import { updateUser } from './db';
 import config from './utils/config';
-import { Request } from 'express';
 
 export enum SocialProvider {
   Facebook = 'facebook',
@@ -193,19 +192,11 @@ export const initPassport = (): void => {
     )
   );
 
-  const cookieExtractor = function(req: Request) {
-    var token = null;
-    if (req && req.cookies) {
-      token = req.cookies['token'];
-    }
-    return token;
-  };
-
   passport.use(
     'jwt',
     new JwtStrategy(
       {
-        jwtFromRequest: cookieExtractor,
+        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
         secretOrKey: process.env.SECRET,
       },
       async (token, done) => {

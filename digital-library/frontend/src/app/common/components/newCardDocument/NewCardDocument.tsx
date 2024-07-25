@@ -103,7 +103,7 @@ const NewCardDocument: React.FC<{
           <div className="flex justify-between items-center my-2">
             <span></span>
             <button className="px-4 py-2 text-white font-semibold rounded-full bg-mainColor text-sm">
-              suscribe
+              subscribe
             </button>
           </div>
         </div>

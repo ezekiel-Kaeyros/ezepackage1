@@ -5,7 +5,8 @@ COPY package*.json ./
 RUN yarn install
 COPY . .
 WORKDIR /app/packages/frontend
-RUN  yarn add styled-components && yarn build
+RUN yarn policies set-version 1.18.0
+RUN yarn add styled-components && yarn build
 
 # Reset the working directory
 WORKDIR /app

@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { config as C } from "@/utils"
+import { config as C } from "./utils"
 
 export async function middleware(request: NextRequest) {
-  // const token = request.cookies.get("token")
-  // if (!token) return NextResponse.redirect(new URL("http://sso.eze.ink/auth/login"))
+  const token = request.cookies.get("token")
+  if (!token) return NextResponse.redirect(new URL("https://sso.eze.ink/auth/login"))
   // Clone the current URL
   return NextResponse.next()
 }

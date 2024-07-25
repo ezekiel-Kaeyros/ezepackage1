@@ -26,27 +26,6 @@ function LibraryItem() {
     const { responseData } = useSelector((item: RootState) => item.setResponseData)
     const dispatch = useDispatch();
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         setLoading(true);
-    //         try {
-    //             const groups = await fetchGroups();
-    //             const allPdfUrls: Item[] = [];
-    //             for (const group of groups) {
-    //                 const groupPdfUrls: Item[] | any = await fetchGroupItems(group.id);
-    //                 allPdfUrls.push(...groupPdfUrls);
-    //             }
-    //             setLoading(false);
-    //             setPdfs(allPdfUrls);
-    //         } catch (error) {
-    //             setLoading(false);
-    //             console.error('Error fetching Zotero data:', error);
-    //         }
-    //     };
-
-    //     fetchData();
-    // }, []);
-
     useEffect(() => {
         if (responseData && responseData.length > 0) return;
         setLoading(true)
@@ -99,7 +78,7 @@ function LibraryItem() {
 
     return (
         <>
-            {matchedItem ? <div className='bg-white w-2/5'>
+            {matchedItem ? <div className='bg-white w-11/12 sm:w-3/5 lg:w-2/5'>
                 <span className='flex justify-end'>
                     <div className='bg-[#3D4C5E] w-20 p-2 flex justify-center rounded-l-xl'>
                         <h3 className='w-fit text-white'>Free</h3>

@@ -20,6 +20,8 @@ export const isAuthorized = async (req, requiredRole = UserRole.Regular): Promis
       },
     });
 
+    console.log('user', user);
+
     if (!user) {
       return false;
     }

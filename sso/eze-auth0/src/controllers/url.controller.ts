@@ -9,13 +9,14 @@ export const getUrlById = async (req: Request, res: Response): Promise<void> => 
         const url = await URL.findById(id)
 
         if (!url) {
-            console.error("URL(s) not found");
+            console.log("URL(s) not found");
             res.status(404).json({message: "Url(s) not found"});
         } else {
+            console.log("Url(s) found: ", url);
             res.status(200).json(url)
         }
     } catch(error: any) {
-        console.error("Server error: ", error);
+        console.log("Server error: ", error);
         res.status(500).json({ message: error });
     }
 }

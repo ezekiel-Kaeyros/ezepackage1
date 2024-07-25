@@ -19,7 +19,7 @@ const capitalizeFirstLetter = (text: string) => {
 const useAuth = (): useAuthPayload => {
   const dispatch = useDispatch();
   const [isAuthFetching, setIsAuthFetching] = useState(true);
-  const [authError, setAuthError] = useState<any>(null); // Update type to any for better error logging
+  const [authError, setAuthError] = useState(false);
   const router = useRouter();
 
   const dispatchAuthUser = useCallback(
@@ -103,21 +103,16 @@ const useAuth = (): useAuthPayload => {
     }
 
     const fetch = async () => {
-      try {
-        axios.defaults.headers.common = { Authorization: `bearer ${token}` };
-        const { data } = await axios.get('/auth-user');
-        if (!data) {
-          return;
-        }
-
-        setCookie(Cookies.Token, token);
-        dispatch(setToken(token));
-        dispatchAuthUser(data);
-        router.replace('/', undefined, { shallow: true });
-      } catch (error) {
-        setAuthError(error);
-        console.error("Social auth error:", error);
+      axios.defaults.headers.common = { Authorization: `bearer ${token}` };
+      const { data } = await axios.get('/auth-user');
+      if (!data) {
+        return;
       }
+
+      setCookie(Cookies.Token, token);
+      dispatch(setToken(token));
+      dispatchAuthUser(data);
+      router.replace('/', undefined, { shallow: true });
     };
 
     fetch();
@@ -134,7 +129,7 @@ const useAuth = (): useAuthPayload => {
 
         axios.defaults.headers.common = { Authorization: `bearer ${token}` };
         const { data } = await axios.get('/auth-user');
-        
+        console.log('data', data);
         if (!data) {
           setIsAuthFetching(false);
           return;
@@ -143,7 +138,6 @@ const useAuth = (): useAuthPayload => {
         setAuthError(null);
       } catch (error) {
         setAuthError(error);
-        console.error("Auth error:", error); // Log detailed error
       } finally {
         setIsAuthFetching(false);
       }

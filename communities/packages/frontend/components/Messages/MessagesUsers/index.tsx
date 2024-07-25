@@ -71,6 +71,7 @@ const MessagesUsers: FC<MessagesUsers> = ({ onSearchItemClick, conversations, us
       `/settings/users?offset=${pageParam}&limit=${DataLimit.AdminUsers}&searchQuery=${searchQuery}`
     );
 
+    console.log('data', data);
     return data;
   };
   const fetchUsersTotal = async () => {

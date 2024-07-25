@@ -30,7 +30,9 @@ class SSOService {
         },
       });
 
+      console.log("RESPONSE: ", response);
       const res = await response.json();
+      console.log("res...... ", res)
 
       if (res.status === "ok") {
         return [true, res.accessToken]; // Assuming the token is in the response data

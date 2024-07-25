@@ -45,7 +45,7 @@ const SettingsAuthentication: FC = () => {
       );
       setValues({ password: '', confirmPassword: '' });
     } catch (error) {
-      console.error('An error occurred while updating a password: ', error);
+      console.log('An error occurred while updating a password: ', error);
       setApiError(error.response.data);
     }
   };

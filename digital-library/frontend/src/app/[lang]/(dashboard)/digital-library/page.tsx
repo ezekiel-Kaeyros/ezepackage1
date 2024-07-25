@@ -151,7 +151,7 @@ const Home = () => {
       }}
     >
       <div className="w-full bg-[#1E1E1E] text-white p-2 my-div">
-        <h1 className="text-center text-5xl sm:mt-24 mt-14">
+        <h1 className="text-center text-5xl sm:mt-24 mt-14" ref={bookSearchRef}>
           Welcome on Eze Digital Living Library
         </h1>
         <p className="flex justify-center my-10 w-6/12 m-auto text-center text-lg font-bold">
@@ -159,7 +159,7 @@ const Home = () => {
           educational resources. Explore our digital repository to access a
           wealth of knowledge
         </p>
-        <div ref={bookSearchRef}>
+        <div>
           <BookSearch />
         </div>
         <p className="text-center font-bold text-lg mb-10">

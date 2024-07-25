@@ -52,7 +52,7 @@ const HeroSection: React.FC<{ home: any }> = ({ home }) => {
   useEffect(() => {
     const response = new ChannelService().channel().then((result) => {
     }).catch((error) => {
-      console.error('Error: ', error);
+      console.log('error==============', error);
     })
   }, [])
   return (

@@ -23,6 +23,10 @@ import coloredOwned from '../../../../public/icons/coloredOwned.svg';
 import uncoloredOwned from '../../../../public/icons/uncoloredOwned.svg';
 import bookmarksUncolored from '../../../../public/icons/bookmarkUncolored.svg';
 import bookmarkscolored from '../../../../public/icons/bookmarkcolored.svg';
+import home from '../../../../public/images/home-2.svg';
+import homeColored from '../../../../public/images/homeColored.svg';
+
+// #015E44
 
 import Image from "next/image";
 import Link from "next/link";
@@ -100,8 +104,10 @@ const Sidebar: FC<SidebarProps> = ({ lang, sidebar }) => {
             <Image
               src={
                 pathName.includes("digital-library") 
-                  ? logo2
-                  : logo21
+                  // ? logo2
+                  // : logo21
+                  ? logo3
+                  : logo31
               }
               alt=""
               className={`${isToggled ? "lg:m-0 sm:m-auto m-0" : "sm:m-auto m-0"
@@ -133,7 +139,8 @@ const Sidebar: FC<SidebarProps> = ({ lang, sidebar }) => {
                 !pathName.includes("bookmarks") &&
                 !pathName.includes("create") &&
                 !pathName.includes("add-document")
-                ? logo3 : logo31}
+                // ? logo3 : logo31}
+                ? homeColored : home}
               alt=""
               className={`${isToggled ? "lg:m-0 sm:m-auto m-0" : "sm:m-auto m-0"
                 }`}

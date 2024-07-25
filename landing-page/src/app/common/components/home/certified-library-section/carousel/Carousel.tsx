@@ -124,7 +124,7 @@ const Carousel: React.FC<{ section6: any }> = ({ section6 }) => {
           autoplay: true,
           autoplaySpeed: 5000,
           // infinite: true,
-          dots: false,
+          dots: true,
         },
       },
       {
@@ -133,7 +133,7 @@ const Carousel: React.FC<{ section6: any }> = ({ section6 }) => {
           slidesToShow: 1,
           slidesToScroll: 1,
           // infinite: true,
-          dots: false,
+          dots: true,
           autoplay: true,
           autoplaySpeed: 5000
         },
@@ -142,7 +142,7 @@ const Carousel: React.FC<{ section6: any }> = ({ section6 }) => {
   };
 
   return (
-    <div className=" lg:w-[70vw] xl:w-[67vw] md:w-[80vw] w-screen px-3 sm:px-8 lg:-mr-48">
+    <div className=" lg:w-[70vw] xl:w-[67vw] md:w-[80vw] w-screen overflow-x-hidden px-3 sm:px-8 lg:-mr-48">
       <Slider {...settings}>
         {reports?.map((report) => (
           <ReportCard

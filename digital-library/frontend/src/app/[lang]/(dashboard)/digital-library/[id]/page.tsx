@@ -72,7 +72,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     const fetchPdfUrl = async () => {
-      
+      console.log("TIme to fetch")
       setLoading(true);
       try {
         const response = await axios.post('/api/file', zoteroConfig);
@@ -93,11 +93,11 @@ const Home: React.FC = () => {
     <div className="w-full h-full p-2">
       <Link href="/en/digital-library" className="flex justify-start items-center gap-2 text-[#015E44] pl-2 mb-5">
         <Image src={arrowIcon} alt="Back" />
+        <span>Back To Documents</span>
       </Link>
-      <span>Back To Documents</span>
 
-      <div className="flex gap-x-10">
-        <div className="w-3/5">
+      <div className="flex gap-x-10 lg:flex-row flex-col justify-start gap-y-6 lg:mb-0 mb-20">
+        <div className=" w-full sm:w-9/12 lg:w-3/5">
           {fileData ? (
             <FileViewer pdfUrl={fileUrl} fileData={fileData} />
           ) : (

@@ -87,6 +87,7 @@ const FilterdCarousel: React.FC<{
   const dispatch = useDispatch();
 
   const { responseData } = useSelector((item: RootState) => item.setResponseData)
+  console.log(path, 'cathegoryName')
 
   useEffect(() => {
     if (responseData && responseData.length > 0) return;
@@ -108,6 +109,8 @@ const FilterdCarousel: React.FC<{
 
 
   const filteredCathegories = responseData.filter((item: any) => item.cathegory === path);
+
+  console.log(filteredCathegories.length, 'filteredCaths')
 
   const settings = {
     dots: true,

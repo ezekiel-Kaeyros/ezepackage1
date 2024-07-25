@@ -42,7 +42,7 @@ const CheckboxCommunityChip: React.FC<CheckboxCommunityChipProps> = ({
   const [check, setCheck] = useState(false)
   return (
     <div
-      className={`bg-[#FFE6EF] w-full ml-0 p-6 rounded-2xl h-[180px] ${check && 'border-primaryColor border-2  text-secondaryColor'} `}
+      className={`bg-[#FFE6EF] w-[350px] ml-0 py-6 rounded-2xl h-[180px] ${check && 'border-primaryColor border-2  text-secondaryColor'} `}
       onClick={() => {
         // alert(check)
         setCheck((preview) => !preview);

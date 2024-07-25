@@ -192,6 +192,7 @@ const Like: FC<LikeProps> = ({
       // alert(likeId);
 
       queryClient.setQueryData(queryKey, (existingPosts: any) => {
+        console.log('existingPosts', existingPosts);
 
         if (!existingPosts.pages) {
           const comments = existingPosts.comments.map((item: any) => {
@@ -203,6 +204,7 @@ const Like: FC<LikeProps> = ({
                 ...item,
                 likes: arraylikes,
               };
+              console.log('row', row);
             }
             return row;
           });
@@ -226,6 +228,7 @@ const Like: FC<LikeProps> = ({
                       ...item,
                       likes: arraylikes,
                     };
+                    console.log('row', row);
                   }
                   return row;
                 });
@@ -273,11 +276,14 @@ const Like: FC<LikeProps> = ({
   };
 
   const likeCommentMutation = async () => {
+    console.log('hasLiked12365', hasLiked);
 
     try {
       const like = hasLiked
         ? await deleteLikeMutation(hasLiked?.id)
         : await createLikeCommentMutation({ commentId: checkLike });
+      console.log('like._id', like._id);
+      console.log('hasLiked', hasLiked);
       // alert('ok')
       // updateAfterUnLike(like._id);
       hasLiked ? updateAfterUnLike(like._id) : updateAfterLike(like._id);

@@ -27,6 +27,7 @@ export const toggleFirstTime = async (email: string): Promise<boolean> => {
     ).exec();
 
     if (user) {
+      console.log(`User's firstTime toggled successfully for email: ${email}`);
       return true
     } else {
       console.error("User Does Not Exist")
